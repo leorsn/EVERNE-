@@ -39,23 +39,32 @@ export type Cart = {
 
 const SHOP_DOMAIN = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN || 'khps10-rs.myshopify.com';
 const STOREFRONT_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN || '';
-const API_VERSION = '2026-07';
+const API_VERSION = import.meta.env.VITE_SHOPIFY_API_VERSION || '2026-07';
 
 async function storefront<T>(query: string, variables: Record<string, unknown> = {}): Promise<T> {
-  if (!STOREFRONT_TOKEN) throw new Error('Shopify Storefront token is not configured.');
+  const headers: Record<string, string> = {
+    'Content-Type': 'application/json',
+  };
+
+  // EVERNE only uses tokenless Storefront API features here: products,
+  // collections and cart. A public token remains optional for future features.
+  if (STOREFRONT_TOKEN) {
+    headers['X-Shopify-Storefront-Access-Token'] = STOREFRONT_TOKEN;
+  }
 
   const response = await fetch(`https://${SHOP_DOMAIN}/api/${API_VERSION}/graphql.json`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Shopify-Storefront-Access-Token': STOREFRONT_TOKEN,
-    },
+    headers,
     body: JSON.stringify({ query, variables }),
   });
 
   if (!response.ok) throw new Error(`Shopify request failed (${response.status}).`);
+
   const payload = await response.json();
-  if (payload.errors?.length) throw new Error(payload.errors[0]?.message || 'Shopify returned an error.');
+  if (payload.errors?.length) {
+    throw new Error(payload.errors[0]?.message || 'Shopify returned an error.');
+  }
+
   return payload.data as T;
 }
 
