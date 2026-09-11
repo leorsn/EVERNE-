@@ -8,10 +8,11 @@ Production repository for the EVERNE Edition 01 storefront.
 - Shopify Headless / Storefront API
 - Shopify remains the commerce source of truth for product data, variants, availability, cart and checkout
 - The custom EVERNE frontend remains the visible storefront
+- Static deployment via GitHub Pages
 
 ## Branches
 
-- `main` — protected release baseline
+- `main` — release baseline and GitHub Pages deployment source
 - `dev/headless-foundation` — active storefront development
 
 ## Shopify
@@ -41,14 +42,14 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Set the public Storefront API token in `.env.local`:
+The current storefront uses Shopify Storefront API operations that support tokenless access for product/collection and cart flows. The only required runtime settings are:
 
 ```env
 VITE_SHOPIFY_STORE_DOMAIN=khps10-rs.myshopify.com
-VITE_SHOPIFY_STOREFRONT_TOKEN=<public storefront token>
+VITE_SHOPIFY_API_VERSION=2026-07
 ```
 
-The token used here is a Shopify **public Storefront token**, never an Admin API or private token.
+No Shopify Admin token, private Storefront token, or payment credential belongs in the browser bundle.
 
 ## Preview vs Live mode
 
@@ -70,24 +71,20 @@ This restores the bag across reloads when the cart remains valid.
 
 ## Deployment
 
-Vercel or another Vite-compatible static host can deploy this repository.
+GitHub Pages is the current static host.
 
-Configure these environment variables in the host:
+Workflow:
 
-- `VITE_SHOPIFY_STORE_DOMAIN`
-- `VITE_SHOPIFY_STOREFRONT_TOKEN`
+`.github/workflows/deploy-pages.yml`
 
-Then use:
-
-- Build command: `npm run build`
-- Output directory: `dist`
+The workflow runs TypeScript checks, builds the Vite application and deploys `dist/` to GitHub Pages from `main`.
 
 ## Current limitations
 
 - Final product photography still needs to be attached to the Shopify products.
-- Edition 01 products must be ACTIVE and published to the Headless sales channel before purchase functionality becomes live.
+- Edition 01 products must be ACTIVE and published to the appropriate storefront publication before purchase functionality becomes live.
 - Supplier/inventory truth must be confirmed before product activation.
-- Newsletter form is currently visual-only and intentionally does not pretend to submit data.
+- Newsletter signup is intentionally not live until subscriber storage and consent handling are connected.
 
 ## Security rule
 
