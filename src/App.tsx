@@ -40,7 +40,7 @@ export default function App() {
         if (cancelled) return;
         setProducts(catalog);
         setCart(restored);
-        if (!catalog.length) setCommerceError('Edition 01 is in private preview and is not yet published for purchase.');
+        if (!catalog.length) setCommerceError('Edition 01 is not currently available from the Shopify Storefront API.');
       } catch (error) {
         if (cancelled) return;
         setCommerceError(error instanceof Error ? error.message : 'Storefront connection unavailable.');
@@ -59,7 +59,8 @@ export default function App() {
     return map;
   }, [products]);
 
-  const liveCommerce = previewProducts.every((item) => {
+  const catalogConnected = previewProducts.every((item) => liveBySku.has(item.sku));
+  const commerceReady = previewProducts.every((item) => {
     const live = liveBySku.get(item.sku);
     return Boolean(live?.product.availableForSale && live?.variant.availableForSale);
   });
@@ -96,8 +97,16 @@ export default function App() {
     <div className="site-shell" id="top">
       <a className="skip-link" href="#collection">Skip to collection</a>
 
-      <div className={`preview-strip ${liveCommerce ? 'live' : ''}`}>
-        <span>{loading ? 'CHECKING EDITION 01' : liveCommerce ? 'EDITION 01 · AVAILABLE' : 'PRIVATE PREVIEW · EDITION 01 IN PREPARATION'}</span>
+      <div className={`preview-strip ${commerceReady ? 'live' : catalogConnected ? 'connected' : ''}`}>
+        <span>
+          {loading
+            ? 'CHECKING EDITION 01'
+            : commerceReady
+              ? 'EDITION 01 · AVAILABLE'
+              : catalogConnected
+                ? 'SHOPIFY CONNECTED · EDITION 01 PRE-LAUNCH'
+                : 'PRIVATE PREVIEW · EDITION 01 IN PREPARATION'}
+        </span>
       </div>
 
       <header className="topbar">
@@ -161,7 +170,7 @@ export default function App() {
                     <a href={`#${preview.sku}`} className="view-label">View {preview.title}</a>
                     <span className="product-index">0 {preview.number}</span>
                     <button className="floating-add" disabled={!purchasable || busySku === preview.sku} onClick={() => addToBag(preview.sku)}>
-                      {purchasable ? (busySku === preview.sku ? 'ADDING…' : 'ADD +') : 'ADD +'}
+                      {purchasable ? (busySku === preview.sku ? 'ADDING…' : 'ADD +') : catalogConnected ? 'COMING SOON' : 'PREVIEW'}
                     </button>
                   </div>
                   <div className="product-info" id={preview.sku}>
@@ -250,7 +259,7 @@ export default function App() {
       <aside className={`bag ${bagOpen ? 'open' : ''}`} aria-hidden={!bagOpen} aria-label="Preview bag">
         <div className="bag-head"><strong>Preview bag</strong><button onClick={() => setBagOpen(false)}>Close</button></div>
         {!cart?.lines.nodes.length ? (
-          <div className="empty-bag"><p>Your preview bag is empty.</p><span>Edition 01 remains in private preview until Shopify availability is published.</span></div>
+          <div className="empty-bag"><p>Your preview bag is empty.</p><span>{catalogConnected ? 'Shopify is connected. Edition 01 checkout remains closed until inventory is available.' : 'Edition 01 remains in private preview while the Shopify catalog connection is unavailable.'}</span></div>
         ) : (
           <>
             <div className="bag-lines">{cart.lines.nodes.map((line) => <div className="bag-line" key={line.id}><div><strong>{line.merchandise.product.title}</strong><span>Qty {line.quantity}</span></div><div><span>{formatMoney(line.merchandise.price)}</span><button onClick={() => removeLine(line.id)}>Remove</button></div></div>)}</div>
