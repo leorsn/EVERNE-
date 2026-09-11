@@ -21,13 +21,20 @@ export default function App() {
           (async () => {
             const id = localStorage.getItem(CART_KEY);
             if (!id) return null;
-            try { return await getCart(id); } catch { return null; }
+            try {
+              return await getCart(id);
+            } catch {
+              localStorage.removeItem(CART_KEY);
+              return null;
+            }
           })(),
         ]);
         if (cancelled) return;
         setProducts(catalog);
         setCart(restored);
-        if (!catalog.length) setCommerceError('Edition 01 is in private preview and is not yet published for purchase.');
+        if (!catalog.length) {
+          setCommerceError('Edition 01 is in private preview and is not yet published for purchase.');
+        }
       } catch (error) {
         if (cancelled) return;
         setCommerceError(error instanceof Error ? error.message : 'Storefront connection unavailable.');
@@ -35,16 +42,25 @@ export default function App() {
         if (!cancelled) setLoading(false);
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const liveBySku = useMemo(() => {
     const map = new Map<string, { product: Product; variant: Product['variants']['nodes'][number] }>();
-    products.forEach((product) => product.variants.nodes.forEach((variant) => {
-      if (variant.sku) map.set(variant.sku, { product, variant });
-    }));
+    products.forEach((product) =>
+      product.variants.nodes.forEach((variant) => {
+        if (variant.sku) map.set(variant.sku, { product, variant });
+      }),
+    );
     return map;
   }, [products]);
+
+  const liveCommerce = previewProducts.every((item) => {
+    const live = liveBySku.get(item.sku);
+    return Boolean(live?.product.availableForSale && live?.variant.availableForSale);
+  });
 
   async function addToBag(sku: string) {
     const live = liveBySku.get(sku);
@@ -68,6 +84,7 @@ export default function App() {
     try {
       const next = await removeCartLine(cart.id, lineId);
       setCart(next);
+      if (!next.totalQuantity) localStorage.removeItem(CART_KEY);
     } catch (error) {
       setCommerceError(error instanceof Error ? error.message : 'Could not update bag.');
     }
@@ -77,12 +94,14 @@ export default function App() {
     <div className="site-shell">
       <header className="topbar">
         <a className="brand" href="#top">EVERNE</a>
-        <nav>
+        <nav aria-label="Primary navigation">
           <a href="#collection">Collection</a>
           <a href="#ritual">Care Ritual</a>
           <a href="#notes">Field Notes</a>
         </nav>
-        <button className="bag-button" onClick={() => setBagOpen(true)}>Bag {cart?.totalQuantity ? `(${cart.totalQuantity})` : ''}</button>
+        <button className="bag-button" onClick={() => setBagOpen(true)} aria-label={`Open bag${cart?.totalQuantity ? ` with ${cart.totalQuantity} items` : ''}`}>
+          Bag {cart?.totalQuantity ? `(${cart.totalQuantity})` : ''}
+        </button>
       </header>
 
       <main id="top">
@@ -91,6 +110,17 @@ export default function App() {
           <h1>Wear it longer.</h1>
           <p className="hero-copy">Quiet, enduring tools for the garments you chose carefully.</p>
           <a className="text-link" href="#collection">Discover Edition 01 →</a>
+        </section>
+
+        <section className={`release-status ${liveCommerce ? 'live' : 'preview'}`} aria-live="polite">
+          <span>{loading ? 'Checking release status' : liveCommerce ? 'Edition 01 · Available' : 'Private preview · Edition 01'}</span>
+          <p>
+            {loading
+              ? 'Connecting to the EVERNE storefront…'
+              : liveCommerce
+                ? 'Edition 01 is connected to Shopify. Availability, bag and checkout reflect the live storefront.'
+                : 'The first collection is being prepared. Product availability and checkout stay disabled until the Edition 01 objects are published to the EVERNE Headless storefront.'}
+          </p>
         </section>
 
         <section className="statement">
@@ -107,7 +137,6 @@ export default function App() {
           </div>
 
           {commerceError && <div className="commerce-note">{commerceError}</div>}
-          {loading && <div className="commerce-note">Checking private release availability…</div>}
 
           <div className="product-grid">
             {previewProducts.map((preview) => {
@@ -166,11 +195,10 @@ export default function App() {
         <section className="private-release">
           <span>PRIVATE FIRST RELEASE</span>
           <h2>Edition 01 begins quietly.</h2>
-          <p>Join the private list for release notes, availability and future object studies.</p>
-          <form onSubmit={(e) => e.preventDefault()}>
-            <input type="email" placeholder="Email address" aria-label="Email address" />
-            <button type="submit">Request access →</button>
-          </form>
+          <div>
+            <p>Release access is not yet automated. The public signup form will only go live once subscriber storage and consent handling are connected.</p>
+            <button className="release-disabled" type="button" disabled>Private list opening soon</button>
+          </div>
         </section>
       </main>
 
@@ -180,7 +208,7 @@ export default function App() {
       </footer>
 
       <div className={`bag-backdrop ${bagOpen ? 'open' : ''}`} onClick={() => setBagOpen(false)} />
-      <aside className={`bag ${bagOpen ? 'open' : ''}`} aria-hidden={!bagOpen}>
+      <aside className={`bag ${bagOpen ? 'open' : ''}`} aria-hidden={!bagOpen} aria-label="Shopping bag">
         <div className="bag-head"><strong>Bag</strong><button onClick={() => setBagOpen(false)}>Close</button></div>
         {!cart?.lines.nodes.length ? (
           <div className="empty-bag"><p>Your bag is empty.</p><span>Edition 01 remains in private preview until Shopify availability is published.</span></div>
