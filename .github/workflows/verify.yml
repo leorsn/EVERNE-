@@ -10,6 +10,10 @@ on:
 jobs:
   verify:
     runs-on: ubuntu-latest
+    env:
+      VITE_SHOPIFY_STORE_DOMAIN: khps10-rs.myshopify.com
+      VITE_SHOPIFY_API_VERSION: 2026-07
+      VITE_SHOPIFY_STOREFRONT_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -27,7 +31,10 @@ jobs:
         shell: bash
         run: |
           node <<'NODE'
-          const endpoint = 'https://khps10-rs.myshopify.com/api/2026-07/graphql.json';
+          const endpoint = `https://${process.env.VITE_SHOPIFY_STORE_DOMAIN}/api/${process.env.VITE_SHOPIFY_API_VERSION}/graphql.json`;
+          const token = process.env.VITE_SHOPIFY_STOREFRONT_TOKEN;
+          if (!token) throw new Error('SHOPIFY_STOREFRONT_TOKEN repository secret is missing.');
+
           const query = `query VerifyEdition01 {
             collection(handle: "edition-01") {
               id
@@ -53,7 +60,10 @@ jobs:
 
           const response = await fetch(endpoint, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json',
+              'X-Shopify-Storefront-Access-Token': token,
+            },
             body: JSON.stringify({ query }),
           });
 
@@ -67,7 +77,7 @@ jobs:
           }
 
           const collection = payload.data?.collection;
-          if (!collection) throw new Error('Edition 01 is not visible through the Storefront API.');
+          if (!collection) throw new Error('Edition 01 is not visible through the authenticated Storefront API.');
 
           const expected = new Set(['EV-RS-01', 'EV-GB-01', 'EV-CC-01', 'EV-CW-06']);
           const received = new Set(
