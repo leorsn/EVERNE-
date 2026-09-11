@@ -23,3 +23,61 @@ jobs:
         run: npm run typecheck
       - name: Build
         run: npm run build
+      - name: Verify Shopify Storefront catalog
+        shell: bash
+        run: |
+          node <<'NODE'
+          const endpoint = 'https://khps10-rs.myshopify.com/api/2026-07/graphql.json';
+          const query = `query VerifyEdition01 {
+            collection(handle: "edition-01") {
+              id
+              title
+              handle
+              products(first: 10) {
+                nodes {
+                  id
+                  title
+                  availableForSale
+                  variants(first: 10) {
+                    nodes {
+                      id
+                      sku
+                      availableForSale
+                      price { amount currencyCode }
+                    }
+                  }
+                }
+              }
+            }
+          }`;
+
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query }),
+          });
+
+          if (!response.ok) {
+            throw new Error(`Storefront API returned HTTP ${response.status}: ${await response.text()}`);
+          }
+
+          const payload = await response.json();
+          if (payload.errors?.length) {
+            throw new Error(`Storefront API GraphQL error: ${JSON.stringify(payload.errors)}`);
+          }
+
+          const collection = payload.data?.collection;
+          if (!collection) throw new Error('Edition 01 is not visible through the Storefront API.');
+
+          const expected = new Set(['EV-RS-01', 'EV-GB-01', 'EV-CC-01', 'EV-CW-06']);
+          const received = new Set(
+            collection.products.nodes.flatMap((product) =>
+              product.variants.nodes.map((variant) => variant.sku).filter(Boolean),
+            ),
+          );
+
+          const missing = [...expected].filter((sku) => !received.has(sku));
+          if (missing.length) throw new Error(`Missing Edition 01 SKUs: ${missing.join(', ')}`);
+
+          console.log(`Shopify connected: ${collection.title} returned all ${expected.size} EVERNE SKUs.`);
+          NODE
