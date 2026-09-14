@@ -13,7 +13,7 @@ jobs:
     env:
       VITE_SHOPIFY_STORE_DOMAIN: khps10-rs.myshopify.com
       VITE_SHOPIFY_API_VERSION: 2026-07
-      VITE_SHOPIFY_STOREFRONT_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_TOKEN }}
+      VITE_SHOPIFY_STOREFRONT_TOKEN: 287474d54307e5fbbd92518ea5b3fd84
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -33,7 +33,7 @@ jobs:
           node <<'NODE'
           const endpoint = `https://${process.env.VITE_SHOPIFY_STORE_DOMAIN}/api/${process.env.VITE_SHOPIFY_API_VERSION}/graphql.json`;
           const token = process.env.VITE_SHOPIFY_STOREFRONT_TOKEN;
-          if (!token) throw new Error('SHOPIFY_STOREFRONT_TOKEN repository secret is missing.');
+          if (!token) throw new Error('The public Shopify Storefront token is missing.');
 
           const query = `query VerifyEdition01 {
             collection(handle: "edition-01") {
