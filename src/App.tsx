@@ -14,6 +14,7 @@ import {
 import { previewProducts, productImages, type PreviewProduct } from './previewCatalog';
 
 const CART_KEY = 'everne.shopify.cart-id';
+const PURCHASES_ENABLED = false;
 
 const faqs = [
   ['Where do you deliver?', 'Available delivery methods, timing and final shipping cost are shown at Shopify checkout for your address.'],
@@ -37,7 +38,7 @@ type ProductFeatureProps = {
 
 function ProductFeature({ preview, live, busy, catalogConnected, onAdd }: ProductFeatureProps) {
   const images = productImages(preview);
-  const purchasable = Boolean(live?.product.availableForSale && live?.variant.availableForSale);
+  const purchasable = PURCHASES_ENABLED && Boolean(live?.product.availableForSale && live?.variant.availableForSale);
   const price = live ? formatMoney(live.variant.price) : preview.price;
 
   return (
@@ -57,10 +58,10 @@ function ProductFeature({ preview, live, busy, catalogConnected, onAdd }: Produc
         <div className="product-purchase">
           <span>{price}</span>
           <button disabled={!purchasable || busy} onClick={() => onAdd(preview.sku)}>
-            {busy ? 'Adding…' : purchasable ? 'Add to bag' : catalogConnected ? 'Unavailable' : 'Connecting…'}
+            {busy ? 'Adding…' : purchasable ? 'Add to bag' : catalogConnected ? 'Currently unavailable' : 'Connecting…'}
           </button>
         </div>
-        <small>Live availability · Secure checkout by Shopify</small>
+        <small>{PURCHASES_ENABLED ? 'Live availability · Secure checkout by Shopify' : 'Storefront connected · Orders currently closed'}</small>
       </div>
     </article>
   );
@@ -108,6 +109,10 @@ export default function App() {
       const [catalog, restored] = await Promise.all([
         getEdition01(),
         (async () => {
+          if (!PURCHASES_ENABLED) {
+            localStorage.removeItem(CART_KEY);
+            return null;
+          }
           const id = localStorage.getItem(CART_KEY);
           if (!id) return null;
           try {
@@ -152,12 +157,13 @@ export default function App() {
   }, [products]);
 
   const catalogConnected = previewProducts.every((item) => liveBySku.has(item.sku));
-  const commerceReady = previewProducts.every((item) => {
+  const commerceReady = PURCHASES_ENABLED && previewProducts.every((item) => {
     const live = liveBySku.get(item.sku);
     return Boolean(live?.product.availableForSale && live.variant.availableForSale);
   });
 
   async function addToBag(sku: string) {
+    if (!PURCHASES_ENABLED) return;
     const live = liveBySku.get(sku);
     if (!live?.product.availableForSale || !live.variant.availableForSale) return;
     setBusySku(sku);
@@ -219,13 +225,13 @@ export default function App() {
     <div className="site-shell" id="top">
       <a className="skip-link" href="#collection">Skip to collection</a>
       <div className={`status-bar ${commerceReady ? 'is-live' : ''}`} role="status">
-        <span>{loading ? 'Connecting to Edition 01' : commerceReady ? 'Edition 01 · Available now' : 'Edition 01 · Store update'}</span>
+        <span>{loading ? 'Connecting to Edition 01' : commerceReady ? 'Edition 01 · Available now' : catalogConnected ? 'Edition 01 · Currently unavailable' : 'Edition 01 · Store update'}</span>
         <span>Germany / EUR</span>
       </div>
       <header className="topbar">
         <a className="brand" href="#top" aria-label="EVERNE home">EVERNE</a>
         <nav aria-label="Primary navigation"><a href="#collection">Collection</a><a href="#method">Method</a><a href="#journal">Journal</a></nav>
-        <button className="bag-button" onClick={() => setBagOpen(true)} aria-label={`Open bag with ${cart?.totalQuantity || 0} items`}>Bag <span>{String(cart?.totalQuantity || 0).padStart(2, '0')}</span></button>
+        <button className="bag-button" disabled={!PURCHASES_ENABLED} onClick={() => setBagOpen(true)} aria-label="Edition 01 is currently unavailable">Unavailable</button>
       </header>
 
       <main>
@@ -283,14 +289,14 @@ export default function App() {
       <footer>
         <div className="footer-lead"><a className="brand" href="#top">EVERNE</a><p>Care for what you keep.</p></div>
         <div><span>Explore</span><a href="#collection">Collection</a><a href="#method">The method</a><a href="#journal">Field notes</a></div>
-        <div><span>Service</span><button onClick={() => setBagOpen(true)}>Shopping bag</button><a href="#faq">Care & delivery</a></div>
+        <div><span>Service</span><button disabled={!PURCHASES_ENABLED} onClick={() => setBagOpen(true)}>Orders currently closed</button><a href="#faq">Care & delivery</a></div>
         <div className="footer-bottom"><span>© 2026 EVERNE</span><span>Hamburg, Germany · EUR</span><span>Commerce by Shopify</span></div>
       </footer>
 
       <button className={`bag-backdrop ${bagOpen ? 'open' : ''}`} onClick={() => setBagOpen(false)} aria-label="Close shopping bag" tabIndex={bagOpen ? 0 : -1} />
       <aside className={`bag ${bagOpen ? 'open' : ''}`} role="dialog" aria-modal="true" aria-hidden={!bagOpen} aria-label="Shopping bag">
         <div className="bag-head"><div><span>EVERNE</span><strong>Your bag</strong></div><button onClick={() => setBagOpen(false)} aria-label="Close bag">Close</button></div>
-        {!cart?.lines.nodes.length ? <div className="empty-bag"><span>Bag 00</span><p>Your collection<br />starts here.</p><small>{catalogConnected ? 'Edition 01 is available.' : 'Connecting to Edition 01…'}</small><button onClick={() => setBagOpen(false)}>Continue exploring</button></div> : <><div className="bag-lines">{cart.lines.nodes.map((line) => <BagLine key={line.id} line={line} busy={busyLine === line.id} onQuantity={changeQuantity} onRemove={removeLine} />)}</div><div className="bag-summary"><div><span>Subtotal</span><strong>{formatMoney(cart.cost.subtotalAmount)}</strong></div><p>Shipping and taxes are calculated at checkout.</p><a className="checkout" href={cart.checkoutUrl}>Continue to secure checkout <span>↗</span></a><small>Secure checkout powered by Shopify</small></div></>}
+        {!PURCHASES_ENABLED || !cart?.lines.nodes.length ? <div className="empty-bag"><span>Edition 01</span><p>Currently<br />unavailable.</p><small>Orders will open after our products and supplier have been confirmed.</small><button onClick={() => setBagOpen(false)}>Continue exploring</button></div> : <><div className="bag-lines">{cart.lines.nodes.map((line) => <BagLine key={line.id} line={line} busy={busyLine === line.id} onQuantity={changeQuantity} onRemove={removeLine} />)}</div><div className="bag-summary"><div><span>Subtotal</span><strong>{formatMoney(cart.cost.subtotalAmount)}</strong></div><p>Shipping and taxes are calculated at checkout.</p><a className="checkout" href={cart.checkoutUrl}>Continue to secure checkout <span>↗</span></a><small>Secure checkout powered by Shopify</small></div></>}
       </aside>
     </div>
   );
