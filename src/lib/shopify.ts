@@ -24,6 +24,7 @@ export type CartLine = {
   merchandise: {
     id: string;
     title: string;
+    sku?: string | null;
     product: { title: string };
     price: Money;
   };
@@ -96,7 +97,7 @@ export async function createCart(variantId: string): Promise<Cart> {
         cart {
           id checkoutUrl totalQuantity
           cost { subtotalAmount { amount currencyCode } totalAmount { amount currencyCode } }
-          lines(first: 50) { nodes { id quantity merchandise { ... on ProductVariant { id title price { amount currencyCode } product { title } } } } }
+          lines(first: 50) { nodes { id quantity merchandise { ... on ProductVariant { id title sku price { amount currencyCode } product { title } } } } }
         }
         userErrors { message }
       }
@@ -114,7 +115,7 @@ export async function addCartLine(cartId: string, variantId: string): Promise<Ca
         cart {
           id checkoutUrl totalQuantity
           cost { subtotalAmount { amount currencyCode } totalAmount { amount currencyCode } }
-          lines(first: 50) { nodes { id quantity merchandise { ... on ProductVariant { id title price { amount currencyCode } product { title } } } } }
+          lines(first: 50) { nodes { id quantity merchandise { ... on ProductVariant { id title sku price { amount currencyCode } product { title } } } } }
         }
         userErrors { message }
       }
@@ -131,7 +132,7 @@ export async function updateCartLine(cartId: string, lineId: string, quantity: n
         cart {
           id checkoutUrl totalQuantity
           cost { subtotalAmount { amount currencyCode } totalAmount { amount currencyCode } }
-          lines(first: 50) { nodes { id quantity merchandise { ... on ProductVariant { id title price { amount currencyCode } product { title } } } } }
+          lines(first: 50) { nodes { id quantity merchandise { ... on ProductVariant { id title sku price { amount currencyCode } product { title } } } } }
         }
         userErrors { message }
       }
@@ -148,7 +149,7 @@ export async function removeCartLine(cartId: string, lineId: string): Promise<Ca
         cart {
           id checkoutUrl totalQuantity
           cost { subtotalAmount { amount currencyCode } totalAmount { amount currencyCode } }
-          lines(first: 50) { nodes { id quantity merchandise { ... on ProductVariant { id title price { amount currencyCode } product { title } } } } }
+          lines(first: 50) { nodes { id quantity merchandise { ... on ProductVariant { id title sku price { amount currencyCode } product { title } } } } }
         }
         userErrors { message }
       }
@@ -164,7 +165,7 @@ export async function getCart(cartId: string): Promise<Cart | null> {
       cart(id: $id) {
         id checkoutUrl totalQuantity
         cost { subtotalAmount { amount currencyCode } totalAmount { amount currencyCode } }
-        lines(first: 50) { nodes { id quantity merchandise { ... on ProductVariant { id title price { amount currencyCode } product { title } } } } }
+        lines(first: 50) { nodes { id quantity merchandise { ... on ProductVariant { id title sku price { amount currencyCode } product { title } } } } }
       }
     }
   `, { id: cartId });
