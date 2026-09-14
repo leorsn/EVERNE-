@@ -35,7 +35,8 @@ jobs:
         env:
           VITE_SHOPIFY_STORE_DOMAIN: khps10-rs.myshopify.com
           VITE_SHOPIFY_API_VERSION: 2026-07
-          VITE_SHOPIFY_STOREFRONT_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_TOKEN }}
+          # This is a public browser token, not an Admin API secret.
+          VITE_SHOPIFY_STOREFRONT_TOKEN: 287474d54307e5fbbd92518ea5b3fd84
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload Pages artifact

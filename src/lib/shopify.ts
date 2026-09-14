@@ -37,6 +37,10 @@ export type Cart = {
   lines: { nodes: CartLine[] };
 };
 
+type StorefrontError = {
+  message?: string;
+};
+
 const SHOP_DOMAIN = import.meta.env.VITE_SHOPIFY_STORE_DOMAIN || 'khps10-rs.myshopify.com';
 const STOREFRONT_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN || '';
 const API_VERSION = import.meta.env.VITE_SHOPIFY_API_VERSION || '2026-07';
@@ -46,8 +50,6 @@ async function storefront<T>(query: string, variables: Record<string, unknown> =
     'Content-Type': 'application/json',
   };
 
-  // EVERNE only uses tokenless Storefront API features here: products,
-  // collections and cart. A public token remains optional for future features.
   if (STOREFRONT_TOKEN) {
     headers['X-Shopify-Storefront-Access-Token'] = STOREFRONT_TOKEN;
   }
@@ -60,12 +62,12 @@ async function storefront<T>(query: string, variables: Record<string, unknown> =
 
   if (!response.ok) throw new Error(`Shopify request failed (${response.status}).`);
 
-  const payload = await response.json();
-  if (payload.errors?.length) {
-    throw new Error(payload.errors[0]?.message || 'Shopify returned an error.');
+  const payload = await response.json() as { data?: T; errors?: StorefrontError[] };
+  if (payload.errors?.length || !payload.data) {
+    throw new Error(payload.errors?.[0]?.message || 'Shopify returned an invalid response.');
   }
 
-  return payload.data as T;
+  return payload.data;
 }
 
 const PRODUCT_FIELDS = `
@@ -88,7 +90,7 @@ export async function getEdition01(): Promise<Product[]> {
 }
 
 export async function createCart(variantId: string): Promise<Cart> {
-  const data = await storefront<{ cartCreate: { cart: Cart; userErrors: Array<{ message: string }> } }>(`
+  const data = await storefront<{ cartCreate: { cart: Cart | null; userErrors: Array<{ message: string }> } }>(`
     mutation CartCreate($lines: [CartLineInput!]) {
       cartCreate(input: { lines: $lines }) {
         cart {
@@ -101,6 +103,7 @@ export async function createCart(variantId: string): Promise<Cart> {
     }
   `, { lines: [{ merchandiseId: variantId, quantity: 1 }] });
   if (data.cartCreate.userErrors.length) throw new Error(data.cartCreate.userErrors[0].message);
+  if (!data.cartCreate.cart) throw new Error('Shopify did not create a cart.');
   return data.cartCreate.cart;
 }
 

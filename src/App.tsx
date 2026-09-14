@@ -30,7 +30,9 @@ export default function App() {
             const id = localStorage.getItem(CART_KEY);
             if (!id) return null;
             try {
-              return await getCart(id);
+              const existing = await getCart(id);
+              if (!existing) localStorage.removeItem(CART_KEY);
+              return existing;
             } catch {
               localStorage.removeItem(CART_KEY);
               return null;
@@ -71,7 +73,17 @@ export default function App() {
     setBusySku(sku);
     setCommerceError(null);
     try {
-      const next = cart ? await addCartLine(cart.id, live.variant.id) : await createCart(live.variant.id);
+      let next: Cart;
+      if (cart) {
+        try {
+          next = await addCartLine(cart.id, live.variant.id);
+        } catch {
+          localStorage.removeItem(CART_KEY);
+          next = await createCart(live.variant.id);
+        }
+      } else {
+        next = await createCart(live.variant.id);
+      }
       setCart(next);
       localStorage.setItem(CART_KEY, next.id);
       setBagOpen(true);
@@ -87,7 +99,10 @@ export default function App() {
     try {
       const next = await removeCartLine(cart.id, lineId);
       setCart(next);
-      if (!next.totalQuantity) localStorage.removeItem(CART_KEY);
+      if (!next.totalQuantity) {
+        localStorage.removeItem(CART_KEY);
+        setCart(null);
+      }
     } catch (error) {
       setCommerceError(error instanceof Error ? error.message : 'Could not update bag.');
     }
@@ -116,8 +131,8 @@ export default function App() {
           <a href="#ritual">Care ritual</a>
           <a href="#notes">Field notes</a>
         </nav>
-        <button className="bag-button" onClick={() => setBagOpen(true)} aria-label={`Open preview bag with ${cart?.totalQuantity || 0} items`}>
-          Preview bag <span>{String(cart?.totalQuantity || 0).padStart(2, '0')}</span>
+        <button className="bag-button" onClick={() => setBagOpen(true)} aria-label={`Open bag with ${cart?.totalQuantity || 0} items`}>
+          Bag <span>{String(cart?.totalQuantity || 0).padStart(2, '0')}</span>
         </button>
       </header>
 
@@ -256,15 +271,15 @@ export default function App() {
       </footer>
 
       <div className={`bag-backdrop ${bagOpen ? 'open' : ''}`} onClick={() => setBagOpen(false)} />
-      <aside className={`bag ${bagOpen ? 'open' : ''}`} aria-hidden={!bagOpen} aria-label="Preview bag">
-        <div className="bag-head"><strong>Preview bag</strong><button onClick={() => setBagOpen(false)}>Close</button></div>
+      <aside className={`bag ${bagOpen ? 'open' : ''}`} aria-hidden={!bagOpen} aria-label="Shopping bag">
+        <div className="bag-head"><strong>Bag</strong><button onClick={() => setBagOpen(false)}>Close</button></div>
         {!cart?.lines.nodes.length ? (
-          <div className="empty-bag"><p>Your preview bag is empty.</p><span>{catalogConnected ? 'Shopify is connected. Edition 01 checkout remains closed until inventory is available.' : 'Edition 01 remains in private preview while the Shopify catalog connection is unavailable.'}</span></div>
+          <div className="empty-bag"><p>Your bag is empty.</p><span>{catalogConnected ? 'Edition 01 is connected to Shopify.' : 'Edition 01 is temporarily unavailable.'}</span></div>
         ) : (
           <>
             <div className="bag-lines">{cart.lines.nodes.map((line) => <div className="bag-line" key={line.id}><div><strong>{line.merchandise.product.title}</strong><span>Qty {line.quantity}</span></div><div><span>{formatMoney(line.merchandise.price)}</span><button onClick={() => removeLine(line.id)}>Remove</button></div></div>)}</div>
             <div className="bag-total"><span>Subtotal</span><strong>{formatMoney(cart.cost.subtotalAmount)}</strong></div>
-            <a className="checkout" href={cart.checkoutUrl}>Continue to secure checkout</a>
+            <a className="checkout" href={cart.checkoutUrl} rel="noreferrer">Continue to secure checkout</a>
           </>
         )}
       </aside>
