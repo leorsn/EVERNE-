@@ -1,15 +1,95 @@
 import { useEffect, useMemo, useState } from 'react';
-import { addCartLine, createCart, formatMoney, getCart, getEdition01, removeCartLine, type Cart, type Product } from './lib/shopify';
-import { previewProducts } from './previewCatalog';
+import {
+  addCartLine,
+  createCart,
+  formatMoney,
+  getCart,
+  getEdition01,
+  removeCartLine,
+  updateCartLine,
+  type Cart,
+  type CartLine,
+  type Product,
+} from './lib/shopify';
+import { previewProducts, productImages, type PreviewProduct } from './previewCatalog';
 
 const CART_KEY = 'everne.shopify.cart-id';
 
 const faqs = [
-  ['When will Edition 01 ship?', 'The launch window is confirmed only after final supplier samples, materials and delivery terms are approved.'],
-  ['Where do you deliver?', 'Edition 01 is being prepared for an initial Germany and EU release. Final delivery markets will be confirmed before checkout opens.'],
-  ['Are the tools suitable for every fabric?', 'No universal care tool is appropriate for every fabric. Always test an inconspicuous area first and follow the garment care label.'],
-  ['What is the returns window?', 'Final returns terms will be published before Edition 01 becomes available for purchase.'],
+  ['Where do you deliver?', 'Available delivery methods, timing and final shipping cost are shown at Shopify checkout for your address.'],
+  ['Are the tools suitable for every fabric?', 'No universal care tool is right for every fabric. Always test an inconspicuous area first and follow the garment care label.'],
+  ['How should I use the cedar pieces?', 'Place them in a clean, dry wardrobe without direct contact with delicate fabric. Refresh the aroma with a very light pass of fine sandpaper when needed.'],
+  ['Is payment secure?', 'Yes. Your order and payment are completed through Shopify’s encrypted checkout; payment details are never handled by this storefront.'],
 ];
+
+function imageForSku(sku: string | null | undefined, index = 0) {
+  const preview = previewProducts.find((item) => item.sku === sku);
+  return preview ? productImages(preview)[index] : productImages(previewProducts[0])[0];
+}
+
+type ProductFeatureProps = {
+  preview: PreviewProduct;
+  live?: { product: Product; variant: Product['variants']['nodes'][number] };
+  busy: boolean;
+  catalogConnected: boolean;
+  onAdd: (sku: string) => void;
+};
+
+function ProductFeature({ preview, live, busy, catalogConnected, onAdd }: ProductFeatureProps) {
+  const images = productImages(preview);
+  const purchasable = Boolean(live?.product.availableForSale && live?.variant.availableForSale);
+  const price = live ? formatMoney(live.variant.price) : preview.price;
+
+  return (
+    <article className="product-feature" id={preview.sku}>
+      <div className="product-gallery">
+        <figure className="product-main-image">
+          <img src={images[0]} alt={preview.alt[0]} loading={preview.number === '01' ? 'eager' : 'lazy'} />
+          <figcaption>{preview.ritual}</figcaption>
+        </figure>
+        <figure><img src={images[1]} alt={preview.alt[1]} loading="lazy" /></figure>
+        <figure><img src={images[2]} alt={preview.alt[2]} loading="lazy" /></figure>
+      </div>
+      <div className="product-copy">
+        <div className="product-meta"><span>0{preview.number}</span><span>{preview.sku}</span></div>
+        <h3>{preview.title}</h3>
+        <p>{preview.description}</p>
+        <div className="product-purchase">
+          <span>{price}</span>
+          <button disabled={!purchasable || busy} onClick={() => onAdd(preview.sku)}>
+            {busy ? 'Adding…' : purchasable ? 'Add to bag' : catalogConnected ? 'Unavailable' : 'Connecting…'}
+          </button>
+        </div>
+        <small>Live availability · Secure checkout by Shopify</small>
+      </div>
+    </article>
+  );
+}
+
+type BagLineProps = {
+  line: CartLine;
+  busy: boolean;
+  onQuantity: (line: CartLine, quantity: number) => void;
+  onRemove: (lineId: string) => void;
+};
+
+function BagLine({ line, busy, onQuantity, onRemove }: BagLineProps) {
+  return (
+    <article className="bag-line">
+      <img src={imageForSku(line.merchandise.sku)} alt="" />
+      <div className="bag-line-copy">
+        <strong>{line.merchandise.product.title}</strong>
+        <span>{formatMoney(line.merchandise.price)}</span>
+        <div className="quantity" aria-label={`Quantity for ${line.merchandise.product.title}`}>
+          <button disabled={busy} onClick={() => onQuantity(line, line.quantity - 1)} aria-label="Decrease quantity">−</button>
+          <span>{line.quantity}</span>
+          <button disabled={busy} onClick={() => onQuantity(line, line.quantity + 1)} aria-label="Increase quantity">+</button>
+        </div>
+      </div>
+      <button className="remove-line" disabled={busy} onClick={() => onRemove(line.id)}>Remove</button>
+    </article>
+  );
+}
 
 export default function App() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -18,40 +98,50 @@ export default function App() {
   const [loading, setLoading] = useState(true);
   const [commerceError, setCommerceError] = useState<string | null>(null);
   const [busySku, setBusySku] = useState<string | null>(null);
+  const [busyLine, setBusyLine] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
+  async function loadCommerce() {
+    setLoading(true);
+    setCommerceError(null);
+    try {
+      const [catalog, restored] = await Promise.all([
+        getEdition01(),
+        (async () => {
+          const id = localStorage.getItem(CART_KEY);
+          if (!id) return null;
+          try {
+            const existing = await getCart(id);
+            if (!existing) localStorage.removeItem(CART_KEY);
+            return existing;
+          } catch {
+            localStorage.removeItem(CART_KEY);
+            return null;
+          }
+        })(),
+      ]);
+      setProducts(catalog);
+      setCart(restored);
+      if (!catalog.length) setCommerceError('Edition 01 is temporarily unavailable. Please try again.');
+    } catch (error) {
+      setCommerceError(error instanceof Error ? error.message : 'Storefront connection unavailable.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  useEffect(() => { void loadCommerce(); }, []);
+
   useEffect(() => {
-    let cancelled = false;
-    (async () => {
-      try {
-        const [catalog, restored] = await Promise.all([
-          getEdition01(),
-          (async () => {
-            const id = localStorage.getItem(CART_KEY);
-            if (!id) return null;
-            try {
-              const existing = await getCart(id);
-              if (!existing) localStorage.removeItem(CART_KEY);
-              return existing;
-            } catch {
-              localStorage.removeItem(CART_KEY);
-              return null;
-            }
-          })(),
-        ]);
-        if (cancelled) return;
-        setProducts(catalog);
-        setCart(restored);
-        if (!catalog.length) setCommerceError('Edition 01 is not currently available from the Shopify Storefront API.');
-      } catch (error) {
-        if (cancelled) return;
-        setCommerceError(error instanceof Error ? error.message : 'Storefront connection unavailable.');
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    })();
-    return () => { cancelled = true; };
-  }, []);
+    if (!bagOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => { if (event.key === 'Escape') setBagOpen(false); };
+    document.body.classList.add('bag-is-open');
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.body.classList.remove('bag-is-open');
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [bagOpen]);
 
   const liveBySku = useMemo(() => {
     const map = new Map<string, { product: Product; variant: Product['variants']['nodes'][number] }>();
@@ -64,20 +154,19 @@ export default function App() {
   const catalogConnected = previewProducts.every((item) => liveBySku.has(item.sku));
   const commerceReady = previewProducts.every((item) => {
     const live = liveBySku.get(item.sku);
-    return Boolean(live?.product.availableForSale && live?.variant.availableForSale);
+    return Boolean(live?.product.availableForSale && live.variant.availableForSale);
   });
 
   async function addToBag(sku: string) {
     const live = liveBySku.get(sku);
-    if (!live || !live.product.availableForSale || !live.variant.availableForSale) return;
+    if (!live?.product.availableForSale || !live.variant.availableForSale) return;
     setBusySku(sku);
     setCommerceError(null);
     try {
       let next: Cart;
       if (cart) {
-        try {
-          next = await addCartLine(cart.id, live.variant.id);
-        } catch {
+        try { next = await addCartLine(cart.id, live.variant.id); }
+        catch {
           localStorage.removeItem(CART_KEY);
           next = await createCart(live.variant.id);
         }
@@ -94,194 +183,114 @@ export default function App() {
     }
   }
 
+  async function changeQuantity(line: CartLine, quantity: number) {
+    if (!cart) return;
+    if (quantity < 1) return removeLine(line.id);
+    setBusyLine(line.id);
+    try {
+      const next = await updateCartLine(cart.id, line.id, quantity);
+      setCart(next);
+    } catch (error) {
+      setCommerceError(error instanceof Error ? error.message : 'Could not update quantity.');
+    } finally {
+      setBusyLine(null);
+    }
+  }
+
   async function removeLine(lineId: string) {
     if (!cart) return;
+    setBusyLine(lineId);
     try {
       const next = await removeCartLine(cart.id, lineId);
-      setCart(next);
       if (!next.totalQuantity) {
         localStorage.removeItem(CART_KEY);
         setCart(null);
-      }
+      } else setCart(next);
     } catch (error) {
       setCommerceError(error instanceof Error ? error.message : 'Could not update bag.');
+    } finally {
+      setBusyLine(null);
     }
   }
+
+  const heroImages = productImages(previewProducts[0]);
 
   return (
     <div className="site-shell" id="top">
       <a className="skip-link" href="#collection">Skip to collection</a>
-
-      <div className={`preview-strip ${commerceReady ? 'live' : catalogConnected ? 'connected' : ''}`}>
-        <span>
-          {loading
-            ? 'CHECKING EDITION 01'
-            : commerceReady
-              ? 'EDITION 01 · AVAILABLE'
-              : catalogConnected
-                ? 'SHOPIFY CONNECTED · EDITION 01 PRE-LAUNCH'
-                : 'PRIVATE PREVIEW · EDITION 01 IN PREPARATION'}
-        </span>
+      <div className={`status-bar ${commerceReady ? 'is-live' : ''}`} role="status">
+        <span>{loading ? 'Connecting to Edition 01' : commerceReady ? 'Edition 01 · Available now' : 'Edition 01 · Store update'}</span>
+        <span>Germany / EUR</span>
       </div>
-
       <header className="topbar">
         <a className="brand" href="#top" aria-label="EVERNE home">EVERNE</a>
-        <nav aria-label="Primary navigation">
-          <a href="#collection">Collection</a>
-          <a href="#ritual">Care ritual</a>
-          <a href="#notes">Field notes</a>
-        </nav>
-        <button className="bag-button" onClick={() => setBagOpen(true)} aria-label={`Open bag with ${cart?.totalQuantity || 0} items`}>
-          Bag <span>{String(cart?.totalQuantity || 0).padStart(2, '0')}</span>
-        </button>
+        <nav aria-label="Primary navigation"><a href="#collection">Collection</a><a href="#method">Method</a><a href="#journal">Journal</a></nav>
+        <button className="bag-button" onClick={() => setBagOpen(true)} aria-label={`Open bag with ${cart?.totalQuantity || 0} items`}>Bag <span>{String(cart?.totalQuantity || 0).padStart(2, '0')}</span></button>
       </header>
 
       <main>
-        <section className="hero old-hero">
-          <div className="hero-copy-wrap">
-            <span className="eyebrow">GARMENT CARE · MADE CONSIDERED</span>
-            <h1>Wear it longer.</h1>
-            <p>Quiet, enduring tools for the garments you chose carefully.</p>
-            <a className="arrow-link" href="#collection">Discover the collection <span>↘</span></a>
-          </div>
-          <div className="hero-visual" aria-label="Garment-care objects beside a wool coat">
-            <div className="hero-object hero-brush"><span>EVERNE</span></div>
-            <div className="hero-object hero-comb" />
-            <div className="hero-fabric" />
-          </div>
-          <a className="hero-bottom-link" href="#collection">Discover the collection <span>↘</span></a>
+        <section className="hero">
+          <img className="hero-image" src={heroImages[2]} alt={previewProducts[0].alt[2]} />
+          <div className="hero-shade" />
+          <div className="hero-copy"><span className="eyebrow">Garment care · Edition 01</span><h1>Care for<br />what you keep.</h1><p>Considered tools for a wardrobe that is worn, restored and kept in motion.</p><a className="text-link light" href="#collection">Explore Edition 01 <span>↓</span></a></div>
+          <div className="hero-index"><span>EVERNE / 2026</span><span>Four enduring objects</span></div>
         </section>
 
-        <section className="premise">
-          <div className="premise-kicker"><span>EDITION 01 / 2026</span><span>OUR PREMISE</span></div>
-          <div className="premise-grid">
-            <h2>Care is the alternative to replacement.</h2>
-            <p>EVERNE makes tactile wardrobe tools designed to clean, restore and protect what you already own. Fewer disposables. Fewer forgotten garments. More years of wear.</p>
-          </div>
-          <div className="premise-actions"><span>Brush lightly</span><span>Air naturally</span><span>Store thoughtfully</span></div>
+        <section className="manifesto">
+          <div className="section-label"><span>01</span><span>Our premise</span></div>
+          <h2>Replacement is easy.<br /><em>Care is intentional.</em></h2>
+          <div className="manifesto-copy"><p>EVERNE makes tactile wardrobe tools for the garments you chose carefully. Objects that invite a quieter rhythm: brush lightly, air naturally, store thoughtfully.</p><a className="text-link" href="#method">Read the method <span>↘</span></a></div>
         </section>
 
         <section className="collection" id="collection">
-          <div className="collection-head">
-            <div><span className="eyebrow">EDITION 01</span><h2>The care collection</h2></div>
-            <p>Four objects.<br />One considered wardrobe.</p>
-          </div>
-
-          {commerceError && <div className="commerce-note">{commerceError}</div>}
-
-          <div className="product-grid original-grid">
-            {previewProducts.map((preview) => {
-              const live = liveBySku.get(preview.sku);
-              const purchasable = Boolean(live?.product.availableForSale && live?.variant.availableForSale);
-              const price = live ? formatMoney(live.variant.price) : preview.price;
-              return (
-                <article className="product-card original-card" key={preview.sku}>
-                  <div className="product-visual">
-                    {live?.product.featuredImage?.url ? (
-                      <img src={live.product.featuredImage.url} alt={live.product.featuredImage.altText || preview.title} />
-                    ) : (
-                      <div className={`product-study study-${preview.number}`}><span>{preview.title}</span></div>
-                    )}
-                    <a href={`#${preview.sku}`} className="view-label">View {preview.title}</a>
-                    <span className="product-index">0 {preview.number}</span>
-                    <button className="floating-add" disabled={!purchasable || busySku === preview.sku} onClick={() => addToBag(preview.sku)}>
-                      {purchasable ? (busySku === preview.sku ? 'ADDING…' : 'ADD +') : catalogConnected ? 'COMING SOON' : 'PREVIEW'}
-                    </button>
-                  </div>
-                  <div className="product-info" id={preview.sku}>
-                    <span className="sku">{preview.sku}</span>
-                    <h3>{preview.title}</h3>
-                    <p>{preview.description}</p>
-                    <strong>{price}</strong>
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-
-          <div className="principles">
-            <article><span>01</span><h3>Material-led</h3><p>Wood, metal and cedar selected through physical sampling.</p></article>
-            <article><span>02</span><h3>Made for repetition</h3><p>Simple tools for a calm, regular care practice.</p></article>
-            <article><span>03</span><h3>Details before launch</h3><p>Materials, delivery and terms confirmed before orders open.</p></article>
+          <div className="collection-heading"><div className="section-label"><span>02</span><span>The collection</span></div><h2>Edition 01</h2><p>Four considered objects. One complete wardrobe ritual.</p></div>
+          {commerceError && <div className="commerce-note" role="alert"><span>{commerceError}</span><button onClick={() => void loadCommerce()}>Try again</button></div>}
+          <div className="product-list">
+            {previewProducts.map((preview) => <ProductFeature key={preview.sku} preview={preview} live={liveBySku.get(preview.sku)} busy={busySku === preview.sku} catalogConnected={catalogConnected} onAdd={addToBag} />)}
           </div>
         </section>
 
-        <section className="object-study">
-          <div className="study-visual"><div className="study-brush"><span>EVERNE</span></div><span className="study-caption">EVERNE garment brush in dark wood</span></div>
-          <div className="study-copy">
-            <span className="eyebrow">OBJECT STUDY / 01</span>
-            <span className="sub-eyebrow">DESIGNED FOR REPETITION</span>
-            <h2>Keep the ritual.<br />Not the waste.</h2>
-            <p>A useful care object should feel intuitive enough to reach for, restrained enough to leave out and durable enough to become familiar.</p>
+        <section className="object-story" id="method">
+          <div className="object-image"><img src={productImages(previewProducts[1])[1]} alt={previewProducts[1].alt[1]} loading="lazy" /></div>
+          <div className="object-copy">
+            <div className="section-label"><span>03</span><span>The method</span></div><span className="eyebrow">Three minutes after wear</span><h2>Keep the ritual.<br /><em>Not the waste.</em></h2>
+            <div className="method-list">
+              <article><span>01</span><div><h3>Brush</h3><p>Long, light strokes lift surface dust. Test discreetly first and always follow the care label.</p></div></article>
+              <article><span>02</span><div><h3>Rest</h3><p>Air the garment and let natural fibres recover their shape between wears.</p></div></article>
+              <article><span>03</span><div><h3>Store</h3><p>Put away only clean, dry pieces. Use cedar around—not directly on—delicate cloth.</p></div></article>
+            </div>
           </div>
         </section>
 
-        <section className="ritual" id="ritual">
-          <div className="ritual-intro"><span className="eyebrow">THE METHOD</span><h2>Three minutes<br />after wear.</h2><p>A small ritual prevents most unnecessary washing and premature wear.</p></div>
-          <div className="ritual-steps">
-            <article><span>01</span><div><h3>Brush</h3><p>Use long strokes with light pressure. Test an inconspicuous area first and follow the garment label.</p></div></article>
-            <article><span>02</span><div><h3>Rest</h3><p>Air the garment and give natural fibres time to recover their shape.</p></div></article>
-            <article><span>03</span><div><h3>Store</h3><p>Store only clean, dry garments. Keep cedar dry and away from direct contact with delicate cloth.</p></div></article>
+        <section className="journal" id="journal">
+          <div className="journal-heading"><div className="section-label"><span>04</span><span>Field notes</span></div><h2>Care, without excess.</h2></div>
+          <div className="journal-grid">
+            <article><img src={productImages(previewProducts[2])[2]} alt={previewProducts[2].alt[2]} loading="lazy" /><span>Natural fibres · Note 01</span><h3>Wool often needs air and rest—not another wash.</h3></article>
+            <article><img src={productImages(previewProducts[3])[1]} alt={previewProducts[3].alt[1]} loading="lazy" /><span>Storage · Note 02</span><h3>Cedar belongs in a clean, dry wardrobe.</h3></article>
           </div>
         </section>
 
-        <section className="notes" id="notes">
-          <div className="notes-head"><span className="eyebrow">PRACTICAL FIELD NOTES</span><h2>Care, without excess.</h2><p>Two useful principles for a wardrobe that is worn often and washed thoughtfully.</p></div>
-          <div className="notes-grid original-notes">
-            <article>
-              <div className="note-visual note-wool"><span>EVERNE garment-care objects arranged on natural fabric</span></div>
-              <div className="note-copy"><span>NATURAL FIBRES · NOTE 01</span><h3>Wool often needs air and rest—not another wash.</h3><p>Let the garment recover between wears. Brush only when needed and treat the care label as the final authority.</p></div>
-            </article>
-            <article>
-              <div className="note-visual note-cedar"><span>Untreated aromatic red-cedar wardrobe blocks</span></div>
-              <div className="note-copy"><span>STORAGE · NOTE 02</span><h3>Cedar works best in a clean, dry wardrobe.</h3><p>Avoid direct contact with delicate fabrics. When the aroma softens, renew the surface with a light pass of fine sandpaper.</p></div>
-            </article>
-          </div>
-        </section>
-
-        <section className="faq">
-          <div><span className="eyebrow">GOOD TO KNOW</span><h2>Before Edition 01.</h2><p>Clear answers for the first supplier-backed release.</p></div>
+        <section className="faq" id="faq">
+          <div><div className="section-label"><span>05</span><span>Good to know</span></div><h2>The details,<br /><em>considered.</em></h2></div>
           <div className="faq-list">
-            {faqs.map(([question, answer], index) => (
-              <article className={openFaq === index ? 'open' : ''} key={question}>
-                <button onClick={() => setOpenFaq(openFaq === index ? null : index)}><span>{question}</span><span>{openFaq === index ? '−' : '+'}</span></button>
-                {openFaq === index && <p>{answer}</p>}
-              </article>
-            ))}
+            {faqs.map(([question, answer], index) => <article key={question}><button aria-expanded={openFaq === index} onClick={() => setOpenFaq(openFaq === index ? null : index)}><span>{question}</span><span>{openFaq === index ? '−' : '+'}</span></button><div className={openFaq === index ? 'faq-answer open' : 'faq-answer'}><p>{answer}</p></div></article>)}
           </div>
         </section>
 
-        <section className="private-release">
-          <div><span className="eyebrow">PRIVATE FIRST RELEASE</span><h2>Edition 01<br />arrives soon.</h2></div>
-          <div className="release-copy">
-            <p>Join the private list for a quieter, earlier way into the first supplier-backed release.</p>
-            <ol><li><span>01</span>Confirmed launch window</li><li><span>02</span>Final materials and product details</li><li><span>03</span>Edition 01 availability notice</li></ol>
-            <div className="email-preview"><span>Email address</span><button disabled>Request access ↗</button></div>
-            <small>Preview mode · no message is sent yet.</small>
-          </div>
-        </section>
+        <section className="closing"><img src={productImages(previewProducts[3])[2]} alt={previewProducts[3].alt[2]} loading="lazy" /><div><span className="eyebrow">Edition 01</span><h2>Fewer replacements.<br />More years of wear.</h2><a className="text-link light" href="#collection">Shop the collection <span>↑</span></a></div></section>
       </main>
 
-      <footer className="original-footer">
-        <div className="footer-brand"><strong>EVERNE</strong><p>Care for what you keep.</p></div>
-        <div><span>EXPLORE</span><a href="#collection">Collection</a><a href="#ritual">The method</a><a href="#notes">Journal</a></div>
-        <div><span>INFORMATION</span><a href="#collection">Launch information</a><a href="#ritual">Care guide</a><a href="#top">Private release</a></div>
-        <div><span>STUDIO</span><p>Hamburg, Germany</p><p>Edition 01 / 2026</p></div>
-        <div className="footer-bottom"><span>© 2026 EVERNE</span><span>GERMANY / EUR</span></div>
+      <footer>
+        <div className="footer-lead"><a className="brand" href="#top">EVERNE</a><p>Care for what you keep.</p></div>
+        <div><span>Explore</span><a href="#collection">Collection</a><a href="#method">The method</a><a href="#journal">Field notes</a></div>
+        <div><span>Service</span><button onClick={() => setBagOpen(true)}>Shopping bag</button><a href="#faq">Care & delivery</a></div>
+        <div className="footer-bottom"><span>© 2026 EVERNE</span><span>Hamburg, Germany · EUR</span><span>Commerce by Shopify</span></div>
       </footer>
 
-      <div className={`bag-backdrop ${bagOpen ? 'open' : ''}`} onClick={() => setBagOpen(false)} />
-      <aside className={`bag ${bagOpen ? 'open' : ''}`} aria-hidden={!bagOpen} aria-label="Shopping bag">
-        <div className="bag-head"><strong>Bag</strong><button onClick={() => setBagOpen(false)}>Close</button></div>
-        {!cart?.lines.nodes.length ? (
-          <div className="empty-bag"><p>Your bag is empty.</p><span>{catalogConnected ? 'Edition 01 is connected to Shopify.' : 'Edition 01 is temporarily unavailable.'}</span></div>
-        ) : (
-          <>
-            <div className="bag-lines">{cart.lines.nodes.map((line) => <div className="bag-line" key={line.id}><div><strong>{line.merchandise.product.title}</strong><span>Qty {line.quantity}</span></div><div><span>{formatMoney(line.merchandise.price)}</span><button onClick={() => removeLine(line.id)}>Remove</button></div></div>)}</div>
-            <div className="bag-total"><span>Subtotal</span><strong>{formatMoney(cart.cost.subtotalAmount)}</strong></div>
-            <a className="checkout" href={cart.checkoutUrl} rel="noreferrer">Continue to secure checkout</a>
-          </>
-        )}
+      <button className={`bag-backdrop ${bagOpen ? 'open' : ''}`} onClick={() => setBagOpen(false)} aria-label="Close shopping bag" tabIndex={bagOpen ? 0 : -1} />
+      <aside className={`bag ${bagOpen ? 'open' : ''}`} role="dialog" aria-modal="true" aria-hidden={!bagOpen} aria-label="Shopping bag">
+        <div className="bag-head"><div><span>EVERNE</span><strong>Your bag</strong></div><button onClick={() => setBagOpen(false)} aria-label="Close bag">Close</button></div>
+        {!cart?.lines.nodes.length ? <div className="empty-bag"><span>Bag 00</span><p>Your collection<br />starts here.</p><small>{catalogConnected ? 'Edition 01 is available.' : 'Connecting to Edition 01…'}</small><button onClick={() => setBagOpen(false)}>Continue exploring</button></div> : <><div className="bag-lines">{cart.lines.nodes.map((line) => <BagLine key={line.id} line={line} busy={busyLine === line.id} onQuantity={changeQuantity} onRemove={removeLine} />)}</div><div className="bag-summary"><div><span>Subtotal</span><strong>{formatMoney(cart.cost.subtotalAmount)}</strong></div><p>Shipping and taxes are calculated at checkout.</p><a className="checkout" href={cart.checkoutUrl}>Continue to secure checkout <span>↗</span></a><small>Secure checkout powered by Shopify</small></div></>}
       </aside>
     </div>
   );
