@@ -283,13 +283,14 @@ export default function App() {
           </div>
         </section>
 
-        <section className="closing"><img src={productImages(previewProducts[3])[2]} alt={previewProducts[3].alt[2]} loading="lazy" /><div><span className="eyebrow">Edition 01</span><h2>Fewer replacements.<br />More years of wear.</h2><a className="text-link light" href="#collection">Shop the collection <span>↑</span></a></div></section>
+        <section className="closing"><img src={productImages(previewProducts[3])[2]} alt={previewProducts[3].alt[2]} loading="lazy" /><div><span className="eyebrow">Edition 01</span><h2>Fewer replacements.<br />More years of wear.</h2><a className="text-link light" href="#collection">Explore the collection <span>↑</span></a></div></section>
       </main>
 
       <footer>
         <div className="footer-lead"><a className="brand" href="#top">EVERNE</a><p>Care for what you keep.</p></div>
         <div><span>Explore</span><a href="#collection">Collection</a><a href="#method">The method</a><a href="#journal">Field notes</a></div>
         <div><span>Service</span><button disabled={!PURCHASES_ENABLED} onClick={() => setBagOpen(true)}>Orders currently closed</button><a href="#faq">Care & delivery</a></div>
+        <div><span>Legal</span><a href="/rechtliches.html#impressum">Impressum</a><a href="/rechtliches.html#datenschutz">Datenschutz</a><a href="/rechtliches.html#widerruf">Widerruf</a><a href="/rechtliches.html#agb">AGB</a><a href="/rechtliches.html#versand">Versand & Retouren</a></div>
         <div className="footer-bottom"><span>© 2026 EVERNE</span><span>Hamburg, Germany · EUR</span><span>Commerce by Shopify</span></div>
       </footer>
 
