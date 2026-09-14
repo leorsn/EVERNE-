@@ -68,7 +68,19 @@ export default function App() {
     setBusySku(sku);
     setCommerceError(null);
     try {
-      const next = cart ? await addCartLine(cart.id, live.variant.id) : await createCart(live.variant.id);
+      let next: Cart;
+      if (cart) {
+        try {
+          next = await addCartLine(cart.id, live.variant.id);
+        } catch {
+          // Shopify carts can expire. Replace a stale cart transparently instead
+          // of leaving the buyer with a permanently broken bag.
+          localStorage.removeItem(CART_KEY);
+          next = await createCart(live.variant.id);
+        }
+      } else {
+        next = await createCart(live.variant.id);
+      }
       setCart(next);
       localStorage.setItem(CART_KEY, next.id);
       setBagOpen(true);
@@ -84,7 +96,10 @@ export default function App() {
     try {
       const next = await removeCartLine(cart.id, lineId);
       setCart(next);
-      if (!next.totalQuantity) localStorage.removeItem(CART_KEY);
+      if (!next.totalQuantity) {
+        localStorage.removeItem(CART_KEY);
+        setCart(null);
+      }
     } catch (error) {
       setCommerceError(error instanceof Error ? error.message : 'Could not update bag.');
     }
@@ -223,7 +238,7 @@ export default function App() {
               ))}
             </div>
             <div className="bag-total"><span>Subtotal</span><strong>{formatMoney(cart.cost.subtotalAmount)}</strong></div>
-            <a className="checkout" href={cart.checkoutUrl}>Continue to secure checkout</a>
+            <a className="checkout" href={cart.checkoutUrl} rel="noreferrer">Continue to secure checkout</a>
           </>
         )}
       </aside>

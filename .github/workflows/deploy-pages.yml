@@ -34,6 +34,8 @@ jobs:
         run: npm run build
         env:
           VITE_SHOPIFY_STORE_DOMAIN: khps10-rs.myshopify.com
+          # Public Storefront API tokens are designed to be shipped to browsers.
+          VITE_SHOPIFY_STOREFRONT_TOKEN: 287474d54307e5fbbd92518ea5b3fd84
           VITE_SHOPIFY_API_VERSION: 2026-07
       - name: Configure Pages
         uses: actions/configure-pages@v5
