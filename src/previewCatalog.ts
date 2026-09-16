@@ -7,6 +7,10 @@ export type PreviewProduct = {
   ritual: string;
   imageDirectory: string;
   alt: [string, string, string];
+  tagline?: string;
+  benefits?: Array<{ title: string; copy: string }>;
+  howToUse?: string;
+  details?: string[];
 };
 
 export const previewProducts: PreviewProduct[] = [
@@ -26,16 +30,43 @@ export const previewProducts: PreviewProduct[] = [
   },
   {
     number: '02',
-    title: 'Garment Brush',
+    title: 'Garment Brush 01',
     sku: 'EV-GB-01',
     price: '€42',
-    description: 'A dark-wood wardrobe brush designed to lift surface dust and restore the hand of woven garments.',
-    ritual: 'For coats, tailoring and woven cloth.',
+    description: 'A refined garment brush designed for the regular care of your wardrobe. Gently remove surface dust, hair and lint from coats, tailoring, knitwear and everyday garments between wears.',
+    ritual: 'Care for what you wear.',
     imageDirectory: 'garment-brush',
     alt: [
       'EVERNE dark-wood garment brush with natural ivory bristles',
       'Close detail of the wood grain and bristles of the EVERNE Garment Brush',
       'EVERNE Garment Brush being used on a charcoal wool coat',
+    ],
+    tagline: 'Daily care for the pieces worth keeping.',
+    benefits: [
+      {
+        title: 'Refresh between wears',
+        copy: 'Remove everyday dust, hair and surface lint without reaching for a disposable lint roller.',
+      },
+      {
+        title: 'Care for your wardrobe',
+        copy: 'A simple daily ritual for garments you want to keep looking their best.',
+      },
+      {
+        title: 'Made for considered clothing',
+        copy: 'Ideal for coats, jackets, tailoring, knitwear and other wardrobe staples.',
+      },
+      {
+        title: 'Use it again and again',
+        copy: 'A permanent garment-care essential designed for repeated use.',
+      },
+    ],
+    howToUse: 'Brush gently in consistent strokes following the direction of the fabric. Use before wearing, after wearing, or whenever a garment needs a quick refresh. For delicate or unfamiliar materials, test first on an inconspicuous area.',
+    details: [
+      'Garment-care brush',
+      'Designed for repeated use',
+      'Suitable for a wide range of everyday garments',
+      'Compact enough for wardrobe or travel use',
+      'Part of the EVERNE Garment Care collection',
     ],
   },
   {
