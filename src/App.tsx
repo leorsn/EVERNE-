@@ -220,6 +220,7 @@ export default function App() {
   }
 
   const heroImages = productImages(previewProducts[0]);
+  const garmentBrush = previewProducts.find((product) => product.sku === 'EV-GB-01') ?? previewProducts[1];
 
   return (
     <div className="site-shell" id="top">
@@ -257,13 +258,26 @@ export default function App() {
         </section>
 
         <section className="object-story" id="method">
-          <div className="object-image"><img src={productImages(previewProducts[1])[1]} alt={previewProducts[1].alt[1]} loading="lazy" /></div>
+          <div className="object-image"><img src={productImages(garmentBrush)[2]} alt={garmentBrush.alt[2]} loading="lazy" /></div>
           <div className="object-copy">
-            <div className="section-label"><span>03</span><span>The method</span></div><span className="eyebrow">Three minutes after wear</span><h2>Keep the ritual.<br /><em>Not the waste.</em></h2>
+            <div className="section-label"><span>03</span><span>Garment Brush 01</span></div>
+            <span className="eyebrow">{garmentBrush.tagline}</span>
+            <h2>Care for<br /><em>what you wear.</em></h2>
             <div className="method-list">
-              <article><span>01</span><div><h3>Brush</h3><p>Long, light strokes lift surface dust. Test discreetly first and always follow the care label.</p></div></article>
-              <article><span>02</span><div><h3>Rest</h3><p>Air the garment and let natural fibres recover their shape between wears.</p></div></article>
-              <article><span>03</span><div><h3>Store</h3><p>Put away only clean, dry pieces. Use cedar around—not directly on—delicate cloth.</p></div></article>
+              {garmentBrush.benefits?.map((benefit, index) => (
+                <article key={benefit.title}>
+                  <span>{String(index + 1).padStart(2, '0')}</span>
+                  <div><h3>{benefit.title}</h3><p>{benefit.copy}</p></div>
+                </article>
+              ))}
+              <article>
+                <span>05</span>
+                <div><h3>How to use</h3><p>{garmentBrush.howToUse}</p></div>
+              </article>
+              <article>
+                <span>06</span>
+                <div><h3>Details</h3><p>{garmentBrush.details?.join(' · ')}</p></div>
+              </article>
             </div>
           </div>
         </section>
