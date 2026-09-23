@@ -19,13 +19,32 @@ const PURCHASES_ENABLED = false;
 const faqs = [
   ['Where do you deliver?', 'Available delivery methods, timing and final shipping cost are shown at Shopify checkout for your address.'],
   ['Are the tools suitable for every fabric?', 'No universal care tool is right for every fabric. Always test an inconspicuous area first and follow the garment care label.'],
-  ['What is included in The Renewal Set?', 'Two Cashmere Combs, one Electronic Lint Remover and one Fabric Shaver. The bundle fulfillment flow is being finalized before orders open.'],
+  ['What is included in The Renewal Set?', 'Two Cashmere Combs, one Electronic Lint Remover and one Fabric Shaver. The Steam Brush is not part of the set.'],
   ['Is payment secure?', 'Yes. Your order and payment are completed through Shopify’s encrypted checkout; payment details are never handled by this storefront.'],
 ];
+
+function previewBySku(sku: string) {
+  return previewProducts.find((item) => item.sku === sku) ?? previewProducts[0];
+}
 
 function imageForSku(sku: string | null | undefined, index = 0) {
   const preview = previewProducts.find((item) => item.sku === sku);
   return preview ? productImages(preview)[index] : productImages(previewProducts[0])[0];
+}
+
+function BundleVisual({ compact = false }: { compact?: boolean }) {
+  const comb = imageForSku('EV-CC-01');
+  const lint = imageForSku('EV-WH-01');
+  const shaver = imageForSku('EV-FS-01');
+
+  return (
+    <div className={`bundle-visual ${compact ? 'bundle-visual--compact' : ''}`} aria-label="The Renewal Set: two Cashmere Combs, one Electronic Lint Remover and one Fabric Shaver">
+      <figure className="bundle-tile bundle-comb-one"><img src={comb} alt="Cashmere Comb included in The Renewal Set" /></figure>
+      <figure className="bundle-tile bundle-comb-two"><img src={comb} alt="Second Cashmere Comb included in The Renewal Set" /></figure>
+      <figure className="bundle-tile bundle-lint"><img src={lint} alt="Electronic Lint Remover included in The Renewal Set" /></figure>
+      <figure className="bundle-tile bundle-shaver"><img src={shaver} alt="Fabric Shaver included in The Renewal Set" /></figure>
+    </div>
+  );
 }
 
 type ProductFeatureProps = {
@@ -37,31 +56,31 @@ type ProductFeatureProps = {
 };
 
 function ProductFeature({ preview, live, busy, catalogConnected, onAdd }: ProductFeatureProps) {
-  const images = productImages(preview);
+  const image = productImages(preview)[0];
+  const isBundle = preview.sku === 'EV-RS-01';
   const purchasable = PURCHASES_ENABLED && Boolean(live?.product.availableForSale && live?.variant.availableForSale);
   const price = live ? formatMoney(live.variant.price) : preview.price;
 
   return (
-    <article className="product-feature" id={preview.sku}>
-      <div className="product-gallery">
-        <figure className="product-main-image">
-          <img src={images[0]} alt={preview.alt[0]} loading={preview.number === '01' ? 'eager' : 'lazy'} />
-          <figcaption>{preview.ritual}</figcaption>
-        </figure>
-        <figure><img src={images[1]} alt={preview.alt[1]} loading="lazy" /></figure>
-        <figure><img src={images[2]} alt={preview.alt[2]} loading="lazy" /></figure>
+    <article className={`product-card ${isBundle ? 'product-card--bundle' : ''}`} id={preview.sku}>
+      <div className="product-card-visual">
+        {isBundle ? <BundleVisual /> : <img src={image} alt={preview.alt[0]} loading={preview.number === '01' ? 'eager' : 'lazy'} />}
       </div>
-      <div className="product-copy">
-        <div className="product-meta"><span>{preview.number}</span><span>{preview.sku}</span></div>
+      <div className="product-card-copy">
+        <div className="product-meta"><span>{preview.number}</span><span>{preview.ritual}</span></div>
         <h3>{preview.title}</h3>
         <p>{preview.description}</p>
+        {preview.facts?.length ? (
+          <ul className="product-facts" aria-label={`${preview.title} details`}>
+            {preview.facts.map((fact) => <li key={fact}>{fact}</li>)}
+          </ul>
+        ) : null}
         <div className="product-purchase">
           <span>{price}</span>
           <button disabled={!purchasable || busy} onClick={() => onAdd(preview.sku)}>
             {busy ? 'Adding…' : purchasable ? 'Add to bag' : catalogConnected ? 'Currently unavailable' : 'Connecting…'}
           </button>
         </div>
-        <small>{PURCHASES_ENABLED ? 'Live availability · Secure checkout by Shopify' : 'Storefront connected · Orders currently closed'}</small>
       </div>
     </article>
   );
@@ -219,11 +238,10 @@ export default function App() {
     }
   }
 
-  const renewalSet = previewProducts.find((product) => product.sku === 'EV-RS-01') ?? previewProducts[0];
-  const steamBrush = previewProducts.find((product) => product.sku === 'EV-GB-01') ?? previewProducts[1];
-  const cashmereComb = previewProducts.find((product) => product.sku === 'EV-CC-01') ?? previewProducts[2];
-  const fabricShaver = previewProducts.find((product) => product.sku === 'EV-FS-01') ?? previewProducts[4];
-  const heroImage = `${import.meta.env.BASE_URL}products/renewal-set/lifestyle.webp`;
+  const cashmereComb = previewBySku('EV-CC-01');
+  const electronicLintRemover = previewBySku('EV-WH-01');
+  const fabricShaver = previewBySku('EV-FS-01');
+  const steamBrush = previewBySku('EV-GB-01');
 
   return (
     <div className="site-shell" id="top">
@@ -239,31 +257,43 @@ export default function App() {
       </header>
 
       <main>
-        <section className="hero">
-          <img className="hero-image" src={heroImage} alt="Wardrobe-care objects arranged beside a considered wardrobe" />
-          <div className="hero-shade" />
-          <div className="hero-copy"><span className="eyebrow">Garment care · Edition 01</span><h1>Care for<br />what you keep.</h1><p>Considered tools for a wardrobe that is worn, restored and kept in motion.</p><a className="text-link light" href="#collection">Explore Edition 01 <span>↓</span></a></div>
+        <section className="hero hero-editorial">
+          <div className="hero-copy">
+            <span className="eyebrow">Garment care · Edition 01</span>
+            <h1>Care for<br />what you keep.</h1>
+            <p>Considered tools for restoring the surface, shape and feel of the garments already in your wardrobe.</p>
+            <a className="text-link" href="#collection">Explore Edition 01 <span>→</span></a>
+            <div className="hero-principles" aria-label="EVERNE principles">
+              <span>Wear longer</span><span>Care deliberately</span><span>Replace less</span>
+            </div>
+          </div>
+          <div className="hero-showcase" aria-label="Edition 01 product photography">
+            <figure className="hero-tile hero-tile--steam"><img src={productImages(steamBrush)[0]} alt={steamBrush.alt[0]} /></figure>
+            <figure className="hero-tile hero-tile--lint"><img src={productImages(electronicLintRemover)[0]} alt={electronicLintRemover.alt[0]} /></figure>
+            <figure className="hero-tile hero-tile--comb"><img src={productImages(cashmereComb)[0]} alt={cashmereComb.alt[0]} /></figure>
+            <figure className="hero-tile hero-tile--shaver"><img src={productImages(fabricShaver)[0]} alt={fabricShaver.alt[0]} /></figure>
+          </div>
           <div className="hero-index"><span>EVERNE / 2026</span><span>Four care tools · one renewal set</span></div>
         </section>
 
         <section className="manifesto">
           <div className="section-label"><span>01</span><span>Our premise</span></div>
-          <h2>Replacement is easy.<br /><em>Care is intentional.</em></h2>
-          <div className="manifesto-copy"><p>EVERNE makes wardrobe-care tools for the garments you chose carefully. Comb thoughtfully, remove pilling with restraint, steam between wears and keep good clothing in rotation.</p><a className="text-link" href="#method">Read the method <span>↘</span></a></div>
+          <h2>Good garments deserve<br /><em>more than one season.</em></h2>
+          <div className="manifesto-copy"><p>EVERNE is built around a simple idea: wardrobe care should feel considered, not disposable. Remove what does not belong, restore what time has changed, and keep the pieces worth wearing in motion.</p><a className="text-link" href="#method">Read the method <span>↘</span></a></div>
         </section>
 
         <section className="collection" id="collection">
-          <div className="collection-heading"><div className="section-label"><span>02</span><span>The collection</span></div><h2>Edition 01</h2><p>Four care tools. One complete renewal set.</p></div>
+          <div className="collection-heading"><div className="section-label"><span>02</span><span>The collection</span></div><h2>Our essentials</h2><p>Four individual care tools and one focused set. No invented product branding. No unnecessary extras.</p></div>
           {commerceError && <div className="commerce-note" role="alert"><span>{commerceError}</span><button onClick={() => void loadCommerce()}>Try again</button></div>}
-          <div className="product-list">
+          <div className="product-grid">
             {previewProducts.map((preview) => <ProductFeature key={preview.sku} preview={preview} live={liveBySku.get(preview.sku)} busy={busySku === preview.sku} catalogConnected={catalogConnected} onAdd={addToBag} />)}
           </div>
         </section>
 
         <section className="object-story" id="method">
-          <div className="object-image"><img src={productImages(steamBrush)[1]} alt={steamBrush.alt[1]} loading="lazy" /></div>
+          <div className="object-image"><img src={productImages(steamBrush)[0]} alt={steamBrush.alt[0]} loading="lazy" /></div>
           <div className="object-copy">
-            <div className="section-label"><span>03</span><span>Steam Brush</span></div>
+            <div className="section-label"><span>03</span><span>The method</span></div>
             <span className="eyebrow">{steamBrush.tagline}</span>
             <h2>Refresh<br /><em>between wears.</em></h2>
             <div className="method-list">
@@ -273,14 +303,7 @@ export default function App() {
                   <div><h3>{benefit.title}</h3><p>{benefit.copy}</p></div>
                 </article>
               ))}
-              <article>
-                <span>05</span>
-                <div><h3>How to use</h3><p>{steamBrush.howToUse}</p></div>
-              </article>
-              <article>
-                <span>06</span>
-                <div><h3>Details</h3><p>{steamBrush.details?.join(' · ')}</p></div>
-              </article>
+              <article><span>05</span><div><h3>How to use</h3><p>{steamBrush.howToUse}</p></div></article>
             </div>
           </div>
         </section>
@@ -288,8 +311,8 @@ export default function App() {
         <section className="journal" id="journal">
           <div className="journal-heading"><div className="section-label"><span>04</span><span>Field notes</span></div><h2>Care, without excess.</h2></div>
           <div className="journal-grid">
-            <article><img src={productImages(cashmereComb)[1]} alt={cashmereComb.alt[1]} loading="lazy" /><span>Knitwear · Note 01</span><h3>Pilling is part of wear—not a reason to replace a good knit.</h3></article>
-            <article><img src={productImages(fabricShaver)[1]} alt={fabricShaver.alt[1]} loading="lazy" /><span>Renewal · Note 02</span><h3>Remove only what the fabric no longer needs.</h3></article>
+            <article><img src={productImages(cashmereComb)[0]} alt={cashmereComb.alt[0]} loading="lazy" /><span>Knitwear · Note 01</span><h3>Pilling is part of wear. A careful pass can be enough.</h3></article>
+            <article><img src={productImages(fabricShaver)[0]} alt={fabricShaver.alt[0]} loading="lazy" /><span>Surface care · Note 02</span><h3>Choose the lightest intervention that gets the fabric back where you want it.</h3></article>
           </div>
         </section>
 
@@ -300,7 +323,10 @@ export default function App() {
           </div>
         </section>
 
-        <section className="closing"><img src={productImages(renewalSet)[1]} alt={renewalSet.alt[1]} loading="lazy" /><div><span className="eyebrow">Edition 01</span><h2>Fewer replacements.<br />More years of wear.</h2><a className="text-link light" href="#collection">Explore the collection <span>↑</span></a></div></section>
+        <section className="closing closing-light">
+          <div className="closing-copy"><span className="eyebrow">The Renewal Set</span><h2>Four pieces.<br />One considered reset.</h2><p>2× Cashmere Comb · Electronic Lint Remover · Fabric Shaver</p><a className="text-link" href="#EV-RS-01">View the set <span>↑</span></a></div>
+          <BundleVisual compact />
+        </section>
       </main>
 
       <footer>
