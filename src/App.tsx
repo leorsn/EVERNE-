@@ -19,7 +19,7 @@ const PURCHASES_ENABLED = false;
 const faqs = [
   ['Where do you deliver?', 'Available delivery methods, timing and final shipping cost are shown at Shopify checkout for your address.'],
   ['Are the tools suitable for every fabric?', 'No universal care tool is right for every fabric. Always test an inconspicuous area first and follow the garment care label.'],
-  ['How should I use the cedar pieces?', 'Place them in a clean, dry wardrobe without direct contact with delicate fabric. Refresh the aroma with a very light pass of fine sandpaper when needed.'],
+  ['What is included in The Renewal Set?', 'Two Cashmere Combs, one Electronic Lint Remover and one Fabric Shaver. The bundle fulfillment flow is being finalized before orders open.'],
   ['Is payment secure?', 'Yes. Your order and payment are completed through Shopify’s encrypted checkout; payment details are never handled by this storefront.'],
 ];
 
@@ -52,7 +52,7 @@ function ProductFeature({ preview, live, busy, catalogConnected, onAdd }: Produc
         <figure><img src={images[2]} alt={preview.alt[2]} loading="lazy" /></figure>
       </div>
       <div className="product-copy">
-        <div className="product-meta"><span>0{preview.number}</span><span>{preview.sku}</span></div>
+        <div className="product-meta"><span>{preview.number}</span><span>{preview.sku}</span></div>
         <h3>{preview.title}</h3>
         <p>{preview.description}</p>
         <div className="product-purchase">
@@ -219,8 +219,11 @@ export default function App() {
     }
   }
 
-  const heroImages = productImages(previewProducts[0]);
-  const garmentBrush = previewProducts.find((product) => product.sku === 'EV-GB-01') ?? previewProducts[1];
+  const renewalSet = previewProducts.find((product) => product.sku === 'EV-RS-01') ?? previewProducts[0];
+  const steamBrush = previewProducts.find((product) => product.sku === 'EV-GB-01') ?? previewProducts[1];
+  const cashmereComb = previewProducts.find((product) => product.sku === 'EV-CC-01') ?? previewProducts[2];
+  const fabricShaver = previewProducts.find((product) => product.sku === 'EV-FS-01') ?? previewProducts[4];
+  const heroImages = productImages(renewalSet);
 
   return (
     <div className="site-shell" id="top">
@@ -237,20 +240,20 @@ export default function App() {
 
       <main>
         <section className="hero">
-          <img className="hero-image" src={heroImages[2]} alt={previewProducts[0].alt[2]} />
+          <img className="hero-image" src={heroImages[2]} alt={renewalSet.alt[2]} />
           <div className="hero-shade" />
           <div className="hero-copy"><span className="eyebrow">Garment care · Edition 01</span><h1>Care for<br />what you keep.</h1><p>Considered tools for a wardrobe that is worn, restored and kept in motion.</p><a className="text-link light" href="#collection">Explore Edition 01 <span>↓</span></a></div>
-          <div className="hero-index"><span>EVERNE / 2026</span><span>Four enduring objects</span></div>
+          <div className="hero-index"><span>EVERNE / 2026</span><span>Four care tools · one renewal set</span></div>
         </section>
 
         <section className="manifesto">
           <div className="section-label"><span>01</span><span>Our premise</span></div>
           <h2>Replacement is easy.<br /><em>Care is intentional.</em></h2>
-          <div className="manifesto-copy"><p>EVERNE makes tactile wardrobe tools for the garments you chose carefully. Objects that invite a quieter rhythm: brush lightly, air naturally, store thoughtfully.</p><a className="text-link" href="#method">Read the method <span>↘</span></a></div>
+          <div className="manifesto-copy"><p>EVERNE makes wardrobe-care tools for the garments you chose carefully. Comb thoughtfully, remove pilling with restraint, steam between wears and keep good clothing in rotation.</p><a className="text-link" href="#method">Read the method <span>↘</span></a></div>
         </section>
 
         <section className="collection" id="collection">
-          <div className="collection-heading"><div className="section-label"><span>02</span><span>The collection</span></div><h2>Edition 01</h2><p>Four considered objects. One complete wardrobe ritual.</p></div>
+          <div className="collection-heading"><div className="section-label"><span>02</span><span>The collection</span></div><h2>Edition 01</h2><p>Four care tools. One complete renewal set.</p></div>
           {commerceError && <div className="commerce-note" role="alert"><span>{commerceError}</span><button onClick={() => void loadCommerce()}>Try again</button></div>}
           <div className="product-list">
             {previewProducts.map((preview) => <ProductFeature key={preview.sku} preview={preview} live={liveBySku.get(preview.sku)} busy={busySku === preview.sku} catalogConnected={catalogConnected} onAdd={addToBag} />)}
@@ -258,13 +261,13 @@ export default function App() {
         </section>
 
         <section className="object-story" id="method">
-          <div className="object-image"><img src={productImages(garmentBrush)[2]} alt={garmentBrush.alt[2]} loading="lazy" /></div>
+          <div className="object-image"><img src={productImages(steamBrush)[1]} alt={steamBrush.alt[1]} loading="lazy" /></div>
           <div className="object-copy">
-            <div className="section-label"><span>03</span><span>Garment Brush 01</span></div>
-            <span className="eyebrow">{garmentBrush.tagline}</span>
-            <h2>Care for<br /><em>what you wear.</em></h2>
+            <div className="section-label"><span>03</span><span>Steam Brush</span></div>
+            <span className="eyebrow">{steamBrush.tagline}</span>
+            <h2>Refresh<br /><em>between wears.</em></h2>
             <div className="method-list">
-              {garmentBrush.benefits?.map((benefit, index) => (
+              {steamBrush.benefits?.map((benefit, index) => (
                 <article key={benefit.title}>
                   <span>{String(index + 1).padStart(2, '0')}</span>
                   <div><h3>{benefit.title}</h3><p>{benefit.copy}</p></div>
@@ -272,11 +275,11 @@ export default function App() {
               ))}
               <article>
                 <span>05</span>
-                <div><h3>How to use</h3><p>{garmentBrush.howToUse}</p></div>
+                <div><h3>How to use</h3><p>{steamBrush.howToUse}</p></div>
               </article>
               <article>
                 <span>06</span>
-                <div><h3>Details</h3><p>{garmentBrush.details?.join(' · ')}</p></div>
+                <div><h3>Details</h3><p>{steamBrush.details?.join(' · ')}</p></div>
               </article>
             </div>
           </div>
@@ -285,8 +288,8 @@ export default function App() {
         <section className="journal" id="journal">
           <div className="journal-heading"><div className="section-label"><span>04</span><span>Field notes</span></div><h2>Care, without excess.</h2></div>
           <div className="journal-grid">
-            <article><img src={productImages(previewProducts[2])[2]} alt={previewProducts[2].alt[2]} loading="lazy" /><span>Natural fibres · Note 01</span><h3>Wool often needs air and rest—not another wash.</h3></article>
-            <article><img src={productImages(previewProducts[3])[1]} alt={previewProducts[3].alt[1]} loading="lazy" /><span>Storage · Note 02</span><h3>Cedar belongs in a clean, dry wardrobe.</h3></article>
+            <article><img src={productImages(cashmereComb)[1]} alt={cashmereComb.alt[1]} loading="lazy" /><span>Knitwear · Note 01</span><h3>Pilling is part of wear—not a reason to replace a good knit.</h3></article>
+            <article><img src={productImages(fabricShaver)[1]} alt={fabricShaver.alt[1]} loading="lazy" /><span>Renewal · Note 02</span><h3>Remove only what the fabric no longer needs.</h3></article>
           </div>
         </section>
 
@@ -297,7 +300,7 @@ export default function App() {
           </div>
         </section>
 
-        <section className="closing"><img src={productImages(previewProducts[3])[2]} alt={previewProducts[3].alt[2]} loading="lazy" /><div><span className="eyebrow">Edition 01</span><h2>Fewer replacements.<br />More years of wear.</h2><a className="text-link light" href="#collection">Explore the collection <span>↑</span></a></div></section>
+        <section className="closing"><img src={productImages(renewalSet)[1]} alt={renewalSet.alt[1]} loading="lazy" /><div><span className="eyebrow">Edition 01</span><h2>Fewer replacements.<br />More years of wear.</h2><a className="text-link light" href="#collection">Explore the collection <span>↑</span></a></div></section>
       </main>
 
       <footer>
@@ -311,7 +314,7 @@ export default function App() {
       <button className={`bag-backdrop ${bagOpen ? 'open' : ''}`} onClick={() => setBagOpen(false)} aria-label="Close shopping bag" tabIndex={bagOpen ? 0 : -1} />
       <aside className={`bag ${bagOpen ? 'open' : ''}`} role="dialog" aria-modal="true" aria-hidden={!bagOpen} aria-label="Shopping bag">
         <div className="bag-head"><div><span>EVERNE</span><strong>Your bag</strong></div><button onClick={() => setBagOpen(false)} aria-label="Close bag">Close</button></div>
-        {!PURCHASES_ENABLED || !cart?.lines.nodes.length ? <div className="empty-bag"><span>Edition 01</span><p>Currently<br />unavailable.</p><small>Orders will open after our products and supplier have been confirmed.</small><button onClick={() => setBagOpen(false)}>Continue exploring</button></div> : <><div className="bag-lines">{cart.lines.nodes.map((line) => <BagLine key={line.id} line={line} busy={busyLine === line.id} onQuantity={changeQuantity} onRemove={removeLine} />)}</div><div className="bag-summary"><div><span>Subtotal</span><strong>{formatMoney(cart.cost.subtotalAmount)}</strong></div><p>Shipping and taxes are calculated at checkout.</p><a className="checkout" href={cart.checkoutUrl}>Continue to secure checkout <span>↗</span></a><small>Secure checkout powered by Shopify</small></div></>}
+        {!PURCHASES_ENABLED || !cart?.lines.nodes.length ? <div className="empty-bag"><span>Edition 01</span><p>Currently<br />unavailable.</p><small>Orders will open after final product and fulfillment checks are complete.</small><button onClick={() => setBagOpen(false)}>Continue exploring</button></div> : <><div className="bag-lines">{cart.lines.nodes.map((line) => <BagLine key={line.id} line={line} busy={busyLine === line.id} onQuantity={changeQuantity} onRemove={removeLine} />)}</div><div className="bag-summary"><div><span>Subtotal</span><strong>{formatMoney(cart.cost.subtotalAmount)}</strong></div><p>Shipping and taxes are calculated at checkout.</p><a className="checkout" href={cart.checkoutUrl}>Continue to secure checkout <span>↗</span></a><small>Secure checkout powered by Shopify</small></div></>}
       </aside>
     </div>
   );
