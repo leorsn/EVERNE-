@@ -5,7 +5,7 @@ export type PreviewProduct = {
   price: string;
   description: string;
   ritual: string;
-  imageDirectory: string;
+  images: [string, string, string];
   alt: [string, string, string];
   tagline?: string;
   benefits?: Array<{ title: string; copy: string }>;
@@ -18,88 +18,121 @@ export const previewProducts: PreviewProduct[] = [
     number: '01',
     title: 'The Renewal Set',
     sku: 'EV-RS-01',
-    price: '€118',
-    description: 'A complete wardrobe-care ritual: brush, comb and aromatic cedar for the pieces you intend to keep.',
-    ritual: 'Brush. Restore. Store.',
-    imageDirectory: 'renewal-set',
+    price: '€122',
+    description: 'The complete EVERNE renewal ritual: two Cashmere Combs, one Electronic Lint Remover and one Fabric Shaver for considered wardrobe care.',
+    ritual: 'Restore. Refresh. Repeat.',
+    images: [
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-renewal-set-catalog.webp?v=1790168125',
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-renewal-set-detail.webp?v=1790168139',
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-renewal-set-lifestyle.webp?v=1790168148',
+    ],
     alt: [
-      'EVERNE Renewal Set with garment brush, cashmere comb and cedar pieces',
-      'Close detail of the EVERNE Renewal Set in dark wood and cedar',
-      'EVERNE Renewal Set arranged beside a considered wardrobe',
+      'EVERNE The Renewal Set with two Cashmere Combs, Electronic Lint Remover and Fabric Shaver',
+      'Detail view of the EVERNE Renewal Set care tools',
+      'EVERNE Renewal Set presented as a complete wardrobe-care collection',
     ],
   },
   {
     number: '02',
-    title: 'Garment Brush 01',
+    title: 'Steam Brush',
     sku: 'EV-GB-01',
-    price: '€42',
-    description: 'A refined garment brush designed for the regular care of your wardrobe. Gently remove surface dust, hair and lint from coats, tailoring, knitwear and everyday garments between wears.',
-    ritual: 'Care for what you wear.',
-    imageDirectory: 'garment-brush',
-    alt: [
-      'EVERNE dark-wood garment brush with natural ivory bristles',
-      'Close detail of the wood grain and bristles of the EVERNE Garment Brush',
-      'EVERNE Garment Brush being used on a charcoal wool coat',
+    price: '€95',
+    description: 'A compact handheld garment steamer designed to smooth, refresh and revive clothing between wears.',
+    ritual: 'Steam. Smooth. Refresh.',
+    images: [
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-steam-brush-catalog.webp?v=1790168156',
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-steam-brush-detail.webp?v=1790168166',
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-steam-brush-lifestyle.webp?v=1790168175',
     ],
-    tagline: 'Daily care for the pieces worth keeping.',
+    alt: [
+      'EVERNE Steam Brush studio product view',
+      'EVERNE Steam Brush in use on a garment',
+      'EVERNE Steam Brush with wardrobe-care accessories',
+    ],
+    tagline: 'A faster reset between wears.',
     benefits: [
       {
-        title: 'Refresh between wears',
-        copy: 'Remove everyday dust, hair and surface lint without reaching for a disposable lint roller.',
+        title: 'Refresh between washes',
+        copy: 'Use steam to relax light creasing and bring garments back into shape without defaulting to another wash.',
       },
       {
-        title: 'Care for your wardrobe',
-        copy: 'A simple daily ritual for garments you want to keep looking their best.',
+        title: 'Made for daily rotation',
+        copy: 'A compact handheld format designed for quick wardrobe care before wearing or after travel.',
       },
       {
-        title: 'Made for considered clothing',
-        copy: 'Ideal for coats, jackets, tailoring, knitwear and other wardrobe staples.',
+        title: 'Foldable by design',
+        copy: 'The folding format keeps the tool easy to store and practical to take with you.',
       },
       {
-        title: 'Use it again and again',
-        copy: 'A permanent garment-care essential designed for repeated use.',
+        title: '1000W steam performance',
+        copy: 'Built around a 1000W handheld format for a focused garment-refresh routine.',
       },
     ],
-    howToUse: 'Brush gently in consistent strokes following the direction of the fabric. Use before wearing, after wearing, or whenever a garment needs a quick refresh. For delicate or unfamiliar materials, test first on an inconspicuous area.',
+    howToUse: 'Fill the reservoir as directed, allow the unit to heat, then steam suitable garments with controlled passes while keeping the fabric comfortably tensioned. Always follow the garment care label and test delicate materials first.',
     details: [
-      'Garment-care brush',
-      'Designed for repeated use',
-      'Suitable for a wide range of everyday garments',
-      'Compact enough for wardrobe or travel use',
-      'Part of the EVERNE Garment Care collection',
+      'Handheld garment steamer',
+      '1000W format',
+      'Foldable design',
+      'Designed for wardrobe care and travel',
+      'Part of EVERNE Edition 01',
     ],
   },
   {
     number: '03',
     title: 'Cashmere Comb',
     sku: 'EV-CC-01',
-    price: '€24',
+    price: '€18',
     description: 'A compact half-moon comb for carefully removing surface pilling from cashmere and fine knitwear.',
     ritual: 'For cashmere and fine knits.',
-    imageDirectory: 'cashmere-comb',
+    images: [
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-cashmere-comb-catalog.webp?v=1790168185',
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-cashmere-comb-detail.webp?v=1790168195',
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-cashmere-comb-lifestyle.webp?v=1790168204',
+    ],
     alt: [
-      'EVERNE dark-wood Cashmere Comb with silver mesh edge',
-      'Close detail of the EVERNE Cashmere Comb on oatmeal knitwear',
-      'EVERNE Cashmere Comb being used on a light cashmere garment',
+      'EVERNE Cashmere Comb studio product view',
+      'EVERNE Cashmere Comb used on knitwear',
+      'EVERNE Cashmere Comb with storage pouch',
     ],
   },
   {
     number: '04',
-    title: 'Cedar Wardrobe Set',
-    sku: 'EV-CW-06',
-    price: '€29',
-    description: 'Six aromatic cedar pieces for a clean, dry wardrobe and the garments resting between seasons.',
-    ritual: 'For drawers, shelves and wardrobes.',
-    imageDirectory: 'cedar-wardrobe-set',
+    title: 'Electronic Lint Remover',
+    sku: 'EV-WH-01',
+    price: '€48',
+    description: 'A compact electronic lint remover designed to lift surface lint and pilling from suitable garments and knitwear.',
+    ritual: 'A clean reset for worn surfaces.',
+    images: [
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-electronic-lint-remover-catalog.webp?v=1790168230',
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-electronic-lint-remover-detail.webp?v=1790168240',
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-electronic-lint-remover-lifestyle.webp?v=1790168250',
+    ],
     alt: [
-      'Six EVERNE aromatic cedar wardrobe pieces',
-      'Close detail of aromatic cedar blocks on natural linen',
-      'EVERNE Cedar Wardrobe Set arranged inside a wardrobe drawer',
+      'EVERNE Electronic Lint Remover studio product view',
+      'EVERNE Electronic Lint Remover used on knitwear',
+      'EVERNE Electronic Lint Remover with charging cable and cleaning brush',
+    ],
+  },
+  {
+    number: '05',
+    title: 'Fabric Shaver',
+    sku: 'EV-FS-01',
+    price: '€32',
+    description: 'A rechargeable fabric shaver with three power levels, LED display and USB-C charging for removing lint and pilling from suitable fabrics.',
+    ritual: 'Renew texture. Keep the garment.',
+    images: [
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-fabric-shaver-catalog.webp?v=1790168261',
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-fabric-shaver-detail.webp?v=1790168271',
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-fabric-shaver-lifestyle.webp?v=1790168284',
+    ],
+    alt: [
+      'EVERNE Fabric Shaver studio product view',
+      'EVERNE Fabric Shaver used on textured knitwear',
+      'EVERNE Fabric Shaver with charging cable, brush and packaging',
     ],
   },
 ];
 
 export function productImages(product: PreviewProduct): [string, string, string] {
-  const root = `${import.meta.env.BASE_URL}products/${product.imageDirectory}`;
-  return [`${root}/catalog.webp`, `${root}/detail.webp`, `${root}/lifestyle.webp`];
+  return product.images;
 }
