@@ -12,6 +12,7 @@ import {
   type Product,
 } from './lib/shopify';
 import { previewProducts, productImages, type PreviewProduct } from './previewCatalog';
+import './hero-premium.css';
 
 const CART_KEY = 'everne.shopify.cart-id';
 const PURCHASES_ENABLED = false;
@@ -239,7 +240,6 @@ export default function App() {
   }
 
   const cashmereComb = previewBySku('EV-CC-01');
-  const electronicLintRemover = previewBySku('EV-WH-01');
   const fabricShaver = previewBySku('EV-FS-01');
   const steamBrush = previewBySku('EV-GB-01');
 
@@ -267,13 +267,26 @@ export default function App() {
               <span>Wear longer</span><span>Care deliberately</span><span>Replace less</span>
             </div>
           </div>
-          <div className="hero-showcase" aria-label="Edition 01 product photography">
-            <figure className="hero-tile hero-tile--steam"><img src={productImages(steamBrush)[0]} alt={steamBrush.alt[0]} /></figure>
-            <figure className="hero-tile hero-tile--lint"><img src={productImages(electronicLintRemover)[0]} alt={electronicLintRemover.alt[0]} /></figure>
-            <figure className="hero-tile hero-tile--comb"><img src={productImages(cashmereComb)[0]} alt={cashmereComb.alt[0]} /></figure>
-            <figure className="hero-tile hero-tile--shaver"><img src={productImages(fabricShaver)[0]} alt={fabricShaver.alt[0]} /></figure>
+
+          <div className="hero-architecture" aria-hidden="true">
+            <div className="arch-backdrop" />
+            <div className="arch-curve" />
+            <div className="arch-panel" />
+            <div className="arch-dark-block" />
+            <div className="arch-plinth" />
+            <div className="arch-branch">
+              <span className="stem" />
+              <span className="leaf" />
+              <span className="leaf" />
+              <span className="leaf" />
+              <span className="leaf" />
+              <span className="leaf" />
+              <span className="leaf" />
+              <span className="leaf" />
+            </div>
           </div>
-          <div className="hero-index"><span>EVERNE / 2026</span><span>Four care tools · one renewal set</span></div>
+
+          <div className="hero-index"><span>EVERNE / 2026</span><span>A more considered wardrobe</span></div>
         </section>
 
         <section className="manifesto">
