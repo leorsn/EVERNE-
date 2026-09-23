@@ -223,7 +223,7 @@ export default function App() {
   const steamBrush = previewProducts.find((product) => product.sku === 'EV-GB-01') ?? previewProducts[1];
   const cashmereComb = previewProducts.find((product) => product.sku === 'EV-CC-01') ?? previewProducts[2];
   const fabricShaver = previewProducts.find((product) => product.sku === 'EV-FS-01') ?? previewProducts[4];
-  const heroImages = productImages(renewalSet);
+  const heroImage = `${import.meta.env.BASE_URL}products/renewal-set/lifestyle.webp`;
 
   return (
     <div className="site-shell" id="top">
@@ -240,7 +240,7 @@ export default function App() {
 
       <main>
         <section className="hero">
-          <img className="hero-image" src={heroImages[2]} alt={renewalSet.alt[2]} />
+          <img className="hero-image" src={heroImage} alt="Wardrobe-care objects arranged beside a considered wardrobe" />
           <div className="hero-shade" />
           <div className="hero-copy"><span className="eyebrow">Garment care · Edition 01</span><h1>Care for<br />what you keep.</h1><p>Considered tools for a wardrobe that is worn, restored and kept in motion.</p><a className="text-link light" href="#collection">Explore Edition 01 <span>↓</span></a></div>
           <div className="hero-index"><span>EVERNE / 2026</span><span>Four care tools · one renewal set</span></div>
