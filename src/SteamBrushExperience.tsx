@@ -8,6 +8,11 @@ type SteamBrushExperienceProps = {
   systemPrice: string;
 };
 
+function productHref(handle: string) {
+  const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+  return `${base}products/${handle}`;
+}
+
 const steps = [
   {
     number: '01',
@@ -59,7 +64,7 @@ export default function SteamBrushExperience({ steamBrush, system, steamPrice, s
           </div>
 
           <div className="featured-actions">
-            <button disabled>Currently unavailable</button>
+            <a href={productHref(steamBrush.handle)}>View full details <span>→</span></a>
             <a href="#system-comparison">Compare with the system <span>↓</span></a>
           </div>
 
@@ -108,7 +113,7 @@ export default function SteamBrushExperience({ steamBrush, system, steamPrice, s
               <li><span>Electronic lint removal</span><strong>—</strong></li>
               <li><span>Cashmere care</span><strong>—</strong></li>
             </ul>
-            <a href="#EV-GB-01">View Steam Brush <span>→</span></a>
+            <a href={productHref(steamBrush.handle)}>View Steam Brush <span>→</span></a>
           </article>
 
           <article className="comparison-card comparison-card--system">
@@ -118,7 +123,7 @@ export default function SteamBrushExperience({ steamBrush, system, steamPrice, s
               {system.facts?.map((fact) => <li key={fact}><span>{fact}</span><strong>Included</strong></li>)}
             </ul>
             <div className="system-value"><span>Individual value €161</span><strong>Save €32</strong></div>
-            <a href="#EV-RS-01">View the system <span>→</span></a>
+            <a href={productHref(system.handle)}>View the system <span>→</span></a>
           </article>
         </div>
       </section>
@@ -142,7 +147,7 @@ export default function SteamBrushExperience({ steamBrush, system, steamPrice, s
 
       <div className="mobile-decision-bar" aria-label="Steam Brush quick decision">
         <div><span>Steam Brush</span><strong>{steamPrice}</strong></div>
-        <a href="#system-comparison">Compare system</a>
+        <a href={productHref(steamBrush.handle)}>View details</a>
       </div>
     </>
   );
