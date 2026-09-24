@@ -1,0 +1,60 @@
+.mobile-decision-bar {
+  display: none;
+}
+
+@media (max-width: 780px) {
+  .mobile-decision-bar {
+    position: fixed;
+    left: 10px;
+    right: 10px;
+    bottom: max(10px, env(safe-area-inset-bottom));
+    z-index: 45;
+    min-height: 62px;
+    padding: 8px 8px 8px 15px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+    background: rgba(35, 34, 30, .94);
+    color: #f1ece4;
+    border: 1px solid rgba(255,255,255,.12);
+    box-shadow: 0 18px 50px rgba(0,0,0,.18);
+    backdrop-filter: blur(18px) saturate(115%);
+    -webkit-backdrop-filter: blur(18px) saturate(115%);
+  }
+
+  .mobile-decision-bar > div {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .mobile-decision-bar span {
+    font-size: 8px;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+    opacity: .7;
+  }
+
+  .mobile-decision-bar strong {
+    font: 400 19px/1 var(--serif);
+  }
+
+  .mobile-decision-bar a {
+    min-height: 44px;
+    padding: 0 14px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgba(255,255,255,.28);
+    background: #f0ece5;
+    color: #292722;
+    font-size: 8px;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  footer {
+    padding-bottom: 104px;
+  }
+}

@@ -12,6 +12,7 @@ import {
   type Product,
 } from './lib/shopify';
 import { previewProducts, productImages, type PreviewProduct } from './previewCatalog';
+import SteamBrushExperience from './SteamBrushExperience';
 import './hero-premium.css';
 
 const CART_KEY = 'everne.shopify.cart-id';
@@ -243,17 +244,22 @@ export default function App() {
   const cashmereComb = previewBySku('EV-CC-01');
   const fabricCareBrush = previewBySku('EV-FS-01');
   const steamBrush = previewBySku('EV-GB-01');
+  const system = previewBySku('EV-RS-01');
+  const steamLive = liveBySku.get('EV-GB-01');
+  const systemLive = liveBySku.get('EV-RS-01');
+  const steamPrice = steamLive ? formatMoney(steamLive.variant.price) : steamBrush.price;
+  const systemPrice = systemLive ? formatMoney(systemLive.variant.price) : system.price;
 
   return (
     <div className="site-shell" id="top">
-      <a className="skip-link" href="#collection">Skip to collection</a>
+      <a className="skip-link" href="#steam-brush">Skip to Steam Brush</a>
       <div className={`status-bar ${commerceReady ? 'is-live' : ''}`} role="status">
         <span>{loading ? 'Connecting to Edition 01' : commerceReady ? 'Edition 01 · Available now' : catalogConnected ? 'Edition 01 · Currently unavailable' : 'Edition 01 · Store update'}</span>
         <span>Germany / EUR</span>
       </div>
       <header className="topbar">
         <a className="brand" href="#top" aria-label="EVERNE home">EVERNE</a>
-        <nav aria-label="Primary navigation"><a href="#collection">Collection</a><a href="#method">Method</a><a href="#journal">Journal</a></nav>
+        <nav aria-label="Primary navigation"><a href="#steam-brush">Steam Brush</a><a href="#system-comparison">System</a><a href="#collection">Collection</a></nav>
         <button className="bag-button" disabled={!PURCHASES_ENABLED} onClick={() => setBagOpen(true)} aria-label="Edition 01 is currently unavailable">Unavailable</button>
       </header>
 
@@ -263,7 +269,7 @@ export default function App() {
             <span className="eyebrow">Garment care · Edition 01</span>
             <h1>Care for<br />what you keep.</h1>
             <p>Considered tools for restoring the surface, shape and feel of the garments already in your wardrobe.</p>
-            <a className="text-link" href="#collection">Explore Edition 01 <span>→</span></a>
+            <a className="text-link" href="#steam-brush">Discover the Steam Brush <span>→</span></a>
             <div className="hero-principles" aria-label="EVERNE principles">
               <span>Wear longer</span><span>Care deliberately</span><span>Replace less</span>
             </div>
@@ -293,11 +299,13 @@ export default function App() {
         <section className="manifesto">
           <div className="section-label"><span>01</span><span>Our premise</span></div>
           <h2>Good garments deserve<br /><em>more than one season.</em></h2>
-          <div className="manifesto-copy"><p>EVERNE is built around a simple idea: wardrobe care should feel considered, not disposable. Remove what does not belong, restore what time has changed, and keep the pieces worth wearing in motion.</p><a className="text-link" href="#method">Read the method <span>↘</span></a></div>
+          <div className="manifesto-copy"><p>EVERNE is built around a simple idea: wardrobe care should feel considered, not disposable. Remove what does not belong, restore what time has changed, and keep the pieces worth wearing in motion.</p><a className="text-link" href="#steam-brush">Meet the hero product <span>↘</span></a></div>
         </section>
 
+        <SteamBrushExperience steamBrush={steamBrush} system={system} steamPrice={steamPrice} systemPrice={systemPrice} />
+
         <section className="collection" id="collection">
-          <div className="collection-heading"><div className="section-label"><span>02</span><span>The collection</span></div><h2>Our essentials</h2><p>Four individual care tools and one focused system. No invented product branding. No unnecessary extras.</p></div>
+          <div className="collection-heading"><div className="section-label"><span>06</span><span>The collection</span></div><h2>Our essentials</h2><p>Four individual care tools and one focused system. No invented product branding. No unnecessary extras.</p></div>
           {commerceError && <div className="commerce-note" role="alert"><span>{commerceError}</span><button onClick={() => void loadCommerce()}>Try again</button></div>}
           <div className="product-grid">
             {previewProducts.map((preview) => <ProductFeature key={preview.sku} preview={preview} live={liveBySku.get(preview.sku)} busy={busySku === preview.sku} catalogConnected={catalogConnected} onAdd={addToBag} />)}
@@ -307,7 +315,7 @@ export default function App() {
         <section className="object-story" id="method">
           <div className="object-image"><img src={productImages(steamBrush)[0]} alt={steamBrush.alt[0]} loading="lazy" /></div>
           <div className="object-copy">
-            <div className="section-label"><span>03</span><span>The method</span></div>
+            <div className="section-label"><span>07</span><span>The method</span></div>
             <span className="eyebrow">{steamBrush.tagline}</span>
             <h2>Refresh<br /><em>between wears.</em></h2>
             <div className="method-list">
@@ -323,7 +331,7 @@ export default function App() {
         </section>
 
         <section className="journal" id="journal">
-          <div className="journal-heading"><div className="section-label"><span>04</span><span>Field notes</span></div><h2>Care, without excess.</h2></div>
+          <div className="journal-heading"><div className="section-label"><span>08</span><span>Field notes</span></div><h2>Care, without excess.</h2></div>
           <div className="journal-grid">
             <article><img src={productImages(cashmereComb)[0]} alt={cashmereComb.alt[0]} loading="lazy" /><span>Knitwear · Note 01</span><h3>Pilling is part of wear. A careful pass can be enough.</h3></article>
             <article><img src={productImages(fabricCareBrush)[0]} alt={fabricCareBrush.alt[0]} loading="lazy" /><span>Surface care · Note 02</span><h3>Choose the lightest intervention that gets the fabric back where you want it.</h3></article>
@@ -331,7 +339,7 @@ export default function App() {
         </section>
 
         <section className="faq" id="faq">
-          <div><div className="section-label"><span>05</span><span>Good to know</span></div><h2>The details,<br /><em>considered.</em></h2></div>
+          <div><div className="section-label"><span>09</span><span>Good to know</span></div><h2>The details,<br /><em>considered.</em></h2></div>
           <div className="faq-list">
             {faqs.map(([question, answer], index) => <article key={question}><button aria-expanded={openFaq === index} onClick={() => setOpenFaq(openFaq === index ? null : index)}><span>{question}</span><span>{openFaq === index ? '−' : '+'}</span></button><div className={openFaq === index ? 'faq-answer open' : 'faq-answer'}><p>{answer}</p></div></article>)}
           </div>
@@ -345,7 +353,7 @@ export default function App() {
 
       <footer>
         <div className="footer-lead"><a className="brand" href="#top">EVERNE</a><p>Care for what you keep.</p></div>
-        <div><span>Explore</span><a href="#collection">Collection</a><a href="#method">The method</a><a href="#journal">Field notes</a></div>
+        <div><span>Explore</span><a href="#steam-brush">Steam Brush</a><a href="#system-comparison">The System</a><a href="#collection">Collection</a></div>
         <div><span>Service</span><button disabled={!PURCHASES_ENABLED} onClick={() => setBagOpen(true)}>Orders currently closed</button><a href="#faq">Care & delivery</a></div>
         <div><span>Legal</span><a href="/rechtliches.html#impressum">Impressum</a><a href="/rechtliches.html#datenschutz">Datenschutz</a><a href="/rechtliches.html#widerruf">Widerruf</a><a href="/rechtliches.html#agb">AGB</a><a href="/rechtliches.html#versand">Versand & Retouren</a></div>
         <div className="footer-bottom"><span>© 2026 EVERNE</span><span>Hamburg, Germany · EUR</span><span>Commerce by Shopify</span></div>
