@@ -120,9 +120,9 @@ export default function ProductDetailPage() {
 
         {isSystem ? (
           <section className="product-system-included">
-            <div className="product-detail-section-heading"><span className="eyebrow">Inside the system</span><h2>Three tools. One routine.</h2></div>
+            <div className="product-detail-section-heading"><span className="eyebrow">Inside the system</span><h2>Four tools. One routine.</h2></div>
             <div className="system-included-grid">
-              {previewProducts.filter((item) => ['EV-GB-01', 'EV-WH-01', 'EV-CC-01'].includes(item.sku)).map((item) => <ProductMiniCard key={item.sku} product={item} />)}
+              {previewProducts.filter((item) => ['EV-GB-01', 'EV-WH-01', 'EV-CC-01', 'EV-FS-01'].includes(item.sku)).map((item) => <ProductMiniCard key={item.sku} product={item} />)}
             </div>
           </section>
         ) : (
@@ -130,8 +130,8 @@ export default function ProductDetailPage() {
             <div className="product-system-upsell-copy">
               <span className="eyebrow">The EVERNE System</span>
               <h2>Build the full routine.</h2>
-              <p>Steam Brush, Electronic Lint Remover and Cashmere Comb together in one considered wardrobe-care system.</p>
-              <div className="system-price-line"><span>Individual value €161</span><strong>€129</strong><em>Save €32</em></div>
+              <p>Steam Brush, Electronic Lint Remover, Cashmere Comb and Fabric Care Brush together in one considered wardrobe-care system.</p>
+              <div className="system-price-line"><span>Individual value €220</span><strong>€149</strong><em>Save €71</em></div>
               <a className="text-link" href={withBase(`products/${system.handle}`)}>View the system <span>→</span></a>
             </div>
             <div className="product-system-upsell-images">
