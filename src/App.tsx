@@ -20,7 +20,7 @@ const PURCHASES_ENABLED = false;
 const faqs = [
   ['Where do you deliver?', 'Available delivery methods, timing and final shipping cost are shown at Shopify checkout for your address.'],
   ['Are the tools suitable for every fabric?', 'No universal care tool is right for every fabric. Always test an inconspicuous area first and follow the garment care label.'],
-  ['What is included in The Renewal Set?', 'Two Cashmere Combs, one Electronic Lint Remover and one Fabric Shaver. The Steam Brush is not part of the set.'],
+  ['What is included in The EVERNE System?', 'The Steam Brush, Electronic Lint Remover and Cashmere Comb. Three complementary tools for refreshing, restoring and maintaining the garments you keep.'],
   ['Is payment secure?', 'Yes. Your order and payment are completed through Shopify’s encrypted checkout; payment details are never handled by this storefront.'],
 ];
 
@@ -34,16 +34,17 @@ function imageForSku(sku: string | null | undefined, index = 0) {
 }
 
 function BundleVisual({ compact = false }: { compact?: boolean }) {
-  const comb = imageForSku('EV-CC-01');
+  const steam = imageForSku('EV-GB-01');
+  const steamDetail = imageForSku('EV-GB-01', 1);
   const lint = imageForSku('EV-WH-01');
-  const shaver = imageForSku('EV-FS-01');
+  const comb = imageForSku('EV-CC-01');
 
   return (
-    <div className={`bundle-visual ${compact ? 'bundle-visual--compact' : ''}`} aria-label="The Renewal Set: two Cashmere Combs, one Electronic Lint Remover and one Fabric Shaver">
-      <figure className="bundle-tile bundle-comb-one"><img src={comb} alt="Cashmere Comb included in The Renewal Set" /></figure>
-      <figure className="bundle-tile bundle-comb-two"><img src={comb} alt="Second Cashmere Comb included in The Renewal Set" /></figure>
-      <figure className="bundle-tile bundle-lint"><img src={lint} alt="Electronic Lint Remover included in The Renewal Set" /></figure>
-      <figure className="bundle-tile bundle-shaver"><img src={shaver} alt="Fabric Shaver included in The Renewal Set" /></figure>
+    <div className={`bundle-visual ${compact ? 'bundle-visual--compact' : ''}`} aria-label="The EVERNE System: Steam Brush, Electronic Lint Remover and Cashmere Comb">
+      <figure className="bundle-tile bundle-comb-one"><img src={steam} alt="Steam Brush included in The EVERNE System" /></figure>
+      <figure className="bundle-tile bundle-comb-two"><img src={comb} alt="Cashmere Comb included in The EVERNE System" /></figure>
+      <figure className="bundle-tile bundle-lint"><img src={lint} alt="Electronic Lint Remover included in The EVERNE System" /></figure>
+      <figure className="bundle-tile bundle-shaver"><img src={steamDetail} alt="Steam Brush detail from The EVERNE System" /></figure>
     </div>
   );
 }
@@ -240,7 +241,7 @@ export default function App() {
   }
 
   const cashmereComb = previewBySku('EV-CC-01');
-  const fabricShaver = previewBySku('EV-FS-01');
+  const fabricCareBrush = previewBySku('EV-FS-01');
   const steamBrush = previewBySku('EV-GB-01');
 
   return (
@@ -296,7 +297,7 @@ export default function App() {
         </section>
 
         <section className="collection" id="collection">
-          <div className="collection-heading"><div className="section-label"><span>02</span><span>The collection</span></div><h2>Our essentials</h2><p>Four individual care tools and one focused set. No invented product branding. No unnecessary extras.</p></div>
+          <div className="collection-heading"><div className="section-label"><span>02</span><span>The collection</span></div><h2>Our essentials</h2><p>Four individual care tools and one focused system. No invented product branding. No unnecessary extras.</p></div>
           {commerceError && <div className="commerce-note" role="alert"><span>{commerceError}</span><button onClick={() => void loadCommerce()}>Try again</button></div>}
           <div className="product-grid">
             {previewProducts.map((preview) => <ProductFeature key={preview.sku} preview={preview} live={liveBySku.get(preview.sku)} busy={busySku === preview.sku} catalogConnected={catalogConnected} onAdd={addToBag} />)}
@@ -325,7 +326,7 @@ export default function App() {
           <div className="journal-heading"><div className="section-label"><span>04</span><span>Field notes</span></div><h2>Care, without excess.</h2></div>
           <div className="journal-grid">
             <article><img src={productImages(cashmereComb)[0]} alt={cashmereComb.alt[0]} loading="lazy" /><span>Knitwear · Note 01</span><h3>Pilling is part of wear. A careful pass can be enough.</h3></article>
-            <article><img src={productImages(fabricShaver)[0]} alt={fabricShaver.alt[0]} loading="lazy" /><span>Surface care · Note 02</span><h3>Choose the lightest intervention that gets the fabric back where you want it.</h3></article>
+            <article><img src={productImages(fabricCareBrush)[0]} alt={fabricCareBrush.alt[0]} loading="lazy" /><span>Surface care · Note 02</span><h3>Choose the lightest intervention that gets the fabric back where you want it.</h3></article>
           </div>
         </section>
 
@@ -337,7 +338,7 @@ export default function App() {
         </section>
 
         <section className="closing closing-light">
-          <div className="closing-copy"><span className="eyebrow">The Renewal Set</span><h2>Four pieces.<br />One considered reset.</h2><p>2× Cashmere Comb · Electronic Lint Remover · Fabric Shaver</p><a className="text-link" href="#EV-RS-01">View the set <span>↑</span></a></div>
+          <div className="closing-copy"><span className="eyebrow">The EVERNE System</span><h2>Three tools.<br />One considered system.</h2><p>Steam Brush · Electronic Lint Remover · Cashmere Comb</p><a className="text-link" href="#EV-RS-01">View the system <span>↑</span></a></div>
           <BundleVisual compact />
         </section>
       </main>
