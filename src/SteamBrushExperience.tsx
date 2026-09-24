@@ -45,7 +45,7 @@ export default function SteamBrushExperience({ steamBrush, system, steamPrice, s
         <div className="featured-product-copy">
           <div className="section-label"><span>02</span><span>Hero product</span></div>
           <span className="eyebrow">{steamBrush.ritual}</span>
-          <h2 id="steam-brush-title">Steam Brush</h2>
+          <h2 id="steam-brush-title">{steamBrush.title}</h2>
           <div className="featured-price-row">
             <strong>{steamPrice}</strong>
             <span>Edition 01 · orders currently closed</span>
@@ -102,7 +102,7 @@ export default function SteamBrushExperience({ steamBrush, system, steamPrice, s
         <div className="comparison-cards">
           <article className="comparison-card">
             <div className="comparison-card-head"><span>Focused care</span><strong>{steamPrice}</strong></div>
-            <h3>Steam Brush</h3>
+            <h3>{steamBrush.title}</h3>
             <ul>
               <li><span>Steam refresh</span><strong>Included</strong></li>
               <li><span>Electronic lint removal</span><strong>—</strong></li>
@@ -113,11 +113,9 @@ export default function SteamBrushExperience({ steamBrush, system, steamPrice, s
 
           <article className="comparison-card comparison-card--system">
             <div className="comparison-card-head"><span>Complete routine</span><strong>{systemPrice}</strong></div>
-            <h3>The EVERNE System</h3>
+            <h3>{system.title}</h3>
             <ul>
-              <li><span>Steam Brush</span><strong>Included</strong></li>
-              <li><span>Electronic Lint Remover</span><strong>Included</strong></li>
-              <li><span>Cashmere Comb</span><strong>Included</strong></li>
+              {system.facts?.map((fact) => <li key={fact}><span>{fact}</span><strong>Included</strong></li>)}
             </ul>
             <div className="system-value"><span>Individual value €161</span><strong>Save €32</strong></div>
             <a href="#EV-RS-01">View the system <span>→</span></a>
@@ -141,6 +139,11 @@ export default function SteamBrushExperience({ steamBrush, system, steamPrice, s
         </div>
         <p className="use-sequence-note">Always follow the product instructions and garment care label. Test delicate or unfamiliar fabrics first.</p>
       </section>
+
+      <div className="mobile-decision-bar" aria-label="Steam Brush quick decision">
+        <div><span>Steam Brush</span><strong>{steamPrice}</strong></div>
+        <a href="#system-comparison">Compare system</a>
+      </div>
     </>
   );
 }
