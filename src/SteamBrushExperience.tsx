@@ -101,7 +101,7 @@ export default function SteamBrushExperience({ steamBrush, system, steamPrice, s
         <div className="system-comparison-copy">
           <div className="section-label"><span>04</span><span>Choose your level</span></div>
           <h2 id="system-comparison-title">Start with steam.<br /><em>Or build the full routine.</em></h2>
-          <p>The Steam Brush is the focused entry point. The EVERNE System adds surface renewal and fine-knit care for €34 more than the Steam Brush alone.</p>
+          <p>The Steam Brush is the focused entry point. The EVERNE System adds the complete four-tool care routine for €54 more than the Steam Brush alone.</p>
         </div>
 
         <div className="comparison-cards">
@@ -112,6 +112,7 @@ export default function SteamBrushExperience({ steamBrush, system, steamPrice, s
               <li><span>Steam refresh</span><strong>Included</strong></li>
               <li><span>Electronic lint removal</span><strong>—</strong></li>
               <li><span>Cashmere care</span><strong>—</strong></li>
+              <li><span>Fabric surface care</span><strong>—</strong></li>
             </ul>
             <a href={productHref(steamBrush.handle)}>View Steam Brush <span>→</span></a>
           </article>
@@ -122,7 +123,7 @@ export default function SteamBrushExperience({ steamBrush, system, steamPrice, s
             <ul>
               {system.facts?.map((fact) => <li key={fact}><span>{fact}</span><strong>Included</strong></li>)}
             </ul>
-            <div className="system-value"><span>Individual value €161</span><strong>Save €32</strong></div>
+            <div className="system-value"><span>Individual value €220</span><strong>Save €71</strong></div>
             <a href={productHref(system.handle)}>View the system <span>→</span></a>
           </article>
         </div>
