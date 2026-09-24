@@ -10,6 +10,7 @@ import './editorial-polish.css';
 import './mobile-conversion.css';
 import './storefront-restructure.css';
 import './product-detail.css';
+import './impact-pass.css';
 
 const basename = import.meta.env.BASE_URL === '/' ? undefined : import.meta.env.BASE_URL.replace(/\/$/, '');
 
