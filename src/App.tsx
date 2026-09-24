@@ -25,6 +25,11 @@ const faqs = [
   ['Is payment secure?', 'Yes. Your order and payment are completed through Shopify’s encrypted checkout; payment details are never handled by this storefront.'],
 ];
 
+function productHref(handle: string) {
+  const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+  return `${base}products/${handle}`;
+}
+
 function previewBySku(sku: string) {
   return previewProducts.find((item) => item.sku === sku) ?? previewProducts[0];
 }
@@ -53,21 +58,19 @@ function BundleVisual({ compact = false }: { compact?: boolean }) {
 type ProductFeatureProps = {
   preview: PreviewProduct;
   live?: { product: Product; variant: Product['variants']['nodes'][number] };
-  busy: boolean;
-  catalogConnected: boolean;
-  onAdd: (sku: string) => void;
 };
 
-function ProductFeature({ preview, live, busy, catalogConnected, onAdd }: ProductFeatureProps) {
+function ProductFeature({ preview, live }: ProductFeatureProps) {
   const image = productImages(preview)[0];
   const isBundle = preview.sku === 'EV-RS-01';
-  const purchasable = PURCHASES_ENABLED && Boolean(live?.product.availableForSale && live?.variant.availableForSale);
   const price = live ? formatMoney(live.variant.price) : preview.price;
 
   return (
     <article className={`product-card ${isBundle ? 'product-card--bundle' : ''}`} id={preview.sku}>
       <div className="product-card-visual">
-        {isBundle ? <BundleVisual /> : <img src={image} alt={preview.alt[0]} loading={preview.number === '01' ? 'eager' : 'lazy'} />}
+        <a className="product-card-visual-link" href={productHref(preview.handle)} aria-label={`View ${preview.title} details`}>
+          {isBundle ? <BundleVisual /> : <img src={image} alt={preview.alt[0]} loading={preview.number === '01' ? 'eager' : 'lazy'} />}
+        </a>
       </div>
       <div className="product-card-copy">
         <div className="product-meta"><span>{preview.number}</span><span>{preview.ritual}</span></div>
@@ -80,9 +83,7 @@ function ProductFeature({ preview, live, busy, catalogConnected, onAdd }: Produc
         ) : null}
         <div className="product-purchase">
           <span>{price}</span>
-          <button disabled={!purchasable || busy} onClick={() => onAdd(preview.sku)}>
-            {busy ? 'Adding…' : purchasable ? 'Add to bag' : catalogConnected ? 'Currently unavailable' : 'Connecting…'}
-          </button>
+          <a className="product-detail-link" href={productHref(preview.handle)}>View details <span>→</span></a>
         </div>
       </div>
     </article>
@@ -118,23 +119,28 @@ export default function App() {
   const [products, setProducts] = useState<Product[]>([]);
   const [cart, setCart] = useState<Cart | null>(null);
   const [bagOpen, setBagOpen] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [commerceError, setCommerceError] = useState<string | null>(null);
   const [busySku, setBusySku] = useState<string | null>(null);
   const [busyLine, setBusyLine] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   async function loadCommerce() {
-    setLoading(true);
     setCommerceError(null);
+
+    if (!PURCHASES_ENABLED) {
+      localStorage.removeItem(CART_KEY);
+      setProducts([]);
+      setCart(null);
+      setLoading(false);
+      return;
+    }
+
+    setLoading(true);
     try {
       const [catalog, restored] = await Promise.all([
         getEdition01(),
         (async () => {
-          if (!PURCHASES_ENABLED) {
-            localStorage.removeItem(CART_KEY);
-            return null;
-          }
           const id = localStorage.getItem(CART_KEY);
           if (!id) return null;
           try {
@@ -254,7 +260,7 @@ export default function App() {
     <div className="site-shell" id="top">
       <a className="skip-link" href="#steam-brush">Skip to Steam Brush</a>
       <div className={`status-bar ${commerceReady ? 'is-live' : ''}`} role="status">
-        <span>{loading ? 'Connecting to Edition 01' : commerceReady ? 'Edition 01 · Available now' : catalogConnected ? 'Edition 01 · Currently unavailable' : 'Edition 01 · Store update'}</span>
+        <span>{!PURCHASES_ENABLED ? 'Edition 01 · Preview' : loading ? 'Connecting to Edition 01' : commerceReady ? 'Edition 01 · Available now' : catalogConnected ? 'Edition 01 · Currently unavailable' : 'Edition 01 · Store update'}</span>
         <span>Germany / EUR</span>
       </div>
       <header className="topbar">
@@ -306,9 +312,9 @@ export default function App() {
 
         <section className="collection" id="collection">
           <div className="collection-heading"><div className="section-label"><span>06</span><span>The collection</span></div><h2>Our essentials</h2><p>Four individual care tools and one focused system. No invented product branding. No unnecessary extras.</p></div>
-          {commerceError && <div className="commerce-note" role="alert"><span>{commerceError}</span><button onClick={() => void loadCommerce()}>Try again</button></div>}
+          {PURCHASES_ENABLED && commerceError && <div className="commerce-note" role="alert"><span>{commerceError}</span><button onClick={() => void loadCommerce()}>Try again</button></div>}
           <div className="product-grid">
-            {previewProducts.map((preview) => <ProductFeature key={preview.sku} preview={preview} live={liveBySku.get(preview.sku)} busy={busySku === preview.sku} catalogConnected={catalogConnected} onAdd={addToBag} />)}
+            {previewProducts.map((preview) => <ProductFeature key={preview.sku} preview={preview} live={liveBySku.get(preview.sku)} />)}
           </div>
         </section>
 
@@ -346,14 +352,14 @@ export default function App() {
         </section>
 
         <section className="closing closing-light">
-          <div className="closing-copy"><span className="eyebrow">The EVERNE System</span><h2>Three tools.<br />One considered system.</h2><p>Steam Brush · Electronic Lint Remover · Cashmere Comb</p><a className="text-link" href="#EV-RS-01">View the system <span>↑</span></a></div>
+          <div className="closing-copy"><span className="eyebrow">The EVERNE System</span><h2>Three tools.<br />One considered system.</h2><p>Steam Brush · Electronic Lint Remover · Cashmere Comb</p><a className="text-link" href={productHref(system.handle)}>View the system <span>→</span></a></div>
           <BundleVisual compact />
         </section>
       </main>
 
       <footer>
         <div className="footer-lead"><a className="brand" href="#top">EVERNE</a><p>Care for what you keep.</p></div>
-        <div><span>Explore</span><a href="#steam-brush">Steam Brush</a><a href="#system-comparison">The System</a><a href="#collection">Collection</a></div>
+        <div><span>Explore</span><a href={productHref(steamBrush.handle)}>Steam Brush</a><a href={productHref(system.handle)}>The System</a><a href="#collection">Collection</a></div>
         <div><span>Service</span><button disabled={!PURCHASES_ENABLED} onClick={() => setBagOpen(true)}>Orders currently closed</button><a href="#faq">Care & delivery</a></div>
         <div><span>Legal</span><a href="/rechtliches.html#impressum">Impressum</a><a href="/rechtliches.html#datenschutz">Datenschutz</a><a href="/rechtliches.html#widerruf">Widerruf</a><a href="/rechtliches.html#agb">AGB</a><a href="/rechtliches.html#versand">Versand & Retouren</a></div>
         <div className="footer-bottom"><span>© 2026 EVERNE</span><span>Hamburg, Germany · EUR</span><span>Commerce by Shopify</span></div>

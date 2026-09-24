@@ -1,0 +1,371 @@
+/* EVERNE impact pass — nature campaign hero + compact hero product. Loaded last. */
+
+.hero-editorial {
+  min-height: calc(100svh - 99px);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background-image:
+    linear-gradient(90deg, rgba(246,242,235,.78) 0%, rgba(246,242,235,.42) 38%, rgba(246,242,235,.08) 70%, rgba(246,242,235,.04) 100%),
+    url("https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-nature-hero.png?v=1790252204");
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.hero-editorial::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.08) 0%, transparent 36%, rgba(57,48,39,.06) 100%),
+    radial-gradient(circle at 16% 22%, rgba(255,255,255,.34), transparent 27%);
+}
+
+.hero-editorial::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px rgba(33,31,27,.04);
+}
+
+.hero-architecture,
+.hero-stage,
+.hero-product-stage,
+.hero-product-visual,
+.hero-showcase,
+.hero-object,
+.hero-visual {
+  display: none !important;
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: none;
+  min-height: calc(100svh - 99px);
+  padding: clamp(70px, 8vw, 118px) 6vw 92px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background: transparent;
+}
+
+.hero-copy::before,
+.hero-copy::after {
+  display: none !important;
+}
+
+.hero-copy .eyebrow {
+  margin: 0 0 clamp(38px, 5vw, 66px);
+  color: #4f4a43;
+  font-size: 0;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+}
+
+.hero-copy .eyebrow::after {
+  content: "EVERNE";
+  font-size: 12px;
+  letter-spacing: .28em;
+  font-weight: 600;
+}
+
+.hero h1 {
+  position: relative;
+  z-index: 2;
+  max-width: 860px;
+  margin: 0;
+  color: #211f1b;
+  font: 400 clamp(5.6rem, 9.8vw, 10.8rem)/.80 var(--serif);
+  letter-spacing: -.066em;
+  text-wrap: balance;
+}
+
+/* The supporting statement now has its own interstitial section below the nature hero. */
+.hero-copy > p {
+  display: none;
+}
+
+.hero .text-link {
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(34px, 4vw, 54px);
+  color: #2f2c27;
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+}
+
+.hero-principles {
+  position: absolute;
+  z-index: 2;
+  left: 6vw;
+  right: 6vw;
+  bottom: 34px;
+  width: auto;
+  margin: 0;
+  padding-top: 17px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid rgba(33,31,27,.17);
+  color: #5f5951;
+}
+
+.hero-principles span {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-right: 28px;
+  font-size: 8px;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+}
+
+.hero-principles span + span {
+  padding-left: 28px;
+  border-left: 1px solid rgba(33,31,27,.12);
+}
+
+.hero-principles span::before {
+  content: "";
+  width: 4px;
+  height: 4px;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: .55;
+}
+
+.hero-index {
+  display: none !important;
+}
+
+/* ---------- Editorial interstitial ---------- */
+.manifesto {
+  min-height: min(88svh, 860px);
+  padding: 7vw 6vw 6vw;
+  position: relative;
+  overflow: hidden;
+  display: grid !important;
+  grid-template-columns: minmax(120px, .34fr) minmax(0, 1.66fr);
+  grid-template-rows: auto 1fr auto;
+  column-gap: 5vw;
+  align-items: start;
+  background:
+    radial-gradient(circle at 86% 18%, rgba(255,255,255,.08), transparent 28%),
+    linear-gradient(128deg, #35312c 0%, #292722 52%, #211f1b 100%);
+  color: #f0e9df;
+  border-top: 1px solid rgba(255,255,255,.08);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.manifesto::before {
+  content: "EVERNE";
+  position: absolute;
+  right: -2vw;
+  bottom: -3.8vw;
+  color: rgba(240,233,223,.035);
+  font: 400 clamp(8rem, 17vw, 19rem)/.8 var(--serif);
+  letter-spacing: -.065em;
+  pointer-events: none;
+}
+
+.manifesto::after {
+  content: "";
+  position: absolute;
+  width: min(44vw, 680px);
+  aspect-ratio: 1;
+  right: -12vw;
+  top: -23vw;
+  border: 1px solid rgba(240,233,223,.08);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.manifesto .section-label {
+  grid-column: 1;
+  grid-row: 1;
+  margin: 0;
+  color: rgba(240,233,223,.54);
+}
+
+.manifesto .section-label span:first-child {
+  font-size: 0;
+}
+
+.manifesto .section-label span:first-child::after {
+  content: "01";
+  font-size: 9px;
+}
+
+.manifesto .section-label span:last-child {
+  font-size: 0;
+}
+
+.manifesto .section-label span:last-child::after {
+  content: "The premise";
+  font-size: 9px;
+}
+
+.manifesto h2 {
+  grid-column: 2;
+  grid-row: 2;
+  align-self: center;
+  max-width: 1180px;
+  margin: 5vw 0;
+  color: #f0e9df;
+  font-size: 0;
+  font-weight: 400;
+}
+
+.manifesto h2::after {
+  content: "Considered tools for restoring\A the surface, shape and feel\A of the garments already\A in your wardrobe.";
+  display: block;
+  white-space: pre-line;
+  font: 400 clamp(4rem, 7.15vw, 8rem)/.93 var(--serif);
+  letter-spacing: -.047em;
+}
+
+.manifesto-copy {
+  display: none !important;
+}
+
+.manifesto > .text-link {
+  display: none !important;
+}
+
+.featured-product {
+  grid-template-columns: .92fr 1.08fr;
+  min-height: 710px;
+}
+
+.featured-gallery {
+  height: 710px;
+  min-height: 0;
+  grid-template-rows: 1.12fr .68fr;
+}
+
+.featured-product-copy {
+  min-height: 710px;
+  padding: 4.4vw 4.4vw 3.6vw;
+}
+
+.featured-product-copy > .eyebrow {
+  margin-top: 38px;
+}
+
+.featured-product-copy h2 {
+  margin: 16px 0 20px;
+  font-size: clamp(3.6rem, 5vw, 5.8rem);
+}
+
+.featured-lead {
+  margin: 26px 0;
+  max-width: 640px;
+}
+
+.featured-actions {
+  margin: 26px 0 20px;
+}
+
+@media (max-width: 980px) {
+  .manifesto {
+    min-height: 720px;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    row-gap: 54px;
+  }
+
+  .manifesto .section-label,
+  .manifesto h2 {
+    grid-column: 1;
+  }
+
+  .manifesto h2 {
+    grid-row: 2;
+    margin: 0;
+  }
+
+  .featured-gallery {
+    height: 620px;
+  }
+
+  .featured-product-copy {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 780px) {
+  .hero-editorial {
+    min-height: auto;
+    background-position: 62% center;
+  }
+
+  .hero-copy {
+    min-height: calc(100svh - 93px);
+    padding: 58px 20px 124px;
+  }
+
+  .hero-copy .eyebrow {
+    margin-bottom: 40px;
+  }
+
+  .hero h1 {
+    max-width: 94%;
+    font-size: clamp(4.5rem, 19vw, 6.4rem);
+  }
+
+  .hero .text-link {
+    margin-top: 38px;
+  }
+
+  .hero-principles {
+    left: 20px;
+    right: 20px;
+    bottom: 18px;
+    grid-template-columns: 1fr;
+  }
+
+  .hero-principles span {
+    padding: 9px 0;
+  }
+
+  .hero-principles span + span {
+    padding-left: 0;
+    border-left: 0;
+    border-top: 1px solid rgba(33,31,27,.09);
+  }
+
+  .manifesto {
+    min-height: 76svh;
+    padding: 64px 20px 58px;
+    row-gap: 44px;
+  }
+
+  .manifesto h2::after {
+    font-size: clamp(3.25rem, 14vw, 5.3rem);
+    line-height: .96;
+  }
+
+  .manifesto::before {
+    font-size: 29vw;
+    bottom: -1vw;
+  }
+
+  .featured-gallery {
+    height: 500px;
+    min-height: 500px;
+    grid-template-rows: 1.08fr .72fr;
+  }
+
+  .featured-product-copy {
+    padding-top: 58px;
+  }
+}
