@@ -130,7 +130,7 @@ export default function ProductDetailPage() {
             <div className="product-system-upsell-copy">
               <span className="eyebrow">The EVERNE System</span>
               <h2>Build the full routine.</h2>
-              <p>Steam Brush, Electronic Lint Remover, Cashmere Comb and Fabric Care Brush together in one considered wardrobe-care system.</p>
+              <p>Steam Brush, Electronic Lint Remover, Cashmere Comb and Fabric Shaver together in one considered wardrobe-care system.</p>
               <div className="system-price-line"><span>Individual value €220</span><strong>€149</strong><em>Save €71</em></div>
               <a className="text-link" href={withBase(`products/${system.handle}`)}>View the system <span>→</span></a>
             </div>
