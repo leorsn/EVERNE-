@@ -6,6 +6,7 @@ import './preview.css';
 import './legal-footer.css';
 import './editorial-polish.css';
 import './mobile-conversion.css';
+import './storefront-restructure.css';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
