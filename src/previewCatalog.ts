@@ -154,6 +154,67 @@ export const previewProducts: PreviewProduct[] = [
     care: 'Always follow the garment care label. Test delicate or unfamiliar fabrics on an inconspicuous area first. Do not use on materials that should not be exposed to steam or heat.',
     details: ['1000W handheld garment steamer', 'Foldable format', 'Brush attachment included', 'Measuring cup included'],
   },
+  {
+    number: '04',
+    title: 'Electric Cleaning Brush',
+    handle: 'everne-electric-cleaning-brush',
+    sku: 'EV-ECB-01',
+    price: '€39',
+    description: 'A compact powered cleaning brush for targeted household care on suitable surfaces. Interchangeable cleaning heads make it useful for kitchens, bathrooms and everyday detail cleaning.',
+    ritual: 'Focused cleaning for everyday surfaces.',
+    tagline: 'More control for the places that need attention.',
+    images: [
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-electric-cleaning-brush-white-studio.png?v=1790341905',
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-electric-cleaning-brush-white-lifestyle.png?v=1790341915',
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-electric-cleaning-brush-white-detail.png?v=1790341927',
+    ],
+    alt: [
+      'Electric Cleaning Brush White studio view',
+      'Electric Cleaning Brush White in use',
+      'Electric Cleaning Brush White detail view',
+    ],
+    variants: [
+      {
+        name: 'White',
+        sku: 'EV-ECB-01',
+        images: [
+          'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-electric-cleaning-brush-white-studio.png?v=1790341905',
+          'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-electric-cleaning-brush-white-lifestyle.png?v=1790341915',
+          'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-electric-cleaning-brush-white-detail.png?v=1790341927',
+        ],
+        alt: ['Electric Cleaning Brush White studio view', 'Electric Cleaning Brush White in use', 'Electric Cleaning Brush White detail view'],
+      },
+      {
+        name: 'Pink',
+        sku: 'EV-ECB-02',
+        images: [
+          'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-electric-cleaning-brush-pink-studio.png?v=1790341937',
+          'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-electric-cleaning-brush-pink-lifestyle.png?v=1790341949',
+          'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-electric-cleaning-brush-pink-detail.png?v=1790341960',
+        ],
+        alt: ['Electric Cleaning Brush Pink studio view', 'Electric Cleaning Brush Pink in use', 'Electric Cleaning Brush Pink detail view'],
+      },
+      {
+        name: 'Green',
+        sku: 'EV-ECB-03',
+        images: [
+          'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-electric-cleaning-brush-green-studio.png?v=1790341868',
+          'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-electric-cleaning-brush-green-lifestyle.png?v=1790341879',
+          'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-electric-cleaning-brush-green-detail.png?v=1790341893',
+        ],
+        alt: ['Electric Cleaning Brush Green studio view', 'Electric Cleaning Brush Green in use', 'Electric Cleaning Brush Green detail view'],
+      },
+    ],
+    facts: ['Powered cleaning', 'Interchangeable heads', '3 colour variants'],
+    benefits: [
+      { title: 'Targeted cleaning', copy: 'Designed for focused household tasks where a powered brush can save repeated manual scrubbing.' },
+      { title: 'Multiple surfaces', copy: 'Use the appropriate head on suitable kitchen, bathroom and everyday household surfaces.' },
+      { title: 'Compact control', copy: 'The handheld format keeps pressure and movement easy to control during detailed cleaning.' },
+    ],
+    howToUse: 'Select a suitable cleaning head, apply an appropriate cleaning product if needed, then work in controlled passes without excessive pressure.',
+    care: 'Always test on an inconspicuous area first and follow the surface manufacturer’s cleaning instructions. Avoid delicate or easily scratched materials unless confirmed suitable.',
+    details: ['Compact powered home-care tool', 'Interchangeable cleaning heads', 'Available in White, Pink and Green'],
+  },
 ];
 
 export function productImages(product: PreviewProduct): [string, string, string] {
