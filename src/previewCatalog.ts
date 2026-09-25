@@ -244,6 +244,57 @@ export const previewProducts: PreviewProduct[] = [
     care: 'Always test on an inconspicuous area first. Do not use on surfaces that may scratch, snag or react to natural fibres or wood. Keep dry and allow the brush to air after use.',
     details: ['Beech-wood body', 'Soft goat-wool bristles', 'Approx. 18 × 5 × 3 cm', 'Manual, non-electric care'],
   },
+  {
+    number: '06',
+    title: 'Double-Sided Lint Brush',
+    handle: 'everne-double-sided-lint-brush',
+    sku: 'EV-DLB-01',
+    price: '€29',
+    description: 'A reusable manual garment-care brush designed to lift loose lint, hair and surface dust from suitable clothing, upholstery and everyday textiles. The double-sided format keeps quick surface care simple and repeatable.',
+    ritual: 'Double-sided care for everyday textiles.',
+    tagline: 'Lift lint. Reset the surface. Use again.',
+    images: [
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-double-sided-lint-brush-blue-studio.png?v=1790351748',
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-double-sided-lint-brush-blue-lifestyle.png?v=1790351759',
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-double-sided-lint-brush-blue-detail.png?v=1790351771',
+    ],
+    alt: [
+      'EVERNE Double-Sided Lint Brush Blue studio view',
+      'EVERNE Double-Sided Lint Brush Blue on dark textile',
+      'EVERNE Double-Sided Lint Brush Blue detail view',
+    ],
+    variants: [
+      {
+        name: 'Blue',
+        sku: 'EV-DLB-01',
+        images: [
+          'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-double-sided-lint-brush-blue-studio.png?v=1790351748',
+          'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-double-sided-lint-brush-blue-lifestyle.png?v=1790351759',
+          'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-double-sided-lint-brush-blue-detail.png?v=1790351771',
+        ],
+        alt: ['EVERNE Double-Sided Lint Brush Blue studio view', 'EVERNE Double-Sided Lint Brush Blue on dark textile', 'EVERNE Double-Sided Lint Brush Blue detail view'],
+      },
+      {
+        name: 'Pink',
+        sku: 'EV-DLB-02',
+        images: [
+          'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-double-sided-lint-brush-pink-studio.png?v=1790351782',
+          'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-double-sided-lint-brush-pink-lifestyle.png?v=1790351796',
+          'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-double-sided-lint-brush-pink-detail.png?v=1790351810',
+        ],
+        alt: ['EVERNE Double-Sided Lint Brush Pink studio view', 'EVERNE Double-Sided Lint Brush Pink on knit textile', 'EVERNE Double-Sided Lint Brush Pink detail view'],
+      },
+    ],
+    facts: ['Double-sided surface', 'Reusable manual care', '2 colour variants'],
+    benefits: [
+      { title: 'Everyday surface reset', copy: 'Made for lifting loose lint, hair and surface dust from suitable garments, upholstery and household textiles.' },
+      { title: 'Reusable format', copy: 'A manual care tool designed for repeat use without disposable sheets or powered components.' },
+      { title: 'Two-sided design', copy: 'The double-sided brushing surface keeps quick textile maintenance straightforward from either direction.' },
+    ],
+    howToUse: 'Brush lightly in controlled strokes over a clean, dry surface. Work gradually and avoid excessive pressure.',
+    care: 'Always test on an inconspicuous area first. Do not use on delicate, loose-knit or easily snagged materials unless confirmed suitable.',
+    details: ['Double-sided manual lint brush', 'Reusable non-electric format', 'Designed for loose lint, hair and surface dust', 'Available in Blue and Pink'],
+  },
 ];
 
 export function productImages(product: PreviewProduct): [string, string, string] {
