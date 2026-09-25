@@ -3,9 +3,9 @@ import './steam-brush-experience.css';
 
 type SteamBrushExperienceProps = {
   steamBrush: PreviewProduct;
-  system: PreviewProduct;
+  pro: PreviewProduct;
   steamPrice: string;
-  systemPrice: string;
+  proPrice: string;
 };
 
 function productHref(handle: string) {
@@ -31,7 +31,7 @@ const steps = [
   },
 ];
 
-export default function SteamBrushExperience({ steamBrush, system, steamPrice, systemPrice }: SteamBrushExperienceProps) {
+export default function SteamBrushExperience({ steamBrush, pro, steamPrice, proPrice }: SteamBrushExperienceProps) {
   return (
     <>
       <section className="featured-product" id="steam-brush" aria-labelledby="steam-brush-title">
@@ -65,7 +65,7 @@ export default function SteamBrushExperience({ steamBrush, system, steamPrice, s
 
           <div className="featured-actions">
             <a href={productHref(steamBrush.handle)}>View full details <span>→</span></a>
-            <a href="#system-comparison">Compare with the system <span>↓</span></a>
+            <a href="#product-comparison">Compare care tools <span>↓</span></a>
           </div>
 
           <details className="featured-details">
@@ -97,34 +97,34 @@ export default function SteamBrushExperience({ steamBrush, system, steamPrice, s
         </div>
       </section>
 
-      <section className="system-comparison" id="system-comparison" aria-labelledby="system-comparison-title">
+      <section className="system-comparison" id="product-comparison" aria-labelledby="product-comparison-title">
         <div className="system-comparison-copy">
-          <div className="section-label"><span>04</span><span>Choose your level</span></div>
-          <h2 id="system-comparison-title">Start with steam.<br /><em>Or build the full routine.</em></h2>
-          <p>The Steam Brush is the focused entry point. The EVERNE System adds the complete four-tool care routine for €54 more than the Steam Brush alone.</p>
+          <div className="section-label"><span>04</span><span>Choose your tool</span></div>
+          <h2 id="product-comparison-title">Refresh the shape.<br /><em>Or restore the surface.</em></h2>
+          <p>The Steam Brush addresses light creasing and refreshes suitable garments. The Fabric Reviver Pro is designed for more intensive surface care when visible pilling and loose fibres need attention.</p>
         </div>
 
         <div className="comparison-cards">
           <article className="comparison-card">
-            <div className="comparison-card-head"><span>Focused care</span><strong>{steamPrice}</strong></div>
+            <div className="comparison-card-head"><span>Steam care</span><strong>{steamPrice}</strong></div>
             <h3>{steamBrush.title}</h3>
             <ul>
-              <li><span>Steam refresh</span><strong>Included</strong></li>
-              <li><span>Electronic lint removal</span><strong>—</strong></li>
-              <li><span>Cashmere care</span><strong>—</strong></li>
-              <li><span>Fabric surface care</span><strong>—</strong></li>
+              <li><span>Light crease smoothing</span><strong>Included</strong></li>
+              <li><span>Between-wear refresh</span><strong>Included</strong></li>
+              <li><span>Surface pilling removal</span><strong>—</strong></li>
             </ul>
             <a href={productHref(steamBrush.handle)}>View Steam Brush <span>→</span></a>
           </article>
 
           <article className="comparison-card comparison-card--system">
-            <div className="comparison-card-head"><span>Complete routine</span><strong>{systemPrice}</strong></div>
-            <h3>{system.title}</h3>
+            <div className="comparison-card-head"><span>Surface care</span><strong>{proPrice}</strong></div>
+            <h3>{pro.title}</h3>
             <ul>
-              {system.facts?.map((fact) => <li key={fact}><span>{fact}</span><strong>Included</strong></li>)}
+              <li><span>Visible pilling</span><strong>Included</strong></li>
+              <li><span>Loose surface fibres</span><strong>Included</strong></li>
+              <li><span>Four colour variants</span><strong>Included</strong></li>
             </ul>
-            <div className="system-value"><span>Individual value €220</span><strong>Save €71</strong></div>
-            <a href={productHref(system.handle)}>View the system <span>→</span></a>
+            <a href={productHref(pro.handle)}>View Fabric Reviver Pro <span>→</span></a>
           </article>
         </div>
       </section>
