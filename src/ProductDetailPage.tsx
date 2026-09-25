@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { previewProducts, type PreviewProduct } from './previewCatalog';
 import './product-detail.css';
+import './product-variants.css';
 
 const PURCHASES_ENABLED = false;
 
