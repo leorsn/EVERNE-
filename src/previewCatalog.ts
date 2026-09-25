@@ -215,6 +215,35 @@ export const previewProducts: PreviewProduct[] = [
     care: 'Always test on an inconspicuous area first and follow the surface manufacturer’s cleaning instructions. Avoid delicate or easily scratched materials unless confirmed suitable.',
     details: ['Compact powered home-care tool', 'Interchangeable cleaning heads', 'Available in White, Pink and Green'],
   },
+  {
+    number: '05',
+    title: 'Soft Care Brush',
+    handle: 'everne-soft-care-brush',
+    sku: 'EV-SCB-01',
+    price: '€29',
+    description: 'A manual care brush with a smooth beech-wood body and soft goat-wool bristles for light, controlled dry surface care on suitable textiles, accessories and everyday objects.',
+    ritual: 'Gentle care, naturally.',
+    tagline: 'Soft fibres. Solid wood. A quieter way to care.',
+    images: [
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-soft-care-brush-studio.png?v=1790347933',
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-soft-care-brush-lifestyle.png?v=1790347949',
+      'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/everne-soft-care-brush-detail.png?v=1790347959',
+    ],
+    alt: [
+      'EVERNE Soft Care Brush in beech wood with soft natural bristles on a warm neutral background',
+      'EVERNE Soft Care Brush styled on natural linen in a warm neutral setting',
+      'Close detail of the EVERNE Soft Care Brush on natural stone',
+    ],
+    facts: ['Beech wood', 'Soft goat-wool bristles', 'Manual care'],
+    benefits: [
+      { title: 'Soft surface care', copy: 'Designed for light brushing where a gentler manual intervention is preferable to powered care.' },
+      { title: 'Natural materials', copy: 'A smooth beech-wood body paired with soft goat-wool bristles for a simple, tactile care object.' },
+      { title: 'Controlled routine', copy: 'Use slow, light strokes and let the bristles lift loose surface dust and fibres without excessive pressure.' },
+    ],
+    howToUse: 'Use with light, controlled strokes on a clean, dry surface. Work gradually and avoid excessive pressure.',
+    care: 'Always test on an inconspicuous area first. Do not use on surfaces that may scratch, snag or react to natural fibres or wood. Keep dry and allow the brush to air after use.',
+    details: ['Beech-wood body', 'Soft goat-wool bristles', 'Approx. 18 × 5 × 3 cm', 'Manual, non-electric care'],
+  },
 ];
 
 export function productImages(product: PreviewProduct): [string, string, string] {
