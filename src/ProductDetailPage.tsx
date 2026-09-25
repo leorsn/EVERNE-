@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { previewProducts, type PreviewProduct } from './previewCatalog';
 import './product-detail.css';
@@ -25,13 +26,14 @@ function ProductMiniCard({ product }: { product: PreviewProduct }) {
 export default function ProductDetailPage() {
   const { handle } = useParams();
   const product = previewProducts.find((item) => item.handle === handle);
+  const [variantIndex, setVariantIndex] = useState(0);
 
   if (!product) {
     return (
       <div className="product-page-shell">
         <header className="topbar product-topbar">
           <a className="brand" href={withBase('')} aria-label="EVERNE home">EVERNE</a>
-          <nav aria-label="Primary navigation"><a href={withBase('#steam-brush')}>Steam Brush</a><a href={withBase('#system-comparison')}>System</a><a href={withBase('#collection')}>Collection</a></nav>
+          <nav aria-label="Primary navigation"><a href={withBase('#steam-brush')}>Steam Brush</a><a href={withBase('#product-comparison')}>Compare</a><a href={withBase('#collection')}>Collection</a></nav>
           <span className="product-topbar-state">Unavailable</span>
         </header>
         <main className="product-not-found"><span className="eyebrow">EVERNE · Edition 01</span><h1>Product not found.</h1><a className="text-link" href={withBase('#collection')}>Back to collection <span>→</span></a></main>
@@ -39,16 +41,17 @@ export default function ProductDetailPage() {
     );
   }
 
-  const isSystem = product.sku === 'EV-RS-01';
-  const system = previewProducts.find((item) => item.sku === 'EV-RS-01')!;
-  const related = previewProducts.filter((item) => item.sku !== product.sku && item.sku !== 'EV-RS-01').slice(0, 3);
+  const selectedVariant = product.variants?.[variantIndex];
+  const activeImages = selectedVariant?.images ?? product.images;
+  const activeAlt = selectedVariant?.alt ?? product.alt;
+  const related = previewProducts.filter((item) => item.sku !== product.sku);
 
   return (
     <div className="product-page-shell" id="top">
       <div className="status-bar product-status"><span>Edition 01 · Preview</span><span>Germany / EUR</span></div>
       <header className="topbar product-topbar">
         <a className="brand" href={withBase('')} aria-label="EVERNE home">EVERNE</a>
-        <nav aria-label="Primary navigation"><a href={withBase('#steam-brush')}>Steam Brush</a><a href={withBase('#system-comparison')}>System</a><a href={withBase('#collection')}>Collection</a></nav>
+        <nav aria-label="Primary navigation"><a href={withBase('#steam-brush')}>Steam Brush</a><a href={withBase('#product-comparison')}>Compare</a><a href={withBase('#collection')}>Collection</a></nav>
         <span className="product-topbar-state">Unavailable</span>
       </header>
 
@@ -57,10 +60,10 @@ export default function ProductDetailPage() {
 
         <section className="product-detail-hero">
           <div className="product-detail-gallery">
-            <figure className="product-detail-main-image"><img src={product.images[0]} alt={product.alt[0]} /></figure>
+            <figure className="product-detail-main-image"><img src={activeImages[0]} alt={activeAlt[0]} /></figure>
             <div className="product-detail-secondary-images">
-              <figure><img src={product.images[1]} alt={product.alt[1]} loading="lazy" /></figure>
-              <figure><img src={product.images[2]} alt={product.alt[2]} loading="lazy" /></figure>
+              <figure><img src={activeImages[1]} alt={activeAlt[1]} loading="lazy" /></figure>
+              <figure><img src={activeImages[2]} alt={activeAlt[2]} loading="lazy" /></figure>
             </div>
           </div>
 
@@ -69,6 +72,24 @@ export default function ProductDetailPage() {
             <h1>{product.title}</h1>
             <p className="product-detail-tagline">{product.tagline ?? product.ritual}</p>
             <p className="product-detail-description">{product.description}</p>
+
+            {product.variants?.length ? (
+              <div className="product-variant-block">
+                <span className="product-variant-label">Colour · {selectedVariant?.name}</span>
+                <div className="product-variant-options" role="group" aria-label="Choose colour">
+                  {product.variants.map((variant, index) => (
+                    <button
+                      key={variant.sku}
+                      className={index === variantIndex ? 'is-active' : ''}
+                      onClick={() => setVariantIndex(index)}
+                      type="button"
+                    >
+                      {variant.name}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : null}
 
             <div className="product-detail-facts" aria-label={`${product.title} key facts`}>
               {product.facts?.map((fact) => <span key={fact}>{fact}</span>)}
@@ -118,28 +139,6 @@ export default function ProductDetailPage() {
           </ul>
         </section>
 
-        {isSystem ? (
-          <section className="product-system-included">
-            <div className="product-detail-section-heading"><span className="eyebrow">Inside the system</span><h2>Four tools. One routine.</h2></div>
-            <div className="system-included-grid">
-              {previewProducts.filter((item) => ['EV-GB-01', 'EV-WH-01', 'EV-CC-01', 'EV-FS-01'].includes(item.sku)).map((item) => <ProductMiniCard key={item.sku} product={item} />)}
-            </div>
-          </section>
-        ) : (
-          <section className="product-system-upsell">
-            <div className="product-system-upsell-copy">
-              <span className="eyebrow">The EVERNE System</span>
-              <h2>Build the full routine.</h2>
-              <p>Steam Brush, Electronic Lint Remover, Cashmere Comb and Fabric Shaver together in one considered wardrobe-care system.</p>
-              <div className="system-price-line"><span>Individual value €220</span><strong>€149</strong><em>Save €71</em></div>
-              <a className="text-link" href={withBase(`products/${system.handle}`)}>View the system <span>→</span></a>
-            </div>
-            <div className="product-system-upsell-images">
-              {system.images.map((image, index) => <figure key={image}><img src={image} alt={system.alt[index]} loading="lazy" /></figure>)}
-            </div>
-          </section>
-        )}
-
         <section className="related-products-section">
           <div className="product-detail-section-heading"><span className="eyebrow">Continue exploring</span><h2>Edition 01.</h2></div>
           <div className="related-products-grid">{related.map((item) => <ProductMiniCard key={item.sku} product={item} />)}</div>
@@ -148,7 +147,7 @@ export default function ProductDetailPage() {
 
       <footer className="product-footer">
         <div className="footer-lead"><a className="brand" href={withBase('')}>EVERNE</a><p>Care for what you keep.</p></div>
-        <div><span>Explore</span><a href={withBase('products/steam-brush')}>Steam Brush</a><a href={withBase('products/the-everne-system')}>The System</a><a href={withBase('#collection')}>Collection</a></div>
+        <div><span>Explore</span><a href={withBase('products/everne-fabric-reviver')}>Fabric Reviver</a><a href={withBase('products/electronic-lint-remover')}>Fabric Reviver Pro</a><a href={withBase('products/steam-brush')}>Steam Brush</a></div>
         <div><span>Service</span><span>Orders currently closed</span><a href={withBase('#faq')}>Care & delivery</a></div>
         <div><span>Legal</span><a href={withBase('rechtliches.html#impressum')}>Impressum</a><a href={withBase('rechtliches.html#datenschutz')}>Datenschutz</a><a href={withBase('rechtliches.html#widerruf')}>Widerruf</a></div>
         <div className="footer-bottom"><span>© 2026 EVERNE</span><span>Hamburg, Germany · EUR</span><span>Commerce by Shopify</span></div>
