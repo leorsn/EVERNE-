@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import App from './App';
 import ProductDetailPage from './ProductDetailPage';
+import SoftCareBrushPage from './SoftCareBrushPage';
 import './styles.css';
 import './preview.css';
 import './legal-footer.css';
@@ -19,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter basename={basename}>
       <Routes>
         <Route path="/" element={<App />} />
+        <Route path="/products/everne-soft-care-brush" element={<SoftCareBrushPage />} />
         <Route path="/products/:handle" element={<ProductDetailPage />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
