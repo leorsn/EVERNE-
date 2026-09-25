@@ -21,7 +21,7 @@ const PURCHASES_ENABLED = false;
 const faqs = [
   ['Where do you deliver?', 'Available delivery methods, timing and final shipping cost are shown at Shopify checkout for your address.'],
   ['Are the tools suitable for every fabric?', 'No universal care tool is right for every fabric. Always test an inconspicuous area first and follow the garment care label.'],
-  ['What is included in The EVERNE System?', 'The Steam Brush, Electronic Lint Remover, Cashmere Comb and Fabric Shaver. Four complementary tools for refreshing, restoring and maintaining the garments you keep.'],
+  ['What is the difference between Fabric Reviver and Fabric Reviver Pro?', 'The Fabric Reviver is the compact everyday option for visible lint and light surface pilling. The Pro is designed for more intensive surface care, has a larger format and an integrated display.'],
   ['Is payment secure?', 'Yes. Your order and payment are completed through Shopify’s encrypted checkout; payment details are never handled by this storefront.'],
 ];
 
@@ -35,24 +35,10 @@ function previewBySku(sku: string) {
 }
 
 function imageForSku(sku: string | null | undefined, index = 0) {
-  const preview = previewProducts.find((item) => item.sku === sku);
-  return preview ? productImages(preview)[index] : productImages(previewProducts[0])[0];
-}
-
-function BundleVisual({ compact = false }: { compact?: boolean }) {
-  const steam = imageForSku('EV-GB-01');
-  const lint = imageForSku('EV-WH-01');
-  const comb = imageForSku('EV-CC-01');
-  const shaver = imageForSku('EV-FS-01');
-
-  return (
-    <div className={`bundle-visual ${compact ? 'bundle-visual--compact' : ''}`} aria-label="The EVERNE System: Steam Brush, Electronic Lint Remover, Cashmere Comb and Fabric Shaver">
-      <figure className="bundle-tile bundle-comb-one"><img src={steam} alt="Steam Brush included in The EVERNE System" /></figure>
-      <figure className="bundle-tile bundle-comb-two"><img src={comb} alt="Cashmere Comb included in The EVERNE System" /></figure>
-      <figure className="bundle-tile bundle-lint"><img src={lint} alt="Electronic Lint Remover included in The EVERNE System" /></figure>
-      <figure className="bundle-tile bundle-shaver"><img src={shaver} alt="Fabric Shaver included in The EVERNE System" /></figure>
-    </div>
-  );
+  const preview = previewProducts.find((item) => item.sku === sku || item.variants?.some((variant) => variant.sku === sku));
+  if (!preview) return productImages(previewProducts[0])[0];
+  const variant = preview.variants?.find((item) => item.sku === sku);
+  return variant ? variant.images[index] : productImages(preview)[index];
 }
 
 type ProductFeatureProps = {
@@ -62,14 +48,13 @@ type ProductFeatureProps = {
 
 function ProductFeature({ preview, live }: ProductFeatureProps) {
   const image = productImages(preview)[0];
-  const isBundle = preview.sku === 'EV-RS-01';
   const price = live ? formatMoney(live.variant.price) : preview.price;
 
   return (
-    <article className={`product-card ${isBundle ? 'product-card--bundle' : ''}`} id={preview.sku}>
+    <article className="product-card" id={preview.sku}>
       <div className="product-card-visual">
         <a className="product-card-visual-link" href={productHref(preview.handle)} aria-label={`View ${preview.title} details`}>
-          {isBundle ? <BundleVisual /> : <img src={image} alt={preview.alt[0]} loading={preview.number === '01' ? 'eager' : 'lazy'} />}
+          <img src={image} alt={preview.alt[0]} loading={preview.number === '01' ? 'eager' : 'lazy'} />
         </a>
       </div>
       <div className="product-card-copy">
@@ -247,14 +232,13 @@ export default function App() {
     }
   }
 
-  const cashmereComb = previewBySku('EV-CC-01');
-  const fabricShaver = previewBySku('EV-FS-01');
+  const fabricReviver = previewBySku('EV-FR-01');
+  const fabricReviverPro = previewBySku('EV-WH-01');
   const steamBrush = previewBySku('EV-GB-01');
-  const system = previewBySku('EV-RS-01');
   const steamLive = liveBySku.get('EV-GB-01');
-  const systemLive = liveBySku.get('EV-RS-01');
+  const proLive = liveBySku.get('EV-WH-01');
   const steamPrice = steamLive ? formatMoney(steamLive.variant.price) : steamBrush.price;
-  const systemPrice = systemLive ? formatMoney(systemLive.variant.price) : system.price;
+  const proPrice = proLive ? formatMoney(proLive.variant.price) : fabricReviverPro.price;
 
   return (
     <div className="site-shell" id="top">
@@ -265,7 +249,7 @@ export default function App() {
       </div>
       <header className="topbar">
         <a className="brand" href="#top" aria-label="EVERNE home">EVERNE</a>
-        <nav aria-label="Primary navigation"><a href="#steam-brush">Steam Brush</a><a href="#system-comparison">System</a><a href="#collection">Collection</a></nav>
+        <nav aria-label="Primary navigation"><a href="#steam-brush">Steam Brush</a><a href="#product-comparison">Compare</a><a href="#collection">Collection</a></nav>
         <button className="bag-button" disabled={!PURCHASES_ENABLED} onClick={() => setBagOpen(true)} aria-label="Edition 01 is currently unavailable">Unavailable</button>
       </header>
 
@@ -308,10 +292,10 @@ export default function App() {
           <div className="manifesto-copy"><p>EVERNE is built around a simple idea: wardrobe care should feel considered, not disposable. Remove what does not belong, restore what time has changed, and keep the pieces worth wearing in motion.</p><a className="text-link" href="#steam-brush">Meet the hero product <span>↘</span></a></div>
         </section>
 
-        <SteamBrushExperience steamBrush={steamBrush} system={system} steamPrice={steamPrice} systemPrice={systemPrice} />
+        <SteamBrushExperience steamBrush={steamBrush} pro={fabricReviverPro} steamPrice={steamPrice} proPrice={proPrice} />
 
         <section className="collection" id="collection">
-          <div className="collection-heading"><div className="section-label"><span>06</span><span>The collection</span></div><h2>Our essentials</h2><p>Four individual care tools and one focused system. No invented product branding. No unnecessary extras.</p></div>
+          <div className="collection-heading"><div className="section-label"><span>06</span><span>The collection</span></div><h2>Our essentials</h2><p>Three focused garment-care tools for refreshing shape, restoring surfaces and maintaining the pieces you keep.</p></div>
           {PURCHASES_ENABLED && commerceError && <div className="commerce-note" role="alert"><span>{commerceError}</span><button onClick={() => void loadCommerce()}>Try again</button></div>}
           <div className="product-grid">
             {previewProducts.map((preview) => <ProductFeature key={preview.sku} preview={preview} live={liveBySku.get(preview.sku)} />)}
@@ -331,7 +315,7 @@ export default function App() {
                   <div><h3>{benefit.title}</h3><p>{benefit.copy}</p></div>
                 </article>
               ))}
-              <article><span>05</span><div><h3>How to use</h3><p>{steamBrush.howToUse}</p></div></article>
+              <article><span>04</span><div><h3>How to use</h3><p>{steamBrush.howToUse}</p></div></article>
             </div>
           </div>
         </section>
@@ -339,8 +323,8 @@ export default function App() {
         <section className="journal" id="journal">
           <div className="journal-heading"><div className="section-label"><span>08</span><span>Field notes</span></div><h2>Care, without excess.</h2></div>
           <div className="journal-grid">
-            <article><img src={productImages(cashmereComb)[0]} alt={cashmereComb.alt[0]} loading="lazy" /><span>Knitwear · Note 01</span><h3>Pilling is part of wear. A careful pass can be enough.</h3></article>
-            <article><img src={productImages(fabricShaver)[0]} alt={fabricShaver.alt[0]} loading="lazy" /><span>Surface care · Note 02</span><h3>Choose the lightest intervention that gets the fabric back where you want it.</h3></article>
+            <article><img src={productImages(fabricReviver)[0]} alt={fabricReviver.alt[0]} loading="lazy" /><span>Surface care · Note 01</span><h3>Light pilling does not always need an intensive intervention.</h3></article>
+            <article><img src={productImages(fabricReviverPro)[0]} alt={fabricReviverPro.alt[0]} loading="lazy" /><span>Surface care · Note 02</span><h3>For more visible wear, work slowly and let the tool do the surface work.</h3></article>
           </div>
         </section>
 
@@ -352,14 +336,14 @@ export default function App() {
         </section>
 
         <section className="closing closing-light">
-          <div className="closing-copy"><span className="eyebrow">The EVERNE System</span><h2>Four tools.<br />One considered system.</h2><p>Steam Brush · Electronic Lint Remover · Cashmere Comb · Fabric Shaver</p><a className="text-link" href={productHref(system.handle)}>View the system <span>→</span></a></div>
-          <BundleVisual compact />
+          <div className="closing-copy"><span className="eyebrow">Fabric Reviver Pro</span><h2>More intensive care.<br />Same considered approach.</h2><p>Cream · White · Green · Grey</p><a className="text-link" href={productHref(fabricReviverPro.handle)}>Explore the Pro <span>→</span></a></div>
+          <div className="object-image"><img src={productImages(fabricReviverPro)[0]} alt={fabricReviverPro.alt[0]} loading="lazy" /></div>
         </section>
       </main>
 
       <footer>
         <div className="footer-lead"><a className="brand" href="#top">EVERNE</a><p>Care for what you keep.</p></div>
-        <div><span>Explore</span><a href={productHref(steamBrush.handle)}>Steam Brush</a><a href={productHref(system.handle)}>The System</a><a href="#collection">Collection</a></div>
+        <div><span>Explore</span><a href={productHref(fabricReviver.handle)}>Fabric Reviver</a><a href={productHref(fabricReviverPro.handle)}>Fabric Reviver Pro</a><a href={productHref(steamBrush.handle)}>Steam Brush</a></div>
         <div><span>Service</span><button disabled={!PURCHASES_ENABLED} onClick={() => setBagOpen(true)}>Orders currently closed</button><a href="#faq">Care & delivery</a></div>
         <div><span>Legal</span><a href="/rechtliches.html#impressum">Impressum</a><a href="/rechtliches.html#datenschutz">Datenschutz</a><a href="/rechtliches.html#widerruf">Widerruf</a><a href="/rechtliches.html#agb">AGB</a><a href="/rechtliches.html#versand">Versand & Retouren</a></div>
         <div className="footer-bottom"><span>© 2026 EVERNE</span><span>Hamburg, Germany · EUR</span><span>Commerce by Shopify</span></div>
