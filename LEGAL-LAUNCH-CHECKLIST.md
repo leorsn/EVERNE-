@@ -10,7 +10,9 @@ Status: PRE-LAUNCH — orders disabled
 - [x] Mobile visual pass completed for homepage and product pages.
 - [x] Desktop final visual pass completed for homepage and product pages.
 - [x] Legal page is present at `/rechtliches.html` with anchors for Impressum, Datenschutz, Widerruf, AGB and Versand & Retouren.
-- [x] Storefront purchase controls remain disabled via `PURCHASES_ENABLED = false`.
+- [x] Commerce status and product ordering are centralized in `src/storefrontConfig.ts`.
+- [x] Purchases require both `VITE_ENABLE_PURCHASES=true` and `VITE_LAUNCH_APPROVED=true`; a single environment change cannot open commerce.
+- [x] `.env.example` defaults both launch gates to `false`.
 - [ ] Final live-browser QA after the latest production deployment on desktop and mobile.
 - [ ] Verify every product image, title, price, SKU/variant and product-detail link against the final Shopify catalog before opening orders.
 
@@ -36,7 +38,7 @@ Status: PRE-LAUNCH — orders disabled
 
 ## Shopify checkout verification
 
-Do not set `PURCHASES_ENABLED` to `true` until all items below are verified in the real checkout.
+Do not set **both** `VITE_ENABLE_PURCHASES=true` and `VITE_LAUNCH_APPROVED=true` until all items below are verified in the real checkout.
 
 - [ ] Delivery restrictions are clearly shown no later than the start of the ordering process.
 - [ ] Accepted payment methods are clearly shown no later than the start of the ordering process.
@@ -50,4 +52,4 @@ Do not set `PURCHASES_ENABLED` to `true` until all items below are verified in t
 
 ## Final go-live gate
 
-EVERNE may only enable purchases after all unchecked legal, fulfilment and checkout blockers above have been resolved and the live Shopify checkout has been tested end-to-end.
+EVERNE may only enable purchases after all unchecked legal, fulfilment and checkout blockers above have been resolved and the live Shopify checkout has been tested end-to-end. At that point, enable both guarded launch variables in the production environment and redeploy.
