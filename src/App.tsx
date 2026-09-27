@@ -1,7 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
-  addCartLine,
-  createCart,
   formatMoney,
   getCart,
   getEdition01,
@@ -44,10 +42,11 @@ function imageForSku(sku: string | null | undefined, index = 0) {
 
 type ProductFeatureProps = {
   preview: PreviewProduct;
+  displayNumber: string;
   live?: { product: Product; variant: Product['variants']['nodes'][number] };
 };
 
-function ProductFeature({ preview, live }: ProductFeatureProps) {
+function ProductFeature({ preview, displayNumber, live }: ProductFeatureProps) {
   const image = productImages(preview)[0];
   const price = live ? formatMoney(live.variant.price) : preview.price;
 
@@ -59,7 +58,7 @@ function ProductFeature({ preview, live }: ProductFeatureProps) {
         </a>
       </div>
       <div className="product-card-copy">
-        <div className="product-meta"><span>{preview.number}</span><span>{preview.ritual}</span></div>
+        <div className="product-meta"><span>{displayNumber}</span><span>{preview.ritual}</span></div>
         <h3>{preview.title}</h3>
         <p>{preview.description}</p>
         {preview.facts?.length ? <ul className="product-facts" aria-label={`${preview.title} details`}>{preview.facts.map((fact) => <li key={fact}>{fact}</li>)}</ul> : null}
@@ -161,13 +160,13 @@ export default function App() {
     return map;
   }, [products]);
 
-  const orderedProducts = useMemo(() => {
-    const rank = new Map(CORE_SKUS.map((sku, index) => [sku, index]));
-    return [...previewProducts].sort((a, b) => (rank.get(a.sku) ?? 99) - (rank.get(b.sku) ?? 99));
-  }, []);
+  const coreProducts = useMemo(
+    () => CORE_SKUS.map((sku) => previewProducts.find((item) => item.sku === sku)).filter((item): item is PreviewProduct => Boolean(item)),
+    [],
+  );
 
-  const catalogConnected = previewProducts.every((item) => liveBySku.has(item.sku));
-  const commerceReady = PURCHASES_ENABLED && previewProducts.every((item) => {
+  const catalogConnected = coreProducts.every((item) => liveBySku.has(item.sku));
+  const commerceReady = PURCHASES_ENABLED && coreProducts.every((item) => {
     const live = liveBySku.get(item.sku);
     return Boolean(live?.product.availableForSale && live.variant.availableForSale);
   });
@@ -260,9 +259,9 @@ export default function App() {
         </section>
 
         <section className="collection" id="collection">
-          <div className="collection-heading"><div className="section-label"><span>03</span><span>The collection</span></div><h2>Manual care first.</h2><p>Reusable tools for pilling, lint, loose fibres, dust and everyday textile maintenance — with the complete Care Set at the centre of the routine.</p></div>
+          <div className="collection-heading"><div className="section-label"><span>03</span><span>The collection</span></div><h2>Manual care first.</h2><p>Five considered essentials: the complete Care Set plus four standalone tools for pilling, lint, loose fibres, dust and everyday textile maintenance.</p></div>
           {PURCHASES_ENABLED && commerceError && <div className="commerce-note" role="alert"><span>{commerceError}</span><button onClick={() => void loadCommerce()}>Try again</button></div>}
-          <div className="product-grid">{orderedProducts.map((preview) => <ProductFeature key={preview.sku} preview={preview} live={liveBySku.get(preview.sku)} />)}</div>
+          <div className="product-grid">{coreProducts.map((preview, index) => <ProductFeature key={preview.sku} preview={preview} displayNumber={String(index + 1).padStart(2, '0')} live={liveBySku.get(preview.sku)} />)}</div>
         </section>
 
         <section className="journal" id="journal">
