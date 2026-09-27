@@ -1,4 +1,4 @@
-export const PRODUCT_ORDER = [
+export const PRODUCT_ORDER: string[] = [
   'EV-CS-BL',
   'EV-CC-01',
   'EV-FS-01',
@@ -8,9 +8,9 @@ export const PRODUCT_ORDER = [
   'EV-WH-01',
   'EV-GB-01',
   'EV-ECB-01',
-] as const;
+];
 
-export const CORE_SKUS = PRODUCT_ORDER.slice(0, 5);
+export const CORE_SKUS: string[] = PRODUCT_ORDER.slice(0, 5);
 
 const commerceRequested = import.meta.env.VITE_ENABLE_PURCHASES === 'true';
 const launchApproved = import.meta.env.VITE_LAUNCH_APPROVED === 'true';
