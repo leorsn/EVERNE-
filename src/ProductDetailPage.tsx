@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { addCartLine, createCart, getCart, getEdition01, type Cart, type Product } from './lib/shopify';
 import { previewProducts, type PreviewProduct } from './previewCatalog';
 import { PRODUCT_ORDER, PURCHASES_ENABLED } from './storefrontConfig';
-import { applySeo } from './seo';
+import { applyProductStructuredData, applySeo, clearProductStructuredData } from './seo';
 import './product-detail.css';
 import './product-variants.css';
 
@@ -49,6 +49,7 @@ export default function ProductDetailPage() {
 
   useEffect(() => {
     if (!product) {
+      clearProductStructuredData();
       applySeo({
         title: 'Product not found — EVERNE',
         description: 'Explore EVERNE Edition 01 garment and textile care tools.',
@@ -58,14 +59,29 @@ export default function ProductDetailPage() {
       return;
     }
 
+    const path = `/products/${product.handle}`;
+    const description = product.tagline ?? product.description;
+
     applySeo({
       title: `${product.title} — EVERNE`,
-      description: product.tagline ?? product.description,
+      description,
       image: product.images[0],
-      path: `/products/${product.handle}`,
+      path,
       type: 'product',
       indexable: PURCHASES_ENABLED,
     });
+
+    applyProductStructuredData({
+      name: product.title,
+      description,
+      sku: product.sku,
+      price: product.price,
+      images: product.images,
+      path,
+      available: PURCHASES_ENABLED,
+    });
+
+    return () => clearProductStructuredData();
   }, [product]);
 
   useEffect(() => {
