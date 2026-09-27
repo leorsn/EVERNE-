@@ -6,9 +6,31 @@ import './product-variants.css';
 
 const PURCHASES_ENABLED = false;
 
+const PRODUCT_ORDER = [
+  'EV-CS-BL',
+  'EV-CC-01',
+  'EV-FS-01',
+  'EV-SCB-01',
+  'EV-DLB-01',
+  'EV-FR-01',
+  'EV-WH-01',
+  'EV-GB-01',
+  'EV-ECB-01',
+];
+
 function withBase(path: string) {
   const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
   return `${base}${path.replace(/^\//, '')}`;
+}
+
+function orderedProducts() {
+  const rank = new Map(PRODUCT_ORDER.map((sku, index) => [sku, index]));
+  return [...previewProducts].sort((a, b) => (rank.get(a.sku) ?? 99) - (rank.get(b.sku) ?? 99));
+}
+
+function displayNumber(product: PreviewProduct) {
+  const index = orderedProducts().findIndex((item) => item.handle === product.handle);
+  return String(index + 1).padStart(2, '0');
 }
 
 function ProductMiniCard({ product }: { product: PreviewProduct }) {
@@ -16,7 +38,7 @@ function ProductMiniCard({ product }: { product: PreviewProduct }) {
     <a className="related-product" href={withBase(`products/${product.handle}`)}>
       <div className="related-product-image"><img src={product.images[0]} alt={product.alt[0]} loading="lazy" /></div>
       <div className="related-product-copy">
-        <span>{product.number}</span>
+        <span>{displayNumber(product)}</span>
         <strong>{product.title}</strong>
         <em>{product.price}</em>
       </div>
@@ -26,7 +48,8 @@ function ProductMiniCard({ product }: { product: PreviewProduct }) {
 
 export default function ProductDetailPage() {
   const { handle } = useParams();
-  const product = previewProducts.find((item) => item.handle === handle);
+  const products = orderedProducts();
+  const product = products.find((item) => item.handle === handle);
   const [variantIndex, setVariantIndex] = useState(0);
 
   if (!product) {
@@ -34,10 +57,18 @@ export default function ProductDetailPage() {
       <div className="product-page-shell">
         <header className="topbar product-topbar">
           <a className="brand" href={withBase('')} aria-label="EVERNE home">EVERNE</a>
-          <nav aria-label="Primary navigation"><a href={withBase('#steam-brush')}>Steam Brush</a><a href={withBase('#product-comparison')}>Compare</a><a href={withBase('#collection')}>Collection</a></nav>
+          <nav aria-label="Primary navigation">
+            <a href={withBase('products/the-everne-care-set')}>Care Set</a>
+            <a href={withBase('#collection')}>Collection</a>
+            <a href={withBase('#faq')}>Care & delivery</a>
+          </nav>
           <span className="product-topbar-state">Unavailable</span>
         </header>
-        <main className="product-not-found"><span className="eyebrow">EVERNE · Edition 01</span><h1>Product not found.</h1><a className="text-link" href={withBase('#collection')}>Back to collection <span>→</span></a></main>
+        <main className="product-not-found">
+          <span className="eyebrow">EVERNE · Edition 01</span>
+          <h1>Product not found.</h1>
+          <a className="text-link" href={withBase('#collection')}>Back to collection <span>→</span></a>
+        </main>
       </div>
     );
   }
@@ -45,32 +76,39 @@ export default function ProductDetailPage() {
   const selectedVariant = product.variants?.[variantIndex];
   const activeImages = selectedVariant?.images ?? product.images;
   const activeAlt = selectedVariant?.alt ?? product.alt;
-  const related = previewProducts.filter((item) => item.sku !== product.sku);
+  const related = products.filter((item) => item.handle !== product.handle);
+  const number = displayNumber(product);
 
   return (
     <div className="product-page-shell" id="top">
       <div className="status-bar product-status"><span>Edition 01 · Preview</span><span>Germany / EUR</span></div>
       <header className="topbar product-topbar">
         <a className="brand" href={withBase('')} aria-label="EVERNE home">EVERNE</a>
-        <nav aria-label="Primary navigation"><a href={withBase('#steam-brush')}>Steam Brush</a><a href={withBase('#product-comparison')}>Compare</a><a href={withBase('#collection')}>Collection</a></nav>
+        <nav aria-label="Primary navigation">
+          <a href={withBase('products/the-everne-care-set')}>Care Set</a>
+          <a href={withBase('#collection')}>Collection</a>
+          <a href={withBase('#faq')}>Care & delivery</a>
+        </nav>
         <span className="product-topbar-state">Unavailable</span>
       </header>
 
       <main>
-        <div className="product-breadcrumb"><a href={withBase('')}>Home</a><span>/</span><a href={withBase('#collection')}>Edition 01</a><span>/</span><strong>{product.title}</strong></div>
+        <div className="product-breadcrumb">
+          <a href={withBase('')}>Home</a><span>/</span><a href={withBase('#collection')}>Edition 01</a><span>/</span><strong>{product.title}</strong>
+        </div>
 
         <section className="product-detail-hero">
           <div className="product-detail-gallery">
             <figure className="product-detail-main-image"><img src={activeImages[0]} alt={activeAlt[0]} /></figure>
             <div className="product-detail-secondary-images">
               {activeImages.slice(1).map((image, index) => (
-                <figure key={image}><img src={image} alt={activeAlt[index + 1] ?? product.title} loading="lazy" /></figure>
+                <figure key={`${image}-${index}`}><img src={image} alt={activeAlt[index + 1] ?? product.title} loading="lazy" /></figure>
               ))}
             </div>
           </div>
 
           <div className="product-detail-intro">
-            <span className="eyebrow">Edition 01 · {product.number}</span>
+            <span className="eyebrow">Edition 01 · {number}</span>
             <h1>{product.title}</h1>
             <p className="product-detail-tagline">{product.tagline ?? product.ritual}</p>
             <p className="product-detail-description">{product.description}</p>
@@ -128,7 +166,7 @@ export default function ProductDetailPage() {
             <p>{product.howToUse}</p>
           </article>
           <article>
-            <span className="eyebrow">Garment care</span>
+            <span className="eyebrow">Care note</span>
             <h2>Use with attention.</h2>
             <p>{product.care}</p>
           </article>
@@ -143,15 +181,29 @@ export default function ProductDetailPage() {
 
         <section className="related-products-section">
           <div className="product-detail-section-heading"><span className="eyebrow">Continue exploring</span><h2>Edition 01.</h2></div>
-          <div className="related-products-grid">{related.map((item) => <ProductMiniCard key={item.sku} product={item} />)}</div>
+          <div className="related-products-grid">{related.map((item) => <ProductMiniCard key={item.handle} product={item} />)}</div>
         </section>
       </main>
 
       <footer className="product-footer">
         <div className="footer-lead"><a className="brand" href={withBase('')}>EVERNE</a><p>Care for what you keep.</p></div>
-        <div><span>Explore</span><a href={withBase('products/everne-fabric-reviver')}>Fabric Reviver</a><a href={withBase('products/electronic-lint-remover')}>Fabric Reviver Pro</a><a href={withBase('products/steam-brush')}>Steam Brush</a></div>
+        <div>
+          <span>Core care</span>
+          <a href={withBase('products/the-everne-care-set')}>The Care Set</a>
+          <a href={withBase('products/cashmere-comb')}>Cashmere Comb</a>
+          <a href={withBase('products/fabric-care-brush')}>Fabric Shaver</a>
+          <a href={withBase('products/everne-soft-care-brush')}>Soft Care Brush</a>
+          <a href={withBase('products/everne-double-sided-lint-brush')}>Lint Brush</a>
+        </div>
         <div><span>Service</span><span>Orders currently closed</span><a href={withBase('#faq')}>Care & delivery</a></div>
-        <div><span>Legal</span><a href={withBase('rechtliches.html#impressum')}>Impressum</a><a href={withBase('rechtliches.html#datenschutz')}>Datenschutz</a><a href={withBase('rechtliches.html#widerruf')}>Widerruf</a></div>
+        <div>
+          <span>Legal</span>
+          <a href={withBase('rechtliches.html#impressum')}>Impressum</a>
+          <a href={withBase('rechtliches.html#datenschutz')}>Datenschutz</a>
+          <a href={withBase('rechtliches.html#widerruf')}>Widerruf</a>
+          <a href={withBase('rechtliches.html#agb')}>AGB</a>
+          <a href={withBase('rechtliches.html#versand')}>Versand & Retouren</a>
+        </div>
         <div className="footer-bottom"><span>© 2026 EVERNE</span><span>Hamburg, Germany · EUR</span><span>Commerce by Shopify</span></div>
       </footer>
     </div>
