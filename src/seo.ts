@@ -7,6 +7,16 @@ type SeoInput = {
   indexable?: boolean;
 };
 
+type ProductStructuredDataInput = {
+  name: string;
+  description: string;
+  sku: string;
+  price: string;
+  images: string[];
+  path: string;
+  available: boolean;
+};
+
 function ensureMeta(selector: string, attributes: Record<string, string>) {
   let element = document.head.querySelector<HTMLMetaElement>(selector);
   if (!element) {
@@ -24,6 +34,10 @@ function ensureCanonical(href: string) {
     document.head.appendChild(element);
   }
   element.href = href;
+}
+
+function removeProductStructuredData() {
+  document.head.querySelector('script[data-everne-product-schema]')?.remove();
 }
 
 export function applySeo({ title, description, image, path = '/', type = 'website', indexable = true }: SeoInput) {
@@ -46,4 +60,51 @@ export function applySeo({ title, description, image, path = '/', type = 'websit
   }
 
   ensureCanonical(url);
+}
+
+export function applyProductStructuredData({
+  name,
+  description,
+  sku,
+  price,
+  images,
+  path,
+  available,
+}: ProductStructuredDataInput) {
+  removeProductStructuredData();
+
+  const numericPrice = price
+    .replace(/[^0-9,.-]/g, '')
+    .replace(',', '.');
+
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name,
+    description,
+    sku,
+    image: images,
+    brand: {
+      '@type': 'Brand',
+      name: 'EVERNE',
+    },
+    offers: {
+      '@type': 'Offer',
+      url: new URL(path, window.location.origin).toString(),
+      priceCurrency: 'EUR',
+      price: numericPrice,
+      availability: available ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      itemCondition: 'https://schema.org/NewCondition',
+    },
+  };
+
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.dataset.everneProductSchema = 'true';
+  script.textContent = JSON.stringify(schema);
+  document.head.appendChild(script);
+}
+
+export function clearProductStructuredData() {
+  removeProductStructuredData();
 }
