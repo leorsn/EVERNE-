@@ -13,7 +13,15 @@ Status: PRE-LAUNCH — orders disabled
 - [x] Commerce status and product ordering are centralized in `src/storefrontConfig.ts`.
 - [x] Purchases require both `VITE_ENABLE_PURCHASES=true` and `VITE_LAUNCH_APPROVED=true`; a single environment change cannot open commerce.
 - [x] `.env.example` defaults both launch gates to `false`.
+- [x] Preview pages default to `noindex,nofollow`; indexability is enabled only behind the launch gate.
+- [x] Product and homepage SEO metadata, canonical URLs and social-sharing metadata are implemented.
+- [x] Explicit in-app 404 experience added for unknown routes.
+- [x] Global keyboard focus visibility and reduced-motion safeguards added.
+- [x] Image containers reserve aspect ratios to reduce cumulative layout shift.
+- [x] Shopify CDN preconnect and long-lived caching for fingerprinted Vite assets added.
+- [x] Baseline response security headers added in `vercel.json`.
 - [ ] Final live-browser QA after the latest production deployment on desktop and mobile.
+- [ ] Run a production Lighthouse pass and record Performance, Accessibility, Best Practices and SEO results.
 - [ ] Verify every product image, title, price, SKU/variant and product-detail link against the final Shopify catalog before opening orders.
 
 ## Blockers before checkout activation
