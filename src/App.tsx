@@ -253,35 +253,20 @@ export default function App() {
           <div className="hero-index"><span>EVERNE / 2026</span><span>A more considered care routine</span></div>
         </section>
 
-        <section className="manifesto">
+        <section className="manifesto" id="method">
           <div className="section-label"><span>01</span><span>Our premise</span></div>
           <h2>Simple tools.<br /><em>Better care.</em></h2>
           <div className="manifesto-copy"><p>EVERNE is built around a simple idea: textile care should be controlled, reusable and easy to understand. Start with the least intensive tool, work deliberately and keep the pieces worth owning in better condition.</p><a className="text-link" href={productHref(careSet.handle)}>Meet the Care Set <span>↘</span></a></div>
         </section>
 
-        <section className="object-story" id="method">
-          <div className="object-image"><img src={productImages(careSet)[0]} alt={careSet.alt[0]} /></div>
-          <div className="object-copy">
-            <div className="section-label"><span>02</span><span>The care system</span></div>
-            <span className="eyebrow">Four tools · One routine</span>
-            <h2>Choose the tool<br /><em>the surface needs.</em></h2>
-            <div className="method-list">
-              <article><span>01</span><div><h3>Cashmere Comb</h3><p>Target visible surface pilling on suitable cashmere and fine knitwear with controlled passes.</p></div></article>
-              <article><span>02</span><div><h3>Fabric Shaver</h3><p>Lift visible lint, loose fibres and light surface debris without batteries or charging.</p></div></article>
-              <article><span>03</span><div><h3>Soft Care Brush</h3><p>Use soft natural bristles for light dry surface care across suitable textiles.</p></div></article>
-              <article><span>04</span><div><h3>Double-Sided Lint Brush</h3><p>Reset everyday surfaces by lifting loose lint, hair and dust with a reusable brush.</p></div></article>
-            </div>
-          </div>
-        </section>
-
         <section className="collection" id="collection">
-          <div className="collection-heading"><div className="section-label"><span>03</span><span>The collection</span></div><h2>The full Edition 01.</h2><p>Nine products across manual and powered care, with the Care Set and four core manual tools leading the collection.</p></div>
+          <div className="collection-heading"><div className="section-label"><span>02</span><span>The collection</span></div><h2>The full Edition 01.</h2><p>Nine products across manual and powered care, with the Care Set and four core manual tools leading the collection.</p></div>
           {PURCHASES_ENABLED && commerceError && <div className="commerce-note" role="alert"><span>{commerceError}</span><button onClick={() => void loadCommerce()}>Try again</button></div>}
           <div className="product-grid">{orderedProducts.map((preview, index) => <ProductFeature key={preview.sku} preview={preview} displayNumber={String(index + 1).padStart(2, '0')} live={liveBySku.get(preview.sku)} />)}</div>
         </section>
 
         <section className="journal" id="journal">
-          <div className="journal-heading"><div className="section-label"><span>04</span><span>Field notes</span></div><h2>Care, without excess.</h2></div>
+          <div className="journal-heading"><div className="section-label"><span>03</span><span>Field notes</span></div><h2>Care, without excess.</h2></div>
           <div className="journal-grid">
             <article><img src={productImages(cashmereComb)[2]} alt={cashmereComb.alt[2]} loading="lazy" /><span>Knitwear care · Note 01</span><h3>Fine knitwear benefits from slow, targeted surface care rather than aggressive treatment.</h3></article>
             <article><img src={productImages(softCareBrush)[1]} alt={softCareBrush.alt[1]} loading="lazy" /><span>Surface care · Note 02</span><h3>For light dust and loose fibres, start with the gentlest tool that can do the job.</h3></article>
@@ -289,7 +274,7 @@ export default function App() {
         </section>
 
         <section className="faq" id="faq">
-          <div><div className="section-label"><span>05</span><span>Good to know</span></div><h2>The details,<br /><em>considered.</em></h2></div>
+          <div><div className="section-label"><span>04</span><span>Good to know</span></div><h2>The details,<br /><em>considered.</em></h2></div>
           <div className="faq-list">{faqs.map(([question, answer], index) => <article key={question}><button aria-expanded={openFaq === index} onClick={() => setOpenFaq(openFaq === index ? null : index)}><span>{question}</span><span>{openFaq === index ? '−' : '+'}</span></button><div className={openFaq === index ? 'faq-answer open' : 'faq-answer'}><p>{answer}</p></div></article>)}</div>
         </section>
 
