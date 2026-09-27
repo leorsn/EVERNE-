@@ -1,10 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import './careSetProduct';
 import './manualCareProducts';
 import App from './App';
 import ProductDetailPage from './ProductDetailPage';
+import NotFoundPage from './NotFoundPage';
 import './styles.css';
 import './preview.css';
 import './legal-footer.css';
@@ -16,6 +17,7 @@ import './impact-pass.css';
 import './all-products-visible.css';
 import './mobile-visual-pass.css';
 import './desktop-final-pass.css';
+import './quality-pass.css';
 
 const basename = import.meta.env.BASE_URL === '/' ? undefined : import.meta.env.BASE_URL.replace(/\/$/, '');
 
@@ -25,7 +27,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/products/:handle" element={<ProductDetailPage />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,
