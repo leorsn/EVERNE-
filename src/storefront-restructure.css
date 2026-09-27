@@ -156,12 +156,6 @@
   display: none;
 }
 
-/* Keep only the three supporting tools in the general collection. */
-.product-grid #EV-GB-01,
-.product-grid #EV-RS-01 {
-  display: none;
-}
-
 .collection {
   padding: 9vw 4vw 11vw;
   background: #ebe4db;
