@@ -1,0 +1,108 @@
+/* Final technical quality pass: accessibility, CLS reduction and motion safety. */
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+:where(button, a) {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:disabled {
+  cursor: not-allowed;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+.product-card-visual,
+.object-image,
+.journal-grid article,
+.product-detail-main-image,
+.product-detail-secondary-images figure,
+.related-product-image {
+  overflow: hidden;
+}
+
+.product-card-visual,
+.related-product-image {
+  aspect-ratio: 1 / 1;
+}
+
+.product-card-visual img,
+.related-product-image img,
+.product-detail-main-image img,
+.product-detail-secondary-images img,
+.object-image img,
+.journal-grid img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-detail-main-image {
+  aspect-ratio: 1 / 1;
+}
+
+.product-detail-secondary-images figure {
+  aspect-ratio: 1 / 1;
+}
+
+.skip-link {
+  position: fixed;
+  left: 16px;
+  top: 16px;
+  z-index: 9999;
+  transform: translateY(-160%);
+  padding: 10px 14px;
+  background: #191914;
+  color: #f4f1e8;
+  text-decoration: none;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+.not-found-page {
+  min-height: 100svh;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  background: #f1efe8;
+  color: #191914;
+}
+
+.not-found-main {
+  display: grid;
+  align-content: center;
+  gap: 20px;
+  min-height: 68svh;
+  padding: clamp(60px, 10vw, 150px) 5vw;
+}
+
+.not-found-main h1 {
+  margin: 0;
+  max-width: 11ch;
+  font-size: clamp(4rem, 10vw, 9rem);
+  line-height: .88;
+  letter-spacing: -.05em;
+  font-weight: 400;
+}
+
+.not-found-main p {
+  max-width: 560px;
+  line-height: 1.7;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
