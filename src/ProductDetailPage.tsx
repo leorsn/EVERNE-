@@ -1,9 +1,12 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { addCartLine, createCart, getCart, getEdition01, type Cart, type Product } from './lib/shopify';
 import { previewProducts, type PreviewProduct } from './previewCatalog';
 import { PRODUCT_ORDER, PURCHASES_ENABLED } from './storefrontConfig';
 import './product-detail.css';
 import './product-variants.css';
+
+const CART_KEY = 'everne.shopify.cart-id';
 
 function withBase(path: string) {
   const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
@@ -11,7 +14,7 @@ function withBase(path: string) {
 }
 
 function orderedProducts() {
-  const rank = new Map(PRODUCT_ORDER.map((sku, index) => [sku, index]));
+  const rank = new Map<string, number>(PRODUCT_ORDER.map((sku, index) => [sku, index]));
   return [...previewProducts].sort((a, b) => (rank.get(a.sku) ?? 99) - (rank.get(b.sku) ?? 99));
 }
 
@@ -38,6 +41,41 @@ export default function ProductDetailPage() {
   const products = orderedProducts();
   const product = products.find((item) => item.handle === handle);
   const [variantIndex, setVariantIndex] = useState(0);
+  const [liveProducts, setLiveProducts] = useState<Product[]>([]);
+  const [cart, setCart] = useState<Cart | null>(null);
+  const [cartBusy, setCartBusy] = useState(false);
+  const [cartMessage, setCartMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!PURCHASES_ENABLED) return;
+    let cancelled = false;
+
+    void (async () => {
+      try {
+        const [catalog, restored] = await Promise.all([
+          getEdition01(),
+          (async () => {
+            const cartId = localStorage.getItem(CART_KEY);
+            if (!cartId) return null;
+            try {
+              return await getCart(cartId);
+            } catch {
+              localStorage.removeItem(CART_KEY);
+              return null;
+            }
+          })(),
+        ]);
+        if (!cancelled) {
+          setLiveProducts(catalog);
+          setCart(restored);
+        }
+      } catch {
+        if (!cancelled) setCartMessage('Store connection unavailable.');
+      }
+    })();
+
+    return () => { cancelled = true; };
+  }, []);
 
   if (!product) {
     return (
@@ -61,14 +99,43 @@ export default function ProductDetailPage() {
   }
 
   const selectedVariant = product.variants?.[variantIndex];
+  const selectedSku = selectedVariant?.sku ?? product.sku;
   const activeImages = selectedVariant?.images ?? product.images;
   const activeAlt = selectedVariant?.alt ?? product.alt;
   const related = products.filter((item) => item.handle !== product.handle);
   const number = displayNumber(product);
+  const liveVariant = liveProducts.flatMap((item) => item.variants.nodes).find((variant) => variant.sku === selectedSku);
+
+  async function addSelectedToBag() {
+    if (!PURCHASES_ENABLED || !liveVariant || cartBusy) return;
+    setCartBusy(true);
+    setCartMessage(null);
+
+    try {
+      let nextCart: Cart;
+      const savedId = cart?.id ?? localStorage.getItem(CART_KEY);
+
+      if (savedId) {
+        const existing = cart ?? await getCart(savedId);
+        if (existing) nextCart = await addCartLine(existing.id, liveVariant.id);
+        else nextCart = await createCart(liveVariant.id);
+      } else {
+        nextCart = await createCart(liveVariant.id);
+      }
+
+      localStorage.setItem(CART_KEY, nextCart.id);
+      setCart(nextCart);
+      setCartMessage('Added to bag.');
+    } catch {
+      setCartMessage('Could not add this item to the bag.');
+    } finally {
+      setCartBusy(false);
+    }
+  }
 
   return (
     <div className="product-page-shell" id="top">
-      <div className="status-bar product-status"><span>Edition 01 · Preview</span><span>Germany / EUR</span></div>
+      <div className="status-bar product-status"><span>{PURCHASES_ENABLED ? 'Edition 01 · Available' : 'Edition 01 · Preview'}</span><span>Germany / EUR</span></div>
       <header className="topbar product-topbar">
         <a className="brand" href={withBase('')} aria-label="EVERNE home">EVERNE</a>
         <nav aria-label="Primary navigation">
@@ -76,7 +143,7 @@ export default function ProductDetailPage() {
           <a href={withBase('#collection')}>Collection</a>
           <a href={withBase('#faq')}>Care & delivery</a>
         </nav>
-        <span className="product-topbar-state">{PURCHASES_ENABLED ? 'Available' : 'Unavailable'}</span>
+        <span className="product-topbar-state">{PURCHASES_ENABLED ? `Bag${cart?.totalQuantity ? ` · ${cart.totalQuantity}` : ''}` : 'Unavailable'}</span>
       </header>
 
       <main>
@@ -124,9 +191,16 @@ export default function ProductDetailPage() {
 
             <div className="product-detail-buyrow">
               <strong>{product.price}</strong>
-              <button disabled={!PURCHASES_ENABLED}>{PURCHASES_ENABLED ? 'Add to bag' : 'Currently unavailable'}</button>
+              <button
+                disabled={!PURCHASES_ENABLED || !liveVariant?.availableForSale || cartBusy}
+                onClick={() => void addSelectedToBag()}
+              >
+                {!PURCHASES_ENABLED ? 'Currently unavailable' : cartBusy ? 'Adding…' : liveVariant?.availableForSale ? 'Add to bag' : 'Unavailable'}
+              </button>
             </div>
-            <p className="product-detail-note">{PURCHASES_ENABLED ? 'Final shipping costs are shown at checkout.' : 'Orders remain closed while final product and fulfillment checks are completed.'}</p>
+            <p className="product-detail-note">
+              {cartMessage ?? (PURCHASES_ENABLED ? 'Secure checkout is completed through Shopify.' : 'Orders remain closed while final product and fulfillment checks are completed.')}
+            </p>
           </div>
         </section>
 
@@ -182,7 +256,7 @@ export default function ProductDetailPage() {
           <a href={withBase('products/everne-soft-care-brush')}>Soft Care Brush</a>
           <a href={withBase('products/everne-double-sided-lint-brush')}>Lint Brush</a>
         </div>
-        <div><span>Service</span><span>{PURCHASES_ENABLED ? 'Orders open' : 'Orders currently closed'}</span><a href={withBase('#faq')}>Care & delivery</a></div>
+        <div><span>Service</span><span>{PURCHASES_ENABLED ? 'Shopping bag available' : 'Orders currently closed'}</span><a href={withBase('#faq')}>Care & delivery</a></div>
         <div>
           <span>Legal</span>
           <a href={withBase('rechtliches.html#impressum')}>Impressum</a>
