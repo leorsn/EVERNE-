@@ -126,11 +126,6 @@
   color: #777168;
 }
 
-/* The previous manifesto repeated the same proposition immediately after the hero. */
-.manifesto {
-  display: none;
-}
-
 /* ---------- Product journey ---------- */
 /* Renumber visible sections after removing the manifesto from the visual flow. */
 .featured-product .section-label span:first-child,
@@ -150,11 +145,6 @@
 .collection .section-label span:first-child::after { content: "05"; font-size: 9px; }
 .journal .section-label span:first-child::after { content: "06"; font-size: 9px; }
 .faq .section-label span:first-child::after { content: "07"; font-size: 9px; }
-
-/* Steam Brush is already presented in-depth above. The old secondary method panel is duplicate. */
-.object-story {
-  display: none;
-}
 
 .collection {
   padding: 9vw 4vw 11vw;
