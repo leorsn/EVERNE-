@@ -2,6 +2,18 @@
 
 Status: PRE-LAUNCH — orders disabled
 
+## Technical storefront readiness
+
+- [x] All 9 Edition 01 products are registered in the storefront catalog.
+- [x] All 9 products use the shared product-detail routing and layout.
+- [x] Core manual-care products lead the collection while the full 9-product range remains visible.
+- [x] Mobile visual pass completed for homepage and product pages.
+- [x] Desktop final visual pass completed for homepage and product pages.
+- [x] Legal page is present at `/rechtliches.html` with anchors for Impressum, Datenschutz, Widerruf, AGB and Versand & Retouren.
+- [x] Storefront purchase controls remain disabled via `PURCHASES_ENABLED = false`.
+- [ ] Final live-browser QA after the latest production deployment on desktop and mobile.
+- [ ] Verify every product image, title, price, SKU/variant and product-detail link against the final Shopify catalog before opening orders.
+
 ## Blockers before checkout activation
 
 - [ ] Replace the imprint placeholder with the final serviceable business address.
