@@ -63,8 +63,9 @@ export default function ProductDetailPage() {
           <div className="product-detail-gallery">
             <figure className="product-detail-main-image"><img src={activeImages[0]} alt={activeAlt[0]} /></figure>
             <div className="product-detail-secondary-images">
-              <figure><img src={activeImages[1]} alt={activeAlt[1]} loading="lazy" /></figure>
-              <figure><img src={activeImages[2]} alt={activeAlt[2]} loading="lazy" /></figure>
+              {activeImages.slice(1).map((image, index) => (
+                <figure key={image}><img src={image} alt={activeAlt[index + 1] ?? product.title} loading="lazy" /></figure>
+              ))}
             </div>
           </div>
 
