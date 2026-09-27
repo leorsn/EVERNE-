@@ -1,22 +1,9 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { previewProducts, type PreviewProduct } from './previewCatalog';
+import { PRODUCT_ORDER, PURCHASES_ENABLED } from './storefrontConfig';
 import './product-detail.css';
 import './product-variants.css';
-
-const PURCHASES_ENABLED = false;
-
-const PRODUCT_ORDER = [
-  'EV-CS-BL',
-  'EV-CC-01',
-  'EV-FS-01',
-  'EV-SCB-01',
-  'EV-DLB-01',
-  'EV-FR-01',
-  'EV-WH-01',
-  'EV-GB-01',
-  'EV-ECB-01',
-];
 
 function withBase(path: string) {
   const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
@@ -89,7 +76,7 @@ export default function ProductDetailPage() {
           <a href={withBase('#collection')}>Collection</a>
           <a href={withBase('#faq')}>Care & delivery</a>
         </nav>
-        <span className="product-topbar-state">Unavailable</span>
+        <span className="product-topbar-state">{PURCHASES_ENABLED ? 'Available' : 'Unavailable'}</span>
       </header>
 
       <main>
@@ -139,7 +126,7 @@ export default function ProductDetailPage() {
               <strong>{product.price}</strong>
               <button disabled={!PURCHASES_ENABLED}>{PURCHASES_ENABLED ? 'Add to bag' : 'Currently unavailable'}</button>
             </div>
-            <p className="product-detail-note">Orders remain closed while final product and fulfillment checks are completed.</p>
+            <p className="product-detail-note">{PURCHASES_ENABLED ? 'Final shipping costs are shown at checkout.' : 'Orders remain closed while final product and fulfillment checks are completed.'}</p>
           </div>
         </section>
 
@@ -195,7 +182,7 @@ export default function ProductDetailPage() {
           <a href={withBase('products/everne-soft-care-brush')}>Soft Care Brush</a>
           <a href={withBase('products/everne-double-sided-lint-brush')}>Lint Brush</a>
         </div>
-        <div><span>Service</span><span>Orders currently closed</span><a href={withBase('#faq')}>Care & delivery</a></div>
+        <div><span>Service</span><span>{PURCHASES_ENABLED ? 'Orders open' : 'Orders currently closed'}</span><a href={withBase('#faq')}>Care & delivery</a></div>
         <div>
           <span>Legal</span>
           <a href={withBase('rechtliches.html#impressum')}>Impressum</a>
