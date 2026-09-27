@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
+import './careSetProduct';
 import App from './App';
 import ProductDetailPage from './ProductDetailPage';
 import SoftCareBrushPage from './SoftCareBrushPage';
