@@ -107,6 +107,7 @@ export default function App() {
       description: 'EVERNE Edition 01 — considered garment and textile care tools for pieces made to last.',
       path: '/',
       type: 'website',
+      indexable: PURCHASES_ENABLED,
     });
   }, []);
 
