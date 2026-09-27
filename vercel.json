@@ -15,6 +15,12 @@
       ]
     },
     {
+      "source": "/rechtliches",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    },
+    {
       "source": "/rechtliches.html",
       "headers": [
         { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
