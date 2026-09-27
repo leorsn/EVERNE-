@@ -160,13 +160,13 @@ export default function App() {
     return map;
   }, [products]);
 
-  const coreProducts = useMemo(
-    () => CORE_SKUS.map((sku) => previewProducts.find((item) => item.sku === sku)).filter((item): item is PreviewProduct => Boolean(item)),
-    [],
-  );
+  const orderedProducts = useMemo(() => {
+    const rank = new Map(CORE_SKUS.map((sku, index) => [sku, index]));
+    return [...previewProducts].sort((a, b) => (rank.get(a.sku) ?? 99) - (rank.get(b.sku) ?? 99));
+  }, []);
 
-  const catalogConnected = coreProducts.every((item) => liveBySku.has(item.sku));
-  const commerceReady = PURCHASES_ENABLED && coreProducts.every((item) => {
+  const catalogConnected = previewProducts.every((item) => liveBySku.has(item.sku));
+  const commerceReady = PURCHASES_ENABLED && previewProducts.every((item) => {
     const live = liveBySku.get(item.sku);
     return Boolean(live?.product.availableForSale && live.variant.availableForSale);
   });
@@ -259,9 +259,9 @@ export default function App() {
         </section>
 
         <section className="collection" id="collection">
-          <div className="collection-heading"><div className="section-label"><span>03</span><span>The collection</span></div><h2>Manual care first.</h2><p>Five considered essentials: the complete Care Set plus four standalone tools for pilling, lint, loose fibres, dust and everyday textile maintenance.</p></div>
+          <div className="collection-heading"><div className="section-label"><span>03</span><span>The collection</span></div><h2>The full Edition 01.</h2><p>Nine products across manual and powered care, with the Care Set and four core manual tools leading the collection.</p></div>
           {PURCHASES_ENABLED && commerceError && <div className="commerce-note" role="alert"><span>{commerceError}</span><button onClick={() => void loadCommerce()}>Try again</button></div>}
-          <div className="product-grid">{coreProducts.map((preview, index) => <ProductFeature key={preview.sku} preview={preview} displayNumber={String(index + 1).padStart(2, '0')} live={liveBySku.get(preview.sku)} />)}</div>
+          <div className="product-grid">{orderedProducts.map((preview, index) => <ProductFeature key={preview.sku} preview={preview} displayNumber={String(index + 1).padStart(2, '0')} live={liveBySku.get(preview.sku)} />)}</div>
         </section>
 
         <section className="journal" id="journal">
