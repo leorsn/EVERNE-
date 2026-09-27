@@ -11,6 +11,7 @@ import {
 } from './lib/shopify';
 import { previewProducts, productImages, type PreviewProduct } from './previewCatalog';
 import { PRODUCT_ORDER, PURCHASES_ENABLED, validateCatalog } from './storefrontConfig';
+import { applySeo } from './seo';
 import './hero-premium.css';
 
 const CART_KEY = 'everne.shopify.cart-id';
@@ -99,6 +100,15 @@ export default function App() {
   const [commerceError, setCommerceError] = useState<string | null>(null);
   const [busyLine, setBusyLine] = useState<string | null>(null);
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  useEffect(() => {
+    applySeo({
+      title: 'EVERNE — Care for what you keep',
+      description: 'EVERNE Edition 01 — considered garment and textile care tools for pieces made to last.',
+      path: '/',
+      type: 'website',
+    });
+  }, []);
 
   async function loadCommerce() {
     setCommerceError(null);
