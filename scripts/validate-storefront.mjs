@@ -36,7 +36,6 @@ const catalogSource = [
 ].join('\n');
 
 const configSource = fs.readFileSync('src/storefrontConfig.ts', 'utf8');
-const legalSource = fs.readFileSync('public/rechtliches.html', 'utf8');
 const vercelSource = fs.readFileSync('vercel.json', 'utf8');
 
 const failures = [];
@@ -66,16 +65,16 @@ if (!configSource.includes("VITE_LAUNCH_APPROVED === 'true'")) {
   failures.push('Secondary launch approval gate is missing');
 }
 
-if (!legalSource.includes('name="robots" content="noindex,nofollow"')) {
-  failures.push('Pre-launch legal page must remain noindex,nofollow');
-}
-
 if (!vercelSource.includes('"source": "/products/:path*"')) {
   failures.push('Vercel product deep-link rewrite is missing');
 }
 
-if (!vercelSource.includes('"X-Robots-Tag"')) {
-  failures.push('Vercel legal-page X-Robots-Tag is missing');
+if (!vercelSource.includes('"source": "/rechtliches"') || !vercelSource.includes('"X-Robots-Tag"')) {
+  failures.push('Pre-launch legal route must have an X-Robots-Tag noindex header');
+}
+
+if (!vercelSource.includes('"value": "noindex, nofollow"')) {
+  failures.push('Legal X-Robots-Tag must remain noindex, nofollow before launch');
 }
 
 if (failures.length) {
