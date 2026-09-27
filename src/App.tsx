@@ -10,12 +10,10 @@ import {
   type Product,
 } from './lib/shopify';
 import { previewProducts, productImages, type PreviewProduct } from './previewCatalog';
+import { CORE_SKUS, PURCHASES_ENABLED } from './storefrontConfig';
 import './hero-premium.css';
 
 const CART_KEY = 'everne.shopify.cart-id';
-const PURCHASES_ENABLED = false;
-
-const CORE_SKUS = ['EV-CS-BL', 'EV-CC-01', 'EV-FS-01', 'EV-SCB-01', 'EV-DLB-01'];
 
 const faqs = [
   ['Where do you deliver?', 'Available delivery methods, timing and final shipping cost are shown at Shopify checkout for your address.'],
@@ -216,7 +214,7 @@ export default function App() {
       <header className="topbar">
         <a className="brand" href="#top" aria-label="EVERNE home">EVERNE</a>
         <nav aria-label="Primary navigation"><a href={productHref(careSet.handle)}>Care Set</a><a href="#method">Our method</a><a href="#collection">Collection</a></nav>
-        <button className="bag-button" disabled={!PURCHASES_ENABLED} onClick={() => setBagOpen(true)} aria-label="Edition 01 is currently unavailable">Unavailable</button>
+        <button className="bag-button" disabled={!PURCHASES_ENABLED} onClick={() => setBagOpen(true)} aria-label={PURCHASES_ENABLED ? 'Open shopping bag' : 'Edition 01 is currently unavailable'}>{PURCHASES_ENABLED ? `Bag${cart?.totalQuantity ? ` · ${cart.totalQuantity}` : ''}` : 'Unavailable'}</button>
       </header>
 
       <main>
@@ -286,7 +284,7 @@ export default function App() {
       <footer>
         <div className="footer-lead"><a className="brand" href="#top">EVERNE</a><p>Care for what you keep.</p></div>
         <div><span>Core care</span><a href={productHref(careSet.handle)}>The Care Set</a><a href={productHref(cashmereComb.handle)}>Cashmere Comb</a><a href={productHref(fabricShaver.handle)}>Fabric Shaver</a><a href={productHref(softCareBrush.handle)}>Soft Care Brush</a><a href={productHref(lintBrush.handle)}>Lint Brush</a></div>
-        <div><span>Service</span><button disabled={!PURCHASES_ENABLED} onClick={() => setBagOpen(true)}>Orders currently closed</button><a href="#faq">Care & delivery</a></div>
+        <div><span>Service</span><button disabled={!PURCHASES_ENABLED} onClick={() => setBagOpen(true)}>{PURCHASES_ENABLED ? 'Shopping bag' : 'Orders currently closed'}</button><a href="#faq">Care & delivery</a></div>
         <div><span>Legal</span><a href="/rechtliches.html#impressum">Impressum</a><a href="/rechtliches.html#datenschutz">Datenschutz</a><a href="/rechtliches.html#widerruf">Widerruf</a><a href="/rechtliches.html#agb">AGB</a><a href="/rechtliches.html#versand">Versand & Retouren</a></div>
         <div className="footer-bottom"><span>© 2026 EVERNE</span><span>Hamburg, Germany · EUR</span><span>Commerce by Shopify</span></div>
       </footer>
