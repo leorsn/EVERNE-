@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { addCartLine, createCart, getCart, getEdition01, type Cart, type Product } from './lib/shopify';
 import { previewProducts, type PreviewProduct } from './previewCatalog';
 import { PRODUCT_ORDER, PURCHASES_ENABLED } from './storefrontConfig';
+import { applySeo } from './seo';
 import './product-detail.css';
 import './product-variants.css';
 
@@ -45,6 +46,25 @@ export default function ProductDetailPage() {
   const [cart, setCart] = useState<Cart | null>(null);
   const [cartBusy, setCartBusy] = useState(false);
   const [cartMessage, setCartMessage] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!product) {
+      applySeo({
+        title: 'Product not found — EVERNE',
+        description: 'Explore EVERNE Edition 01 garment and textile care tools.',
+        path: window.location.pathname,
+      });
+      return;
+    }
+
+    applySeo({
+      title: `${product.title} — EVERNE`,
+      description: product.tagline ?? product.description,
+      image: product.images[0],
+      path: `/products/${product.handle}`,
+      type: 'product',
+    });
+  }, [product]);
 
   useEffect(() => {
     if (!PURCHASES_ENABLED) return;
