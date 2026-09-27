@@ -1,3 +1,5 @@
+import { PRODUCT_ORDER } from '../storefrontConfig';
+
 export type Money = { amount: string; currencyCode: string };
 
 export type Product = {
@@ -80,14 +82,19 @@ const PRODUCT_FIELDS = `
 `;
 
 export async function getEdition01(): Promise<Product[]> {
-  const data = await storefront<{ collection: { products: { nodes: Product[] } } | null }>(`
-    query Edition01($handle: String!) {
-      collection(handle: $handle) {
-        products(first: 20) { nodes { ${PRODUCT_FIELDS} } }
-      }
+  const data = await storefront<{ products: { nodes: Product[] } }>(`
+    query EverneCatalog {
+      products(first: 50) { nodes { ${PRODUCT_FIELDS} } }
     }
-  `, { handle: 'edition-01' });
-  return data.collection?.products.nodes ?? [];
+  `);
+
+  const wantedSkus = new Set(PRODUCT_ORDER);
+  const rank = new Map<string, number>(PRODUCT_ORDER.map((sku, index) => [sku, index]));
+  const primarySku = (product: Product) => product.variants.nodes.find((variant) => variant.sku && wantedSkus.has(variant.sku))?.sku ?? '';
+
+  return data.products.nodes
+    .filter((product) => product.variants.nodes.some((variant) => variant.sku && wantedSkus.has(variant.sku)))
+    .sort((a, b) => (rank.get(primarySku(a)) ?? 99) - (rank.get(primarySku(b)) ?? 99));
 }
 
 export async function createCart(variantId: string): Promise<Cart> {
