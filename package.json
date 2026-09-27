@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "check:storefront": "node scripts/validate-storefront.mjs",
+    "build": "npm run check:storefront && tsc -b && vite build",
     "postbuild": "node -e \"require('fs').copyFileSync('dist/index.html','dist/404.html')\"",
     "preview": "vite preview",
     "typecheck": "tsc -b --pretty false"
