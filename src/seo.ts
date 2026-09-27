@@ -4,6 +4,7 @@ type SeoInput = {
   image?: string;
   path?: string;
   type?: 'website' | 'product';
+  indexable?: boolean;
 };
 
 function ensureMeta(selector: string, attributes: Record<string, string>) {
@@ -25,11 +26,12 @@ function ensureCanonical(href: string) {
   element.href = href;
 }
 
-export function applySeo({ title, description, image, path = '/', type = 'website' }: SeoInput) {
+export function applySeo({ title, description, image, path = '/', type = 'website', indexable = true }: SeoInput) {
   const url = new URL(path, window.location.origin).toString();
   document.title = title;
 
   ensureMeta('meta[name="description"]', { name: 'description', content: description });
+  ensureMeta('meta[name="robots"]', { name: 'robots', content: indexable ? 'index,follow' : 'noindex,nofollow' });
   ensureMeta('meta[property="og:title"]', { property: 'og:title', content: title });
   ensureMeta('meta[property="og:description"]', { property: 'og:description', content: description });
   ensureMeta('meta[property="og:type"]', { property: 'og:type', content: type });
