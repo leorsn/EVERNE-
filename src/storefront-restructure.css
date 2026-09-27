@@ -1,5 +1,5 @@
 /* Structural pass: preserve the established EVERNE palette while simplifying the landing page
-   and removing duplicated product presentations. Loaded last on purpose. */
+   and removing duplicated product presentations. */
 
 /* ---------- Landing page: full-width editorial typography, no right-side visual ---------- */
 .hero-editorial {
@@ -126,25 +126,21 @@
   color: #777168;
 }
 
-/* ---------- Product journey ---------- */
-/* Renumber visible sections after removing the manifesto from the visual flow. */
-.featured-product .section-label span:first-child,
-.steam-rationale .section-label span:first-child,
-.system-comparison .section-label span:first-child,
-.use-sequence .section-label span:first-child,
+/* The old secondary method panel duplicates the current premise/care-set journey. */
+.object-story {
+  display: none;
+}
+
+/* ---------- Current visible section numbering ---------- */
 .collection .section-label span:first-child,
 .journal .section-label span:first-child,
 .faq .section-label span:first-child {
   font-size: 0;
 }
 
-.featured-product .section-label span:first-child::after { content: "01"; font-size: 9px; }
-.steam-rationale .section-label span:first-child::after { content: "02"; font-size: 9px; }
-.system-comparison .section-label span:first-child::after { content: "03"; font-size: 9px; }
-.use-sequence .section-label span:first-child::after { content: "04"; font-size: 9px; }
-.collection .section-label span:first-child::after { content: "05"; font-size: 9px; }
-.journal .section-label span:first-child::after { content: "06"; font-size: 9px; }
-.faq .section-label span:first-child::after { content: "07"; font-size: 9px; }
+.collection .section-label span:first-child::after { content: "02"; font-size: 9px; }
+.journal .section-label span:first-child::after { content: "03"; font-size: 9px; }
+.faq .section-label span:first-child::after { content: "04"; font-size: 9px; }
 
 .collection {
   padding: 9vw 4vw 11vw;
@@ -216,7 +212,6 @@
   font-size: 8px;
 }
 
-/* Give the final System section more presence without reintroducing card clutter. */
 .closing-light {
   min-height: 720px;
   padding-top: 8vw;
@@ -239,7 +234,6 @@
   min-height: 540px;
 }
 
-/* ---------- Reduce page-length noise ---------- */
 .journal {
   padding-top: 8vw;
   padding-bottom: 8vw;
@@ -254,7 +248,6 @@
   padding-bottom: 8vw;
 }
 
-/* ---------- Responsive ---------- */
 @media (max-width: 1050px) {
   .hero-copy {
     grid-template-columns: minmax(0, 1.25fr) minmax(250px, .75fr);
