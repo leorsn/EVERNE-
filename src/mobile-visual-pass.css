@@ -1,0 +1,354 @@
+/* Final mobile visual refinement pass.
+   Loaded last so the existing EVERNE design system remains intact while small-screen
+   spacing, hierarchy and product-page behaviour are normalized. */
+
+@media (max-width: 780px) {
+  html {
+    scroll-padding-top: 72px;
+  }
+
+  .status-bar,
+  .product-status {
+    min-height: 25px;
+    padding-left: 16px;
+    padding-right: 16px;
+    font-size: 7px;
+    letter-spacing: .11em;
+  }
+
+  .topbar,
+  .product-topbar {
+    min-height: 64px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .topbar nav,
+  .product-topbar nav {
+    display: none;
+  }
+
+  .topbar .brand,
+  .product-topbar .brand {
+    font-size: 16px;
+    letter-spacing: .19em;
+  }
+
+  .bag-button,
+  .product-topbar-state {
+    font-size: 7px;
+    letter-spacing: .12em;
+  }
+
+  /* Homepage hero */
+  .hero-copy {
+    min-height: calc(100svh - 89px);
+    padding: 54px 18px 76px;
+  }
+
+  .hero-copy .eyebrow {
+    margin-bottom: 44px;
+  }
+
+  .hero h1 {
+    max-width: 96%;
+    font-size: clamp(4.2rem, 19vw, 6.2rem);
+    line-height: .84;
+    letter-spacing: -.06em;
+  }
+
+  .hero-copy > p {
+    max-width: 92%;
+    margin-top: 38px;
+    font-size: 18px;
+    line-height: 1.45;
+  }
+
+  .hero .text-link {
+    margin-top: 24px;
+  }
+
+  .hero-principles {
+    margin-top: 58px;
+  }
+
+  .hero-index {
+    left: 18px;
+    right: 18px;
+    bottom: 16px;
+    gap: 12px;
+    font-size: 7px;
+  }
+
+  .hero-index span:last-child {
+    text-align: right;
+  }
+
+  /* Collection */
+  .collection {
+    padding: 68px 10px 82px;
+  }
+
+  .collection-heading {
+    padding: 0 8px 38px;
+  }
+
+  .collection-heading .section-label {
+    margin-bottom: 32px;
+  }
+
+  .collection-heading h2 {
+    font-size: clamp(3.5rem, 15vw, 5rem);
+    line-height: .9;
+  }
+
+  .product-grid {
+    gap: 10px;
+  }
+
+  .product-card {
+    border-radius: 0;
+  }
+
+  .product-card-visual {
+    aspect-ratio: 1 / .86 !important;
+  }
+
+  .product-card-copy {
+    padding: 20px 18px 20px !important;
+  }
+
+  .product-card-copy h3 {
+    margin-top: 18px !important;
+    font-size: clamp(2.35rem, 11vw, 3.2rem) !important;
+  }
+
+  .product-card-copy > p {
+    margin-bottom: 16px !important;
+    font-size: 11px !important;
+  }
+
+  .product-facts {
+    margin-bottom: 16px !important;
+  }
+
+  .product-purchase {
+    min-height: 52px !important;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .product-detail-link {
+    min-width: 132px;
+    padding: 0 14px;
+    gap: 14px;
+  }
+
+  /* Editorial sections */
+  .journal,
+  .faq {
+    padding-top: 72px;
+    padding-bottom: 72px;
+  }
+
+  .closing-light {
+    padding: 72px 18px;
+    gap: 44px;
+  }
+
+  .closing-copy h2 {
+    font-size: clamp(3.6rem, 16vw, 5.2rem);
+  }
+
+  .closing-light .object-image {
+    min-height: 0;
+    aspect-ratio: 1 / .9;
+  }
+
+  footer,
+  .product-footer {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  /* Shared product page */
+  .product-breadcrumb {
+    padding: 14px 18px;
+    gap: 8px;
+    white-space: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .product-breadcrumb::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product-detail-hero {
+    min-height: 0;
+  }
+
+  .product-detail-gallery {
+    padding: 10px;
+    display: block;
+  }
+
+  .product-detail-main-image {
+    width: 100%;
+    max-height: none;
+    aspect-ratio: 1 / 1.06;
+  }
+
+  .product-detail-secondary-images {
+    margin-top: 10px;
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 72%;
+    grid-template-columns: none;
+    gap: 10px;
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline mandatory;
+    scrollbar-width: none;
+  }
+
+  .product-detail-secondary-images::-webkit-scrollbar {
+    display: none;
+  }
+
+  .product-detail-secondary-images figure {
+    aspect-ratio: 4 / 3;
+    scroll-snap-align: start;
+  }
+
+  .product-detail-intro {
+    padding: 48px 18px 58px;
+  }
+
+  .product-detail-intro h1 {
+    margin: 18px 0 16px;
+    font-size: clamp(3.45rem, 15vw, 5.1rem);
+    line-height: .9;
+  }
+
+  .product-detail-tagline {
+    margin-bottom: 20px;
+    font-size: 20px;
+  }
+
+  .product-detail-description {
+    margin-bottom: 24px;
+    font-size: 12px;
+    line-height: 1.68;
+  }
+
+  .product-detail-facts span {
+    min-height: 44px;
+    padding: 11px 0;
+  }
+
+  .product-detail-buyrow {
+    margin-top: 24px;
+    grid-template-columns: 100px minmax(0, 1fr);
+  }
+
+  .product-detail-buyrow strong {
+    padding: 14px;
+    font-size: 19px;
+  }
+
+  .product-detail-buyrow button {
+    min-height: 52px;
+    padding: 0 12px;
+    font-size: 7px;
+  }
+
+  .product-detail-benefits,
+  .product-system-included,
+  .related-products-section {
+    padding: 66px 18px;
+  }
+
+  .product-detail-section-heading {
+    gap: 30px;
+  }
+
+  .product-detail-section-heading h2 {
+    font-size: clamp(3.25rem, 14vw, 4.7rem);
+  }
+
+  .product-benefit-grid {
+    margin-top: 42px;
+  }
+
+  .product-benefit-grid h3 {
+    margin-top: 26px;
+  }
+
+  .product-detail-information article,
+  .product-specifications {
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .product-detail-information article {
+    padding-top: 62px;
+    padding-bottom: 62px;
+  }
+
+  .product-specifications {
+    padding-top: 62px;
+    padding-bottom: 62px;
+    gap: 38px;
+  }
+
+  .product-specifications li {
+    padding: 15px 0;
+    font-size: 9px;
+  }
+
+  /* Eight full related cards are excessive on a phone. Keep the strongest three. */
+  .related-products-grid .related-product:nth-child(n + 4) {
+    display: none;
+  }
+
+  .related-products-grid {
+    margin-top: 42px;
+  }
+
+  .related-product-image {
+    aspect-ratio: 1 / .78;
+  }
+
+  .related-product-copy {
+    padding: 16px;
+    gap: 10px;
+  }
+
+  .related-product-copy strong {
+    font-size: 21px;
+  }
+}
+
+@media (max-width: 390px) {
+  .hero h1 {
+    font-size: clamp(3.9rem, 18.5vw, 5rem);
+  }
+
+  .product-detail-buyrow {
+    grid-template-columns: 1fr;
+  }
+
+  .product-detail-buyrow button {
+    border-left: 0;
+    border-top: 1px solid rgba(33,31,27,.16);
+  }
+
+  .product-detail-buyrow strong {
+    min-height: 48px;
+  }
+
+  .product-detail-secondary-images {
+    grid-auto-columns: 82%;
+  }
+}
