@@ -5,6 +5,6 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/products/:path*", "destination": "/index.html" }
+    { "source": "/products/:path*", "destination": "/" }
   ]
 }
