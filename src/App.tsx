@@ -10,7 +10,7 @@ import {
   type Product,
 } from './lib/shopify';
 import { previewProducts, productImages, type PreviewProduct } from './previewCatalog';
-import { CORE_SKUS, PURCHASES_ENABLED } from './storefrontConfig';
+import { PRODUCT_ORDER, PURCHASES_ENABLED, validateCatalog } from './storefrontConfig';
 import './hero-premium.css';
 
 const CART_KEY = 'everne.shopify.cart-id';
@@ -129,7 +129,16 @@ export default function App() {
       ]);
       setProducts(catalog);
       setCart(restored);
-      if (!catalog.length) setCommerceError('Edition 01 is temporarily unavailable. Please try again.');
+
+      const integrity = validateCatalog(catalog);
+      if (!integrity.valid) {
+        const details = [
+          integrity.missingSkus.length ? `missing: ${integrity.missingSkus.join(', ')}` : '',
+          integrity.duplicateSkus.length ? `duplicate: ${integrity.duplicateSkus.join(', ')}` : '',
+          integrity.unavailableSkus.length ? `unavailable: ${integrity.unavailableSkus.join(', ')}` : '',
+        ].filter(Boolean).join(' · ');
+        setCommerceError(`Edition 01 is not launch-ready${details ? ` (${details})` : ''}.`);
+      }
     } catch (error) {
       setCommerceError(error instanceof Error ? error.message : 'Storefront connection unavailable.');
     } finally {
@@ -159,15 +168,13 @@ export default function App() {
   }, [products]);
 
   const orderedProducts = useMemo(() => {
-    const rank = new Map(CORE_SKUS.map((sku, index) => [sku, index]));
+    const rank = new Map(PRODUCT_ORDER.map((sku, index) => [sku, index]));
     return [...previewProducts].sort((a, b) => (rank.get(a.sku) ?? 99) - (rank.get(b.sku) ?? 99));
   }, []);
 
-  const catalogConnected = previewProducts.every((item) => liveBySku.has(item.sku));
-  const commerceReady = PURCHASES_ENABLED && previewProducts.every((item) => {
-    const live = liveBySku.get(item.sku);
-    return Boolean(live?.product.availableForSale && live.variant.availableForSale);
-  });
+  const catalogIntegrity = useMemo(() => validateCatalog(products), [products]);
+  const catalogConnected = catalogIntegrity.missingSkus.length === 0 && catalogIntegrity.duplicateSkus.length === 0;
+  const commerceReady = PURCHASES_ENABLED && catalogIntegrity.valid;
 
   async function changeQuantity(line: CartLine, quantity: number) {
     if (!cart) return;
@@ -214,7 +221,7 @@ export default function App() {
       <header className="topbar">
         <a className="brand" href="#top" aria-label="EVERNE home">EVERNE</a>
         <nav aria-label="Primary navigation"><a href={productHref(careSet.handle)}>Care Set</a><a href="#method">Our method</a><a href="#collection">Collection</a></nav>
-        <button className="bag-button" disabled={!PURCHASES_ENABLED} onClick={() => setBagOpen(true)} aria-label={PURCHASES_ENABLED ? 'Open shopping bag' : 'Edition 01 is currently unavailable'}>{PURCHASES_ENABLED ? `Bag${cart?.totalQuantity ? ` · ${cart.totalQuantity}` : ''}` : 'Unavailable'}</button>
+        <button className="bag-button" disabled={!PURCHASES_ENABLED || !commerceReady} onClick={() => setBagOpen(true)} aria-label={commerceReady ? 'Open shopping bag' : 'Edition 01 is currently unavailable'}>{commerceReady ? `Bag${cart?.totalQuantity ? ` · ${cart.totalQuantity}` : ''}` : 'Unavailable'}</button>
       </header>
 
       <main>
@@ -284,7 +291,7 @@ export default function App() {
       <footer>
         <div className="footer-lead"><a className="brand" href="#top">EVERNE</a><p>Care for what you keep.</p></div>
         <div><span>Core care</span><a href={productHref(careSet.handle)}>The Care Set</a><a href={productHref(cashmereComb.handle)}>Cashmere Comb</a><a href={productHref(fabricShaver.handle)}>Fabric Shaver</a><a href={productHref(softCareBrush.handle)}>Soft Care Brush</a><a href={productHref(lintBrush.handle)}>Lint Brush</a></div>
-        <div><span>Service</span><button disabled={!PURCHASES_ENABLED} onClick={() => setBagOpen(true)}>{PURCHASES_ENABLED ? 'Shopping bag' : 'Orders currently closed'}</button><a href="#faq">Care & delivery</a></div>
+        <div><span>Service</span><button disabled={!commerceReady} onClick={() => setBagOpen(true)}>{commerceReady ? 'Shopping bag' : 'Orders currently closed'}</button><a href="#faq">Care & delivery</a></div>
         <div><span>Legal</span><a href="/rechtliches.html#impressum">Impressum</a><a href="/rechtliches.html#datenschutz">Datenschutz</a><a href="/rechtliches.html#widerruf">Widerruf</a><a href="/rechtliches.html#agb">AGB</a><a href="/rechtliches.html#versand">Versand & Retouren</a></div>
         <div className="footer-bottom"><span>© 2026 EVERNE</span><span>Hamburg, Germany · EUR</span><span>Commerce by Shopify</span></div>
       </footer>
@@ -292,7 +299,7 @@ export default function App() {
       <button className={`bag-backdrop ${bagOpen ? 'open' : ''}`} onClick={() => setBagOpen(false)} aria-label="Close shopping bag" tabIndex={bagOpen ? 0 : -1} />
       <aside className={`bag ${bagOpen ? 'open' : ''}`} role="dialog" aria-modal="true" aria-hidden={!bagOpen} aria-label="Shopping bag">
         <div className="bag-head"><div><span>EVERNE</span><strong>Your bag</strong></div><button onClick={() => setBagOpen(false)} aria-label="Close bag">Close</button></div>
-        {!PURCHASES_ENABLED || !cart?.lines.nodes.length ? <div className="empty-bag"><span>Edition 01</span><p>Currently<br />unavailable.</p><small>Orders will open after final product and fulfillment checks are complete.</small><button onClick={() => setBagOpen(false)}>Continue exploring</button></div> : <><div className="bag-lines">{cart.lines.nodes.map((line) => <BagLine key={line.id} line={line} busy={busyLine === line.id} onQuantity={changeQuantity} onRemove={removeLine} />)}</div><div className="bag-summary"><div><span>Subtotal</span><strong>{formatMoney(cart.cost.subtotalAmount)}</strong></div><p>Shipping and taxes are calculated at checkout.</p><a className="checkout" href={cart.checkoutUrl}>Continue to secure checkout <span>↗</span></a><small>Secure checkout powered by Shopify</small></div></>}
+        {!commerceReady || !cart?.lines.nodes.length ? <div className="empty-bag"><span>Edition 01</span><p>Currently<br />unavailable.</p><small>Orders will open after final product and fulfillment checks are complete.</small><button onClick={() => setBagOpen(false)}>Continue exploring</button></div> : <><div className="bag-lines">{cart.lines.nodes.map((line) => <BagLine key={line.id} line={line} busy={busyLine === line.id} onQuantity={changeQuantity} onRemove={removeLine} />)}</div><div className="bag-summary"><div><span>Subtotal</span><strong>{formatMoney(cart.cost.subtotalAmount)}</strong></div><p>Shipping and taxes are calculated at checkout.</p><a className="checkout" href={cart.checkoutUrl}>Continue to secure checkout <span>↗</span></a><small>Secure checkout powered by Shopify</small></div></>}
       </aside>
     </div>
   );
