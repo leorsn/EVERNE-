@@ -53,6 +53,7 @@ export default function ProductDetailPage() {
         title: 'Product not found — EVERNE',
         description: 'Explore EVERNE Edition 01 garment and textile care tools.',
         path: window.location.pathname,
+        indexable: false,
       });
       return;
     }
@@ -63,6 +64,7 @@ export default function ProductDetailPage() {
       image: product.images[0],
       path: `/products/${product.handle}`,
       type: 'product',
+      indexable: PURCHASES_ENABLED,
     });
   }, [product]);
 
