@@ -15,6 +15,7 @@ import './product-detail.css';
 import './impact-pass.css';
 import './all-products-visible.css';
 import './mobile-visual-pass.css';
+import './desktop-final-pass.css';
 
 const basename = import.meta.env.BASE_URL === '/' ? undefined : import.meta.env.BASE_URL.replace(/\/$/, '');
 
