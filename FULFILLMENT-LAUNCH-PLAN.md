@@ -11,10 +11,10 @@ Edition 01 should not open orders until every launch SKU has a confirmed source,
 | Product | EVERNE SKU | Current sourcing status | Launch status |
 | --- | --- | --- | --- |
 | The EVERNE Care Set | EV-CS-BL | Bundle of the four manual core tools | BLOCKED until all four components are confirmed |
-| Cashmere Comb | EV-CC-01 | FTC Germany/EU retail bridge identified at €4.95 incl. VAT; sample and resale/packaging treatment still need validation | SAMPLE-BUY CANDIDATE |
-| Fabric Shaver | EV-FS-01 | Faire has a matching Natural Beech Wood manual fabric-shaver wholesale listing; Germany price/MOQ visible only after retailer login | BLOCKED pending wholesale terms/sample match |
-| Soft Care Brush | EV-SCB-01 | Genuine garment-brush routes identified; Hillbrush offers an in-stock FSC beechwood extra-soft clothes brush; Frank Bürsten offers German private-label/custom production at scale | BLOCKED pending launch-source price/sample selection |
-| Double-Sided Lint Brush | EV-DLB-01 | Schneider Berlin has a ready-to-ship double-sided textile brush with published quantity pricing; visual colors differ from current EVERNE Blue/Pink direction | BLOCKED pending visual/sample decision |
+| Cashmere Comb | EV-CC-01 | FTC Germany retail bridge at €4.95 incl. VAT remains strongest immediate sample route | SAMPLE-BUY CANDIDATE |
+| Fabric Shaver | EV-FS-01 | Supreva manual wood/metal shaver ships from Hungary to Germany, MOQ 10, visible price approx. €0.87 each at MOQ | STRONG SMALL-BATCH CANDIDATE |
+| Soft Care Brush | EV-SCB-01 | Holz-Frank genuine beech clothes brush matches current dimensions closely, visible tier pricing, Germany stock and short delivery | STRONG SMALL-BATCH CANDIDATE |
+| Double-Sided Lint Brush | EV-DLB-01 | Blue Beldray/UP.Direct wholesale route identified with EU responsible operator; Schneider Berlin remains lowest-cost fallback | STRONG B2B CANDIDATES |
 
 ## Secondary products
 
@@ -46,7 +46,7 @@ A small-stock bridge should only be used after confirming:
 
 ### 1. Cashmere Comb — strongest immediate sample candidate
 
-FTC Cashmere currently lists an FSC-certified wooden cashmere comb at €4.95 incl. VAT and marked in stock at the time of the sourcing check. It is explicitly intended to remove pilling from cashmere and wool knitwear.
+FTC Cashmere currently lists an FSC-certified wooden cashmere comb at €4.95 incl. VAT and marked in stock at the sourcing check. It is explicitly intended to remove pilling from cashmere and wool knitwear.
 
 EVERNE storefront price: €28 incl. VAT.
 
@@ -60,70 +60,88 @@ Before launch approval:
 
 Fallback/scale option: Faire lists wholesale cashmere combs, including a Clothes Doctor beechwood comb. This is potentially better for recurring B2B supply, but wholesale pricing and exact Germany terms require retailer access.
 
-### 2. Fabric Shaver — matching wholesale product found
+### 2. Fabric Shaver — visible-price EU wholesale route found
 
-Faire currently lists a product specifically described as a Natural Beech Wood Lint Remover / Manual Fabric Shaver for Sweaters & Wool Clothing. This matches the current EVERNE manual Fabric Shaver concept materially better than the previously mismatched electric CJ route.
+Supreva currently lists a manual lint remover / fabric shaver made from wood and metal that materially matches the EVERNE manual Fabric Shaver concept.
+
+Published sourcing facts at the check:
+- product: manual wood/metal lint remover / fabric shaver
+- dispatch country: Hungary
+- Germany listed as a destination country
+- minimum quantity: 10 pieces
+- approx. €0.87 per piece at 10 pieces before VAT shown by the marketplace
+- approx. €0.78 from 200 pieces, €0.74 from 500, €0.70 from 1,000
+- stated delivery time: 1–3 days
+- in stock at sourcing check
+
+This is currently stronger for launch execution than the Faire route because price, MOQ and Germany delivery are visible without waiting for a retailer-account quote.
 
 EVERNE storefront price: €32 incl. VAT.
 
-Status: STRONG WHOLESALE PRODUCT-FIT CANDIDATE / TERMS REQUIRED.
+Status: STRONG SMALL-BATCH CANDIDATE / SAMPLE REQUIRED.
 
 Before launch approval:
-- unlock wholesale price and MOQ through the retailer account
-- confirm ship-from location and Germany delivery
-- compare geometry, finish and blade/material layout to the existing storefront imagery
-- order one physical sample before changing the live product source
-- reject the candidate if true net landed cost exceeds €16.13 unless the retail price is deliberately revised
+- verify actual shipping charge to Germany and final VAT treatment at checkout
+- inspect physical geometry, wood finish and metal edge against current EVERNE imagery
+- test on wool/cashmere/knitwear before marketing claims are finalized
+- obtain seller/manufacturer/responsible-operator data required for resale
+- confirm whether neutral packaging is supplied
 
-### 3. Soft Care Brush — genuine garment-care route established
+Faire remains a fallback/scale route if its Natural Beech Wood manual Fabric Shaver offers better finish or continuity after retailer-account access.
 
-The earlier baby-brush-style candidate is no longer the preferred route. Proper garment-care products are available.
+### 3. Soft Care Brush — strong German launch source found
 
-Preferred launch candidate:
-
-1. Hillbrush FSC 100% Finest Extra Soft Clothes Brush
-   - lacquered beechwood body
-   - extra-soft bristles
-   - explicitly intended to remove dust, pet hair and fluff from clothing
-   - in stock at sourcing check
-   - worldwide dispatch
-   - distributor / retail partner program available
-   - product length 206 mm; width 38 mm; 100 g; pack size 22
-
-Preferred scale/private-label manufacturer:
-
-2. Frank Bürsten GmbH, Germany
-   - German brush manufacturer
-   - works with beechwood, horsehair, goat hair, natural and synthetic bristles
-   - offers custom/private-label production
-   - custom logo/bristle configuration starts at approximately 1,000 pieces
-   - supports pad print, hot-foil and laser engraving routes depending on project
-
-EVERNE storefront price: €29 incl. VAT.
-
-Status: LAUNCH PRODUCT-FIT FOUND / COMMERCIAL TERMS REQUIRED. PRIVATE-LABEL SCALE PATH IDENTIFIED.
-
-Selection rule: launch only if the selected finished brush stays at or below €14.62 net landed cost, or consciously revise the retail price. Frank Bürsten is a later scale path rather than a 10-unit launch solution because of the private-label MOQ.
-
-### 4. Double-Sided Lint Brush — strongest immediately priced B2B candidate
-
-Hans-Joachim Schneider GmbH, Berlin lists the X LANA FORTE & DELICATA double-sided textile brush for wool and knitwear.
+Holz-Frank currently lists a genuine clothes brush with holder made of untreated beechwood.
 
 Published sourcing facts at the check:
-- €3.95 per piece
-- €3.75 from 6 pieces
-- €3.67 from 12 pieces
-- €3.56 from 24 pieces
-- €3.48 from 48 pieces
-- quantity pricing continues down to €3.16 at 384 pieces
-- ready for shipping
-- explicitly designed for knitwear/wool; one side targets stronger wool/pilling and the other finer yarns
+- genuine clothes brush, not a repurposed baby brush
+- untreated beechwood body
+- black/white bristles described as gentle on clothing and effective for dust/lint
+- brush dimensions: 18 × 5 × 3.5 cm
+- current EVERNE storefront direction is approximately 18 × 5 × 3 cm, so the physical footprint is a close match
+- individually boxed
+- €3.81 incl. 19% VAT at single-unit price
+- €3.43 from 20 pieces
+- €3.05 from 50 pieces
+- €2.67 from 100 pieces
+- 658 pieces shown in stock at sourcing check
+- Germany delivery time shown as 2–4 working days
+
+This is now the preferred launch candidate because it combines correct intended use, Germany stock, visible pricing, close dimensions and low MOQ friction.
 
 EVERNE storefront price: €29 incl. VAT.
 
-Status: STRONGEST CURRENT SMALL-BATCH B2B CANDIDATE / VISUAL-MATCH DECISION REQUIRED.
+Status: STRONG SMALL-BATCH CANDIDATE / SAMPLE REQUIRED.
 
-The main drawback is visual: Schneider's product uses red/pink sides instead of EVERNE's current Blue/Pink variants. Do not reject a reliable product solely for color if a small storefront update would produce a more dependable launch. If Blue/Pink is retained as a hard requirement, continue with Faire wholesale alternatives and verify price/availability before approval.
+Before launch approval:
+- inspect bristle softness on delicate fabrics
+- verify exact box/branding and whether the supplied packaging can be used, removed or replaced
+- confirm manufacturer/responsible-party information for final product page/legal records
+- compare color/wood finish to current EVERNE imagery and update imagery if necessary
+
+Scale/private-label path: Frank Bürsten GmbH remains the preferred later-stage German customization route because it offers beechwood, horsehair/goat-hair options and private-label customization, but logo/bristle customization is aimed at much larger quantities (around 1,000 units).
+
+### 4. Double-Sided Lint Brush — blue wholesale route now identified
+
+UP.Direct lists the Beldray Pet Plus Double-Sided Lint Brush & Mini Pad Set in blue as a wholesale product.
+
+Published sourcing facts at the check:
+- product colour: Blue
+- carton quantity: 12 units
+- carton price shown: £94.91 ex VAT / £113.89 incl. VAT
+- reusable double-sided lint/hair-removal design for clothing and other textiles
+- European Responsible Market Operator listed as Ultimate Products Europe Ltd, Dublin, Ireland
+- delivery page states orders automatically qualify for free delivery; courier delivery stated as 3–5 working days
+
+This is visually closer to EVERNE's current Blue/Pink architecture than the Schneider product and has explicit EU responsible-operator information. The exact delivered economics to Germany and whether the mini-pad/set format fits the EVERNE product presentation must still be checked before selection.
+
+EVERNE storefront price: €29 incl. VAT.
+
+Status: STRONG BLUE B2B CANDIDATE / CHECKOUT + SAMPLE REQUIRED.
+
+Fallback: Hans-Joachim Schneider GmbH, Berlin X LANA FORTE & DELICATA remains the lowest-friction German B2B fallback with visible pricing from €3.95 per piece and quantity tiers down to €3.16, but its red/pink visual direction would require a storefront change.
+
+If preserving both Blue and Pink variants remains mandatory, source continuity for both colours must be demonstrated before retaining two live variants.
 
 ## Launch economics guardrail — 40% minimum gross margin
 
@@ -131,15 +149,26 @@ For launch, reliability and product confidence take priority over maximizing ini
 
 For consistency, the planning guardrail below treats the current storefront price as VAT-inclusive and calculates the maximum preferred net landed cost as 60% of net sales after 19% German VAT. This is a sourcing screen, not a complete contribution-margin model.
 
-| Product | EVERNE price incl. VAT | Net sales after 19% VAT | Max preferred net landed cost for 40% gross margin | Launch note |
+| Product | EVERNE price incl. VAT | Net sales after 19% VAT | Max preferred net landed cost for 40% gross margin | Current sourcing implication |
 | --- | ---: | ---: | ---: | --- |
-| Cashmere Comb | €28 | €23.53 | €14.12 | FTC bridge fits comfortably before secondary costs |
-| Fabric Shaver | €32 | €26.89 | €16.13 | Matching manual wholesale route found; exact B2B terms required |
-| Soft Care Brush | €29 | €24.37 | €14.62 | Genuine garment brush required; Hillbrush launch route + Frank private-label scale route |
-| Double-Sided Lint Brush | €29 | €24.37 | €14.62 | Schneider published pricing fits comfortably; visual fit remains decision |
+| Cashmere Comb | €28 | €23.53 | €14.12 | FTC bridge has substantial room before shipping/packaging |
+| Fabric Shaver | €32 | €26.89 | €16.13 | Supreva unit economics are comfortably inside the ceiling before inbound costs |
+| Soft Care Brush | €29 | €24.37 | €14.62 | Holz-Frank pricing is comfortably inside the ceiling even at small quantities |
+| Double-Sided Lint Brush | €29 | €24.37 | €14.62 | Beldray needs final EUR landed-cost check; Schneider fallback fits comfortably |
 | Care Set | €99 | €83.19 | €49.91 total net landed cost | All four components must fit simultaneously |
 
 These thresholds are launch sourcing guardrails only. Payment fees, packaging, pick/pack, outbound shipping subsidy, returns, marketing CAC and overhead still need to be modelled separately before final pricing decisions.
+
+## Recommended first validation batch
+
+Do not place a large inventory order yet. The next purchase step should be a controlled validation batch:
+
+- Cashmere Comb: 1–2 FTC samples
+- Fabric Shaver: minimum Supreva batch of 10 only if checkout confirms Germany shipping and acceptable total landed cost
+- Soft Care Brush: 1 sample first; if approved, 20-unit tier is a sensible initial stock step
+- Double-Sided Lint Brush: 1 wholesale carton / smallest available Beldray order only after confirming Germany checkout and delivered cost; otherwise use Schneider as the fallback test route
+
+The purpose of this batch is physical product validation, photography, packaging decisions, compliance record collection and end-to-end Shopify fulfilment testing — not demand forecasting.
 
 ## Care Set release gate
 
@@ -147,14 +176,15 @@ The Care Set may only move from Shopify DRAFT to a sellable state once all four 
 
 ## Immediate next actions
 
-- [ ] Order/inspect one FTC Cashmere Comb sample or secure an equivalent unbranded wholesale source.
-- [ ] Unlock Faire wholesale terms for the Natural Beech Wood manual Fabric Shaver and order one matching sample.
-- [ ] Obtain Hillbrush distributor/retail pricing for the FSC extra-soft clothes brush and compare landed cost to €14.62 ceiling.
-- [ ] Treat Frank Bürsten as the preferred private-label scale path once volume can justify ~1,000-unit customization.
-- [ ] Decide whether to accept Schneider red/pink for launch; if yes, buy a 6- or 12-unit validation batch only after physical/sample confirmation.
-- [ ] Obtain manufacturer / EU responsible-person data for all launch products.
+- [ ] Buy/inspect 1–2 FTC Cashmere Comb samples or secure an equivalent unbranded source.
+- [ ] Checkout-test the Supreva manual Fabric Shaver for Germany; if landed cost remains acceptable, buy the minimum 10-unit validation batch.
+- [ ] Buy one Holz-Frank clothes-brush sample and test it on delicate garments; if approved, move to the 20-unit price tier.
+- [ ] Checkout-test the blue Beldray/UP.Direct carton for Germany and confirm the 12-unit delivered cost plus packaging format.
+- [ ] Use Schneider Berlin as the lint-brush fallback if Beldray delivery/economics or product format fail validation.
+- [ ] Obtain manufacturer / EU responsible-person data for all selected launch products.
 - [x] Launch route decision: controlled Germany/EU small stock is preferred over blind dropshipping for the four manual core tools.
 - [x] Launch margin policy revised: minimum target is approximately 40% gross margin where product confidence and reliable fulfilment justify it.
-- [ ] Enter confirmed landed costs and contribution margins after physical sample validation.
+- [x] Visible-price EU/Germany launch candidates now exist for Fabric Shaver and Soft Care Brush.
+- [ ] Enter confirmed landed costs and contribution margins after checkout/sample validation.
 - [ ] Confirm return address and reverse-logistics process.
-- [ ] Only then publish the Care Set and run a real checkout/test-order flow.
+- [ ] Only then reconnect/replace the affected Shopify supplier routes, publish the Care Set and run a real checkout/test-order flow.
