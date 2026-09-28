@@ -13,7 +13,7 @@ Edition 01 should not open orders until every launch SKU has a confirmed source,
 | The EVERNE Care Set | EV-CS-BL | Bundle of the four manual core tools | BLOCKED until all four components are confirmed |
 | Cashmere Comb | EV-CC-01 | FTC Germany retail bridge at €4.95 incl. VAT is verified and remains strongest immediate sample route | SAMPLE-BUY CANDIDATE |
 | Fabric Shaver | EV-FS-01 | Faire has a verified Natural Beech Wood manual fabric-shaver listing; wholesale price/MOQ remain behind retailer login | BLOCKED pending wholesale terms/sample match |
-| Soft Care Brush | EV-SCB-01 | Holz-Frank genuine beech clothes brush remains preferred German launch route; close dimensional fit and visible tier pricing | STRONG SMALL-BATCH CANDIDATE |
+| Soft Care Brush | EV-SCB-01 | Holz-Frank product page live-verified: genuine untreated-beech clothes brush, €3.81 incl. VAT, 656 units shown in stock, 2–4 working days DE | STRONGEST VERIFIED SMALL-BATCH CANDIDATE |
 | Double-Sided Lint Brush | EV-DLB-01 | Beldray/UP.Direct blue wholesale carton verified with EU responsible operator; Schneider Berlin remains fallback | STRONG B2B CANDIDATES |
 
 ## Secondary products
@@ -58,13 +58,13 @@ Before launch approval:
 - confirm actual Germany shipping charge and resulting landed cost
 - retain manufacturer/responsible-party information
 
-Fallback/scale option: Faire lists wholesale cashmere combs, including a Clothes Doctor beechwood comb. This is potentially better for recurring B2B supply, but wholesale pricing and exact Germany terms require retailer access.
+Fallback/scale option: Faire lists wholesale cashmere combs, including natural-beech options. This is potentially better for recurring B2B supply, but wholesale pricing and exact Germany terms require retailer access.
 
 ### 2. Fabric Shaver — verified product fit, terms still gated
 
-Faire currently lists a product specifically described as a Natural Beech Wood Lint Remover / Manual Fabric Shaver for Sweaters & Wool Clothing by modarislife. This matches the current EVERNE manual Fabric Shaver concept materially better than the previously mismatched electric CJ route.
+Faire publicly lists a Natural Beech Wood Lint Remover / Manual Fabric Shaver for Sweaters & Wool Clothing by modarislife. This matches the current EVERNE manual Fabric Shaver concept materially better than the previously mismatched electric CJ route.
 
-The listing is verifiable publicly, but Faire keeps wholesale price and commercial terms behind retailer login. Therefore no unit-cost, MOQ or Germany-shipping claim should be treated as confirmed until the merchant account exposes them.
+The product itself is verifiable publicly, but Faire keeps wholesale price and commercial terms behind retailer login. Therefore no unit-cost, MOQ or Germany-shipping claim should be treated as confirmed until the merchant account exposes them.
 
 EVERNE storefront price: €32 incl. VAT.
 
@@ -77,31 +77,43 @@ Before launch approval:
 - order one physical sample before changing the live product source
 - reject the candidate if true net landed cost exceeds €16.13 unless the retail price is deliberately revised
 
-Important correction: the previously referenced Supreva small-batch route is removed from the launch plan because its exact listing, pricing and Germany-delivery details could not be reliably re-verified.
+Important correction: the previously referenced Supreva small-batch route remains removed because its exact listing, pricing and Germany-delivery details could not be reliably re-verified.
 
-### 3. Soft Care Brush — preferred German launch route
+Open-market backup research found manual wooden shavers with visible low MOQs outside the EU, but these are not promoted to preferred launch status because EU/Germany fulfilment, customs and responsible-operator handling are less clean than the current Faire route.
 
-Holz-Frank remains the preferred launch candidate for a genuine clothes brush with untreated beechwood body and dimensions close to the current EVERNE product architecture.
+### 3. Soft Care Brush — strongest fully verified German launch route
 
-Previously observed sourcing facts:
+Holz-Frank is now fully live-verified as the preferred launch candidate.
+
+Verified sourcing facts:
+- product: Kleiderbürste mit Halter aus Buche - roh, article 94127
 - genuine clothes brush, not a repurposed baby brush
-- untreated beechwood body
-- approximately 18 × 5 × 3.5 cm
-- visible German stock and tier pricing
-- short domestic delivery window
+- untreated beechwood (Fagus sylvatica)
+- black/white bristles described as gentle on clothing and effective for dust/lint
+- brush dimensions: 18 × 5 × 3.5 cm
+- individually boxed
+- €3.81 incl. 19% VAT at single-unit price
+- €3.43 from 20 pieces
+- €3.05 from 50 pieces
+- €2.67 from 100 pieces
+- 656 pieces shown in stock at the live check
+- Germany delivery time shown as 2–4 working days
+- manufacturer and responsible person: Holz Frank GmbH & Co. KG, Hersbruck, Germany
+- supplier page lists laser engraving and 5C digital print as available print methods for the product category
+
+This is the cleanest current launch route because intended use, dimensions, stock, price, domestic delivery and responsible-party information are all publicly visible.
 
 EVERNE storefront price: €29 incl. VAT.
 
-Status: STRONG SMALL-BATCH CANDIDATE / SAMPLE REQUIRED.
+Status: STRONGEST VERIFIED SMALL-BATCH CANDIDATE / SAMPLE REQUIRED.
 
 Before launch approval:
-- re-check current price, stock and shipping immediately before purchase
-- inspect bristle softness on delicate fabrics
+- buy one sample and inspect bristle softness on delicate fabrics
 - verify exact box/branding and whether the supplied packaging can be used, removed or replaced
-- confirm manufacturer/responsible-party information for final product page/legal records
 - compare color/wood finish to current EVERNE imagery and update imagery if necessary
+- confirm any engraving/printing quote separately before treating customization as available at launch quantity
 
-Scale/private-label path: Frank Bürsten GmbH remains the preferred later-stage German customization route because it offers beechwood, horsehair/goat-hair options and private-label customization, but logo/bristle customization is aimed at much larger quantities.
+Scale/private-label path: Frank Bürsten GmbH remains a later-stage German customization route for larger quantities.
 
 ### 4. Double-Sided Lint Brush — verified blue wholesale route
 
@@ -140,7 +152,7 @@ For consistency, the planning guardrail below treats the current storefront pric
 | --- | ---: | ---: | ---: | --- |
 | Cashmere Comb | €28 | €23.53 | €14.12 | FTC bridge has substantial room before shipping/packaging |
 | Fabric Shaver | €32 | €26.89 | €16.13 | Faire product fit is verified; exact economics remain pending retailer login |
-| Soft Care Brush | €29 | €24.37 | €14.62 | Holz-Frank route previously fit comfortably; re-check immediately before purchase |
+| Soft Care Brush | €29 | €24.37 | €14.62 | Holz-Frank €3.81 retail sample price and tier pricing fit comfortably before inbound/packaging |
 | Double-Sided Lint Brush | €29 | €24.37 | €14.62 | Beldray needs final Germany/EUR landed-cost check; Schneider fallback fits comfortably |
 | Care Set | €99 | €83.19 | €49.91 total net landed cost | All four components must fit simultaneously |
 
@@ -152,7 +164,7 @@ Do not place a large inventory order yet. The next purchase step should be a con
 
 - Cashmere Comb: 1–2 FTC samples
 - Fabric Shaver: smallest Faire sample/order available after wholesale terms are visible
-- Soft Care Brush: 1 Holz-Frank sample first; if approved, use the next sensible tier for initial stock
+- Soft Care Brush: 1 Holz-Frank sample first; if approved, 20 units at the published €3.43 tier is the logical first-stock step
 - Double-Sided Lint Brush: 1 Beldray wholesale carton / 12 units only after confirming Germany checkout and final delivered cost; otherwise use Schneider as the fallback test route
 
 The purpose of this batch is physical product validation, photography, packaging decisions, compliance record collection and end-to-end Shopify fulfilment testing — not demand forecasting.
@@ -176,12 +188,13 @@ The Care Set may only move from Shopify DRAFT to a sellable state once all four 
 
 - [ ] Buy/inspect 1–2 FTC Cashmere Comb samples.
 - [ ] Open the Faire retailer account/product listing and record wholesale price, MOQ, ship-from and Germany delivery for the Natural Beech Wood manual Fabric Shaver.
-- [ ] Re-check Holz-Frank live price/stock and buy one Soft Care Brush sample if still within the €14.62 net-landed ceiling.
+- [ ] Buy one Holz-Frank Soft Care Brush sample; if approved, move to the 20-unit €3.43 tier.
 - [ ] Checkout-test the blue Beldray/UP.Direct carton to a German address and record total delivered cost.
 - [ ] Use Schneider Berlin as the lint-brush fallback if Beldray delivery/economics or product format fail validation.
-- [ ] Obtain manufacturer / EU responsible-person data for all selected launch products.
+- [ ] Obtain/retain manufacturer and EU responsible-person data for all selected launch products.
 - [x] Launch route decision: controlled Germany/EU small stock is preferred over blind dropshipping for the four manual core tools.
 - [x] Launch margin policy revised: minimum target is approximately 40% gross margin where product confidence and reliable fulfilment justify it.
+- [x] Holz-Frank Soft Care Brush source fully verified for price, stock, domestic delivery and responsible-party information.
 - [ ] Enter confirmed landed costs and contribution margins after checkout/sample validation.
 - [ ] Confirm return address and reverse-logistics process.
 - [ ] Only then reconnect/replace the affected Shopify supplier routes, publish the Care Set and run a real checkout/test-order flow.
