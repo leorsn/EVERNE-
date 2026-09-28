@@ -11,10 +11,10 @@ Edition 01 should not open orders until every launch SKU has a confirmed source,
 | Product | EVERNE SKU | Current sourcing status | Launch status |
 | --- | --- | --- | --- |
 | The EVERNE Care Set | EV-CS-BL | Bundle of the four manual core tools | BLOCKED until all four components are confirmed |
-| Cashmere Comb | EV-CC-01 | Previous CJ route is commercially unsuitable for Germany due to high shipping | BLOCKED — replacement source required |
-| Fabric Shaver | EV-FS-01 | Previous connected source did not deliver to Germany | BLOCKED — replacement source required |
-| Soft Care Brush | EV-SCB-01 | Accepted product concept: unbranded beech/goat-wool style brush; final landed cost and Germany fulfilment still require confirmation | BLOCKED pending fulfilment confirmation |
-| Double-Sided Lint Brush | EV-DLB-01 | Product exists in Shopify; supplier/landed cost/Germany fulfilment still require final confirmation | BLOCKED pending fulfilment confirmation |
+| Cashmere Comb | EV-CC-01 | FTC Germany/EU retail bridge identified at €4.95 incl. VAT; sample and resale/packaging treatment still need validation | SAMPLE-BUY CANDIDATE |
+| Fabric Shaver | EV-FS-01 | Faire has matching manual beech/metal fabric-shaver wholesale listings; Germany price/MOQ visible only after retailer login | BLOCKED pending wholesale terms/sample match |
+| Soft Care Brush | EV-SCB-01 | Proper garment-brush routes now identified; Hillbrush offers FSC beechwood extra-soft clothes brush with retail/distributor program; Basselburg offers German-made beech/soft-horsehair clothing brushes | BLOCKED pending price/visual/sample selection |
+| Double-Sided Lint Brush | EV-DLB-01 | German B2B textile-brush candidate plus Faire wholesale double-sided lint brushes identified | BLOCKED pending visual/price/sample selection |
 
 ## Secondary products
 
@@ -27,95 +27,110 @@ The existing powered products remain in the Edition 01 catalog but are not the s
 
 The Steam Brush previously had a Germany-warehouse route and should be re-verified immediately before launch rather than assumed current.
 
-## Replacement sourcing candidates
-
-### Cashmere Comb
-
-Current Germany/EU references worth approaching for B2B or reseller terms:
-
-1. Gustav Selter / addi cashmere comb — German manufacturer; product is sold through German retailers and has clear EU manufacturer/GPSR information.
-2. FTC Cashmere comb — FSC-certified wooden cashmere comb, currently offered from a German-language EU storefront.
-3. PAPA LOBSTER Cashmere Care comb — German company with in-stock garment-care comb and published manufacturer/contact information.
-
-These are sourcing leads, not approved suppliers. Wholesale price, neutral packaging, resale permission, blind shipping and stock continuity must be confirmed in writing before use.
-
-### Fabric Shaver
-
-Current replacement paths worth validating:
-
-1. Faire wholesale — listings include natural beech-wood manual fabric shavers/lint removers. Confirm seller location, Germany delivery, wholesale landed cost and continuity before selection.
-2. Everful Wholesale — manual reusable fabric shaver/lint-remover listings exist with low unit prices and no-MOQ options on some listings. Germany shipping, tax/import treatment and GPSR economic-operator information require confirmation.
-3. German/EU manual lint-remover retail bridges — acceptable for sampling or a tiny controlled batch when they match the current manual product geometry and stay within the 40% launch margin floor.
-
 ## Preferred launch bridge
 
-For the four manual core products, prefer a controlled EU/Germany small-stock route over a China direct-to-customer route when the latter creates either excessive shipping cost, no Germany delivery or long/uncertain delivery times.
+For the four manual core products, prefer a controlled EU/Germany small-stock route over a China direct-to-customer route when the latter creates excessive shipping cost, no Germany delivery, long/uncertain delivery times or unclear product identity.
 
 A small-stock bridge should only be used after confirming:
 
 - unit cost + inbound shipping + VAT/import cost
 - minimum order quantity
-- neutral/unbranded product and packaging
+- neutral/unbranded product and packaging, or an explicit plan for branded-source resale
 - written resale permission where required
 - manufacturer / responsible economic operator information
 - product material/specification consistency with the storefront copy
 - return address and defective-product process
 - replenishment lead time
 
-## Rapid bridge sourcing check — 28 September 2026
+## Sourcing status — 28 September 2026
 
-Objective: avoid further supplier-email dependency and validate products that can be bought now in Germany/EU for a small controlled launch stock.
+### 1. Cashmere Comb — strongest immediate sample candidate
 
-### Cashmere Comb — bridge candidate found
+FTC Cashmere currently lists an FSC-certified wooden cashmere comb at €4.95 incl. VAT and marked in stock at the time of the sourcing check. It is explicitly intended to remove pilling from cashmere and wool knitwear.
 
-- FTC Cashmere currently lists an FSC-certified wooden cashmere comb at €4.95 incl. VAT and marked in stock at the time of the sourcing check.
-- EVERNE storefront price is €28.
-- At the listed retail acquisition price, gross spread before inbound shipping, packaging, payment fees, fulfilment and tax is €23.05 per unit.
-- This is financially viable as a short bridge if the delivered product matches the storefront specification and resale/repackaging treatment is legally and operationally acceptable.
-- Do not treat the FTC product as an EVERNE private-label source until branding/packaging and resale handling have been checked on the physical sample.
+EVERNE storefront price: €28 incl. VAT.
 
-Bridge status: SAMPLE-BUY CANDIDATE.
+Status: SAMPLE-BUY CANDIDATE.
 
-### Fabric Shaver — bridge candidates found, continuity weak
+Before launch approval:
+- verify physical geometry and finish against EVERNE imagery
+- check whether visible FTC branding/packaging can be removed or whether the product should be sourced elsewhere for resale/private-label use
+- confirm inbound shipping and resulting landed cost
+- retain manufacturer/responsible-party information
 
-- German marketplace listings for manual wood/metal lint removers are available in a price band that can fit the revised 40% launch-margin floor.
-- EVERNE storefront price is €32.
-- These listings can support a very small validation batch, but visible stock continuity may be unsuitable as the long-term source.
-- Use only for physical product validation and initial emergency stock if the delivered item precisely matches the website imagery/specification.
-- Faire remains the preferred wholesale scale route if a matching manual shaver has acceptable Germany terms.
+### 2. Fabric Shaver — wholesale route exists, exact terms still hidden
 
-Bridge status: SAMPLE-BUY CANDIDATE / WHOLESALE SCALE ROUTE STILL TO CONFIRM.
+Faire currently lists multiple manual fabric-shaver/lint-remover products, including natural beech-wood and wooden-handle manual tools for sweaters, wool coats and general garment care.
 
-### Soft Care Brush — low-cost candidate found, Germany fulfilment still unverified
+This is preferable to the previously mismatched/electric CJ route because the product type matches the current EVERNE manual Fabric Shaver concept.
 
-- Everful currently lists natural beech-wood soft wool/goat-hair baby brushes around €1.59–€2.16 with no MOQ on one listing.
-- A second Everful listing includes a beech-wood wool brush in an 18 × 5 cm format, closely matching the current EVERNE 18 × 5 × 3 cm visual/specification direction.
-- Product economics fit the €29 storefront price easily, but Germany shipping, VAT/import treatment, exact bristle composition, packaging and EU responsible-person/GPSR data still require checkout/sample verification.
-- Do not market a sourced baby-hairbrush product as a garment-care brush until the physical sample is tested on textiles and the supplier/manufacturer documentation supports the intended use.
+EVERNE storefront price: €32 incl. VAT.
 
-Bridge status: PROMISING LOW-COST SAMPLE CANDIDATE / NOT YET LAUNCH-APPROVED.
+Status: WHOLESALE CANDIDATE / TERMS REQUIRED.
 
-### Double-Sided Lint Brush — stronger Germany/EU B2B candidate found
+Before launch approval:
+- unlock wholesale price and MOQ through the retailer account
+- confirm ship-from location and Germany delivery
+- compare geometry, coral/neutral finish and blade/material layout to the existing storefront imagery
+- order one physical sample before changing the live product source
 
-- Hans-Joachim Schneider GmbH in Berlin lists the X LANA FORTE & DELICATA double-sided textile brush for wool and knitwear.
-- Published pricing is €3.95 per piece, with quantity tiers down to €3.16 at 384 pieces; the listing is marked ready for shipping at the time of the sourcing check.
-- This is a materially stronger sourcing route than a generic marketplace listing because it is a specialist German supplier with explicit garment/textile use and quantity pricing.
-- The product is red/pink rather than EVERNE's current Blue/Pink variant architecture, so it is not an automatic visual replacement. If selected, the storefront imagery/variant architecture would need to be adjusted unless another matching colour source is secured.
+### 3. Soft Care Brush — replace baby-brush logic with genuine garment brush
 
-Bridge status: STRONG B2B PRODUCT CANDIDATE / VISUAL-MATCH DECISION REQUIRED.
+The earlier baby-brush-style candidate should no longer be the preferred route. Proper garment-care products are available.
 
-## Launch economics guardrail — revised to 40% minimum gross margin
+Preferred candidates:
 
-For launch, reliability and product confidence now take priority over maximizing initial margin. A product may launch at approximately 40% gross margin if the sourcing route is stable, quality is acceptable and Germany fulfilment/compliance are clear. Margin can be improved later through supplier negotiation, larger order quantities, packaging optimization, bundles and price increases.
+1. Hillbrush FSC 100% Finest Extra Soft Clothes Brush
+   - lacquered beechwood body
+   - extra-soft bristles
+   - explicitly intended to remove dust, pet hair and fluff from clothing
+   - in stock at sourcing check
+   - worldwide dispatch
+   - distributor / retail partner program available
 
-For consistency, the planning guardrail below treats the current storefront price as VAT-inclusive and calculates the maximum preferred **net landed cost** as 60% of net sales after 19% German VAT. This is a sourcing screen, not a complete contribution-margin model.
+2. Basselburg clothes brush
+   - German manufacturer
+   - beech thermowood
+   - soft horsehair version specifically for delicate fabrics
+   - genuine clothes-care use rather than repurposed baby-care product
+
+EVERNE storefront price: €29 incl. VAT.
+
+Status: STRONG PRODUCT-FIT CANDIDATES / COMMERCIAL TERMS REQUIRED.
+
+Selection rule: prefer the candidate whose landed B2B cost stays at or below the 40% margin floor and whose dimensions/appearance require the least storefront redesign.
+
+### 4. Double-Sided Lint Brush — several viable routes
+
+Current candidate routes:
+
+1. Hans-Joachim Schneider GmbH, Berlin — X LANA FORTE & DELICATA double-sided textile brush
+   - specialist textile/garment-care product
+   - published price €3.95 per piece with quantity tiers down to €3.16 at 384 pieces
+   - ready for shipping at the sourcing check
+   - visual drawback: red/pink direction rather than EVERNE Blue/Pink
+
+2. Faire wholesale — Double-Sided Lint & Pet Hair Remover Brush and similar reusable lint-brush products
+   - wholesale-oriented
+   - some listings show multiple colors
+   - exact wholesale price and Germany terms require retailer login
+
+EVERNE storefront price: €29 incl. VAT.
+
+Status: B2B ROUTE AVAILABLE / VISUAL-MATCH DECISION REQUIRED.
+
+## Launch economics guardrail — 40% minimum gross margin
+
+For launch, reliability and product confidence take priority over maximizing initial margin. A product may launch at approximately 40% gross margin if the sourcing route is stable, quality is acceptable and Germany fulfilment/compliance are clear. Margin can be improved later through supplier negotiation, larger order quantities, packaging optimization, bundles and price increases.
+
+For consistency, the planning guardrail below treats the current storefront price as VAT-inclusive and calculates the maximum preferred net landed cost as 60% of net sales after 19% German VAT. This is a sourcing screen, not a complete contribution-margin model.
 
 | Product | EVERNE price incl. VAT | Net sales after 19% VAT | Max preferred net landed cost for 40% gross margin | Launch note |
 | --- | ---: | ---: | ---: | --- |
-| Cashmere Comb | €28 | €23.53 | €14.12 | Strong sourcing flexibility |
-| Fabric Shaver | €32 | €26.89 | €16.13 | Reliability now outweighs chasing very low unit cost |
-| Soft Care Brush | €29 | €24.37 | €14.62 | Plenty of sourcing room if intended use is valid |
-| Double-Sided Lint Brush | €29 | €24.37 | €14.62 | German B2B textile-brush route easily fits financially |
+| Cashmere Comb | €28 | €23.53 | €14.12 | FTC bridge fits comfortably before secondary costs |
+| Fabric Shaver | €32 | €26.89 | €16.13 | Wholesale terms can be materially higher than old 60% floor |
+| Soft Care Brush | €29 | €24.37 | €14.62 | Genuine garment-brush source preferred over repurposed baby brush |
+| Double-Sided Lint Brush | €29 | €24.37 | €14.62 | German B2B product easily fits; visual fit remains decision |
 | Care Set | €99 | €83.19 | €49.91 total net landed cost | All four components must fit simultaneously |
 
 These thresholds are launch sourcing guardrails only. Payment fees, packaging, pick/pack, outbound shipping subsidy, returns, marketing CAC and overhead still need to be modelled separately before final pricing decisions.
@@ -126,10 +141,10 @@ The Care Set may only move from Shopify DRAFT to a sellable state once all four 
 
 ## Immediate next actions
 
-- [ ] Buy/inspect one Cashmere Comb bridge sample from a Germany/EU source before committing stock.
-- [ ] Buy/inspect one manual Fabric Shaver bridge sample that matches the current coral product imagery/specification.
-- [ ] Checkout-test or sample the Everful Soft Care Brush candidate; confirm Germany landed cost, dimensions and bristle composition.
-- [ ] Decide whether the German Schneider X LANA double-sided textile brush is acceptable despite its red/pink visual direction, or retain the current Blue/Pink design and source a closer match.
+- [ ] Order/inspect one FTC Cashmere Comb sample or secure an equivalent unbranded source.
+- [ ] Unlock Faire wholesale terms for the manual Fabric Shaver and order one matching sample.
+- [ ] Request/obtain commercial pricing for Hillbrush and/or Basselburg Soft Care Brush candidates; pick the one with best product fit within the €14.62 net-landed guardrail.
+- [ ] Compare Schneider versus Faire for the Double-Sided Lint Brush; preserve Blue/Pink only if the product itself is reliable and commercially sound.
 - [ ] Obtain manufacturer / EU responsible-person data for all launch products.
 - [x] Launch route decision: controlled Germany/EU small stock is preferred over blind dropshipping for the four manual core tools.
 - [x] Launch margin policy revised: minimum target is approximately 40% gross margin where product confidence and reliable fulfilment justify it.
