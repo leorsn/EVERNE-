@@ -85,21 +85,23 @@ Bridge status: SAMPLE-BUY CANDIDATE.
 
 Bridge status: SAMPLE-BUY CANDIDATE / NOT SCALE-READY.
 
-### Soft Care Brush — do not force the wrong product
+### Soft Care Brush — low-cost candidate found, Germany fulfilment still unverified
 
-- German-made beech/goat-hair clothing brushes are readily available, but verified retail examples around €42 are above the EVERNE €29 selling price.
-- Cheaper natural-bristle wooden brushes exist, but they do not necessarily match the current goat-wool specification and 18 × 5 × 3 cm product copy.
-- Do not substitute a materially different brush without updating imagery, facts and copy.
+- Everful currently lists natural beech-wood soft wool/goat-hair baby brushes around €1.59–€2.16 with no MOQ on one listing.
+- A second Everful listing includes a beech-wood wool brush in an 18 × 5 cm format, closely matching the current EVERNE 18 × 5 × 3 cm visual/specification direction.
+- Product economics fit the €29 storefront price easily, but Germany shipping, VAT/import treatment, exact bristle composition, packaging and EU responsible-person/GPSR data still require checkout/sample verification.
+- Do not market a sourced baby-hairbrush product as a garment-care brush until the physical sample is tested on textiles and the supplier/manufacturer documentation supports the intended use.
 
-Bridge status: STILL BLOCKED ON COMMERCIAL FIT.
+Bridge status: PROMISING LOW-COST SAMPLE CANDIDATE / NOT YET LAUNCH-APPROVED.
 
-### Double-Sided Lint Brush — function available, variant fidelity unresolved
+### Double-Sided Lint Brush — exact colour candidate found
 
-- Double-sided reusable lint brushes are readily available from German/EU sellers at low retail prices.
-- Several verified examples are branded or use white/silver rather than EVERNE's current Blue/Pink variants.
-- The Care Set and product page currently promise Blue/Pink variants; do not buy mismatched stock and keep the existing copy unchanged.
+- SHEIN Germany/EU currently lists a reusable double-sided lint brush at about €6.38 with selectable dark Blue and Pink variants, matching EVERNE's current colour architecture at a functional level.
+- The current EVERNE storefront price is €29.
+- This is suitable for a physical sample check because the price falls below the €11.60 landed-cost guardrail before shipping/secondary costs.
+- Exact shape, finish, blue/pink shade, packaging, source continuity and EU product-responsibility data still need verification before the Shopify product can be treated as sourced.
 
-Bridge status: BLOCKED ON EXACT VARIANT MATCH.
+Bridge status: SAMPLE-BUY CANDIDATE / EXACT COLOUR PATH FOUND.
 
 ## Bridge economics guardrail
 
@@ -109,8 +111,8 @@ For the current individual storefront prices:
 | --- | ---: | ---: | --- |
 | Cashmere Comb | €28 | €11.20 | FTC sample route fits before secondary costs |
 | Fabric Shaver | €32 | €12.80 | Current German sample listings fit before secondary costs |
-| Soft Care Brush | €29 | €11.60 | Verified goat-hair retail route does not fit |
-| Double-Sided Lint Brush | €29 | €11.60 | Functionally possible; exact Blue/Pink match still required |
+| Soft Care Brush | €29 | €11.60 | Everful candidate fits on unit cost; Germany landed cost still unknown |
+| Double-Sided Lint Brush | €29 | €11.60 | Blue/Pink candidate found at ~€6.38 before shipping |
 | Care Set | €99 | €39.60 total landed cost | All four components must fit simultaneously |
 
 The 60% gross-margin line is a launch guardrail, not a final contribution-margin calculation. Payment fees, packaging, pick/pack, outbound shipping subsidy, returns and VAT effects still need to be modelled separately.
@@ -123,8 +125,8 @@ The Care Set may only move from Shopify DRAFT to a sellable state once all four 
 
 - [ ] Buy/inspect one Cashmere Comb bridge sample from a Germany/EU source before committing stock.
 - [ ] Buy/inspect one manual Fabric Shaver bridge sample that matches the current coral product imagery/specification.
-- [ ] Find a Soft Care Brush source at <= €11.60 landed cost or revise the product specification before launch.
-- [ ] Find the exact Blue/Pink Double-Sided Lint Brush at <= €11.60 landed cost.
+- [ ] Checkout-test or sample the Everful Soft Care Brush candidate; confirm Germany landed cost, dimensions and bristle composition.
+- [ ] Sample the Blue and Pink Double-Sided Lint Brush candidate; compare physical shades and geometry with current images.
 - [ ] Obtain manufacturer / EU responsible-person data for all launch products.
 - [x] Launch route decision: controlled Germany/EU small stock is preferred over blind dropshipping for the four manual core tools.
 - [ ] Enter confirmed landed costs and contribution margins after physical sample validation.
