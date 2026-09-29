@@ -5,6 +5,7 @@ on:
     branches:
       - main
       - dev/headless-foundation
+      - audit/launch-readiness-2026-09-29
   pull_request:
 
 jobs:
@@ -13,7 +14,6 @@ jobs:
     env:
       VITE_SHOPIFY_STORE_DOMAIN: khps10-rs.myshopify.com
       VITE_SHOPIFY_API_VERSION: 2026-07
-      VITE_SHOPIFY_STOREFRONT_TOKEN: 287474d54307e5fbbd92518ea5b3fd84
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,20 +32,18 @@ jobs:
         run: |
           node <<'NODE'
           const endpoint = `https://${process.env.VITE_SHOPIFY_STORE_DOMAIN}/api/${process.env.VITE_SHOPIFY_API_VERSION}/graphql.json`;
-          const token = process.env.VITE_SHOPIFY_STOREFRONT_TOKEN;
-          if (!token) throw new Error('The public Shopify Storefront token is missing.');
 
           const query = `query VerifyEdition01 {
             collection(handle: "edition-01") {
               id
               title
               handle
-              products(first: 10) {
+              products(first: 20) {
                 nodes {
                   id
                   title
                   availableForSale
-                  variants(first: 10) {
+                  variants(first: 20) {
                     nodes {
                       id
                       sku
@@ -60,10 +58,7 @@ jobs:
 
           const response = await fetch(endpoint, {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'X-Shopify-Storefront-Access-Token': token,
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ query }),
           });
 
@@ -77,17 +72,34 @@ jobs:
           }
 
           const collection = payload.data?.collection;
-          if (!collection) throw new Error('Edition 01 is not visible through the authenticated Storefront API.');
+          if (!collection) throw new Error('Edition 01 is not visible through the Storefront API.');
 
-          const expected = new Set(['EV-RS-01', 'EV-GB-01', 'EV-CC-01', 'EV-WH-01', 'EV-FS-01']);
+          // The Care Set remains DRAFT until all four manual-care components pass
+          // physical sample validation. Verify the eight products that should be
+          // Storefront-visible now; Care Set publication remains a separate launch gate.
+          const expectedVisible = new Set([
+            'EV-CC-01',
+            'EV-FS-01',
+            'EV-SCB-01',
+            'EV-DLB-01',
+            'EV-FR-01',
+            'EV-WH-01',
+            'EV-GB-01',
+            'EV-ECB-01',
+          ]);
+
           const received = new Set(
             collection.products.nodes.flatMap((product) =>
               product.variants.nodes.map((variant) => variant.sku).filter(Boolean),
             ),
           );
 
-          const missing = [...expected].filter((sku) => !received.has(sku));
-          if (missing.length) throw new Error(`Missing Edition 01 SKUs: ${missing.join(', ')}`);
+          const missing = [...expectedVisible].filter((sku) => !received.has(sku));
+          if (missing.length) throw new Error(`Missing storefront-visible Edition 01 SKUs: ${missing.join(', ')}`);
 
-          console.log(`Shopify connected: ${collection.title} returned all ${expected.size} EVERNE SKUs.`);
+          if (received.has('EV-RS-01')) {
+            throw new Error('Retired SKU EV-RS-01 is still Storefront-visible.');
+          }
+
+          console.log(`Shopify connected: ${collection.title} returned all ${expectedVisible.size} currently Storefront-visible EVERNE SKUs; Care Set remains an explicit draft launch gate.`);
           NODE
