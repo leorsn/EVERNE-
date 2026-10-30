@@ -220,3 +220,64 @@ for (const item of preferred) {
   console.log(`  Fulfillment ${item.conceptName.padEnd(20)} stocked-six-sample scenario €${warehouseEstimate.toFixed(2)} before ads/overhead; own-label dropship courier ceiling €${maxDropshipLabelForBuffer.toFixed(2)} to retain provisional €${logistics.examples.dropshipIllustrativeMinimumContributionBeforeAdsAndFixedOverheadEur} buffer. NOT confirmed.`);
 }
 console.log('  Fulfillment audit passed: warehouse parcel and own-label dropship economics kept separate; no payment, sale or live update.');
+
+const capsule = JSON.parse(fs.readFileSync('sourcing/capsule-hero-alternatives.json', 'utf8'));
+assert.equal(capsule.status, 'RESEARCH_ONLY', 'Capsule-hero research cannot authorize a sale');
+assert.equal(capsule.approvedForSale, false, 'Capsule-hero approval must remain false');
+assert.equal(capsule.supplier, 'FactoryPrice', 'Capsule supplier must be specified');
+assert.equal(capsule.reviewedAt, '2026-10-30', 'Time-sensitive public stock must have a snapshot date');
+assert.equal(capsule.candidates.length, 6, 'Six additional hero/wardrobe alternatives expected');
+assert.equal(capsule.provisionalCapsule.length, 5, 'Provisional launch edit contains five conceptual slots');
+assert.ok(capsule.launchGates.length >= 5, 'A provisional capsule requires explicit launch blockers');
+
+const capsuleIds = new Set();
+const capsuleUrls = new Set();
+let potentiallySampleable = 0;
+for (const item of capsule.candidates) {
+  const concept = conceptByName.get(item.conceptName);
+  assert.ok(concept && concept.category !== 'tops', `Hero candidate must match an existing non-top concept: ${item.id}`);
+  assert.ok(!capsuleIds.has(item.id) && !capsuleUrls.has(item.url), `Duplicate capsule candidate: ${item.id}`);
+  assert.equal(item.approvedForSale, false, `Capsule candidate must not be sale-approved: ${item.id}`);
+  assert.ok(item.url.startsWith('https://factoryprice.eu/de/products/'), `Official supplier source required: ${item.id}`);
+  assert.equal(item.baselineRetailGrossEur, concept.targetPrice, `Concept retail mismatch: ${item.id}`);
+  assert.equal(item.proposedRetailGrossEur, concept.targetPrice, `No unapproved repricing: ${item.id}`);
+  assert.ok(Number.isInteger(item.proposedRetailGrossEur) && [4, 9].includes(item.proposedRetailGrossEur % 10), `Whole euro 4/9 required: ${item.id}`);
+  assert.ok(Number.isFinite(item.indicativeSupplierNetEur) && item.indicativeSupplierNetEur > 0, `Public supplier cost required: ${item.id}`);
+  assert.ok(item.listedComposition.length > 10 && item.listedSilhouette.length > 30, `Composition/silhouette needed: ${item.id}`);
+  assert.ok(item.visibleSizesForSampleColor.length >= 2, `Two identifiable variants needed: ${item.id}`);
+  assert.ok(item.questions.length >= 4 && item.seasonalRole.length > 50, `Acceptance and seasonal fit must be recorded: ${item.id}`);
+  assert.ok(item.candidateStatus !== 'APPROVED', `Research-only listing cannot be approved: ${item.id}`);
+  const availableSizes = item.visibleSizesForSampleColor.filter((size) => {
+    const stock = item.publicStockObservedBySize[size];
+    assert.ok(Number.isInteger(stock) && stock >= 0, `Public stock must be nonnegative: ${item.id}/${size}`);
+    assert.ok(typeof item.variantIdentifiersBySize[size] === 'string' && item.variantIdentifiersBySize[size].length >= 10, `Variant id required: ${item.id}/${size}`);
+    assert.ok(Number.isFinite(item.listedMeasurementsCmBySize[size]?.length) && item.listedMeasurementsCmBySize[size].length > 0, `Garment length required: ${item.id}/${size}`);
+    return stock > 0;
+  });
+  if (availableSizes.length < 2) assert.ok(item.candidateStatus.includes('HOLD'), `Poor size coverage must be held: ${item.id}`);
+  if (item.visibleSizesForSampleColor.some((size) => item.publicStockObservedBySize[size] < 5)) {
+    assert.ok(item.candidateStatus.includes('HOLD'), `Out-of-stock or under-five variant must be held: ${item.id}`);
+  }
+  if (item.listedSilhouette.includes('NOT a wrap')) assert.ok(item.candidateStatus.includes('RENAME'), `Cardigan mismatch cannot be sold as wrap: ${item.id}`);
+  if (item.candidateStatus.startsWith('SAMPLE_OPTION')) potentiallySampleable += 1;
+  capsuleIds.add(item.id);
+  capsuleUrls.add(item.url);
+
+  const m = essentials.model;
+  const netSale = item.proposedRetailGrossEur / (1 + m.germanGrossVatRateAssumption);
+  const fee = item.proposedRetailGrossEur * m.paymentFeeGrossRateAssumption + m.paymentFeeFixedEurAssumption;
+  const ceiling = netSale - item.indicativeSupplierNetEur - m.outboundShippingPerSaleExVatEurAssumption - m.packagingPerSaleExVatEurAssumption - fee - m.returnCostReservePerSaleExVatEurAssumption;
+  const maxDropshipLabel = netSale - item.indicativeSupplierNetEur - dropshipHandlingEur - logistics.examples.dropshipConservativePackagingBufferEur - fee - m.returnCostReservePerSaleExVatEurAssumption - logistics.examples.dropshipIllustrativeMinimumContributionBeforeAdsAndFixedOverheadEur;
+  assert.ok(Number.isFinite(ceiling) && Number.isFinite(maxDropshipLabel), `Price math must be finite: ${item.id}`);
+  console.log(`  Hero ${item.conceptName.padEnd(20)} gross €${item.proposedRetailGrossEur} | public net goods €${item.indicativeSupplierNetEur.toFixed(2)} | pre-inbound ceiling €${ceiling.toFixed(2)} | max dropship label €${maxDropshipLabel.toFixed(2)} for €10 buffer | ${item.candidateStatus}`);
+}
+assert.equal(potentiallySampleable, 2, 'Exactly two dresses are conditional sample options, not launch approvals');
+const capsuleSlots = new Set();
+for (const slot of capsule.provisionalCapsule) {
+  const concept = conceptByName.get(slot.conceptName);
+  assert.ok(concept && slot.retailGrossEur === concept.targetPrice, `Capsule slot references a valid unchanged price: ${slot.conceptName}`);
+  assert.ok(!capsuleSlots.has(slot.conceptName), `No duplicate product slots: ${slot.conceptName}`);
+  assert.ok(slot.gate.length >= 20 && slot.source.length >= 20, `Supplier-specific approval gate required: ${slot.conceptName}`);
+  capsuleSlots.add(slot.conceptName);
+}
+console.log('  Capsule-hero audit passed: two conditional sample dresses, four explicitly held options; separate suppliers, no sale or checkout changes.');
