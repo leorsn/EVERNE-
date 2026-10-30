@@ -51,11 +51,18 @@ assert.ok(homepage.includes('aria-pressed={category === item.id}'), 'Category fi
 assert.ok(homepage.includes('aria-live="polite"'), 'Filtered result counts must be announced without forcing focus');
 assert.ok(homepage.includes('prefersReducedMotion ? \'auto\' : \'smooth\''), 'Reduced-motion users must not be forced into smooth scrolling');
 assert.ok(homepage.includes("event.key === 'Escape'"), 'Mobile navigation must close on Escape');
+assert.ok(homepage.includes('menuToggleRef.current?.focus()'), 'Closing the mobile menu with Escape must restore keyboard focus');
 assert.ok(homepage.includes("aria-controls={'woman-faq-answer-' + index}"), 'FAQ controls need a persistent panel relationship');
 assert.ok(homepage.includes("hidden={openQuestion !== index}"), 'Closed FAQ content must remain associated but hidden');
 assert.ok(!homepage.includes('Autumn / Winter 26'), 'Unconfirmed supplier garments must not be marketed as an approved seasonal collection');
 assert.ok(homepage.includes('Styling inspiration only.'), 'The styling section must not imply confirmed products');
 assert.ok(homepage.includes('€34–€59'), 'Homepage must show the updated whole-euro planned price range');
 assert.ok(englishLegal.includes('€34 and €59'), 'Legal prelaunch notice must show the updated planned price range');
+
+const womenswearCss = fs.readFileSync('src/womenswear.css', 'utf8');
+assert.ok(womenswearCss.includes('.w-style-piece-grid { grid-template-columns: repeat(2,minmax(0,1fr));'),
+  'Narrow mobile screens need two readable style columns instead of three cramped columns');
+assert.ok(womenswearCss.includes('.w-category-title { font-size: clamp(24px,6vw,34px); flex-wrap: wrap;'),
+  'Category titles must wrap without clipping when paired with an arrow on mobile');
 
 console.log(`EVERNE WOMAN validation passed: ${conceptPieces.length} concepts, ${fashionCategories.length} category counts, distinct routes, whole-euro 4/9 targets (€34–€59), English pages, noindex and active app guard.`);
