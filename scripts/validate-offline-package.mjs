@@ -50,7 +50,7 @@ assert.doesNotMatch(html, /<script[^>]*\bsrc=["']https?:|<link[^>]*\bhref=["']ht
   'Offline HTML must not load remote scripts, stylesheets or assets');
 assert.doesNotMatch(html, /X-Shopify-Storefront-Access-Token|\/api\/\d{4}-\d{2}\/graphql\.json/,
   'The editorial preview must not embed Shopify commerce API clients');
-assert.doesNotMatch(html, /<\/script/i.test(html) ? /<script[^>]*\bsrc=["']\//i : /a^/,
+assert.doesNotMatch(html, /<script[^>]*\bsrc=["']\//i,
   'The file preview must not refer to a root-only app script');
 
 const scriptEntry = builtHtml.match(/<script type="module" crossorigin src="\.\/assets\/([^"/]+\.js)"><\/script>/);
