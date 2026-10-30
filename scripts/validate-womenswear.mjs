@@ -102,4 +102,56 @@ assert.ok(womenswearCss.includes('.w-style-piece-grid { grid-template-columns: r
 assert.ok(womenswearCss.includes('.w-category-title { font-size: clamp(24px,6vw,34px); flex-wrap: wrap;'),
   'Category titles must wrap without clipping when paired with an arrow on mobile');
 
-console.log(`EVERNE WOMAN validation passed: ${conceptPieces.length} concepts, ${fashionCategories.length} category counts, distinct routes, whole-euro 4/9 targets (€34–€59), English pages, noindex and active app guard.`);
+function contrastRatio(foreground, background) {
+  function luminance(hex) {
+    const rgb = hex.match(/[a-f\d]{2}/gi).map((part) => parseInt(part, 16) / 255);
+    const linear = rgb.map((value) => value <= 0.04045 ? value / 12.92 : ((value + 0.055) / 1.055) ** 2.4);
+    return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2];
+  }
+  const light = Math.max(luminance(foreground), luminance(background));
+  const dark = Math.min(luminance(foreground), luminance(background));
+  return (light + 0.05) / (dark + 0.05);
+}
+
+function textColorInRule(selector) {
+  const rule = womenswearCss.split('\n').find((line) => line.trim().startsWith(selector + ' {'));
+  assert.ok(rule, `Missing contrast-checked selector: ${selector}`);
+  const match = rule.match(/(?:^|[;{])\s*color:\s*(#[a-f\d]{6})\b/i);
+  assert.ok(match, `Missing literal text color for contrast audit: ${selector}`);
+  return match[1];
+}
+
+// These small labels and body texts previously measured as low as 2.92:1.
+// Audit their explicit foreground against each section's solid background.
+// Photo overlays and the full visual experience still need browser QA.
+const contrastCases = [
+  ['.w-overline', '#ede8e0'],
+  ['.w-kicker', '#e9e4dc'],
+  ['.w-section-meta,.w-hero-foot', '#ede8e0'],
+  ['.w-media-note', '#f7f5f0'],
+  ['.w-story-copy>p', '#e8e3dc'],
+  ['.w-style-intro>p', '#e9e4dc'],
+  ['.w-style-intro-foot', '#e9e4dc'],
+  ['.w-style-options button', '#e9e4dc'],
+  ['.w-style-selection-heading>p', '#e9e4dc'],
+  ['.w-style-piece-price', '#e9e4dc'],
+  ['.w-style-notice', '#e9e4dc'],
+  ['.w-edit-description>span', '#f7f5f0'],
+  ['.w-results-summary', '#f7f5f0'],
+  ['.w-concept-meta>div>span,.w-target-price span', '#f7f5f0'],
+  ['.w-disclaimer', '#f7f5f0'],
+  ['.w-faq-item p', '#e8e3dc'],
+  ['.w-detail-breadcrumb', '#f7f5f0'],
+  ['.w-detail-art-note', '#f7f5f0'],
+  ['.w-detail-facts dt', '#f7f5f0'],
+  ['.w-detail-related-card>small', '#f7f5f0'],
+];
+for (const [selector, background] of contrastCases) {
+  const foreground = textColorInRule(selector);
+  const ratio = contrastRatio(foreground, background);
+  assert.ok(ratio >= 4.5, `${selector} has insufficient contrast: ${ratio.toFixed(2)}:1`);
+}
+assert.ok(womenswearCss.includes('.w-announcement { min-height: 32px;') &&
+  womenswearCss.includes('font-size: 10px; }'), 'Announcement must remain legible as microcopy');
+
+console.log(`EVERNE WOMAN validation passed: ${conceptPieces.length} concepts, ${fashionCategories.length} categories, route and return navigation, ${contrastCases.length} static text contrast checks, noindex and active app guard.`);
