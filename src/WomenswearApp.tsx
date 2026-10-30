@@ -75,6 +75,15 @@ export default function WomenswearApp() {
     });
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    function closeOnEscape(event: KeyboardEvent) {
+      if (event.key === 'Escape') setMenuOpen(false);
+    }
+    window.addEventListener('keydown', closeOnEscape);
+    return () => window.removeEventListener('keydown', closeOnEscape);
+  }, [menuOpen]);
+
   const selectedPieces = category === 'all'
     ? conceptPieces
     : conceptPieces.filter((piece) => piece.category === category);
@@ -87,7 +96,8 @@ export default function WomenswearApp() {
     setCategory(nextCategory);
     setShowAll(false);
     setMenuOpen(false);
-    document.getElementById('edit')?.scrollIntoView({ behavior: 'smooth' });
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.getElementById('edit')?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
   }
 
   function closeMenu() { setMenuOpen(false); }
@@ -125,7 +135,7 @@ export default function WomenswearApp() {
       <main id="main">
         <section className="w-hero" aria-labelledby="hero-title">
           <div className="w-hero-copy">
-            <div className="w-section-meta"><span>01 / THE NEW EVERYDAY</span><span>Autumn / Winter 26</span></div>
+            <div className="w-section-meta"><span>01 / THE NEW EVERYDAY</span><span>Collection study / 2026</span></div>
             <div className="w-hero-main">
               <p className="w-overline">Modern femininity. Your way.</p>
               <h1 id="hero-title">For every day.<br /><em>Never ordinary.</em></h1>
@@ -167,6 +177,7 @@ export default function WomenswearApp() {
                 type="button"
                 className={'w-category-card w-category-' + item.id}
                 onClick={() => selectCategory(item.id)}
+                aria-pressed={category === item.id}
                 aria-label={item.title + ': view design concepts'}
               >
                 {index === 0 && <img src={editorialImage('trench')} alt="" loading="lazy" />}
@@ -261,11 +272,15 @@ export default function WomenswearApp() {
           </div>
 
           <div className="w-filters" role="group" aria-label="Choose a category">
-            <button type="button" className={category === 'all' ? 'is-active' : ''} onClick={() => selectCategory('all')}>All <span>20</span></button>
+            <button type="button" aria-pressed={category === 'all'} className={category === 'all' ? 'is-active' : ''} onClick={() => selectCategory('all')}>All <span>20</span></button>
             {fashionCategories.map((item) => (
-              <button key={item.id} type="button" className={category === item.id ? 'is-active' : ''} onClick={() => selectCategory(item.id)}>{item.title} <span>{item.count}</span></button>
+              <button key={item.id} type="button" aria-pressed={category === item.id} className={category === item.id ? 'is-active' : ''} onClick={() => selectCategory(item.id)}>{item.title} <span>{item.count}</span></button>
             ))}
           </div>
+
+          <p className="w-results-summary" role="status" aria-live="polite">
+            Showing {visiblePieces.length} of {selectedPieces.length} planned design concepts{category === 'all' ? '' : ` in ${fashionCategories.find((item) => item.id === category)?.title}`}.
+          </p>
 
           <div className="w-concept-grid">
             {visiblePieces.map((piece) => {
@@ -311,10 +326,10 @@ export default function WomenswearApp() {
           <div className="w-faq-list">
             {questions.map((item, index) => (
               <div className="w-faq-item" key={item.question}>
-                <button type="button" aria-expanded={openQuestion === index} onClick={() => setOpenQuestion((value) => value === index ? null : index)}>
+                <button type="button" aria-expanded={openQuestion === index} aria-controls={'woman-faq-answer-' + index} onClick={() => setOpenQuestion((value) => value === index ? null : index)}>
                   <span>{item.question}</span><span aria-hidden="true">{openQuestion === index ? '−' : '+'}</span>
                 </button>
-                {openQuestion === index && <p>{item.answer}</p>}
+                <p id={'woman-faq-answer-' + index} hidden={openQuestion !== index}>{item.answer}</p>
               </div>
             ))}
           </div>
