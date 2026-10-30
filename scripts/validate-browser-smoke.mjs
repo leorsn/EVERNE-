@@ -158,8 +158,13 @@ try {
     await js("document.querySelectorAll('.w-filters button')[" + i + "].click()");
     await eq("document.querySelectorAll('.w-filters button')[" + i +
       "].getAttribute('aria-pressed')", 'true', 'Category ' + i);
-    await eq("document.querySelectorAll('.w-concept-card').length", 4,
-      'Four concepts for category ' + i);
+    const expectedCount = await js(
+      "Number(document.querySelectorAll('.w-filters button')[" + i +
+      "].querySelector('span')?.textContent)");
+    yes(Number.isInteger(expectedCount) && expectedCount > 0,
+      'Selected category must display its declared concept count');
+    await eq("document.querySelectorAll('.w-concept-card').length", expectedCount,
+      'Correct number of concepts for category ' + i);
   }
   await js("document.querySelectorAll('.w-filters button')[3].click()");
   await eq("document.querySelectorAll('.w-filters button')[3].getAttribute('aria-pressed')",
@@ -171,7 +176,7 @@ try {
   await eq("document.querySelectorAll('.w-filters button')[3].getAttribute('aria-pressed')",
     'true', 'Back-to-collection retains selected filter');
   await eq("document.querySelectorAll('.w-concept-card').length", 4,
-    'Back-to-collection retains filtered cards');
+    'Back-to-collection retains the four trouser concepts');
 
   await js("window.location.hash = '#/products/legacy-item'");
   await waitFor(async () => (await js("document.querySelector('main h1')?.innerText"))?.includes('Something new'),
