@@ -71,6 +71,7 @@ assert.ok(homepage.includes("aria-controls={'woman-faq-answer-' + index}"), 'FAQ
 assert.ok(homepage.includes("hidden={openQuestion !== index}"), 'Closed FAQ content must remain associated but hidden');
 assert.ok(!homepage.includes('Autumn / Winter 26'), 'Unconfirmed supplier garments must not be marketed as an approved seasonal collection');
 assert.ok(homepage.includes('Styling inspiration only.'), 'The styling section must not imply confirmed products');
+assert.ok(homepage.includes("name + '.webp'"), 'The active editorial preview must use optimized WebP photography');
 assert.ok(homepage.includes('parseEditView(location.search)'), 'The selected edit must be restored from the URL');
 assert.ok(homepage.includes('id="edit-title" tabIndex={-1}'), 'The returned edit heading must allow programmatic keyboard focus');
 assert.ok(homepage.includes('conceptLink(piece.name, editView)'), 'Concept links must retain their originating filter');
@@ -79,6 +80,7 @@ assert.ok(homepage.includes('€34–€59'), 'Homepage must show the updated wh
 assert.ok(englishLegal.includes('€34 and €59'), 'Legal prelaunch notice must show the updated planned price range');
 
 const conceptDetail = fs.readFileSync('src/ConceptDetailPage.tsx', 'utf8');
+assert.ok(conceptDetail.includes("story.photo + '.webp'"), 'Concept editorials must use optimized WebP photography');
 assert.ok(conceptDetail.includes('collectionReturnLink(location.search)'), 'Detail links must restore collection filters on return');
 assert.ok(conceptDetail.includes('conceptLink(item.name, originatingView)'), 'Related concepts must retain the originating selection');
 assert.ok(conceptDetail.includes('id="piece-title" tabIndex={-1}'), 'Concept headings must support route-change focus');
@@ -91,6 +93,21 @@ assert.ok(routeFocus.includes('focus({ preventScroll: true })'), 'Focus must not
 const pendingPage = fs.readFileSync('src/CollectionPendingPage.tsx', 'utf8');
 assert.ok(pendingPage.includes('href="#pending-main"'), 'Pending pages need a keyboard skip link');
 assert.ok(pendingPage.includes('tabIndex={-1}'), 'Pending heading must accept route-change focus');
+
+let originalBytes = 0;
+let optimizedBytes = 0;
+for (const name of ['tailored', 'trench', 'knit']) {
+  const original = fs.readFileSync(`public/editorial/${name}.jpg`);
+  const optimized = fs.readFileSync(`public/editorial/${name}.webp`);
+  assert.ok(optimized.subarray(0, 4).toString('ascii') === 'RIFF' &&
+    optimized.subarray(8, 12).toString('ascii') === 'WEBP',
+  `Invalid WebP signature: ${name}`);
+  assert.ok(optimized.length < original.length * 0.8,
+    `Editorial ${name} should be at least 20% smaller than its reference JPEG`);
+  originalBytes += original.length;
+  optimizedBytes += optimized.length;
+}
+console.log(`Editorial images: ${Math.round(originalBytes / 1024)} KiB JPEG -> ${Math.round(optimizedBytes / 1024)} KiB WebP (${Math.round((1 - optimizedBytes / originalBytes) * 100)}% smaller).`);
 
 const womenswearCss = fs.readFileSync('src/womenswear.css', 'utf8');
 assert.ok(!womenswearCss.includes('fonts.googleapis.com') && !womenswearCss.includes('@import url('),
