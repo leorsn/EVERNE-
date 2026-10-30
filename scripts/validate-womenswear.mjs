@@ -118,6 +118,14 @@ assert.ok(womenswearCss.includes('.w-style-piece-grid { grid-template-columns: r
   'Narrow mobile screens need two readable style columns instead of three cramped columns');
 assert.ok(womenswearCss.includes('.w-category-title { font-size: clamp(24px,6vw,34px); flex-wrap: wrap;'),
   'Category titles must wrap without clipping when paired with an arrow on mobile');
+assert.ok(womenswearCss.includes('.w-detail-related-card:last-child { display: block; grid-column: 1 / -1; }'),
+  'The third related concept must remain accessible on narrow phones');
+assert.ok(womenswearCss.includes('.w-detail-related-card:last-child>.w-concept-visual { aspect-ratio: 2.05; }'),
+  'The full-width related concept needs a compact mobile artwork ratio');
+for (const selector of ['.w-filters button', '.w-style-options button', '.w-menu-toggle', '.w-header-cta']) {
+  const rule = womenswearCss.split('\n').find((line) => line.startsWith(selector + ' {'));
+  assert.ok(rule?.includes('min-height: 44px'), `${selector} must offer a 44px touch target`);
+}
 
 function contrastRatio(foreground, background) {
   function luminance(hex) {
