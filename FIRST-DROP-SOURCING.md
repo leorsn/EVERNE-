@@ -402,6 +402,47 @@ are all unresolved. **GO/NO-GO: NO-GO** for sample buying, stock publishing,
 selling or launching until those gates are independently verified and the
 founder approves the expense.
 
+### Eighth pass — return-rate sensitivity (30 October 2026)
+
+The earlier **€2.50 per-unit return reserve is not a verified return-cost
+estimate**. A separate stress test now asks what happens if **10%, 20% or 30%**
+of single-item orders are fully refunded. For this test only:
+
+- Merchant-paid outbound label remains the illustrative **€7.50 net**, plus
+  FactoryPrice's listed 3 PLN handling and our hypothetical €0.70 packaging.
+- A return incurs an additional hypothetical **€5 net reverse label** and **€3
+  inspection/handling**; card fees are assumed not to be refunded.
+- Two end states are evaluated: the returned garment is intact and its listed
+  supplier goods value is recoverable in inventory, or the garment cannot be
+  resold and its **full goods cost is lost**. Neither recovery case is a real
+  supplier return approval. Recovered goods value is *inventory*, not cash.
+- This calculation **replaces** the earlier flat €2.50 return reserve; it
+  explicitly excludes advertising, labor, overhead, partial returns, value
+  loss on resale, liability and actual merchant taxes/refund accounting.
+
+At a hypothetical **20% full-order return rate**, the calculated *expected*
+contribution per placed single-item order before advertising and overhead is:
+
+| Candidate | Goods fully resellable after return | Goods lost on return | €10 buffer in goods-loss case |
+|---|---:|---:|---|
+| Essential Rib Top €34 | €6.56 | **€5.38** | **Missed** |
+| Second Skin Body €39 | €8.75 | **€7.31** | **Missed** |
+| Tailored Everyday Pant €59 | €14.57 | **€11.35** | Cleared narrowly |
+| Easy Slip Dress €44 | €6.15 | **€3.25** | **Missed** |
+| Soft Midi Dress €59 | €14.57 | **€11.35** | Cleared narrowly |
+
+**Commercial implication:** do not treat the five proposed SKUs as equally
+launch-ready merely because the nominal one-order contribution is positive.
+The €34 top, €39 bodysuit and particularly €44 slip dress require verified
+low-return fit/size guidance, lower actual shipping costs, a defensible
+delivery-charge policy or a stronger multi-item basket before committing to
+paid advertising. The €59 bottom and dress are less fragile *under this exact
+stress test*, but neither has passed quality, seasonal or fulfillment gates.
+No customer return observations or merchant quotes exist yet; the scenarios
+must not be represented as predictions or guarantees. The three stress rates,
+two goods-recovery cases and calculations are reproducible through
+`npm run check:sourcing` using `sourcing/capsule-order-economics.json`.
+
 **Selection rule:** for a launch apparel SKU, require at least two independently
 orderable size variants; prefer S/M/L for bottoms and S/M plus L/XL or more
 for knitwear. A generic size chart must not satisfy this rule. `npm run
