@@ -104,7 +104,7 @@ export default function ConceptDetailPage() {
 
         <section className="w-detail-editorial" aria-labelledby="detail-editorial-title">
           <div className="w-detail-editorial-copy"><span className="w-kicker">THE EVERNE POINT OF VIEW</span><h2 id="detail-editorial-title">Curated, <em>not rushed.</em></h2><p>We will select the final garment only after reviewing its cut, fabric, sizing, origin, availability and returns process. This editorial image is a style reference only.</p></div>
-          <div className="w-detail-editorial-image"><img src={import.meta.env.BASE_URL + 'editorial/' + story.photo + '.jpg'} alt="Editorial style reference for the planned collection, not a product photograph" loading="lazy"/></div>
+          <div className="w-detail-editorial-image"><img src={import.meta.env.BASE_URL + 'editorial/' + story.photo + '.webp'} alt="Editorial style reference for the planned collection, not a product photograph" loading="lazy"/></div>
         </section>
 
         <section className="w-detail-related"><div className="w-kicker">EXPLORE THE EDIT</div><h2>More <em>ideas.</em></h2><div className="w-detail-related-grid">{related.map((item) => <Link key={item.name} to={conceptLink(item.name, originatingView)} className="w-detail-related-card"><div className={'w-concept-visual tone-' + item.tone}><span className="w-concept-watermark">E.</span><span className="w-concept-label">DESIGN CONCEPT ↗</span></div><span>{item.name}</span><small>Price target {formatTargetPrice(item.targetPrice)}</small></Link>)}</div></section>
