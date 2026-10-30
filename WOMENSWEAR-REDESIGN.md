@@ -24,6 +24,9 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
   in shareable URL queries. Concept-detail and related-item links retain the
   originating edit view; returning to the collection restores its filter and
   `#edit` position, including after a direct detail-page load.
+- Client-side page transitions move keyboard focus to the new page heading,
+  or to the edit heading when returning from a concept, without overriding
+  its scroll position. Pending/legacy routes also expose a skip-to-main link.
 - Historical `/products/*` routes show a truthful collection-pending page.
 - Product names and prices in womenswearCatalog.ts are planning concepts,
   not offers, published Shopify items, or verified stock.
