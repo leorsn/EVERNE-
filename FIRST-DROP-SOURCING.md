@@ -115,6 +115,60 @@ LYCHEE cardigan, a sized wool-look palazzo whose listed fibre composition is
 sized lace-hem turtleneck that does not suit the minimalist concept. The full
 dated comparison is in `sourcing/sized-alternatives.json`.
 
+### Tops and denim — third research pass (30 October 2026)
+
+Actual color/size order lines were checked again, not the generic XS–XL guide.
+Six researched listings are captured with SKU, actual sizes, publicly visible
+inventory snapshot, fibre claims and blockers in
+`sourcing/tops-denim-alternatives.json`.
+
+| EVERNE concept | Supplier listing and observed sizes in target color | Listed supplier cost ex VAT* | Gross retail | Indicative contribution** | Decision |
+|---|---|---:|---:|---:|---|
+| Soft Line Longsleeve | [CHERRY BLUE crew-neck viscose, Black S/M + M/L](https://leivip.com/collections/tops-bodys/products/basic-long-sleeve-viscose-top) | €17.90 | **€39** | **€3.21** | **Hold — poor margin** |
+| Essential Rib Top | [CHERRY BLUE short-sleeve viscose, White S/M + M/L](https://leivip.com/collections/tops-bodys/products/basic-short-sleeve-viscose-t-shirt) | €15.90 | **€34** | **€1.14** | **Hold — not ribbed, poor margin** |
+| Soft Line Longsleeve, alternate neckline | [CHERRY BLUE V-neck viscose, Black S/M + M/L](https://leivip.com/collections/tops-bodys/products/v-neck-long-sleeve-viscose-top) | €17.90 | **€39** | **€3.21** | **Hold — alternate neckline, poor margin** |
+| Straight Leg Denim | [CHERRY BLUE washed straight-leg, Grey XS/S/M/L](https://leivip.com/collections/aw26-denim/products/classic-washed-straight-leg-denim-jeans-wholesale) | €24.90 | **€59** | **€12.52** | **First denim sample candidate**, subject to grey colorway and samples |
+| Relaxed Denim | [CIVICO 1 modern wide-leg, Denim S/M/L](https://leivip.com/collections/aw26-denim/products/modern-wide-leg-denim-jeans-wholesale) | €15.90 | **€54** | **€17.44** | **Hold — only 3 L units visible** |
+| Straight Leg Denim, alternative | [CHERRY BLUE classic straight, Dark Denim XS/S/M/L](https://leivip.com/collections/aw26-denim/products/classic-straight-leg-denim-jeans-wholesale-5) | €16.90 | **€59** | **€20.52** | **Hold — published fibre total is 97%, not 100%** |
+
+\* Public prices are not authenticated purchase quotations. Some suppliers'
+size inventories are low, and observations conflict across different crawl
+times; re-check immediately before deciding on a basket. For the washed jeans,
+**Grey** has the full visible size range, while the conventional **Denim**
+colorway has S and M marked out of stock. The earlier CIVICO 1 straight-cut
+mid-rise product also still shows an unavailable M despite search snippets
+with older quantities.
+
+\** Exactly the six-unit LEIVIP contribution model described above, including
+the **assumed 19% German VAT** treatment. Contributions are *not profits*, do
+not include marketing or overhead, and use sample-batch freight allocation
+which may understate recurring commercial logistics. A €3.21/€1.14 buffer
+cannot support a credible paid-acquisition plan. No retail price increase was
+approved or applied; keeping prices at €34/€39 requires finding more efficient
+supplier listings or a different fulfillment model.
+
+**Next operational selection:**
+
+1. Before ordering, confirm the grey 100%-cotton straight-leg jeans' authenticated
+   XS/S/M/L availability, price, measurements and photo permissions. This is the
+   **best research-only denim sample candidate**, not an approved launch item.
+2. Seek cheaper true ribbed/cotton or viscose everyday tops with at least two
+   real sizes. The screened CHERRY BLUE tops have workable size choices but do
+   **not** meet a sensible launch contribution at current fixed prices.
+3. Request an updated fibre specification for the dark-denim CHERRY BLUE jeans:
+   public listing declares **63% cotton + 33% viscose + 1% elastane = 97%**.
+   Until corrected and sample label checked, treat this colorway as blocked.
+4. Require replenishment evidence for the CIVICO wide-leg's size L before
+   marketing a consistent S/M/L range.
+
+**Still missing:** a clean size-led Everyday Tank, an authentic Essential Rib
+Top, and a Second Skin Body. The tempting LEIVIP scoop-neck tank and ribbed
+knits proved to be **one-size only**; the baroque-print sheer bodysuit has
+S/M but is not a truthful match for the proposed minimal black body.
+
+No products were purchased, imported into Shopify, renamed on the live site,
+or offered as orderable. This work only enriches the research gate.
+
 **Selection rule:** for a launch apparel SKU, require at least two independently
 orderable size variants; prefer S/M/L for bottoms and S/M plus L/XL or more
 for knitwear. A generic size chart must not satisfy this rule. `npm run

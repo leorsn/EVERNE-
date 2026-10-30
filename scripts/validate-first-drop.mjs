@@ -86,3 +86,48 @@ for (const alternative of sizeResearch.alternatives) {
 }
 assert.ok(sizeResearch.rejectedOrOnHold.length >= 3, 'Need an explicit rejected or on-hold research trail');
 console.log('  Sized-alternative audit passed: actual variant options, 4/9 price rule, no automatic import.');
+
+const topsDenimResearch = JSON.parse(fs.readFileSync('sourcing/tops-denim-alternatives.json', 'utf8'));
+assert.equal(topsDenimResearch.status, 'RESEARCH_ONLY', 'Tops and denim research must remain research-only');
+assert.equal(topsDenimResearch.approvedForSale, false, 'Tops and denim research must never grant retail approval');
+assert.equal(topsDenimResearch.candidates.length, 6, 'Expected three top and three denim alternatives');
+const topsDenimIds = new Set();
+const topsDenimUrls = new Set();
+let topsCount = 0;
+let denimCount = 0;
+for (const item of topsDenimResearch.candidates) {
+  const concept = conceptByName.get(item.conceptName);
+  assert.ok(concept, `Unknown top/denim concept: ${item.conceptName}`);
+  assert.ok(!topsDenimIds.has(item.id), `Duplicate top/denim ID: ${item.id}`);
+  assert.ok(!topsDenimUrls.has(item.url), `Duplicate top/denim listing: ${item.url}`);
+  assert.equal(item.approvedForSale, false, `Top/denim may not be sale-approved: ${item.id}`);
+  assert.equal(item.baselineRetailGrossEur, concept.targetPrice, `Price differs from plan: ${item.id}`);
+  assert.ok(Number.isInteger(item.proposedRetailGrossEur) && [4, 9].includes(item.proposedRetailGrossEur % 10), `4/9 whole-euro retail required: ${item.id}`);
+  assert.ok(item.indicativeSupplierNetEur > 0 && item.url.startsWith('https://leivip.com/'), `Invalid cost or source: ${item.id}`);
+  assert.ok(item.listedComposition.length > 10, `Composition must be documented: ${item.id}`);
+  assert.ok(item.visibleSizesForSampleColor.length >= 2, `At least two real selectable sizes required: ${item.id}`);
+  assert.ok(item.visibleSizesForSampleColor.every((size) => size !== 'ONESIZE' && Number.isInteger(item.stockObservedBySize[size]) && item.stockObservedBySize[size] > 0), `Only in-stock real variants allowed: ${item.id}`);
+  assert.ok(item.questions.length >= 3, `Unresolved acceptance gates required: ${item.id}`);
+  assert.ok(item.candidateStatus !== 'APPROVED', `Candidate cannot be approved: ${item.id}`);
+  topsDenimIds.add(item.id);
+  topsDenimUrls.add(item.url);
+  if (concept.category === 'tops') topsCount += 1;
+  else if (concept.category === 'trousers') denimCount += 1;
+  else assert.fail(`Wrong product category in tops/denim research: ${item.id}`);
+
+  const netSale = item.proposedRetailGrossEur / (1 + assumption.germanGrossVatRate);
+  const cardFee = item.proposedRetailGrossEur * assumption.paymentFeeGrossRate + assumption.paymentFeeFixedEur;
+  const contribution = netSale - item.indicativeSupplierNetEur - assumption.inboundShippingExVatEur / assumption.testBatchUnits - assumption.outboundShippingPerSaleExVatEur - assumption.packagingPerSaleExVatEur - cardFee - assumption.returnCostReservePerSaleExVatEur;
+  assert.ok(Number.isFinite(contribution), `Contribution must be calculable: ${item.id}`);
+  if (concept.category === 'tops') {
+    assert.ok(contribution < 5 && item.candidateStatus.includes('HOLD'), `Low-margin top must be held: ${item.id}`);
+  }
+  if (item.listedComposition.includes('97% — 3% missing')) {
+    assert.ok(item.candidateStatus.includes('FIBRE'), 'Incomplete supplier fibre details must block launch');
+  }
+  console.log(`  Top/denim ${item.id}: €${contribution.toFixed(2)} indicative contribution; ${item.candidateStatus}; not approved.`);
+}
+assert.equal(topsCount, 3, 'Expected three top candidates');
+assert.equal(denimCount, 3, 'Expected three denim candidates');
+assert.ok(topsDenimResearch.rejectedOrOnHold.length >= 4, 'Must retain rejected listing evidence');
+console.log('  Tops and denim audit passed: real size variants, margin/label blockers, no automatic Shopify import.');
