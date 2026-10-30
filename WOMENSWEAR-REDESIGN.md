@@ -20,6 +20,10 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
 - The redesign renders WomenswearApp.tsx and womenswear.css.
 - Each of the 20 concepts has a non-transactional design-study page at
   `/edit/<slug>`; direct links are rewritten to the React app by Vercel.
+- Collection category selections and the expanded 20-piece view are preserved
+  in shareable URL queries. Concept-detail and related-item links retain the
+  originating edit view; returning to the collection restores its filter and
+  `#edit` position, including after a direct detail-page load.
 - Historical `/products/*` routes show a truthful collection-pending page.
 - Product names and prices in womenswearCatalog.ts are planning concepts,
   not offers, published Shopify items, or verified stock.
