@@ -27,6 +27,10 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
 - Client-side page transitions move keyboard focus to the new page heading,
   or to the edit heading when returning from a concept, without overriding
   its scroll position. Pending/legacy routes also expose a skip-to-main link.
+- Small editorial text on solid backgrounds has been darkened and enlarged
+  where appropriate, with 20 reproducible contrast checks at 4.5:1 or above.
+  Image overlays, true Safari rendering and full accessibility conformance
+  remain open for visual/device acceptance.
 - Historical `/products/*` routes show a truthful collection-pending page.
 - Product names and prices in womenswearCatalog.ts are planning concepts,
   not offers, published Shopify items, or verified stock.
