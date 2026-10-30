@@ -65,6 +65,7 @@ export default function WomenswearApp() {
   const { category, showAll } = editView;
   const [menuOpen, setMenuOpen] = useState(false);
   const menuToggleRef = useRef<HTMLButtonElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
   const [openQuestion, setOpenQuestion] = useState<number | null>(null);
   const [activeStyle, setActiveStyle] = useState(0);
 
@@ -122,6 +123,17 @@ export default function WomenswearApp() {
     return () => window.removeEventListener('keydown', closeOnEscape);
   }, [menuOpen]);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    function closeWhenOutside(event: PointerEvent) {
+      if (event.target instanceof Node && !headerRef.current?.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    }
+    document.addEventListener('pointerdown', closeWhenOutside);
+    return () => document.removeEventListener('pointerdown', closeWhenOutside);
+  }, [menuOpen]);
+
   const selectedPieces = category === 'all'
     ? conceptPieces
     : conceptPieces.filter((piece) => piece.category === category);
@@ -149,7 +161,7 @@ export default function WomenswearApp() {
         <span>Hamburg · Germany</span>
       </div>
 
-      <header className="w-header">
+      <header className="w-header" ref={headerRef}>
         <button
           ref={menuToggleRef}
           className="w-menu-toggle"
@@ -166,8 +178,8 @@ export default function WomenswearApp() {
           <a href="#style-notes" onClick={closeMenu}>Style Notes</a>
           <a href="#edit" onClick={closeMenu}>The Edit</a>
         </nav>
-        <a className="w-logo" href="#top" aria-label="EVERNE homepage">EVERNE<span>WOMAN</span></a>
-        <a className="w-header-cta" href="#edit">The Edit <Arrow diagonal /></a>
+        <a className="w-logo" href="#top" onClick={closeMenu} aria-label="EVERNE homepage">EVERNE<span>WOMAN</span></a>
+        <a className="w-header-cta" href="#edit" onClick={closeMenu}>The Edit <Arrow diagonal /></a>
       </header>
 
       <main id="main">
