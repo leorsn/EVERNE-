@@ -25,6 +25,9 @@ html = html.replace(styleMatch[0], () => `<style>\n${css.replace(/<\/style/gi, '
 assert.ok(!html.includes(scriptMatch[0]) && !html.includes(styleMatch[0]), 'Portable HTML must inline JS and CSS');
 assert.ok(html.includes('noindex,nofollow'), 'Offline review must remain explicitly non-indexable');
 
+// Remove remnants from a previous review before staging an exact new archive.
+// The generated output folder is disposable; never touch source/public assets.
+fs.rmSync(output, { recursive: true, force: true });
 fs.mkdirSync(path.join(output, 'editorial'), { recursive: true });
 fs.writeFileSync(path.join(output, 'index.html'), html);
 
