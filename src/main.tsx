@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import WomenswearApp from './WomenswearApp';
 import ConceptDetailPage from './ConceptDetailPage';
 import CollectionPendingPage from './CollectionPendingPage';
+import RouteFocus from './RouteFocus';
 import './womenswear.css';
 
 const basename = import.meta.env.BASE_URL === '/' ? undefined : import.meta.env.BASE_URL.replace(/\/$/, '');
@@ -11,6 +12,7 @@ const basename = import.meta.env.BASE_URL === '/' ? undefined : import.meta.env.
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter basename={basename}>
+      <RouteFocus />
       <Routes>
         <Route path="/" element={<WomenswearApp />} />
         <Route path="/edit/:slug" element={<ConceptDetailPage />} />
