@@ -88,6 +88,7 @@ assert.ok(!homepage.includes('Autumn / Winter 26'), 'Unconfirmed supplier garmen
 assert.ok(homepage.includes('Styling inspiration only.'), 'The styling section must not imply confirmed products');
 assert.ok(homepage.includes("name + '.webp'"), 'The active editorial preview must use optimized WebP photography');
 assert.ok(homepage.includes('parseEditView(location.search)'), 'The selected edit must be restored from the URL');
+assert.ok(homepage.includes('id="hero-title" tabIndex={-1}'), 'The home heading must be focusable after returning from a concept without #edit');
 assert.ok(homepage.includes('id="edit-title" tabIndex={-1}'), 'The returned edit heading must allow programmatic keyboard focus');
 assert.ok(homepage.includes('conceptLink(piece.name, editView)'), 'Concept links must retain their originating filter');
 assert.ok(homepage.includes('aria-expanded={showAll}') && homepage.includes('aria-controls="w-concepts"'), 'The expanded concept view needs a reversible and accessible toggle');
