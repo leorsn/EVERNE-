@@ -90,6 +90,27 @@ export default function WomenswearApp() {
   }, []);
 
   useEffect(() => {
+    if (import.meta.env.VITE_OFFLINE_PREVIEW !== '1') return;
+    // In the portable HashRouter build, plain #section anchors would be
+    // interpreted as page routes. Handle them as in-page scrolls instead.
+    function jumpToSection(event: MouseEvent) {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+      if (!(event.target instanceof Element)) return;
+      const link = event.target.closest<HTMLAnchorElement>('a[href^="#"]');
+      const targetId = link?.getAttribute('href')?.slice(1);
+      if (!targetId) return;
+      const target = document.getElementById(targetId);
+      if (!target) return;
+      event.preventDefault();
+      target.scrollIntoView({
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
+      });
+    }
+    document.addEventListener('click', jumpToSection);
+    return () => document.removeEventListener('click', jumpToSection);
+  }, []);
+
+  useEffect(() => {
     if (!menuOpen) return;
     function closeOnEscape(event: KeyboardEvent) {
       if (event.key === 'Escape') {
@@ -299,7 +320,7 @@ export default function WomenswearApp() {
             Showing {visiblePieces.length} of {selectedPieces.length} planned design concepts{category === 'all' ? '' : ` in ${fashionCategories.find((item) => item.id === category)?.title}`}.
           </p>
 
-          <div className="w-concept-grid">
+          <div className="w-concept-grid" id="w-concepts">
             {visiblePieces.map((piece) => {
               const index = conceptPieces.indexOf(piece);
               return (
@@ -320,8 +341,16 @@ export default function WomenswearApp() {
             })}
           </div>
 
-          {category === 'all' && !showAll &&
-            <button className="w-show-all" type="button" onClick={() => navigate({ search: editViewSearch({ category: 'all', showAll: true }), hash: location.hash }, { replace: true })}>View all 20 concepts <Arrow /></button>
+          {category === 'all' &&
+            <button
+              className="w-show-all"
+              type="button"
+              aria-expanded={showAll}
+              aria-controls="w-concepts"
+              onClick={() => navigate({ search: editViewSearch({ category: 'all', showAll: !showAll }), hash: location.hash }, { replace: true })}
+            >
+              {showAll ? 'Show fewer concepts' : 'View all 20 concepts'} <Arrow />
+            </button>
           }
           <p className="w-disclaimer">This edit is a creative and sourcing plan. Product names, final prices, fabrics, sizing and availability will only be confirmed after sourcing is complete.</p>
         </section>
