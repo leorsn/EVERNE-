@@ -7,9 +7,10 @@
     "dev": "vite",
     "check:storefront": "node scripts/validate-storefront.mjs",
     "check:womenswear": "node scripts/validate-womenswear.mjs",
+    "check:womenswear:render": "node scripts/validate-womenswear-render.mjs",
     "check:sourcing": "node scripts/validate-first-drop.mjs",
-    "build": "npm run check:storefront && npm run check:womenswear && npm run check:sourcing && tsc -b && vite build",
-    "build:offline": "npm run check:womenswear && tsc -b && VITE_OFFLINE_PREVIEW=1 vite build --base ./ --outDir dist-offline && node scripts/pack-offline-preview.mjs && (cd offline-review && zip -qr -FS everne-woman-safari-preview.zip everne-woman-safari-preview)",
+    "build": "npm run check:storefront && npm run check:womenswear && npm run check:womenswear:render && npm run check:sourcing && tsc -b && vite build",
+    "build:offline": "npm run check:womenswear && npm run check:womenswear:render && tsc -b && VITE_OFFLINE_PREVIEW=1 vite build --base ./ --outDir dist-offline && node scripts/pack-offline-preview.mjs && (cd offline-review && zip -qr -FS everne-woman-safari-preview.zip everne-woman-safari-preview)",
     "postbuild": "node -e \"require('fs').copyFileSync('dist/index.html','dist/404.html')\"",
     "preview": "vite preview",
     "typecheck": "tsc -b --pretty false"
