@@ -37,6 +37,8 @@ jobs:
         run: npm run build
       - name: Build and verify offline Safari ZIP
         run: npm run build:offline
+      - name: Real Chromium smoke of offline preview
+        run: npm run check:browser:offline
       # Legacy garment-care collection is not a requirement of the new womenswear preview.
       # It is intentionally still testable through an explicit manual dispatch.
       - name: Verify legacy Shopify Storefront catalog (manual opt-in)
