@@ -95,12 +95,30 @@
       "plannedGrossEur": 34,
       "publicSupplierNetEur": 5.89,
       "reviewStage": "SAMPLE_RESEARCH_PRIORITY",
-      "supplierQuote": "PENDING",
-      "fitAndFabricSample": "PENDING",
-      "verifiedVariantStock": "PENDING",
-      "licensedProductPhotography": "PENDING",
-      "labelAndSafetyEvidence": "PENDING",
-      "founderMerchandisingApproval": "PENDING",
+      "supplierQuote": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "fitAndFabricSample": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "verifiedVariantStock": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "licensedProductPhotography": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "labelAndSafetyEvidence": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "founderMerchandisingApproval": {
+        "status": "PENDING",
+        "evidence": null
+      },
       "blockingReason": "The hypothetical 20% full-refund, unsellable-goods case yields only €5.38 contribution per placed order before advertising and overhead; do not approve paid acquisition on this assumption.",
       "approvedForSale": false
     },
@@ -110,12 +128,30 @@
       "plannedGrossEur": 39,
       "publicSupplierNetEur": 7.2,
       "reviewStage": "SAMPLE_RESEARCH_PRIORITY",
-      "supplierQuote": "PENDING",
-      "fitAndFabricSample": "PENDING",
-      "verifiedVariantStock": "PENDING",
-      "licensedProductPhotography": "PENDING",
-      "labelAndSafetyEvidence": "PENDING",
-      "founderMerchandisingApproval": "PENDING",
+      "supplierQuote": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "fitAndFabricSample": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "verifiedVariantStock": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "licensedProductPhotography": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "labelAndSafetyEvidence": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "founderMerchandisingApproval": {
+        "status": "PENDING",
+        "evidence": null
+      },
       "blockingReason": "The hypothetical 20% full-refund, unsellable-goods case yields €7.31 contribution per placed order before advertising and overhead; require fit evidence, not just nominal unit margin.",
       "approvedForSale": false
     },
@@ -125,12 +161,30 @@
       "plannedGrossEur": 59,
       "publicSupplierNetEur": 16.11,
       "reviewStage": "SAMPLE_RESEARCH_PRIORITY",
-      "supplierQuote": "PENDING",
-      "fitAndFabricSample": "PENDING",
-      "verifiedVariantStock": "PENDING",
-      "licensedProductPhotography": "PENDING",
-      "labelAndSafetyEvidence": "PENDING",
-      "founderMerchandisingApproval": "PENDING",
+      "supplierQuote": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "fitAndFabricSample": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "verifiedVariantStock": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "licensedProductPhotography": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "labelAndSafetyEvidence": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "founderMerchandisingApproval": {
+        "status": "PENDING",
+        "evidence": null
+      },
       "blockingReason": "The hypothetical 20% full-refund, unsellable-goods case leaves €11.35 per placed order before advertising/overhead, a narrow buffer and not profit.",
       "approvedForSale": false
     },
@@ -140,12 +194,30 @@
       "plannedGrossEur": 44,
       "publicSupplierNetEur": 14.5,
       "reviewStage": "HOLD",
-      "supplierQuote": "PENDING",
-      "fitAndFabricSample": "PENDING",
-      "verifiedVariantStock": "PENDING",
-      "licensedProductPhotography": "PENDING",
-      "labelAndSafetyEvidence": "PENDING",
-      "founderMerchandisingApproval": "PENDING",
+      "supplierQuote": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "fitAndFabricSample": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "verifiedVariantStock": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "licensedProductPhotography": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "labelAndSafetyEvidence": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "founderMerchandisingApproval": {
+        "status": "PENDING",
+        "evidence": null
+      },
       "blockingReason": "Unverified high gloss may conflict with the restrained editorial look; thin straps require styling context for autumn/winter and the €44 price is fragile in return stress tests.",
       "approvedForSale": false
     },
@@ -155,12 +227,30 @@
       "plannedGrossEur": 59,
       "publicSupplierNetEur": 16.11,
       "reviewStage": "HOLD",
-      "supplierQuote": "PENDING",
-      "fitAndFabricSample": "PENDING",
-      "verifiedVariantStock": "PENDING",
-      "licensedProductPhotography": "PENDING",
-      "labelAndSafetyEvidence": "PENDING",
-      "founderMerchandisingApproval": "PENDING",
+      "supplierQuote": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "fitAndFabricSample": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "verifiedVariantStock": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "licensedProductPhotography": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "labelAndSafetyEvidence": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "founderMerchandisingApproval": {
+        "status": "PENDING",
+        "evidence": null
+      },
       "blockingReason": "Supplier calls the garment a summer dress with short sleeves; a 111–114 cm garment length is not midi on every person and does not by itself anchor a November capsule.",
       "approvedForSale": false
     }
