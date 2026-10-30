@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { applySeo } from './seo';
+import { conceptLink, editViewSearch, parseEditView } from './womenswearNavigation';
 import {
   conceptPieces,
-  conceptSlug,
   fashionCategories,
   formatTargetPrice,
   type FashionCategory,
@@ -59,8 +59,10 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
 }
 
 export default function WomenswearApp() {
-  const [category, setCategory] = useState<FashionCategory | 'all'>('all');
-  const [showAll, setShowAll] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
+  const editView = parseEditView(location.search);
+  const { category, showAll } = editView;
   const [menuOpen, setMenuOpen] = useState(false);
   const menuToggleRef = useRef<HTMLButtonElement>(null);
   const [openQuestion, setOpenQuestion] = useState<number | null>(null);
@@ -74,6 +76,17 @@ export default function WomenswearApp() {
       type: 'website',
       indexable: false,
     });
+  }, []);
+
+  useEffect(() => {
+    // React Router does not reliably restore a hash target when the home page
+    // mounts after a detail route. Wait until the collection DOM exists.
+    if (location.hash !== '#edit') return;
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById('edit')?.scrollIntoView({ behavior: 'auto' });
+    });
+    return () => window.cancelAnimationFrame(frame);
+    // Only on mount: changing a filter uses its own reduced-motion-aware scroll.
   }, []);
 
   useEffect(() => {
@@ -97,8 +110,7 @@ export default function WomenswearApp() {
   const selectedStyle = styleNotes[activeStyle];
 
   function selectCategory(nextCategory: FashionCategory | 'all') {
-    setCategory(nextCategory);
-    setShowAll(false);
+    navigate({ search: editViewSearch({ category: nextCategory, showAll: false }) }, { replace: true });
     setMenuOpen(false);
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     document.getElementById('edit')?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
@@ -247,7 +259,7 @@ export default function WomenswearApp() {
                 {selectedStyle.pieces.map((name, index) => {
                   const piece = conceptPieces.find((item) => item.name === name)!;
                   return (
-                    <Link key={piece.name} className="w-style-piece" to={'/edit/' + conceptSlug(piece.name)} aria-label={'View design concept: ' + piece.name}>
+                    <Link key={piece.name} className="w-style-piece" to={conceptLink(piece.name, editView)} aria-label={'View design concept: ' + piece.name}>
                       <div className={'w-style-piece-art tone-' + piece.tone} aria-hidden="true">
                         <span className="w-style-piece-number">0{index + 1}</span>
                         <span className="w-style-piece-mark">E.</span>
@@ -292,7 +304,7 @@ export default function WomenswearApp() {
               const index = conceptPieces.indexOf(piece);
               return (
                 <article className="w-concept-card" key={piece.name}>
-                  <Link className="w-concept-link" to={'/edit/' + conceptSlug(piece.name)} aria-label={'View the ' + piece.name + ' design concept'}>
+                  <Link className="w-concept-link" to={conceptLink(piece.name, editView)} aria-label={'View the ' + piece.name + ' design concept'}>
                     <div className={'w-concept-visual tone-' + piece.tone} aria-hidden="true">
                       <span className="w-concept-watermark">E.</span>
                       <span className="w-concept-index">{String(index + 1).padStart(2, '0')}</span>
@@ -309,7 +321,7 @@ export default function WomenswearApp() {
           </div>
 
           {category === 'all' && !showAll &&
-            <button className="w-show-all" type="button" onClick={() => setShowAll(true)}>View all 20 concepts <Arrow /></button>
+            <button className="w-show-all" type="button" onClick={() => navigate({ search: editViewSearch({ category: 'all', showAll: true }), hash: location.hash }, { replace: true })}>View all 20 concepts <Arrow /></button>
           }
           <p className="w-disclaimer">This edit is a creative and sourcing plan. Product names, final prices, fabrics, sizing and availability will only be confirmed after sourcing is complete.</p>
         </section>
