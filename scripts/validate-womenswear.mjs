@@ -47,6 +47,13 @@ assert.ok(homepage.includes('Our size range is not confirmed yet.'), 'Size FAQ m
 assert.ok(homepage.includes('exact garment measurements and fit guidance'), 'Size FAQ must promise product-specific measurements before launch');
 assert.ok(!homepage.includes('mostly XS–XL'), 'Do not imply unverified XS–XL availability');
 assert.ok(homepage.includes('aria-pressed={activeStyle === index}'), 'Style Notes must expose the selected mood to assistive technology');
+assert.ok(homepage.includes('aria-pressed={category === item.id}'), 'Category filter buttons must announce their selected state');
+assert.ok(homepage.includes('aria-live="polite"'), 'Filtered result counts must be announced without forcing focus');
+assert.ok(homepage.includes('prefersReducedMotion ? \'auto\' : \'smooth\''), 'Reduced-motion users must not be forced into smooth scrolling');
+assert.ok(homepage.includes("event.key === 'Escape'"), 'Mobile navigation must close on Escape');
+assert.ok(homepage.includes("aria-controls={'woman-faq-answer-' + index}"), 'FAQ controls need a persistent panel relationship');
+assert.ok(homepage.includes("hidden={openQuestion !== index}"), 'Closed FAQ content must remain associated but hidden');
+assert.ok(!homepage.includes('Autumn / Winter 26'), 'Unconfirmed supplier garments must not be marketed as an approved seasonal collection');
 assert.ok(homepage.includes('Styling inspiration only.'), 'The styling section must not imply confirmed products');
 assert.ok(homepage.includes('€34–€59'), 'Homepage must show the updated whole-euro planned price range');
 assert.ok(englishLegal.includes('€34 and €59'), 'Legal prelaunch notice must show the updated planned price range');
