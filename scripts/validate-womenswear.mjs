@@ -43,6 +43,7 @@ const indexHtml = fs.readFileSync('index.html', 'utf8');
 assert.ok(entry.includes('path="/edit/:slug"'), 'A route to the concept detail page is required');
 assert.ok(entry.includes('WomenswearApp'), 'The entry must render the women’s fashion preview');
 assert.ok(entry.includes('<RouteFocus />'), 'Client-side route changes must restore keyboard focus to page headings');
+assert.ok(entry.includes('HashRouter') && entry.includes('VITE_OFFLINE_PREVIEW'), 'A portable review build must use hash routes without changing deployed routes');
 assert.ok(!entry.includes("import App from './App'"), 'The old store must not be loaded as the active app');
 assert.ok(indexHtml.includes('noindex,nofollow'), 'The fashion preview must stay out of search indexes');
 assert.ok(indexHtml.includes('<html lang="en">'), 'The fashion preview must explicitly use English');
@@ -66,6 +67,7 @@ assert.ok(homepage.includes('aria-pressed={category === item.id}'), 'Category fi
 assert.ok(homepage.includes('aria-live="polite"'), 'Filtered result counts must be announced without forcing focus');
 assert.ok(homepage.includes('prefersReducedMotion ? \'auto\' : \'smooth\''), 'Reduced-motion users must not be forced into smooth scrolling');
 assert.ok(homepage.includes("event.key === 'Escape'"), 'Mobile navigation must close on Escape');
+assert.ok(homepage.includes("document.addEventListener('click', jumpToSection)"), 'Offline hash routes must not swallow in-page editorial anchors');
 assert.ok(homepage.includes('menuToggleRef.current?.focus()'), 'Closing the mobile menu with Escape must restore keyboard focus');
 assert.ok(homepage.includes("aria-controls={'woman-faq-answer-' + index}"), 'FAQ controls need a persistent panel relationship');
 assert.ok(homepage.includes("hidden={openQuestion !== index}"), 'Closed FAQ content must remain associated but hidden');
@@ -75,6 +77,8 @@ assert.ok(homepage.includes("name + '.webp'"), 'The active editorial preview mus
 assert.ok(homepage.includes('parseEditView(location.search)'), 'The selected edit must be restored from the URL');
 assert.ok(homepage.includes('id="edit-title" tabIndex={-1}'), 'The returned edit heading must allow programmatic keyboard focus');
 assert.ok(homepage.includes('conceptLink(piece.name, editView)'), 'Concept links must retain their originating filter');
+assert.ok(homepage.includes('aria-expanded={showAll}') && homepage.includes('aria-controls="w-concepts"'), 'The expanded concept view needs a reversible and accessible toggle');
+assert.ok(homepage.includes("showAll ? 'Show fewer concepts' : 'View all 20 concepts'"), 'Visitors must be able to collapse the full 20-piece edit');
 assert.ok(homepage.includes("location.hash !== '#edit'"), 'The collection return hash must be restored on home mount');
 assert.ok(homepage.includes('€34–€59'), 'Homepage must show the updated whole-euro planned price range');
 assert.ok(englishLegal.includes('€34 and €59'), 'Legal prelaunch notice must show the updated planned price range');
