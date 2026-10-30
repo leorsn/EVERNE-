@@ -55,6 +55,10 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
   homepage, eight- and twenty-concept views, five filtered categories, all
   twenty detail pages and the unknown-route fallback. It checks truthful
   non-commerce output and return links, without claiming Safari visual QA.
+- `npm run check:preview-boundary` walks the active TypeScript/TSX dependency
+  graph from `src/main.tsx`. It fails closed if unreviewed source modules,
+  external libraries, old commerce/backend configuration or direct network
+  calls enter the live preview. Both builds run this gate before bundling.
 - Historical `/products/*` routes show a truthful collection-pending page.
 - Product names and prices in womenswearCatalog.ts are planning concepts,
   not offers, published Shopify items, or verified stock.
