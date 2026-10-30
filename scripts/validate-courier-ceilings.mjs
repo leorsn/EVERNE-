@@ -14,12 +14,39 @@ assert.equal(m.approvedForSale, false);
 assert.equal(release.status, 'NO_GO');
 assert.equal(release.approvedForSale, false);
 assert.equal(release.storefrontPublicationAuthorized, false);
-assert.equal(release.knownTerms.confirmedGermanyDropshipLabelNetEur, null,
-  'Do not substitute a hypothetical label for an authenticated Germany courier quote');
-assert.equal(m.realGermanCustomerCourierLabelNetEur, null,
-  'An unquoted own-label courier price must remain unknown');
-assert.equal(m.realShopifyIntegrationSubscriptionEur, null,
-  'Do not claim a zero-cost Shopify integration without proof');
+// A future authenticated merchant quote may enter the research model only
+// when the independent readiness register contains the same amount and a
+// dated, reviewed source. Scenario snapshots remain hypothetical regardless.
+const actualLabel = m.realGermanCustomerCourierLabelNetEur;
+assert.equal(actualLabel, release.knownTerms.confirmedGermanyDropshipLabelNetEur,
+  'The source model and readiness register disagree on a real courier quote');
+const labelGate = release.globalGates.ownLabelGermanyCourierQuote;
+if (actualLabel === null) {
+  assert.equal(labelGate.status, 'PENDING', 'An unquoted label cannot be verified');
+} else {
+  assert.ok(Number.isFinite(actualLabel) && actualLabel > 0,
+    'Real German courier label price must be a positive net EUR amount');
+  assert.equal(labelGate.status, 'VERIFIED', 'Quoted labels need verified supplier evidence');
+  assert.ok(labelGate.evidence?.reference?.length > 5 &&
+    labelGate.evidence?.reviewedBy &&
+    /^\d{4}-\d{2}-\d{2}$/.test(labelGate.evidence.verifiedAt),
+    'Quote evidence must be dated, attributable and source-linked');
+}
+const integration = m.realShopifyIntegrationSubscriptionEur;
+const integrationGate = release.globalGates.shopifyIntegrationRecurringCost;
+if (integration === null) {
+  assert.equal(integrationGate.status, 'PENDING',
+    'Do not claim that Shopify automation is free before receiving a quote');
+} else {
+  assert.ok(Number.isFinite(integration) && integration >= 0,
+    'An authenticated Shopify integration cost must be non-negative');
+  assert.equal(integrationGate.status, 'VERIFIED',
+    'Known subscription costs, including EUR 0, need documented evidence');
+  assert.ok(integrationGate.evidence?.reference?.length > 5 &&
+    integrationGate.evidence?.reviewedBy &&
+    /^\d{4}-\d{2}-\d{2}$/.test(integrationGate.evidence.verifiedAt),
+    'Integration quote evidence must be dated and attributable');
+}
 assert.deepEqual(m.courierWhatIfNetEur, [5, 7.5, 10]);
 assert.deepEqual(risk.illustrativeRates, [0.1, 0.2, 0.3]);
 assert.equal(threshold, 10);
