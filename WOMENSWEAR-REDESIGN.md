@@ -39,6 +39,8 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
   full-width card rather than silently hiding it. Main menu and filter
   controls have at least 44px tall touch targets in the CSS; Safari visual
   confirmation is still required.
+- The mobile menu closes after selecting either header shortcut or tapping
+  outside the header, in addition to Escape and the main menu links.
 - The complete edit can now be both expanded and collapsed with a single
   accessible control; its selection remains shareable in the existing URL.
 - `npm run build:offline` creates a separate zipped Safari review under
