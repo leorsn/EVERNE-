@@ -478,6 +478,40 @@ new structured research and contradictory inventory evidence are saved in
 `npm run check:sourcing`. No live storefront product, price, stock, shipping
 offer, customer claim or external supplier relationship was changed.
 
+### Tenth pass — five-piece merchandising cohesion (30 October 2026)
+
+**The first drop is still not approved for sale.** The visual direction works
+best as black foundations with distinct textures: a ribbed cotton top, a
+smooth cotton bodysuit and a straight tailored trouser. Those three are the
+**next research priorities**, **not** approved sample orders or merchandise.
+The structured trouser is the strongest styling anchor because it makes two
+coherent outfit concepts with the different tops. The top and body are also
+visually close, so one may be cut after a real fit/quality comparison.
+
+The two remaining provisional slots are **held**, not silently substituted:
+
+- **Easy Slip Dress (€44):** actual garment is glossy, acetate/polyester and
+  thin-strapped; finish, hand-feel, fall/winter relevance and fragile returns
+  economics (hypothetical 20% unsellable-refund contribution **€3.25**) make
+  it an unsuitable automatic hero selection.
+- **Soft Midi Dress (€59):** supplier names it a short-sleeve cotton **summer**
+  dress, with 111–114 cm garment lengths; midi fit and November relevance
+  require the founder's judgment and physical fitting despite a stronger
+  hypothetical margin.
+
+**Color truthfulness:** all five linked supplier candidates are **black**.
+The existing site's abstract concept tones include chalk, ink, cocoa, wine
+and stone; those art-direction swatches are **not orderable supplier colors**.
+The preview now also says there is **no confirmed size range** rather than
+promising mostly XS–XL; the candidate size labels span grouped S/M, L/XL and
+individual S/M/L/XL. Exact centimeter measurement and customer fit guidance
+must precede any live listing.
+
+The full product-level styling/fit/return gate and two conceptual outfits are
+recorded in `sourcing/merchandising-cohesion-review.json`; validation checks
+that the five linked SKUs remain frozen and unsaleable. **No** supplier
+contact, sample purchase, Shopify import, price change or live deployment.
+
 **Selection rule:** for a launch apparel SKU, require at least two independently
 orderable size variants; prefer S/M/L for bottoms and S/M plus L/XL or more
 for knitwear. A generic size chart must not satisfy this rule. `npm run
