@@ -41,6 +41,28 @@ These are **NOT supplier quotes** or actual profit margins, and changing
 shipping fees or target retail prices requires separate approval. Use
 `npm run check:courier-ceilings` to recompute and verify the assumptions.
 
+## Two-item outfit carts: consolidated vs split parcels
+
+The zero-spend sensitivity review in `sourcing/PRIORITY-MIXED-CART-ECONOMICS.md`
+and the reproducible `npm run check:priority-mixed-carts` test compare
+**all three possible pairs** of the currently prioritized sample-research items.
+At a **hypothetical €7.50 net outward label per parcel** and **20% full
+basket refunds with all returned garments lost**, the modelled contribution
+**before advertising and fixed overhead** is **€22.83 / €12.95** for rib top
++ body, **€26.86 / €16.98** for rib top + trouser, and **€28.79 / €18.91**
+for body + trouser, where each pair of figures means **one shared parcel /
+two split parcels**.
+
+An assumed €10 screening buffer **per item** (€20 for a two-item basket)
+is cleared in the one-parcel variant but missed for all three split-parcel
+variants under these assumptions. The model also screens a distinct
+20% one-item partial-return stress case; it is **not additive** to the
+full-order refund case. Consolidation savings depend on **written supplier
+confirmation of multi-SKU packing, genuine German courier labels, split
+shipping and partial returns**. Figures are **NOT carrier quotations, actual
+profits or authorization for live bundles**, discounts or free shipping.
+The two dresses remain on HOLD and the full release decision stays NO-GO.
+
 ## Owner approval and data gates
 
 There are **12 global checks** and **30 per-product evidence checks**. Each starts `PENDING`, and it may only become `VERIFIED` with an evidence reference, verification date and reviewer. The full machine-readable set is:
