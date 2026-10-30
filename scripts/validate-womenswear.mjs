@@ -75,7 +75,7 @@ assert.ok(homepage.includes('aria-pressed={category === item.id}'), 'Category fi
 assert.ok(homepage.includes('aria-live="polite"'), 'Filtered result counts must be announced without forcing focus');
 assert.ok(homepage.includes('prefersReducedMotion ? \'auto\' : \'smooth\''), 'Reduced-motion users must not be forced into smooth scrolling');
 assert.ok(homepage.includes("event.key === 'Escape'"), 'Mobile navigation must close on Escape');
-assert.ok(homepage.includes("document.addEventListener('click', jumpToSection)"), 'Offline hash routes must not swallow in-page editorial anchors');
+assert.ok(homepage.includes('<main id="main" tabIndex={-1}>'), 'The home skip target must accept keyboard focus');
 assert.ok(homepage.includes('menuToggleRef.current?.focus()'), 'Closing the mobile menu with Escape must restore keyboard focus');
 assert.ok(homepage.includes("document.addEventListener('pointerdown', closeWhenOutside)"),
   'The mobile menu must close after a tap outside the header');
@@ -101,15 +101,21 @@ assert.ok(conceptDetail.includes("story.photo + '.webp'"), 'Concept editorials m
 assert.ok(conceptDetail.includes('collectionReturnLink(location.search)'), 'Detail links must restore collection filters on return');
 assert.ok(conceptDetail.includes('conceptLink(item.name, originatingView)'), 'Related concepts must retain the originating selection');
 assert.ok(conceptDetail.includes('id="piece-title" tabIndex={-1}'), 'Concept headings must support route-change focus');
+assert.ok(conceptDetail.includes('<main id="detail-main" tabIndex={-1}>'), 'The concept skip target must accept keyboard focus');
 
 const routeFocus = fs.readFileSync('src/RouteFocus.tsx', 'utf8');
 assert.ok(routeFocus.includes('previousPath.current !== location.pathname'), 'Focus should move only when the active page changes');
 assert.ok(routeFocus.includes("location.hash === '#edit'"), 'Returning from a concept should focus the edit heading');
 assert.ok(routeFocus.includes('focus({ preventScroll: true })'), 'Focus must not undo the restored collection scroll position');
+assert.ok(routeFocus.includes("document.addEventListener('click', jumpToSection)"),
+  'Offline section links must work on every route, not just the homepage');
+assert.ok(routeFocus.includes("link?.classList.contains('w-skip-link')"),
+  'The portable skip link must restore keyboard focus to the main region');
 
 const pendingPage = fs.readFileSync('src/CollectionPendingPage.tsx', 'utf8');
 assert.ok(pendingPage.includes('href="#pending-main"'), 'Pending pages need a keyboard skip link');
 assert.ok(pendingPage.includes('tabIndex={-1}'), 'Pending heading must accept route-change focus');
+assert.ok(pendingPage.includes('<main id="pending-main" tabIndex={-1}>'), 'Pending skip target must accept keyboard focus');
 
 let originalBytes = 0;
 let optimizedBytes = 0;
