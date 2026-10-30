@@ -9,12 +9,13 @@
     "check:womenswear": "node scripts/validate-womenswear.mjs",
     "check:womenswear:render": "node scripts/validate-womenswear-render.mjs",
     "check:preview-boundary": "node scripts/validate-preview-boundary.mjs",
-    "check:sourcing": "node scripts/validate-first-drop.mjs",
+    "check:sourcing": "node scripts/validate-first-drop.mjs && npm run check:first-drop:readiness",
     "build": "npm run check:storefront && npm run check:womenswear && npm run check:womenswear:render && npm run check:preview-boundary && npm run check:sourcing && tsc -b && vite build",
-    "build:offline": "npm run check:womenswear && npm run check:womenswear:render && npm run check:preview-boundary && tsc -b && VITE_OFFLINE_PREVIEW=1 vite build --base ./ --outDir dist-offline && node scripts/pack-offline-preview.mjs && (cd offline-review && zip -qr -FS everne-woman-safari-preview.zip everne-woman-safari-preview)",
+    "build:offline": "npm run check:womenswear && npm run check:womenswear:render && npm run check:preview-boundary && npm run check:sourcing && tsc -b && VITE_OFFLINE_PREVIEW=1 vite build --base ./ --outDir dist-offline && node scripts/pack-offline-preview.mjs && (cd offline-review && zip -qr -FS everne-woman-safari-preview.zip everne-woman-safari-preview)",
     "postbuild": "node -e \"require('fs').copyFileSync('dist/index.html','dist/404.html')\"",
     "preview": "vite preview",
-    "typecheck": "tsc -b --pretty false"
+    "typecheck": "tsc -b --pretty false",
+    "check:first-drop:readiness": "node scripts/validate-first-drop-readiness.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
