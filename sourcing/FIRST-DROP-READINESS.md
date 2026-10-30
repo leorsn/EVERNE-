@@ -28,6 +28,19 @@ The retailer prices are planning targets, not offers: they are integer euros end
 3. **Returns mismatch / highest operational blocker.** FactoryPrice's posted wholesale return terms say seven days, buyer-paid return freight, and no direct end-consumer claims handling. Its own-label dropship page says separate return terms will be published. In ordinary EU online consumer purchases, the customer generally has 14 days to withdraw, and retailer responsibilities for defects continue separately. The supplier's wholesale deadline **does not reduce** EVERNE's consumer duties. Sources: https://factoryprice.eu/de/terms/ruckgabebestimmungen-772.html and https://europa.eu/youreurope/citizens/consumers/shopping/returns/index_de.htm and https://europa.eu/youreurope/business/selling-in-eu/consumer-contracts-guarantees/consumer-guarantees/index_de.htm
 4. **Real goods.** No five-SKU fit, fibre/label, exact variant stock, image licence or physical quality review has been approved. No import or live inventory is authorised.
 
+## Price feasibility before asking for a courier quotation
+
+A new, **hypothetical** sensitivity report `sourcing/COURIER-LABEL-CEILINGS.md`
+models 20% fully refunded orders with all returned goods lost, separate
+reverse-freight/handling costs, free outbound shipping for customers, and
+a €10 screening buffer **before** advertising and overhead. Under these
+assumptions, the maximum single-order **net outbound courier-label costs**
+are **€2.88** for the €34 rib top, **€4.81** for the €39 body, and **€8.85**
+for the €59 trouser. The two held dresses are not promoted by this model.
+These are **NOT supplier quotes** or actual profit margins, and changing
+shipping fees or target retail prices requires separate approval. Use
+`npm run check:courier-ceilings` to recompute and verify the assumptions.
+
 ## Owner approval and data gates
 
 There are **12 global checks** and **30 per-product evidence checks**. Each starts `PENDING`, and it may only become `VERIFIED` with an evidence reference, verification date and reviewer. The full machine-readable set is:
