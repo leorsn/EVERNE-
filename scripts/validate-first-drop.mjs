@@ -386,3 +386,54 @@ for (const item of cartEconomics.items) {
   }
 }
 console.log('  Return-sensitivity audit passed: full-refund/fee/reverse-label risk, 10/20/30% assumptions, no duplicate €2.50 reserve, no live changes.');
+
+const seasonal = JSON.parse(fs.readFileSync('sourcing/seasonal-replacement-screen.json', 'utf8'));
+assert.equal(seasonal.status, 'RESEARCH_ONLY', 'Seasonal rescreen must be research-only');
+assert.equal(seasonal.approvedForSale, false, 'Seasonal rescreen must not release products');
+assert.equal(seasonal.reviewedAt, '2026-10-30', 'Date the public supplier listings were checked');
+assert.equal(seasonal.screenedConceptName, 'Soft Midi Dress', 'Seasonal rescreen must use an existing concept');
+assert.equal(seasonal.currentConditionalModel.supplierProductCode, capsuleCatalog.get('Soft Midi Dress').supplierProductCode, 'Original conditional dress must remain traceable');
+assert.equal(seasonal.alternatives.length, 3, 'Three alternative seasonal silhouettes were screened');
+assert.ok(seasonal.decision.includes('REVIEW') && seasonal.unresolvedBeforeAnySale.length >= 4,
+  'Do not recommend a seasonal replacement without founder and supplier gates');
+const seasonalIds = new Set();
+const seasonalUrls = new Set();
+for (const item of seasonal.alternatives) {
+  assert.ok(!seasonalIds.has(item.id) && !seasonalUrls.has(item.url), `Duplicate seasonal alternative: ${item.id}`);
+  assert.equal(item.conceptName, seasonal.screenedConceptName, `Unexpected concept in seasonal screen: ${item.id}`);
+  assert.equal(item.approvedForSale, false, `Seasonal candidate cannot be approved: ${item.id}`);
+  assert.ok(item.url.startsWith('https://factoryprice.eu/de/products/'), `Official FactoryPrice listing required: ${item.id}`);
+  assert.equal(item.baselineRetailGrossEur, conceptByName.get(item.conceptName).targetPrice, `Wrong seasonal baseline price: ${item.id}`);
+  assert.equal(item.proposedRetailGrossEur, item.baselineRetailGrossEur, `No silent seasonal retail price changes: ${item.id}`);
+  assert.ok(Number.isInteger(item.proposedRetailGrossEur) && [4, 9].includes(item.proposedRetailGrossEur % 10), `Seasonal pricing must follow whole-euro 4/9 style: ${item.id}`);
+  assert.ok(item.indicativeSupplierNetEur > 0 && item.listedComposition.length >= 15 && item.whyNotPromoted.length >= 80, `Research evidence missing for ${item.id}`);
+  assert.ok(item.candidateStatus.startsWith('HOLD_'), `Seasonal research cannot silently promote: ${item.id}`);
+  assert.deepEqual(item.visibleSizesForColor, ['S/M', 'L/XL'], `Require stated size pair for this screening round: ${item.id}`);
+  assert.ok(item.visibleSizesForColor.every((size) => typeof item.variantIdentifiersBySize[size] === 'string'
+    && item.variantIdentifiersBySize[size].length >= 10 && Number.isInteger(item.publicStockObservedBySize[size])
+    && item.publicStockObservedBySize[size] >= 0), `Actual observed stock and supplier variant IDs needed: ${item.id}`);
+  if (item.publicStockObservedBySize['L/XL'] < 5) assert.ok(item.candidateStatus.includes('LOW_STOCK') || item.candidateStatus.includes('NO_L_XL'), `L/XL stock gate missing for ${item.id}`);
+  if (!item.colorInSupplierSelector.includes('Black')) assert.ok(item.candidateStatus.includes('BLACK_COLOR_NOT_VERIFIED'), `Conflicting black-color claim must block: ${item.id}`);
+  if (item.listedCutAndSeason.includes('BEFORE THE KNEE')) assert.ok(item.candidateStatus.includes('CONCEPT_MISMATCH'), `Do not present a short dress as midi: ${item.id}`);
+  if (item.listedCutAndSeason.includes('SHORT sleeve')) assert.ok(item.candidateStatus.includes('SHORT_SLEEVES'), `Short sleeves are not a proved winter upgrade: ${item.id}`);
+  seasonalIds.add(item.id);
+  seasonalUrls.add(item.url);
+
+  const oneItem = capsuleCatalog.get('Soft Midi Dress');
+  const netSale = oneItem.retailGrossEur / (1 + cartEconomics.retailVatRateAssumption);
+  const fee = oneItem.retailGrossEur * cartEconomics.paymentFeeGrossRateAssumption + cartEconomics.paymentFeeFixedEurPerOrderAssumption;
+  const hypotheticalContribution = netSale - item.indicativeSupplierNetEur - fee
+    - 7.5 - handlingEur - cartEconomics.packagingBufferEurPerParcelExVatAssumption
+    - cartEconomics.returnsReserveEurPerItemExVatAssumption;
+  assert.ok(Number.isFinite(hypotheticalContribution), `Seasonal cost screening failed: ${item.id}`);
+  console.log(`  Seasonal hold ${item.id}: at original €${item.proposedRetailGrossEur}, €7.50 HYPOTHETICAL label → €${hypotheticalContribution.toFixed(2)} before ads/overhead; ${item.candidateStatus}.`);
+}
+const inventoryConflict = seasonal.stockReliabilityIncident;
+const originalMini = capsule.candidates.find((item) => item.id === inventoryConflict.existingCandidateId);
+assert.ok(originalMini && originalMini.supplierProductCode === inventoryConflict.productCode && originalMini.url === inventoryConflict.url,
+  'Inventory conflict must map to an existing held SKU');
+assert.deepEqual(originalMini.publicStockObservedBySize, inventoryConflict.originalDocumentedSnapshot, 'Do not rewrite earlier stock snapshots without proof');
+assert.deepEqual(inventoryConflict.directPageOpenOnReview, inventoryConflict.originalDocumentedSnapshot, 'Direct page currently confirms the earlier held mini stock');
+assert.notDeepEqual(inventoryConflict.searchIndexSnippetFromDifferentCrawl, inventoryConflict.directPageOpenOnReview, 'The conflicting crawls must remain visible');
+assert.equal(inventoryConflict.candidateStillBlocked, true, 'Search snippets cannot release stock');
+console.log('  Seasonal rescreen passed: zero automatic replacements, contradictory mini stock snapshots retained, original conditional dress still gated.');
