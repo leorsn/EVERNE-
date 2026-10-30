@@ -43,6 +43,16 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
   outside the header, in addition to Escape and the main menu links.
 - The complete edit can now be both expanded and collapsed with a single
   accessible control; its selection remains shareable in the existing URL.
+- `SAFARI-ACCEPTANCE.md` defines 20 owner-facing real Safari/iPhone
+  checks with explicit **UNGETESTET** status and severity thresholds.
+  This guide is now the ninth file inside the portable ZIP and includes
+  trusted-LAN iPhone test instructions instead of assuming AirDrop/Files
+  provides a complete JavaScript browser runtime.
+- The GitHub PR workflow now runs `npm run build:offline` and
+  `npm run check:offline:package`, checking byte-for-byte ZIP integrity,
+  local editorial assets and legal links, build inline CSS/JS and the
+  exact owner QA document. CI acceptance **does not** establish Safari
+  rendering or iPhone interaction acceptance.
 - `npm run build:offline` creates a separate zipped Safari review under
   `offline-review/` with inlined application JS/CSS, local editorial images,
   local legal pages and hash-based concept routes. The actual Vercel build
