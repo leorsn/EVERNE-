@@ -286,8 +286,41 @@ const cartEconomics = JSON.parse(fs.readFileSync('sourcing/capsule-order-economi
 assert.equal(cartEconomics.status, 'RESEARCH_ONLY', 'Cart economics must not authorize selling');
 assert.equal(cartEconomics.approvedForSale, false, 'Cart approval must stay false');
 assert.equal(cartEconomics.chosenRoute, 'ONE_FACTORYPRICE_SUPPLIER_RESEARCH_ONLY', 'Do not silently mix supplier routes');
-assert.equal(cartEconomics.realGermanCustomerCourierLabelNetEur, null, 'Courier label is still unquoted');
-assert.equal(cartEconomics.realShopifyIntegrationSubscriptionEur, null, 'Shopify integration cost is unverified');
+// Real quotes are allowed only after a matching, attributable evidence
+// record. Scenario tables below still use hypothetical €5/€7.50/€10 labels.
+const quoteReadiness = JSON.parse(fs.readFileSync('sourcing/first-drop-readiness.json', 'utf8'));
+assert.equal(quoteReadiness.status, 'NO_GO', 'Authentic quotes cannot enable commerce');
+assert.equal(quoteReadiness.approvedForSale, false, 'Quotes are not SKU sale approvals');
+assert.equal(quoteReadiness.storefrontPublicationAuthorized, false, 'Never auto-publish a quoted SKU');
+const quotedLabel = cartEconomics.realGermanCustomerCourierLabelNetEur;
+assert.equal(quotedLabel, quoteReadiness.knownTerms.confirmedGermanyDropshipLabelNetEur,
+  'Courier quote must exactly match its separate readiness source');
+function mustHaveVerifiedEvidence(gate, label) {
+  assert.equal(gate.status, 'VERIFIED', label + ' must have owner-reviewed evidence');
+  assert.ok(gate.evidence?.reference?.length > 5 &&
+    gate.evidence?.reviewedBy &&
+    /^\d{4}-\d{2}-\d{2}$/.test(gate.evidence.verifiedAt),
+    label + ' needs a dated proof reference and reviewer');
+}
+if (quotedLabel === null) {
+  assert.equal(quoteReadiness.globalGates.ownLabelGermanyCourierQuote.status, 'PENDING',
+    'Unquoted courier rates must remain pending');
+} else {
+  assert.ok(Number.isFinite(quotedLabel) && quotedLabel > 0,
+    'A German own-label courier quote must be positive net EUR');
+  mustHaveVerifiedEvidence(quoteReadiness.globalGates.ownLabelGermanyCourierQuote,
+    'German courier quote');
+}
+const integrationQuote = cartEconomics.realShopifyIntegrationSubscriptionEur;
+if (integrationQuote === null) {
+  assert.equal(quoteReadiness.globalGates.shopifyIntegrationRecurringCost.status, 'PENDING',
+    'An unverified Shopify connector cost must not be called free');
+} else {
+  assert.ok(Number.isFinite(integrationQuote) && integrationQuote >= 0,
+    'A verified Shopify connector quote may be free (EUR 0) or positive');
+  mustHaveVerifiedEvidence(quoteReadiness.globalGates.shopifyIntegrationRecurringCost,
+    'Shopify integration quote');
+}
 assert.equal(cartEconomics.items.length, capsule.provisionalCapsule.length, 'Every capsule slot needs one matching source-cost record');
 assert.ok(cartEconomics.warnings.length >= 6, 'Incomplete costs and constraints need warnings');
 assert.equal(cartEconomics.secondarySupplierRoute.publicOrderMinimumGoodsEur, 100, 'LEIVIP EUR 100 minimum must remain explicit');
