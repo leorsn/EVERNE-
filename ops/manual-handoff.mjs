@@ -63,6 +63,9 @@ export function reviewSyntheticOrder(order, context) {
     'COURIER_LABEL_NOT_AUTHORIZED',
     'NO_SHOPIFY_FULFILLMENT_PERMISSION',
   ]);
+  if (readiness.knownTerms?.supplierServiceContradiction?.ownerSpecificServiceConfirmed !== true) {
+    blockers.add('FACTORYPRICE_DROPSHIP_SERVICE_CONTRADICTION');
+  }
   if (order.paymentStatus !== 'PAID') blockers.add('PAYMENT_NOT_PAID');
   if (order.fulfillmentStatus !== 'UNFULFILLED') blockers.add('ALREADY_OR_PARTIALLY_FULFILLED');
 
