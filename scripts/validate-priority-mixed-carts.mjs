@@ -17,14 +17,48 @@ assert.equal(readiness.storefrontPublicationAuthorized, false);
 assert.equal(screen.status, 'RESEARCH_ONLY_NO_GO');
 assert.equal(screen.approvedForSale, false);
 assert.equal(screen.publishedPricesChanged, false);
-assert.equal(screen.courierLabelQuoted, false);
-assert.equal(screen.shopifyIntegrationCostQuoted, false);
 assert.equal(screen.allowFreeShippingClaim, false);
-assert.equal(model.realGermanCustomerCourierLabelNetEur, null);
-assert.equal(model.realShopifyIntegrationSubscriptionEur, null);
+// The mixed-cart exercise can retain hypothetical label scenarios even after
+// real carrier or integration quotes are received, but it must distinguish
+// the model's actual quoted values from the hypothetical baseline.
+const quotedLabel = model.realGermanCustomerCourierLabelNetEur;
+assert.equal(quotedLabel, readiness.knownTerms.confirmedGermanyDropshipLabelNetEur,
+  'Merchant label quote in economics and readiness records must match');
+assert.equal(screen.courierLabelQuoted, quotedLabel !== null,
+  'Mixed-cart quote flag must reflect documented actual label evidence');
+assert.equal(screen.routeGates.actualMerchantGermanLabelPriceNetEur, quotedLabel,
+  'Mixed-cart quote must match source model, not a hypothetical price');
+if (quotedLabel === null) {
+  assert.equal(readiness.globalGates.ownLabelGermanyCourierQuote.status, 'PENDING');
+} else {
+  assert.ok(Number.isFinite(quotedLabel) && quotedLabel > 0,
+    'Merchant courier quote must be a positive net EUR amount');
+  const gate = readiness.globalGates.ownLabelGermanyCourierQuote;
+  assert.equal(gate.status, 'VERIFIED');
+  assert.ok(gate.evidence?.reference?.length > 5 &&
+    gate.evidence?.reviewedBy &&
+    /^\d{4}-\d{2}-\d{2}$/.test(gate.evidence.verifiedAt),
+    'Merchant courier quote must have dated and reviewed evidence');
+}
+const quotedIntegration = model.realShopifyIntegrationSubscriptionEur;
+assert.equal(screen.shopifyIntegrationCostQuoted, quotedIntegration !== null,
+  'Mixed-cart integration flag must reflect an authenticated cost or explicit zero quote');
+if (quotedIntegration === null) {
+  assert.equal(readiness.globalGates.shopifyIntegrationRecurringCost.status, 'PENDING');
+} else {
+  assert.ok(Number.isFinite(quotedIntegration) && quotedIntegration >= 0,
+    'Explicit zero integration fee is allowed only when independently evidenced');
+  const gate = readiness.globalGates.shopifyIntegrationRecurringCost;
+  assert.equal(gate.status, 'VERIFIED');
+  assert.ok(gate.evidence?.reference?.length > 5 &&
+    gate.evidence?.reviewedBy &&
+    /^\d{4}-\d{2}-\d{2}$/.test(gate.evidence.verifiedAt),
+    'Integration subscription cost must have dated and reviewed evidence');
+}
 for (const [key, value] of Object.entries(screen.routeGates)) {
+  if (key === 'actualMerchantGermanLabelPriceNetEur') continue;
   assert.ok(value === false || value === null,
-    'The mixed-cart route has an unverified launch gate: ' + key);
+    'Do not bypass unverified packing, returns or owner-approval gates: ' + key);
 }
 assert.deepEqual(screen.scenarios.parcelCounts, [1, 2]);
 assert.deepEqual(screen.scenarios.labelNetEurEachParcel, [5, 7.5, 10]);
