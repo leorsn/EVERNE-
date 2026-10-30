@@ -226,7 +226,7 @@ assert.equal(capsule.status, 'RESEARCH_ONLY', 'Capsule-hero research cannot auth
 assert.equal(capsule.approvedForSale, false, 'Capsule-hero approval must remain false');
 assert.equal(capsule.supplier, 'FactoryPrice', 'Capsule supplier must be specified');
 assert.equal(capsule.reviewedAt, '2026-10-30', 'Time-sensitive public stock must have a snapshot date');
-assert.equal(capsule.candidates.length, 6, 'Six additional hero/wardrobe alternatives expected');
+assert.equal(capsule.candidates.length, 8, 'Eight additional hero/wardrobe alternatives expected');
 assert.equal(capsule.provisionalCapsule.length, 5, 'Provisional launch edit contains five conceptual slots');
 assert.ok(capsule.launchGates.length >= 5, 'A provisional capsule requires explicit launch blockers');
 
@@ -271,7 +271,7 @@ for (const item of capsule.candidates) {
   assert.ok(Number.isFinite(ceiling) && Number.isFinite(maxDropshipLabel), `Price math must be finite: ${item.id}`);
   console.log(`  Hero ${item.conceptName.padEnd(20)} gross €${item.proposedRetailGrossEur} | public net goods €${item.indicativeSupplierNetEur.toFixed(2)} | pre-inbound ceiling €${ceiling.toFixed(2)} | max dropship label €${maxDropshipLabel.toFixed(2)} for €10 buffer | ${item.candidateStatus}`);
 }
-assert.equal(potentiallySampleable, 2, 'Exactly two dresses are conditional sample options, not launch approvals');
+assert.equal(potentiallySampleable, 3, 'Exactly two dresses plus a four-size tailored pant are conditional sample options, not launch approvals');
 const capsuleSlots = new Set();
 for (const slot of capsule.provisionalCapsule) {
   const concept = conceptByName.get(slot.conceptName);
@@ -280,4 +280,65 @@ for (const slot of capsule.provisionalCapsule) {
   assert.ok(slot.gate.length >= 20 && slot.source.length >= 20, `Supplier-specific approval gate required: ${slot.conceptName}`);
   capsuleSlots.add(slot.conceptName);
 }
-console.log('  Capsule-hero audit passed: two conditional sample dresses, four explicitly held options; separate suppliers, no sale or checkout changes.');
+console.log('  Capsule-hero audit passed: three conditional sample options, five explicitly held options; no sale or checkout changes.');
+
+const cartEconomics = JSON.parse(fs.readFileSync('sourcing/capsule-order-economics.json', 'utf8'));
+assert.equal(cartEconomics.status, 'RESEARCH_ONLY', 'Cart economics must not authorize selling');
+assert.equal(cartEconomics.approvedForSale, false, 'Cart approval must stay false');
+assert.equal(cartEconomics.chosenRoute, 'ONE_FACTORYPRICE_SUPPLIER_RESEARCH_ONLY', 'Do not silently mix supplier routes');
+assert.equal(cartEconomics.realGermanCustomerCourierLabelNetEur, null, 'Courier label is still unquoted');
+assert.equal(cartEconomics.realShopifyIntegrationSubscriptionEur, null, 'Shopify integration cost is unverified');
+assert.equal(cartEconomics.items.length, capsule.provisionalCapsule.length, 'Every capsule slot needs one matching source-cost record');
+assert.ok(cartEconomics.warnings.length >= 6, 'Incomplete costs and constraints need warnings');
+assert.equal(cartEconomics.secondarySupplierRoute.publicOrderMinimumGoodsEur, 100, 'LEIVIP EUR 100 minimum must remain explicit');
+assert.equal(cartEconomics.secondarySupplierRoute.canDirectFulfillOneTrouserOrderInIsolation, false, 'LEIVIP single-trouser under-minimum route cannot be represented as directly fulfillable');
+assert.ok(cartEconomics.secondarySupplierRoute.publishedGermanyInboundRateUpTo5KgEur > 0, 'Separate LEIVIP inbound carrier rate is required');
+assert.deepEqual(cartEconomics.courierWhatIfNetEur, [5, 7.5, 10], 'Courier stress scenarios must be explicit hypothetical inputs');
+assert.ok(cartEconomics.whatIfCarts.length >= 8, 'Single- and multi-item cart cases required');
+
+const capsuleCatalog = new Map();
+for (const item of cartEconomics.items) {
+  const concept = conceptByName.get(item.conceptName);
+  assert.ok(concept && item.retailGrossEur === concept.targetPrice, `Unapproved cart pricing: ${item.conceptName}`);
+  assert.ok(item.supplier === 'FactoryPrice' && item.supplierPublicCostNetEur > 0, `Cart item cannot silently use separate supplier: ${item.conceptName}`);
+  assert.ok(!capsuleCatalog.has(item.conceptName), `Duplicate cart item: ${item.conceptName}`);
+  const sourceList = [...essentials.candidates, ...capsule.candidates];
+  assert.ok(sourceList.some((source) => source.conceptName === item.conceptName
+      && source.supplierProductCode === item.supplierProductCode
+      && source.indicativeSupplierNetEur === item.supplierPublicCostNetEur), `Cart's supplier SKU/cost must match a documented research candidate: ${item.conceptName}`);
+  capsuleCatalog.set(item.conceptName, item);
+}
+for (const slot of capsule.provisionalCapsule) assert.ok(capsuleCatalog.has(slot.conceptName), `Missing capsule cart item: ${slot.conceptName}`);
+assert.ok(cartEconomics.items.every((item) => [4, 9].includes(item.retailGrossEur % 10)), 'Whole euro 4/9 rule must hold across cart selection');
+
+const handlingEur = cartEconomics.supplierDropshipFeeNetPlnPerParcel / cartEconomics.ecbPlnPerEurReference;
+const seenCarts = new Set();
+for (const cart of cartEconomics.whatIfCarts) {
+  assert.ok(!seenCarts.has(cart.id), `Duplicate what-if cart ID: ${cart.id}`);
+  assert.ok(cart.itemConceptNames.length > 0 && new Set(cart.itemConceptNames).size === cart.itemConceptNames.length, `Cart items must be distinct and non-empty: ${cart.id}`);
+  const items = cart.itemConceptNames.map((name) => {
+    assert.ok(capsuleCatalog.has(name), `Unknown cart item: ${name}`);
+    return capsuleCatalog.get(name);
+  });
+  assert.ok(cart.possibleParcelCounts.length >= 1 && cart.possibleParcelCounts.every((count) => Number.isInteger(count) && count > 0 && count <= items.length), `Invalid parcel count: ${cart.id}`);
+  if (items.length > 1) assert.deepEqual(cart.possibleParcelCounts, [1, 2], 'Mixed carts must model consolidated and split parcels');
+  seenCarts.add(cart.id);
+
+  const gross = items.reduce((sum, item) => sum + item.retailGrossEur, 0);
+  const cost = items.reduce((sum, item) => sum + item.supplierPublicCostNetEur, 0);
+  const netRevenue = gross / (1 + cartEconomics.retailVatRateAssumption);
+  const paymentFee = gross * cartEconomics.paymentFeeGrossRateAssumption + cartEconomics.paymentFeeFixedEurPerOrderAssumption;
+  for (const parcels of cart.possibleParcelCounts) {
+    for (const courierLabel of cartEconomics.courierWhatIfNetEur) {
+      const projectedContribution = netRevenue - cost - paymentFee
+        - items.length * cartEconomics.returnsReserveEurPerItemExVatAssumption
+        - parcels * (handlingEur + cartEconomics.packagingBufferEurPerParcelExVatAssumption + courierLabel);
+      assert.ok(Number.isFinite(projectedContribution), `Invalid cart what-if math for ${cart.id}`);
+      if (courierLabel === 7.5) {
+        const policy = projectedContribution >= cartEconomics.illustrativeMinimumContributionBeforeAdsAndFixedOverheadEur ? 'CLEARS_SCREENING_BUFFER' : 'BELOW_SCREENING_BUFFER';
+        console.log(`  Cart what-if ${cart.id.padEnd(11)} ${parcels} parcel(s) @ hypothetical €7.50 net label EACH | €${projectedContribution.toFixed(2)} contribution BEFORE ads/overhead | ${policy}`);
+      }
+    }
+  }
+}
+console.log('  Cart-economics audit passed: all five products match researched supplier SKUs, one-supplier alternative replaces under-MOQ LEIVIP mixed route; courier prices hypothetical and no purchase authorized.');
