@@ -29,6 +29,8 @@ jobs:
           node-version: 22
       - name: Install dependencies
         run: npm install
+      - name: Validate Mac Safari launcher syntax
+        run: bash -n scripts/review-safari-mac.sh
       - name: Typecheck
         run: npm run typecheck
       - name: Build
