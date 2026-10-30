@@ -39,8 +39,8 @@ export function reviewSyntheticOrder(order, context) {
     !/^MOCK-[A-Z0-9-]{3,40}$/.test(order.scenarioId)) {
     throw new Error('Only explicitly synthetic MOCK- identifiers are accepted');
   }
-  if (!Array.isArray(order.lines) || order.lines.length < 1 || order.lines.length > 3) {
-    throw new Error('One to three synthetic order lines are required');
+  if (!Array.isArray(order.lines) || order.lines.length < 1 || order.lines.length > 2) {
+    throw new Error('One or two synthetic order lines are required');
   }
   if (!ACCEPTED_PAYMENT.has(order.paymentStatus) ||
       !ACCEPTED_FULFILLMENT.has(order.fulfillmentStatus) ||
