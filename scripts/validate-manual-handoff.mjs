@@ -14,6 +14,11 @@ assert.equal(readiness.status, 'NO_GO');
 assert.equal(readiness.approvedForSale, false);
 assert.equal(readiness.storefrontPublicationAuthorized, false);
 assert.equal(economics.approvedForSale, false);
+const serviceConflict = readiness.knownTerms.supplierServiceContradiction;
+assert.ok(serviceConflict && serviceConflict.newerMainSiteUrl.startsWith('https://factoryprice.eu/'));
+assert.ok(serviceConflict.conflictingFaqUrl.startsWith('https://hurtownia.factoryprice.eu/'));
+assert.ok(['OPEN_REQUIRES_WRITTEN_VERIFICATION', 'VERIFIED_BY_AUTHENTICATED_MERCHANT']
+  .includes(serviceConflict.status), 'Unreviewed supplier claims must be documented');
 
 function line(conceptName, size) {
   const entry = economics.items.find((item) => item.conceptName === conceptName);
@@ -51,6 +56,9 @@ assert.equal(single.lines[0].conceptName, 'Essential Rib Top');
 assert.equal(single.lines[0].mapping, 'RESEARCH_REFERENCE_ONLY');
 assert.ok(single.blockers.includes('PRODUCTS_NOT_APPROVED_FOR_SALE'));
 assert.ok(single.blockers.includes('GERMANY_CARRIER_LABEL_UNQUOTED'));
+if (!serviceConflict.ownerSpecificServiceConfirmed) {
+  assert.ok(single.blockers.includes('FACTORYPRICE_DROPSHIP_SERVICE_CONTRADICTION'));
+}
 
 const two = reviewSyntheticOrder(scenario([top, pant]), context);
 assert.deepEqual(two.parcelCountsForResearchOnly, [1, 2]);
