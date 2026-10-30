@@ -51,6 +51,9 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
 - Local `file://` previews omit canonical and Open Graph page URLs rather than
   attempting to resolve them against the browser's opaque `null` origin;
   ordinary `http(s)` deployments continue to emit their canonical URLs.
+- Offline in-page hash links are handled once across every route. Home, detail
+  and pending-page skip links scroll to a keyboard-focusable main landmark;
+  detail-to-collection route handling continues to use the existing router.
 - `npm run check:womenswear:render` additionally renders the actual React
   homepage, eight- and twenty-concept views, five filtered categories, all
   twenty detail pages and the unknown-route fallback. It checks truthful
