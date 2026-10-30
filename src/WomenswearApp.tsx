@@ -91,27 +91,6 @@ export default function WomenswearApp() {
   }, []);
 
   useEffect(() => {
-    if (import.meta.env.VITE_OFFLINE_PREVIEW !== '1') return;
-    // In the portable HashRouter build, plain #section anchors would be
-    // interpreted as page routes. Handle them as in-page scrolls instead.
-    function jumpToSection(event: MouseEvent) {
-      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
-      if (!(event.target instanceof Element)) return;
-      const link = event.target.closest<HTMLAnchorElement>('a[href^="#"]');
-      const targetId = link?.getAttribute('href')?.slice(1);
-      if (!targetId) return;
-      const target = document.getElementById(targetId);
-      if (!target) return;
-      event.preventDefault();
-      target.scrollIntoView({
-        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
-      });
-    }
-    document.addEventListener('click', jumpToSection);
-    return () => document.removeEventListener('click', jumpToSection);
-  }, []);
-
-  useEffect(() => {
     if (!menuOpen) return;
     function closeOnEscape(event: KeyboardEvent) {
       if (event.key === 'Escape') {
@@ -182,7 +161,7 @@ export default function WomenswearApp() {
         <a className="w-header-cta" href="#edit" onClick={closeMenu}>The Edit <Arrow diagonal /></a>
       </header>
 
-      <main id="main">
+      <main id="main" tabIndex={-1}>
         <section className="w-hero" aria-labelledby="hero-title">
           <div className="w-hero-copy">
             <div className="w-section-meta"><span>01 / THE NEW EVERYDAY</span><span>Collection study / 2026</span></div>
