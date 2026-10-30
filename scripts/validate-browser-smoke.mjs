@@ -109,7 +109,7 @@ try {
   await navigate(preview + '#/');
   await eq("document.querySelectorAll('.w-concept-card').length", 8,
     'Eight homepage concept cards');
-  yes(await js("document.body.innerText.includes('Shopping not yet available')"),
+  yes(await js("document.body.innerText.toLowerCase().includes('shopping not yet available')"),
     'Homepage must be clearly noncommercial');
   yes(!(await js("Boolean(document.querySelector('form,input,[href*=\"/checkout\"]'))")),
     'No forms or checkout links in preview');
