@@ -55,7 +55,7 @@ function validateGate(gate, label) {
   if (gate.status === 'VERIFIED') {
     assert.ok(gate.evidence && typeof gate.evidence.reference === 'string' &&
       gate.evidence.reference.length > 5 &&
-      /^\\d{4}-\\d{2}-\\d{2}$/.test(gate.evidence.verifiedAt) &&
+      /^\d{4}-\d{2}-\d{2}$/.test(gate.evidence.verifiedAt) &&
       gate.evidence.reviewedBy,
       'Verified gates must contain a dated traceable source and reviewer: ' + label);
   } else {
