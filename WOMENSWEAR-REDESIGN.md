@@ -31,6 +31,10 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
   where appropriate, with 20 reproducible contrast checks at 4.5:1 or above.
   Image overlays, true Safari rendering and full accessibility conformance
   remain open for visual/device acceptance.
+- Three credited Unsplash editorial references now load as quality-78 WebP
+  derivatives (the JPEG originals remain intact), reducing combined image
+  bytes by roughly two thirds without changing the represented garments.
+  Signature and size-reduction tests run in `check:womenswear`.
 - Historical `/products/*` routes show a truthful collection-pending page.
 - Product names and prices in womenswearCatalog.ts are planning concepts,
   not offers, published Shopify items, or verified stock.
