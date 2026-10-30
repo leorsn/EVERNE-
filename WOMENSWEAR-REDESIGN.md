@@ -53,6 +53,12 @@ Use a **five-product sourcing pilot** before importing the intended 20 items:
 confirm samples, supplier costs, actual Germany shipping/returns, image rights,
 size charts, manufacturer and safety contacts, and textile composition.
 
+**Next-step implementation:** `FIRST-DROP-SOURCING.md` and
+`sourcing/first-drop-candidates.json` now contain a dated, five-listing LEIVIP
+research shortlist with a cost model and explicit non-approval gates. Run
+`npm run check:sourcing` for its reproducible contribution estimates. There are
+no new Shopify products, actual orders or launch approvals.
+
 ## Required before launch
 
 1. Reconnect and verify the intended Shopify store and publication.

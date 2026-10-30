@@ -7,7 +7,8 @@
     "dev": "vite",
     "check:storefront": "node scripts/validate-storefront.mjs",
     "check:womenswear": "node scripts/validate-womenswear.mjs",
-    "build": "npm run check:storefront && npm run check:womenswear && tsc -b && vite build",
+    "check:sourcing": "node scripts/validate-first-drop.mjs",
+    "build": "npm run check:storefront && npm run check:womenswear && npm run check:sourcing && tsc -b && vite build",
     "postbuild": "node -e \"require('fs').copyFileSync('dist/index.html','dist/404.html')\"",
     "preview": "vite preview",
     "typecheck": "tsc -b --pretty false"
