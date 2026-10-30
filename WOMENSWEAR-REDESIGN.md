@@ -53,6 +53,15 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
   local editorial assets and legal links, build inline CSS/JS and the
   exact owner QA document. CI acceptance **does not** establish Safari
   rendering or iPhone interaction acceptance.
+- A no-extra-cost local Mac launcher `bash scripts/review-safari-mac.sh`
+  uses the committed `package-lock.json` (`npm ci`), runs the complete
+  `build:offline` integrity checks, prints the ZIP SHA-256 and opens the
+  resulting `file://` preview in Safari. npm installation needs network
+  access; the assembled preview does not require Shopify or supplier APIs.
+  It is Mac-only and does not claim a real Safari visual pass.
+- The CI ZIP is deliberately **not uploaded** to GitHub as an artifact or
+  release (to avoid unapproved publication/storage). The owner's current
+  private ZIP must be rebuilt locally from the specific source branch.
 - `npm run build:offline` creates a separate zipped Safari review under
   `offline-review/` with inlined application JS/CSS, local editorial images,
   local legal pages and hash-based concept routes. The actual Vercel build
