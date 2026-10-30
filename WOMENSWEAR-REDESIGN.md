@@ -9,6 +9,8 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
 - First curation: 20 concepts in five categories: tops, knitwear,
   trousers and denim, dresses, skirts.
 - English-first copy, quiet editorial typography, ivory, ink, stone and wine.
+- A three-mood interactive Style Notes section showcases combinations of
+  existing planning concepts, without suggesting inventory or real product photography.
 
 ## Architecture and safety
 

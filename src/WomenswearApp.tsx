@@ -33,6 +33,27 @@ const questions = [
   },
 ];
 
+const styleNotes = [
+  {
+    label: '01 / OFF DUTY',
+    title: 'Easy, always.',
+    description: 'A softer kind of uniform. Familiar foundations, relaxed proportions, and one extra layer for wherever the day leads.',
+    pieces: ['Essential Rib Top', 'Wide Leg Trouser', 'Relaxed Crew Knit'],
+  },
+  {
+    label: '02 / AFTER HOURS',
+    title: 'Understated drama.',
+    description: 'The simplest pieces can make the strongest impression. A close fit, a sharp silhouette, a little unexpected texture.',
+    pieces: ['Second Skin Body', 'The Black Mini', 'Off-Shoulder Knit'],
+  },
+  {
+    label: '03 / NEW PERSPECTIVE',
+    title: 'Rules? Your own.',
+    description: 'An expressive knit, lived-in denim and a layer that ties everything together. Effortlessly individual.',
+    pieces: ['Fine Knit Top', 'Straight Leg Denim', 'Wrap Knit Cardigan'],
+  },
+] as const;
+
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <span aria-hidden="true">{diagonal ? '↗' : '→'}</span>;
 }
@@ -42,6 +63,7 @@ export default function WomenswearApp() {
   const [showAll, setShowAll] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [openQuestion, setOpenQuestion] = useState<number | null>(null);
+  const [activeStyle, setActiveStyle] = useState(0);
 
   useEffect(() => {
     applySeo({
@@ -59,6 +81,7 @@ export default function WomenswearApp() {
   const visiblePieces = showAll || category !== 'all'
     ? selectedPieces
     : selectedPieces.slice(0, 8);
+  const selectedStyle = styleNotes[activeStyle];
 
   function selectCategory(nextCategory: FashionCategory | 'all') {
     setCategory(nextCategory);
@@ -92,6 +115,7 @@ export default function WomenswearApp() {
         <nav id="woman-nav" className={menuOpen ? 'w-nav is-open' : 'w-nav'} aria-label="Main navigation">
           <a href="#collection" onClick={closeMenu}>Collection</a>
           <a href="#story" onClick={closeMenu}>Our World</a>
+          <a href="#style-notes" onClick={closeMenu}>Style Notes</a>
           <a href="#edit" onClick={closeMenu}>The Edit</a>
         </nav>
         <a className="w-logo" href="#top" aria-label="EVERNE homepage">EVERNE<span>WOMAN</span></a>
@@ -173,10 +197,61 @@ export default function WomenswearApp() {
           </div>
         </section>
 
+        <section className="w-style-notes" id="style-notes" aria-labelledby="style-notes-title">
+          <div className="w-style-intro">
+            <span className="w-kicker">03 — STYLE NOTES</span>
+            <h2 id="style-notes-title">Wear it<br /><em>your way.</em></h2>
+            <p>The best wardrobe isn't a set of rules. It's a collection of pieces you can make your own — from slow mornings to spontaneous nights.</p>
+            <span className="w-style-intro-foot">THREE MOODS / ONE WARDROBE</span>
+          </div>
+          <div className="w-style-explorer">
+            <div className="w-style-options" role="group" aria-label="Choose a styling direction">
+              {styleNotes.map((style, index) => (
+                <button
+                  key={style.label}
+                  type="button"
+                  className={activeStyle === index ? 'is-active' : ''}
+                  aria-pressed={activeStyle === index}
+                  onClick={() => setActiveStyle(index)}
+                >
+                  <span>{style.label}</span>
+                  <span aria-hidden="true">{activeStyle === index ? '●' : '○'}</span>
+                </button>
+              ))}
+            </div>
+            <div className="w-style-selection">
+              <div className="w-style-selection-heading">
+                <div>
+                  <span className="w-kicker">THE SELECTED EDIT</span>
+                  <h3 aria-live="polite">{selectedStyle.title}</h3>
+                </div>
+                <p>{selectedStyle.description}</p>
+              </div>
+              <div className="w-style-piece-grid">
+                {selectedStyle.pieces.map((name, index) => {
+                  const piece = conceptPieces.find((item) => item.name === name)!;
+                  return (
+                    <Link key={piece.name} className="w-style-piece" to={'/edit/' + conceptSlug(piece.name)} aria-label={'View design concept: ' + piece.name}>
+                      <div className={'w-style-piece-art tone-' + piece.tone} aria-hidden="true">
+                        <span className="w-style-piece-number">0{index + 1}</span>
+                        <span className="w-style-piece-mark">E.</span>
+                        <span className="w-style-piece-arrow">↗</span>
+                      </div>
+                      <span className="w-style-piece-name">{piece.name}</span>
+                      <span className="w-style-piece-price">TARGET {formatTargetPrice(piece.targetPrice)}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+              <p className="w-style-notice">Styling inspiration only. These are design concepts, not photographs or available products.</p>
+            </div>
+          </div>
+        </section>
+
         <section className="w-edit" id="edit">
           <div className="w-edit-header">
             <div>
-              <div className="w-kicker">03 — COMING INTO FOCUS</div>
+              <div className="w-kicker">04 — COMING INTO FOCUS</div>
               <h2>The <em>Edit.</em></h2>
             </div>
             <div className="w-edit-description">
@@ -232,7 +307,7 @@ export default function WomenswearApp() {
         </section>
 
         <section className="w-faq" id="faq">
-          <div><div className="w-kicker">04 — GOOD TO KNOW</div><h2>The little<br /><em>details.</em></h2></div>
+          <div><div className="w-kicker">05 — GOOD TO KNOW</div><h2>The little<br /><em>details.</em></h2></div>
           <div className="w-faq-list">
             {questions.map((item, index) => (
               <div className="w-faq-item" key={item.question}>
@@ -249,7 +324,7 @@ export default function WomenswearApp() {
       <footer className="w-footer">
         <div className="w-footer-top">
           <div><a href="#top" className="w-footer-logo">EVERNE</a><p>Modern essentials.<br />New expressions.</p></div>
-          <div><span>Explore</span><a href="#collection">Collection</a><a href="#edit">The Edit</a><a href="#story">Our World</a></div>
+          <div><span>Explore</span><a href="#collection">Collection</a><a href="#edit">The Edit</a><a href="#style-notes">Style Notes</a><a href="#story">Our World</a></div>
           <div><span>Information</span><a href={base + 'legal.html#imprint'}>Legal notice</a><a href={base + 'legal.html#privacy'}>Privacy</a><a href={base + 'legal.html#returns'}>Returns</a><a href={base + 'legal.html#shipping'}>Shipping & returns</a></div>
         </div>
         <div className="w-footer-bottom"><span>© 2026 EVERNE · Hamburg</span><span>Collection preview · No active sales</span><span>Commerce foundation by Shopify</span></div>
