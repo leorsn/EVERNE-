@@ -437,3 +437,34 @@ assert.deepEqual(inventoryConflict.directPageOpenOnReview, inventoryConflict.ori
 assert.notDeepEqual(inventoryConflict.searchIndexSnippetFromDifferentCrawl, inventoryConflict.directPageOpenOnReview, 'The conflicting crawls must remain visible');
 assert.equal(inventoryConflict.candidateStillBlocked, true, 'Search snippets cannot release stock');
 console.log('  Seasonal rescreen passed: zero automatic replacements, contradictory mini stock snapshots retained, original conditional dress still gated.');
+
+const merchandising = JSON.parse(fs.readFileSync('sourcing/merchandising-cohesion-review.json', 'utf8'));
+assert.equal(merchandising.status, 'RESEARCH_ONLY', 'Merchandising review cannot imply products are available');
+assert.equal(merchandising.approvedForSale, false, 'Merchandising review is not a sale approval');
+assert.equal(merchandising.decision, 'THREE_RESEARCH_PRIORITIES_TWO_HELD', 'First capsule requires explicit research versus hold split');
+assert.equal(merchandising.collectionDirection.actualSupplierColorOfFiveCandidates, 'Black', 'Black supplier color evidence must not be presented as multiple orderable swatches');
+assert.equal(merchandising.collectionDirection.conceptSwatchesAreNotSupplierColorVariants, true, 'Concept art cannot become a product color claim');
+assert.equal(merchandising.items.length, capsuleCatalog.size, 'All five sourced capsule concepts require a merchandising decision');
+const decisions = new Map();
+for (const item of merchandising.items) {
+  const source = capsuleCatalog.get(item.conceptName);
+  assert.ok(source, `Unknown merchandised concept: ${item.conceptName}`);
+  assert.ok(!decisions.has(item.conceptName), `Duplicated merchandising decision: ${item.conceptName}`);
+  assert.equal(item.supplierProductCode, source.supplierProductCode, `Product mapping changed without evidence: ${item.conceptName}`);
+  assert.equal(item.approvedForSale, false, `Styling assessment cannot approve stock: ${item.conceptName}`);
+  assert.equal(merchandising.collectionDirection.conceptTonesByName[item.conceptName], conceptByName.get(item.conceptName).tone,
+    `Must distinguish concept tone from supplier color: ${item.conceptName}`);
+  assert.ok(item.styleRisks.length >= 3 && item.commercialGate.includes('hypothetical'), `Real risk and indicative assumptions required: ${item.conceptName}`);
+  assert.ok(item.mustVerify?.length >= 3 || item.reopenOnlyIf?.length >= 3, `Fit, cost and return gates required: ${item.conceptName}`);
+  decisions.set(item.conceptName, item);
+}
+assert.equal([...decisions.values()].filter((item) => item.researchPriority.startsWith('HOLD_')).length, 2, 'Exactly two conditional dresses remain held');
+assert.equal([...decisions.values()].filter((item) => item.researchPriority.includes('PRIORITY')).length, 3, 'Three foundation pieces are research priorities only');
+for (const name of ['Easy Slip Dress', 'Soft Midi Dress']) assert.ok(decisions.get(name).researchPriority.startsWith('HOLD_'), `Seasonal/quality dress must remain held: ${name}`);
+for (const look of merchandising.outfitResearch) {
+  assert.equal(look.status, 'STYLING_CONCEPT_ONLY', 'Outfits are not saleable bundles');
+  assert.ok(look.conceptNames.length >= 2 && look.conceptNames.every((name) => decisions.has(name)), 'Every look must map to researched concepts');
+}
+assert.ok(merchandising.nonNegotiableLaunchGates.length >= 4 && merchandising.founderDecisionsNeeded.length >= 3,
+  'Founder approval, physical checks, copy accuracy and inventory gates must remain explicit');
+console.log('  Merchandising cohesion passed: three research-only foundations, two held dresses, black supplier samples not conflated with editorial tones.');
