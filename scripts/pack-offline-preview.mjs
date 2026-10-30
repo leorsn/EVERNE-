@@ -35,6 +35,7 @@ for (const name of ['knit', 'tailored', 'trench']) {
   fs.copyFileSync(path.join(source, 'editorial', `${name}.webp`), path.join(output, 'editorial', `${name}.webp`));
 }
 fs.copyFileSync(path.resolve('public/editorial/CREDITS.md'), path.join(output, 'editorial', 'CREDITS.md'));
+fs.copyFileSync(path.resolve('SAFARI-ACCEPTANCE.md'), path.join(output, 'SAFARI-ACCEPTANCE.md'));
 
 for (const legalPage of ['legal.html', 'rechtliches.html']) {
   const content = fs.readFileSync(path.join(source, legalPage), 'utf8')
@@ -43,6 +44,6 @@ for (const legalPage of ['legal.html', 'rechtliches.html']) {
   fs.writeFileSync(path.join(output, legalPage), content);
 }
 
-fs.writeFileSync(path.join(output, 'START-HERE.txt'), `EVERNE WOMAN — Private Safari Review\n\n1. Unzip the archive.\n2. Open index.html in Safari on your Mac.\n3. Review the mobile layout, menu, Style Notes, all five category filters, all 20 concept links, the return-to-collection flow and legal information.\n4. For mobile Safari, AirDrop the unzipped folder or review the folder using a local web server on the same network.\n\nIf your browser restricts local file access, open Terminal in this extracted folder and run:\n  python3 -m http.server 4173\nThen visit http://127.0.0.1:4173 in Safari.\n\nAll merchandise is fictional curation material. No checkout, payments, supplier orders, connected backend or active sales. No network connection is needed for the editorial preview or its local images. Do not use this package as a public deployment.\n`);
+fs.writeFileSync(path.join(output, 'START-HERE.txt'), `EVERNE WOMAN — Private Safari Review\n\n1. Unzip the archive.\n2. Open index.html in Safari on your Mac.\n3. Review the mobile layout, menu, Style Notes, all five category filters, all 20 concept links, the return-to-collection flow and legal information.\n4. Use SAFARI-ACCEPTANCE.md for the 20 real-device acceptance tests.\n5. iPhone Safari: do NOT rely on opening the HTML via AirDrop/Files. On a trusted private Wi-Fi network, run python3 -m http.server 4173 --bind 0.0.0.0 inside the extracted folder on your Mac; open http://MAC-PRIVATE-IP:4173/ on iPhone Safari. Stop the unauthenticated local server with Ctrl+C when finished. Never expose it on public Wi-Fi or the internet.\n\nIf your browser restricts local file access, open Terminal in this extracted folder and run:\n  python3 -m http.server 4173\nThen visit http://127.0.0.1:4173 in Safari.\n\nAll merchandise is fictional curation material. No checkout, payments, supplier orders, connected backend or active sales. No network connection is needed for the editorial preview or its local images. Do not use this package as a public deployment.\n`);
 
 console.log(`Offline Safari review staged: ${output}`);
