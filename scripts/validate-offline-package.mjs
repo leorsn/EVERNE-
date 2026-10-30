@@ -12,6 +12,7 @@ const archive = path.join(root, name + '.zip');
 const files = [
   'index.html',
   'START-HERE.txt',
+  'SAFARI-ACCEPTANCE.md',
   'legal.html',
   'rechtliches.html',
   'editorial/CREDITS.md',
@@ -71,9 +72,16 @@ for (const pageName of ['legal.html', 'rechtliches.html']) {
     'Offline legal links must not point to the website root');
 }
 const readme = fs.readFileSync(path.join(folder, 'START-HERE.txt'), 'utf8');
-for (const phrase of ['Safari', 'index.html', 'No checkout']) {
+for (const phrase of ['Safari', 'index.html', 'No checkout', 'SAFARI-ACCEPTANCE.md', 'MAC-PRIVATE-IP']) {
   assert.ok(readme.includes(phrase), 'Owner instructions missing: ' + phrase);
 }
+const checklist = fs.readFileSync(path.join(folder, 'SAFARI-ACCEPTANCE.md'), 'utf8');
+const originalChecklist = fs.readFileSync('SAFARI-ACCEPTANCE.md', 'utf8');
+assert.equal(checklist, originalChecklist, 'Packaged owner acceptance checklist must match this commit');
+assert.equal((checklist.match(/\| S\d{2} \|/g) ?? []).length, 20,
+  'Safari acceptance checklist must contain all 20 manual device tests');
+assert.match(checklist, /UNGETESTET/, 'A CI pass must never claim a real Safari browser/device review');
+assert.match(checklist, /NO-GO/, 'Device acceptance must not imply supplier or checkout approval');
 
 for (const picture of ['knit', 'tailored', 'trench']) {
   const relative = 'editorial/' + picture + '.webp';
@@ -102,4 +110,4 @@ for (const file of files) {
   const staged = fs.readFileSync(path.join(folder, file));
   assert.ok(archived.equals(staged), 'ZIP content differs from the validated staged file: ' + file);
 }
-console.log('EVERNE Safari ZIP acceptance passed: 8 exact files, independent inlined assets, three local WebP images, legal links, noindex and byte-for-byte archive integrity. Real Safari display review remains outstanding.');
+console.log('EVERNE Safari ZIP acceptance passed: 9 exact files, including manual Safari review, independent inlined assets, three local WebP images, legal links, noindex and byte-for-byte archive integrity. Real Safari display review remains outstanding.');
