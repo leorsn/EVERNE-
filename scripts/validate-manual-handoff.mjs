@@ -78,9 +78,12 @@ for (const result of [single, two, alternate]) {
 }
 
 const unrecognizedVariant = reviewSyntheticOrder(
-  scenario([{ ...top, variantEan: '9999999999999' }]), context);
+  scenario([{ ...top, variantEan: '9999999999994' }]), context);
 assert.ok(unrecognizedVariant.blockers.includes('VARIANT_EAN_NOT_VERIFIED_FROM_RESEARCH'));
 assert.equal(unrecognizedVariant.lines[0].mapping, 'UNVERIFIED_VARIANT');
+assert.throws(() => reviewSyntheticOrder(
+  scenario([{ ...top, variantEan: '5906694124755' }]), context), /Invalid synthetic/,
+  'Correct supplier EAN with altered check digit must be rejected');
 const unknownProduct = reviewSyntheticOrder(
   scenario([{ ...top, supplierProductCode: 'UNKNOWN-SKU-000' }]), context);
 assert.ok(unknownProduct.blockers.includes('UNKNOWN_SUPPLIER_PRODUCT'));
@@ -88,8 +91,10 @@ const wrongPrice = reviewSyntheticOrder(scenario([{ ...top, unitPriceGrossEur: 4
 assert.ok(wrongPrice.blockers.includes('RETAIL_PRICE_NOT_MATCHED'));
 assert.equal(wrongPrice.lines[0].mapping, 'PRICE_MISMATCH');
 const bothInvalid = reviewSyntheticOrder(
-  scenario([{ ...top, variantEan: '9999999999999', unitPriceGrossEur: 49 }]), context);
+  scenario([{ ...top, variantEan: '9999999999994', unitPriceGrossEur: 49 }]), context);
 assert.equal(bothInvalid.lines[0].mapping, 'PRICE_AND_VARIANT_UNVERIFIED');
+assert.ok(!bothInvalid.blockers.includes('UNKNOWN_SUPPLIER_PRODUCT'));
+
 assert.ok(bothInvalid.blockers.includes('RETAIL_PRICE_NOT_MATCHED'));
 assert.ok(bothInvalid.blockers.includes('VARIANT_EAN_NOT_VERIFIED_FROM_RESEARCH'));
 const heldDress = reviewSyntheticOrder(scenario([dress]), context);
