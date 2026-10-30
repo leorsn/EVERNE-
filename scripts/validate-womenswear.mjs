@@ -31,6 +31,7 @@ assert.ok(entry.includes('WomenswearApp'), 'The entry must render the women’s 
 assert.ok(!entry.includes("import App from './App'"), 'The old store must not be loaded as the active app');
 assert.ok(indexHtml.includes('noindex,nofollow'), 'The fashion preview must stay out of search indexes');
 assert.ok(indexHtml.includes('<html lang="en">'), 'The fashion preview must explicitly use English');
+assert.ok(indexHtml.includes('€34–€59'), 'Static page metadata must show the updated whole-euro planned price range');
 
 const englishLegal = fs.readFileSync('public/legal.html', 'utf8');
 assert.ok(englishLegal.includes('<html lang="en">'), 'An English legal information page is required');
