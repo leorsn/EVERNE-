@@ -276,11 +276,11 @@ export default function WomenswearApp() {
           </div>
         </section>
 
-        <section className="w-edit" id="edit">
+        <section className="w-edit" id="edit" aria-labelledby="edit-title">
           <div className="w-edit-header">
             <div>
               <div className="w-kicker">04 — COMING INTO FOCUS</div>
-              <h2>The <em>Edit.</em></h2>
+              <h2 id="edit-title" tabIndex={-1}>The <em>Edit.</em></h2>
             </div>
             <div className="w-edit-description">
               <p>20 planned pieces. An early edit — not yet available to buy.</p>
