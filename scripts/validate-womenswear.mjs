@@ -43,6 +43,9 @@ for (const anchor of ['imprint', 'privacy', 'returns', 'shipping']) {
 const homepage = fs.readFileSync('src/WomenswearApp.tsx', 'utf8');
 assert.ok(homepage.includes('legal.html#imprint'), 'The English footer must link to the English legal notice');
 assert.ok(homepage.includes('Shopping not yet available'), 'The preview status must remain clear in English');
+assert.ok(homepage.includes('Our size range is not confirmed yet.'), 'Size FAQ must clearly state sizes are not confirmed');
+assert.ok(homepage.includes('exact garment measurements and fit guidance'), 'Size FAQ must promise product-specific measurements before launch');
+assert.ok(!homepage.includes('mostly XS–XL'), 'Do not imply unverified XS–XL availability');
 assert.ok(homepage.includes('aria-pressed={activeStyle === index}'), 'Style Notes must expose the selected mood to assistive technology');
 assert.ok(homepage.includes('Styling inspiration only.'), 'The styling section must not imply confirmed products');
 assert.ok(homepage.includes('€34–€59'), 'Homepage must show the updated whole-euro planned price range');
