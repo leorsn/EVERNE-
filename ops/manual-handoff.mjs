@@ -1,5 +1,6 @@
 // EVERNE WOMAN: local-only manual fulfillment preview.
 // Never connect this module to a webhook, live order, customer record or carrier.
+// Exactly one unit per order line: the reviewed parcel economics do not model bulk quantities.
 const ORDER_KEYS = ['scenarioId', 'currency', 'paymentStatus', 'fulfillmentStatus', 'lines'];
 const LINE_KEYS = ['supplierProductCode', 'variantEan', 'quantity', 'unitPriceGrossEur'];
 const ACCEPTED_PAYMENT = new Set(['PAID', 'PENDING', 'REFUNDED', 'VOIDED']);
@@ -76,7 +77,7 @@ export function reviewSyntheticOrder(order, context) {
         !/^[A-Z0-9.-]{3,40}$/.test(line.supplierProductCode) ||
         typeof line.variantEan !== 'string' ||
         !/^\d{13}$/.test(line.variantEan) ||
-        !Number.isInteger(line.quantity) || line.quantity < 1 || line.quantity > 2 ||
+        !Number.isInteger(line.quantity) || line.quantity !== 1 ||
         !Number.isInteger(line.unitPriceGrossEur)) {
       throw new Error('Invalid synthetic SKU, variant, quantity or gross price');
     }
@@ -97,21 +98,22 @@ export function reviewSyntheticOrder(order, context) {
     if (readinessItem.reviewStage !== 'SAMPLE_RESEARCH_PRIORITY') {
       blockers.add('NOT_A_PRIORITY_SAMPLE_CANDIDATE');
     }
-    if (line.unitPriceGrossEur !== product.retailGrossEur ||
-        ![4, 9].includes(line.unitPriceGrossEur % 10)) {
-      blockers.add('RETAIL_PRICE_NOT_MATCHED');
-    }
-    if (!approvedReferenceVariants(sourcing, line.supplierProductCode)
-        .has(line.variantEan)) {
-      blockers.add('VARIANT_EAN_NOT_VERIFIED_FROM_RESEARCH');
-    }
+    const priceMatches = line.unitPriceGrossEur === product.retailGrossEur &&
+      [4, 9].includes(line.unitPriceGrossEur % 10);
+    const variantMatches = approvedReferenceVariants(sourcing, line.supplierProductCode)
+      .has(line.variantEan);
+    if (!priceMatches) blockers.add('RETAIL_PRICE_NOT_MATCHED');
+    if (!variantMatches) blockers.add('VARIANT_EAN_NOT_VERIFIED_FROM_RESEARCH');
     return {
       supplierProductCode: line.supplierProductCode,
       conceptName: product.conceptName,
       variantEan: line.variantEan,
       quantity: line.quantity,
       grossUnitTargetEur: product.retailGrossEur,
-      mapping: 'RESEARCH_REFERENCE_ONLY',
+      mapping: !priceMatches && !variantMatches ? 'PRICE_AND_VARIANT_UNVERIFIED'
+        : !priceMatches ? 'PRICE_MISMATCH'
+        : !variantMatches ? 'UNVERIFIED_VARIANT'
+        : 'RESEARCH_REFERENCE_ONLY',
       simulatedOnly: true,
     };
   });
