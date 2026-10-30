@@ -60,6 +60,10 @@ assert.ok(homepage.includes('€34–€59'), 'Homepage must show the updated wh
 assert.ok(englishLegal.includes('€34 and €59'), 'Legal prelaunch notice must show the updated planned price range');
 
 const womenswearCss = fs.readFileSync('src/womenswear.css', 'utf8');
+assert.ok(!womenswearCss.includes('fonts.googleapis.com') && !womenswearCss.includes('@import url('),
+  'Editorial preview should not request third-party web fonts');
+assert.ok(womenswearCss.includes('--sans: -apple-system, BlinkMacSystemFont'),
+  'Preview must have a complete system font stack for a resilient, fast render');
 assert.ok(womenswearCss.includes('.w-style-piece-grid { grid-template-columns: repeat(2,minmax(0,1fr));'),
   'Narrow mobile screens need two readable style columns instead of three cramped columns');
 assert.ok(womenswearCss.includes('.w-category-title { font-size: clamp(24px,6vw,34px); flex-wrap: wrap;'),
