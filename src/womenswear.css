@@ -135,6 +135,7 @@ button:focus-visible, a:focus-visible { outline: 2px solid #a4775d; outline-offs
 .w-filters button span { color: #9c9289; font-size: 9px; }
 .w-filters button:hover,.w-filters button.is-active { color: white; border-color: var(--ink); background: var(--ink); }
 .w-filters button.is-active span { color: #c5b4aa; }
+.w-results-summary { margin: -3px 0 20px; color: #77716a; font: 500 10px/1.6 'Manrope',Arial,sans-serif; letter-spacing: .035em; }
 .w-concept-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 40px 14px; }
 .w-concept-card { min-width: 0; }
 .w-concept-link { display: block; height: 100%; }
