@@ -4,10 +4,10 @@
   "approvedForSale": false,
   "supplier": "FactoryPrice",
   "supplierPriceBasis": "Public EUR net listing observed on 30 October 2026; not a signed-in wholesale quote, booked stock, or landed cost",
-  "fulfilmentStatus": "UNQUOTED_GERMANY_SHIPPING_AND_B2B_RETURNS",
+  "fulfilmentStatus": "PUBLIC_GERMANY_TARIFF_UNCONFIRMED_DROPSHIP_LABEL",
   "shippingAndReturnWarnings": [
-    "Germany supplier-to-EVERNE shipping, dropship fees, shipment frequency and lead times are not quoted; NEVER substitute LEIVIP's separate EUR 14 shipping band.",
-    "FactoryPrice's B2B terms on product pages specify seven working days to return unused goods in original packaging at the buyer's shipping cost; consumer-facing 14-day badges do not override this wholesale condition.",
+    "FactoryPrice now publishes Germany parcel rates from PLN 32 net for DHL up to 10 kg. This is a public standard-order tariff, NOT a confirmed quote for EVERNE's actual basket or own-label dropship model; never substitute LEIVIP freight.",
+    "The supplier's general B2B return policy says seven days; product-page snippets say seven working days. Treat the shorter window as the planning limit until the merchant contract clarifies the conflict. Goods must be unused and buyer pays return shipping.",
     "EVERNE remains responsible for its own consumer returns, complaints, textile labels and customer support; clarify any hygiene requirements for bodies without misrepresenting consumer rights.",
     "Supplier photos, price discounts and stock availability are not cleared for retail publication. Physical quality, true measurements, opaqueness and wash performance require samples."
   ],

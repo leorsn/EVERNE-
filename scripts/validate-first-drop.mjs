@@ -136,7 +136,7 @@ const essentials = JSON.parse(fs.readFileSync('sourcing/essential-basics-alterna
 assert.equal(essentials.status, 'RESEARCH_ONLY', 'Essentials must be research-only');
 assert.equal(essentials.approvedForSale, false, 'Essentials must never be sale-approved');
 assert.equal(essentials.supplier, 'FactoryPrice', 'Essentials supplier identity must be explicit');
-assert.equal(essentials.fulfilmentStatus, 'UNQUOTED_GERMANY_SHIPPING_AND_B2B_RETURNS', 'Unquoted shipping and B2B returns must remain visible');
+assert.equal(essentials.fulfilmentStatus, 'PUBLIC_GERMANY_TARIFF_UNCONFIRMED_DROPSHIP_LABEL', 'Public supplier shipping is not a confirmed own-label dropship rate');
 assert.ok(essentials.shippingAndReturnWarnings.length >= 4, 'Document wholesale logistics/returns before any launch');
 assert.ok(essentials.model.excludedCosts.some((cost) => cost.includes('inbound shipping')), 'FactoryPrice inbound shipping must remain excluded from the ceiling');
 assert.equal(essentials.candidates.length, 5, 'Expected three essential models and two alternatives');
@@ -172,7 +172,51 @@ for (const item of essentials.candidates) {
   const paymentFee = item.proposedRetailGrossEur * m.paymentFeeGrossRateAssumption + m.paymentFeeFixedEurAssumption;
   const ceiling = netRevenue - item.indicativeSupplierNetEur - m.outboundShippingPerSaleExVatEurAssumption - m.packagingPerSaleExVatEurAssumption - paymentFee - m.returnCostReservePerSaleExVatEurAssumption;
   assert.ok(Number.isFinite(ceiling), `Contribution ceiling must be calculable: ${item.id}`);
-  console.log(`  Essential ${item.conceptName.padEnd(20)} gross €${item.proposedRetailGrossEur} | public net goods €${item.indicativeSupplierNetEur.toFixed(2)} | ceiling before INBOUND/ads €${ceiling.toFixed(2)} | ${item.candidateStatus}`);
+  console.log(`  Basic ${item.conceptName.padEnd(20)} gross €${item.proposedRetailGrossEur} | public net goods €${item.indicativeSupplierNetEur.toFixed(2)} | ceiling before INBOUND/ads €${ceiling.toFixed(2)} | ${item.candidateStatus}`);
 }
 assert.deepEqual([...matchedConcepts].sort(), ['Essential Rib Top', 'Everyday Tank', 'Second Skin Body'].sort(), 'Cover exactly three outstanding essential concepts');
-console.log('  Essentials audit passed: real size/stock snapshots, 4/9 prices, unknown inbound freight EXCLUDED, no Shopify import or purchase.');
+console.log('  Essentials audit passed: real size/stock snapshots, 4/9 prices, supplier inbound freight EXCLUDED pending route-specific scenario, no Shopify import or purchase.');
+
+const logistics = JSON.parse(fs.readFileSync('sourcing/fulfillment-gates.json', 'utf8'));
+assert.equal(logistics.status, 'RESEARCH_ONLY', 'Logistics must remain research-only');
+assert.equal(logistics.approvedForSale, false, 'Logistics assessment cannot authorize sales');
+assert.equal(logistics.supplier, essentials.supplier, 'Logistics provider mismatch');
+assert.ok(logistics.sourceUrls.publishedShipping.startsWith('https://factoryprice.eu/'), 'Official shipping rate source required');
+assert.ok(logistics.sourceUrls.publishedReturnPolicy.startsWith('https://factoryprice.eu/'), 'Official returns source required');
+assert.ok(logistics.sourceUrls.ownLabelDropshipProgram.startsWith('https://factoryprice.eu/'), 'Official dropship source required');
+assert.ok(logistics.sourceUrls.ecbReference.startsWith('https://www.ecb.europa.eu/'), 'Central-bank reference required');
+assert.equal(logistics.currencyReference.rateDate, '2026-10-29', 'Currency snapshot date must be explicit');
+assert.ok(logistics.currencyReference.plnPerEur > 4, 'FX must be expressed as PLN per EUR');
+assert.equal(logistics.supplierPublishedGermanyFreight.carrier, 'DHL', 'Warehouse sample illustration must use a named carrier');
+assert.equal(logistics.supplierPublishedGermanyFreight.merchantOrderConfirmed, false, 'Public chart cannot stand in for a checkout quote');
+assert.equal(logistics.supplierPublishedDropship.ownLabelCourierRateEur, null, 'Never invent a dropship courier label rate');
+assert.equal(logistics.supplierPublishedDropship.returnsContractVerified, false, 'Wholesale returns need explicit confirmation');
+assert.equal(logistics.returns.generalWholesalePolicyDays, 7, 'The shorter general policy must be retained');
+assert.equal(logistics.returns.productPageWorkingDays, 7, 'The conflicting product-page policy must be retained');
+assert.equal(logistics.returns.buyerPaysReturnFreight, true, 'Wholesale return freight must not be silently omitted');
+assert.equal(logistics.examples.oneOfEachSizeForThreePreferredConcepts.approvedToPurchase, false, 'Illustrative basket may not be ordered');
+assert.equal(logistics.examples.oneOfEachSizeForThreePreferredConcepts.sampleUnits, 6, 'Three models × two sizes require six samples');
+assert.ok(logistics.decisionGates.length >= 5, 'Supplier diligence gates required before launch');
+
+const preferred = essentials.candidates.filter((item) => item.candidateStatus === 'PREFERRED_SAMPLE_RESEARCH_ONLY');
+assert.equal(preferred.length, 3, 'Need exactly three preferred essential listings');
+const illustrativeGoods = preferred.reduce((total, item) => total + item.indicativeSupplierNetEur * logistics.examples.oneOfEachSizeForThreePreferredConcepts.itemsPerConcept, 0);
+assert.ok(Math.abs(illustrativeGoods - logistics.examples.oneOfEachSizeForThreePreferredConcepts.goodsSubtotalListedNetEur) < 0.00001, 'Basket goods total mismatch');
+const warehouseParcelShippingEur = logistics.supplierPublishedGermanyFreight.netPlnPerParcel / logistics.currencyReference.plnPerEur;
+const allocatedWarehouseInbound = warehouseParcelShippingEur / logistics.examples.oneOfEachSizeForThreePreferredConcepts.sampleUnits;
+const dropshipHandlingEur = logistics.supplierPublishedDropship.feeNetPlnPerParcel / logistics.currencyReference.plnPerEur;
+console.log(`  Supplier published DHL Germany <=${logistics.supplierPublishedGermanyFreight.upToKg}kg: PLN ${logistics.supplierPublishedGermanyFreight.netPlnPerParcel} net ≈ €${warehouseParcelShippingEur.toFixed(2)} (ECB ${logistics.currencyReference.rateDate}); not a merchant quote.`);
+console.log(`  Illustrative six-sample goods €${illustrativeGoods.toFixed(2)} + DHL €${warehouseParcelShippingEur.toFixed(2)} ≈ €${(illustrativeGoods + warehouseParcelShippingEur).toFixed(2)} net, excl. VAT/FX/payment changes; NOT an order.`);
+console.log(`  Own-label dropship handling PLN ${logistics.supplierPublishedDropship.feeNetPlnPerParcel} ≈ €${dropshipHandlingEur.toFixed(2)} plus merchant-purchased COURIER LABEL of UNQUOTED price.`);
+
+for (const item of preferred) {
+  const m = essentials.model;
+  const netSale = item.proposedRetailGrossEur / (1 + m.germanGrossVatRateAssumption);
+  const fee = item.proposedRetailGrossEur * m.paymentFeeGrossRateAssumption + m.paymentFeeFixedEurAssumption;
+  const warehouseEstimate = netSale - item.indicativeSupplierNetEur - allocatedWarehouseInbound - m.outboundShippingPerSaleExVatEurAssumption - m.packagingPerSaleExVatEurAssumption - fee - m.returnCostReservePerSaleExVatEurAssumption;
+  const maxDropshipLabelForBuffer = netSale - item.indicativeSupplierNetEur - dropshipHandlingEur - logistics.examples.dropshipConservativePackagingBufferEur - fee - m.returnCostReservePerSaleExVatEurAssumption - logistics.examples.dropshipIllustrativeMinimumContributionBeforeAdsAndFixedOverheadEur;
+  assert.ok(Number.isFinite(warehouseEstimate) && Number.isFinite(maxDropshipLabelForBuffer), 'Shipping scenarios must calculate');
+  assert.ok(maxDropshipLabelForBuffer > 0, 'Candidate fails provisional standalone dropship ceiling');
+  console.log(`  Fulfillment ${item.conceptName.padEnd(20)} stocked-six-sample scenario €${warehouseEstimate.toFixed(2)} before ads/overhead; own-label dropship courier ceiling €${maxDropshipLabelForBuffer.toFixed(2)} to retain provisional €${logistics.examples.dropshipIllustrativeMinimumContributionBeforeAdsAndFixedOverheadEur} buffer. NOT confirmed.`);
+}
+console.log('  Fulfillment audit passed: warehouse parcel and own-label dropship economics kept separate; no payment, sale or live update.');

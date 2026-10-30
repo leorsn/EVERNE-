@@ -176,8 +176,9 @@ or offered as orderable. This work only enriches the research gate.
 listing worth sampling* at the existing retail-price points **€34 / €39**.
 These are **not accepted garments or a supplier contract**. Unlike the former
 LEIVIP top alternatives, FactoryPrice's public net unit prices leave a larger
-theoretical buffer, but inbound shipping and any direct-to-consumer
-fulfillment charges are still **unknown**.
+theoretical buffer. At this point the exact German delivery and own-label
+dropshipping terms had not been reconciled; see the fifth pass below for
+**newly verified public freight tariffs**, still not an order-specific quote.
 
 | Concept | Best current candidate (actual black variant) | Public supplier unit net* | Concept retail gross | Public stock snapshot | Status |
 |---|---|---:|---:|---|---|
@@ -225,6 +226,82 @@ launch-approved or stocked.
 **Suggested next controlled action:** obtain a trade quote and return/shipping
 terms for the three preferred model SKUs, then seek founder approval for a
 small **sample-only** basket. Price labels and storefront remain unchanged.
+
+### Germany delivery and dropshipping — fifth pass (30 October 2026)
+
+FactoryPrice publishes more specific terms than initially found. Its **current
+German-language shipping tariff** lists Germany DHL **32 PLN net per parcel
+up to 10 kg**, about **€7.28** using the ECB's reference of **1 EUR = 4.3938
+PLN on 29 October 2026**; DPD is listed at **35 PLN net**. The chart states
+around **two business days** for the Germany carrier route. The final amount
+appears at supplier checkout and depends on shipment weight, packing and
+carrier; it has not been quoted for EVERNE. The earlier cached 45 PLN listing
+is not used for the calculation. Sources: [official Germany freight
+table](https://factoryprice.eu/de/terms/versandkosten-610.html), [ECB
+reference](https://www.ecb.europa.eu/stats/shared/pdf/eurofxref.pdf).
+
+Crucially, **two fulfillment methods must not be mixed**:
+
+1. **Small stocked batch:** buy a limited batch delivered to EVERNE; we then
+   pack and ship each customer order ourselves. The supplier's published
+   Germany parcel tariff is a plausible starting point for *inbound* freight.
+   A **hypothetical** six-piece basket of one S/M and one L/XL for each of the
+   three preferred basics is **€42.30 listed net goods** plus approximately
+   **€7.28** supplier DHL parcel = **€49.58** before applicable VAT, actual
+   currency/payment cost and other charges. That assumes one parcel below
+   10 kg and **is not ordered or authorized**. Unlike LEIVIP's earlier
+   illustrative basket, the supplier claims no minimum order for this model.
+2. **Direct dropshipping with EVERNE-branded sender:** the [supplier's
+   program](https://factoryprice.eu/pl/cms/hurtownia-dropshipping-odziezy-damskiej-nadajemy-na-twojej-etykiecie-783.html)
+   claims a free B2B account, orders from one unit, XML/API stock feeds,
+   Shopify compatibility (through BaseLinker or a dedicated application),
+   dispatch using a **shipping label uploaded and paid for by the merchant**,
+   plus **3 PLN net handling per parcel** (~€0.68 at the above ECB rate).
+   The true cost of an EVERNE-supplied German customer label, integration
+   subscription, merchant packaging and any returns service is **not quoted**.
+   Do not automatically charge the published *standard wholesale parcel*
+   rate or the previous assumed €4.90 outbound freight here: either can
+   double-count or misstate costs in this different dispatch arrangement.
+
+**Decision thresholds rather than invented dropship profit.** To retain an
+*illustrative* **€10 contribution buffer per single-item order before paid
+acquisition and fixed overhead**, after public net product cost, assumed
+German 19% VAT gross-to-net, payment fee 2.5% + €0.25, €2.50 return reserve,
+€0.70 packaging contingency and estimated 3 PLN dropship handling, the
+**maximum affordable third-party courier label** would be:
+
+| Product at unchanged concept price | Maximum net German customer-label expense* |
+|---|---:|
+| Essential Rib Top, **€34** | **€7.70** |
+| Second Skin Body, **€39** | **€10.47** |
+| Everyday Tank, **€34** | **€5.53** |
+
+\* A *screening bound*, not a verified carrier offer or net profit. Returns,
+damages and ads could easily exceed the provisional reserves. Tax treatment
+and the actual billing channel must be verified. The supplier's wholesale
+general [returns policy](https://factoryprice.eu/de/terms/ruckgabebestimmungen-772.html)
+states **seven days from delivery**, buyer-paid return freight and unused
+resalable goods, whereas some product pages say **seven working days**.
+Plan for the shorter **seven-calendar-day** limit until confirmed in writing.
+The supplier also disclaims customer complaint handling, so EVERNE must
+design its own lawful customer service and withdrawal process. A separate
+specific dropshipping-return agreement is not yet available.
+
+**First-drop sample order of priority (not a purchase):**
+
+1. **Essential Rib Top (€34):** strongest public in-size stock and favorable
+   listed goods cost. Verify actual rib/opacity, comfort and wash performance.
+2. **Second Skin Body (€39):** visually distinct companion with workable
+   economics, but gusset/closure and hygiene/returns raise the acceptance bar.
+3. **Everyday Tank (€34):** good stock, but overlaps the other black sleeveless
+   basic and is hardest to profitably dropship alone if German shipping is
+   expensive. Hold as optional cross-sell until a true shipping quote arrives.
+
+**Current go/no-go: NO-GO for any paid launch.** Public catalogue availability,
+stock feeds and freight schedules are not supplier acceptance, real image
+licenses or proof that returns and fulfillment work. Full raw freight,
+exchange-rate and validation assumptions are saved in
+`sourcing/fulfillment-gates.json`. No Shopify publication or spend was made.
 
 **Selection rule:** for a launch apparel SKU, require at least two independently
 orderable size variants; prefer S/M/L for bottoms and S/M plus L/XL or more
