@@ -74,7 +74,7 @@ export default function ConceptDetailPage() {
         <span className="w-detail-header-caption">CURATION STUDY / {String(index + 1).padStart(2, '0')}</span>
       </header>
 
-      <main id="detail-main">
+      <main id="detail-main" tabIndex={-1}>
         <div className="w-detail-breadcrumb"><Link to="/">EVERNE WOMAN</Link><span>/</span><span>THE EDIT</span><span>/</span><span>{piece.name}</span></div>
         <section className="w-detail-layout" aria-labelledby="piece-title">
           <div className="w-detail-artwork">
