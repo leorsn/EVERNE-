@@ -9,16 +9,22 @@ Dieses Dokument gehört zur privaten Vorschau. Es ist kein Bericht über bereits
 
 ## 1. Start auf dem Mac
 
-1. Die **aktuell** von GitHub gebaute `everne-woman-safari-preview.zip` lokal entpacken.
-2. `index.html` in **Safari auf macOS** öffnen. Die Anwendung sollte auf `file://` als eigenständige Datei funktionieren.
-3. Falls Safari die lokale Ausführung einschränkt: Terminal im entpackten Ordner öffnen und ausschließlich für den eigenen Mac starten:
+1. Den Quellcode der **aktuellen** Branch `feat/everne-woman-editorial-preview` aus GitHub laden (im Branch-Menü auswählen → **Code → Download ZIP**), lokal entpacken und den **Quellordner** im Terminal öffnen. Ein altes Archiv aus der ChatGPT Library entspricht nicht automatisch der aktuellen Version.
+2. Auf dem Mac **Node.js 22 oder neuer** sowie npm, zip und unzip bereithalten. Dann im entpackten Quellordner ausführen:
+
+   ```sh
+   bash scripts/review-safari-mac.sh
+   ```
+
+   Der Befehl installiert ausschließlich die im `package-lock.json` fixierten Entwicklungsabhängigkeiten (`npm ci`, Netzwerkzugriff zu npm erforderlich), erzeugt die aktuelle Safari-ZIP, prüft sie auf Vollständigkeit und öffnet `index.html` automatisch in Safari. Er tätigt keine Bestellungen und aktiviert keinen Checkout. Das lokale Ergebnis liegt unter `offline-review/everne-woman-safari-preview.zip`; die SHA-256-Prüfsumme wird im Terminal ausgegeben.
+3. Falls Safari die lokale `file://`-Ausführung einschränkt: Terminal im generierten Ordner `offline-review/everne-woman-safari-preview/` öffnen und ausschließlich für den eigenen Mac starten:
 
    ```sh
    python3 -m http.server 4173 --bind 127.0.0.1
    ```
 
    Danach `http://127.0.0.1:4173/` in Safari öffnen. Zum Beenden `Ctrl+C` eingeben.
-4. **Nicht** die bereits früher gespeicherte ZIP mit einer aktuellen Commit-Abnahme verwechseln. Für eine gültige Abnahme müssen ZIP, Datum und Commit-Stand zusammenpassen.
+4. **Nicht** eine ältere Library-ZIP mit dem aktuellen Branch-Stand verwechseln. GitHub CI erstellt und prüft das Paket, legt es bisher aber absichtlich nicht als öffentliches Artefakt ab. Das lokale Archiv ist die geprüfte, eigens gebaute Ausgabe des heruntergeladenen Quellstands. Für die dokumentierte Abnahme ZIP-Prüfsumme, Quellcommit (sofern vorhanden), Datum und Safari-Version festhalten.
 
 ## 2. Test mit iPhone-Safari
 
