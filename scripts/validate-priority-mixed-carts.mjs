@@ -91,7 +91,7 @@ for (const pair of screen.pairs) {
   assert.ok(!pairsSeen.has(key), 'Duplicate priority pair: ' + key);
   pairsSeen.add(key);
   const gross = names.reduce((sum, name) => sum + source.get(name).retailGrossEur, 0);
-  assert.ok([4, 9].every(Number.isInteger), 'Money input integrity guard');
+  assert.ok(Number.isInteger(gross) && gross > 0, 'Combined gross must use approved integer EUR price targets');
   assert.ok(names.every((name) => [4, 9].includes(source.get(name).retailGrossEur % 10)),
     'Individual prices must remain whole EUR ending in 4 or 9');
   const pairResults = {};
