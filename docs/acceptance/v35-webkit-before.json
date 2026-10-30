@@ -1,0 +1,427 @@
+{
+  "engine": "webkit",
+  "browserVersion": "26.5",
+  "platform": "linux",
+  "playwrightVersion": "1.62.1",
+  "testedAt": "2026-10-30T21:24:23.900Z",
+  "artifactSha256": "ecd467f433f543fa33edf1b6747664291ebda5f2b0029177b7e3cd4de92c3cb5",
+  "transport": "file://, actual inlined production offline build",
+  "widths": [
+    320,
+    375,
+    390,
+    430,
+    768,
+    1024,
+    1440
+  ],
+  "conceptRouteLoads": 140,
+  "cases": [
+    {
+      "width": 320,
+      "name": "Homepage, text wrapping, layout and noindex",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "name": "Keyboard skip link and reduced motion",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "name": "Mobile menu: Escape, outside click, keyboard destination focus",
+      "status": "FAIL",
+      "error": "page.waitForFunction: Timeout 3000ms exceeded."
+    },
+    {
+      "width": 320,
+      "name": "All five categories: actual 5/5/4/3/3 counts",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "name": "Expand 8→20→8 concepts",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "name": "20 direct concept routes, related links, layout, planned prices",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "name": "Detail focus, browser back/forward and category retention",
+      "status": "FAIL",
+      "error": "The input did not match the regular expression /Back to collection/. Input:\n\n'←'\n"
+    },
+    {
+      "width": 320,
+      "name": "Three styling directions and keyboard FAQ",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "name": "Local images decode with cover layout",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "name": "Obsolete/unknown routes stay noncommercial",
+      "status": "PASS"
+    },
+    {
+      "width": 320,
+      "name": "Four legal targets, local return and no checkout",
+      "status": "PASS"
+    },
+    {
+      "width": 375,
+      "name": "Homepage, text wrapping, layout and noindex",
+      "status": "PASS"
+    },
+    {
+      "width": 375,
+      "name": "Keyboard skip link and reduced motion",
+      "status": "PASS"
+    },
+    {
+      "width": 375,
+      "name": "Mobile menu: Escape, outside click, keyboard destination focus",
+      "status": "FAIL",
+      "error": "page.waitForFunction: Timeout 3000ms exceeded."
+    },
+    {
+      "width": 375,
+      "name": "All five categories: actual 5/5/4/3/3 counts",
+      "status": "PASS"
+    },
+    {
+      "width": 375,
+      "name": "Expand 8→20→8 concepts",
+      "status": "PASS"
+    },
+    {
+      "width": 375,
+      "name": "20 direct concept routes, related links, layout, planned prices",
+      "status": "PASS"
+    },
+    {
+      "width": 375,
+      "name": "Detail focus, browser back/forward and category retention",
+      "status": "FAIL",
+      "error": "The input did not match the regular expression /Back to collection/. Input:\n\n'←'\n"
+    },
+    {
+      "width": 375,
+      "name": "Three styling directions and keyboard FAQ",
+      "status": "PASS"
+    },
+    {
+      "width": 375,
+      "name": "Local images decode with cover layout",
+      "status": "PASS"
+    },
+    {
+      "width": 375,
+      "name": "Obsolete/unknown routes stay noncommercial",
+      "status": "PASS"
+    },
+    {
+      "width": 375,
+      "name": "Four legal targets, local return and no checkout",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "name": "Homepage, text wrapping, layout and noindex",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "name": "Keyboard skip link and reduced motion",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "name": "Mobile menu: Escape, outside click, keyboard destination focus",
+      "status": "FAIL",
+      "error": "page.waitForFunction: Timeout 3000ms exceeded."
+    },
+    {
+      "width": 390,
+      "name": "All five categories: actual 5/5/4/3/3 counts",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "name": "Expand 8→20→8 concepts",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "name": "20 direct concept routes, related links, layout, planned prices",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "name": "Detail focus, browser back/forward and category retention",
+      "status": "FAIL",
+      "error": "The input did not match the regular expression /Back to collection/. Input:\n\n'←'\n"
+    },
+    {
+      "width": 390,
+      "name": "Three styling directions and keyboard FAQ",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "name": "Local images decode with cover layout",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "name": "Obsolete/unknown routes stay noncommercial",
+      "status": "PASS"
+    },
+    {
+      "width": 390,
+      "name": "Four legal targets, local return and no checkout",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "name": "Homepage, text wrapping, layout and noindex",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "name": "Keyboard skip link and reduced motion",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "name": "Mobile menu: Escape, outside click, keyboard destination focus",
+      "status": "FAIL",
+      "error": "page.waitForFunction: Timeout 3000ms exceeded."
+    },
+    {
+      "width": 430,
+      "name": "All five categories: actual 5/5/4/3/3 counts",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "name": "Expand 8→20→8 concepts",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "name": "20 direct concept routes, related links, layout, planned prices",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "name": "Detail focus, browser back/forward and category retention",
+      "status": "FAIL",
+      "error": "The input did not match the regular expression /Back to collection/. Input:\n\n'←'\n"
+    },
+    {
+      "width": 430,
+      "name": "Three styling directions and keyboard FAQ",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "name": "Local images decode with cover layout",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "name": "Obsolete/unknown routes stay noncommercial",
+      "status": "PASS"
+    },
+    {
+      "width": 430,
+      "name": "Four legal targets, local return and no checkout",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "name": "Homepage, text wrapping, layout and noindex",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "name": "Keyboard skip link and reduced motion",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "name": "Mobile menu: Escape, outside click, keyboard destination focus",
+      "status": "FAIL",
+      "error": "page.waitForFunction: Timeout 3000ms exceeded."
+    },
+    {
+      "width": 768,
+      "name": "All five categories: actual 5/5/4/3/3 counts",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "name": "Expand 8→20→8 concepts",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "name": "20 direct concept routes, related links, layout, planned prices",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "name": "Detail focus, browser back/forward and category retention",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "name": "Three styling directions and keyboard FAQ",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "name": "Local images decode with cover layout",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "name": "Obsolete/unknown routes stay noncommercial",
+      "status": "PASS"
+    },
+    {
+      "width": 768,
+      "name": "Four legal targets, local return and no checkout",
+      "status": "PASS"
+    },
+    {
+      "width": 1024,
+      "name": "Homepage, text wrapping, layout and noindex",
+      "status": "PASS"
+    },
+    {
+      "width": 1024,
+      "name": "Keyboard skip link and reduced motion",
+      "status": "PASS"
+    },
+    {
+      "width": 1024,
+      "name": "All five categories: actual 5/5/4/3/3 counts",
+      "status": "PASS"
+    },
+    {
+      "width": 1024,
+      "name": "Expand 8→20→8 concepts",
+      "status": "PASS"
+    },
+    {
+      "width": 1024,
+      "name": "20 direct concept routes, related links, layout, planned prices",
+      "status": "PASS"
+    },
+    {
+      "width": 1024,
+      "name": "Detail focus, browser back/forward and category retention",
+      "status": "PASS"
+    },
+    {
+      "width": 1024,
+      "name": "Three styling directions and keyboard FAQ",
+      "status": "PASS"
+    },
+    {
+      "width": 1024,
+      "name": "Local images decode with cover layout",
+      "status": "PASS"
+    },
+    {
+      "width": 1024,
+      "name": "Obsolete/unknown routes stay noncommercial",
+      "status": "PASS"
+    },
+    {
+      "width": 1024,
+      "name": "Four legal targets, local return and no checkout",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "name": "Homepage, text wrapping, layout and noindex",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "name": "Keyboard skip link and reduced motion",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "name": "All five categories: actual 5/5/4/3/3 counts",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "name": "Expand 8→20→8 concepts",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "name": "20 direct concept routes, related links, layout, planned prices",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "name": "Detail focus, browser back/forward and category retention",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "name": "Three styling directions and keyboard FAQ",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "name": "Local images decode with cover layout",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "name": "Obsolete/unknown routes stay noncommercial",
+      "status": "PASS"
+    },
+    {
+      "width": 1440,
+      "name": "Four legal targets, local return and no checkout",
+      "status": "PASS"
+    },
+    {
+      "name": "No JavaScript exceptions",
+      "status": "PASS",
+      "details": []
+    },
+    {
+      "name": "No remote HTTP(S) requests",
+      "status": "PASS",
+      "details": []
+    },
+    {
+      "name": "No failed local assets",
+      "status": "PASS",
+      "details": []
+    }
+  ],
+  "exceptions": [],
+  "remoteRequests": [],
+  "failedAssets": [],
+  "nativeMacSafari": "NOT EXECUTED",
+  "iPhoneSafari": "NOT EXECUTED",
+  "passed": 69,
+  "failed": 9
+}

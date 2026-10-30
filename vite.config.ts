@@ -5,5 +5,6 @@ const isGitHubPages = process.env.GITHUB_ACTIONS === 'true';
 
 export default defineConfig({
   plugins: [react()],
+  server: { allowedHosts: ['terminal.local'] },
   base: isGitHubPages ? '/EVERNE-/' : '/',
 });

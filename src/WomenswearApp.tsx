@@ -128,7 +128,19 @@ export default function WomenswearApp() {
     document.getElementById('edit')?.scrollIntoView({ behavior: prefersReducedMotion ? 'auto' : 'smooth' });
   }
 
-  function closeMenu() { setMenuOpen(false); }
+  function closeMenu(event: { currentTarget: HTMLAnchorElement }) {
+    setMenuOpen(false);
+    if (!menuOpen) return;
+    // A closed mobile menu hides its focused link. Move keyboard focus to
+    // the destination instead of leaving Tab to restart in the header.
+    const section = document.getElementById(event.currentTarget.hash.slice(1));
+    const destination = section?.querySelector<HTMLElement>('h1, h2') ?? section;
+    if (!destination) return;
+    window.requestAnimationFrame(() => {
+      destination.tabIndex = -1;
+      destination.focus({ preventScroll: true });
+    });
+  }
 
   return (
     <div className="everne-woman" id="top">

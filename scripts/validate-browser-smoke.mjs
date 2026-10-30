@@ -70,6 +70,12 @@ async function navigate(url) {
   await waitFor(async () => await js('document.readyState') === 'complete',
     'page fully loaded');
 }
+async function key(name, code) {
+  for (const type of ['keyDown', 'keyUp']) {
+    await cdp('Input.dispatchKeyEvent',
+      { type, key: name, code: name, windowsVirtualKeyCode: code }, sessionId);
+  }
+}
 try {
   const portFile = path.join(profile, 'DevToolsActivePort');
   await waitFor(() => fs.existsSync(portFile), 'Chrome DevTools endpoint', 20000);
@@ -114,7 +120,7 @@ try {
   yes(!(await js("Boolean(document.querySelector('form,input,[href*=\"/checkout\"]'))")),
     'No forms or checkout links in preview');
 
-  for (const width of [320, 390]) {
+  for (const width of [320, 375, 390, 430, 768, 1024, 1440]) {
     await cdp('Emulation.setDeviceMetricsOverride',
       { width, height: 844, deviceScaleFactor: 2, mobile: true }, sessionId);
     await sleep(100);
@@ -122,6 +128,21 @@ try {
     yes(actual <= width + 3,
       'No horizontal overflow at ' + width + 'px; measured ' + actual);
   }
+  await cdp('Emulation.setDeviceMetricsOverride',
+    { width: 390, height: 844, deviceScaleFactor: 2, mobile: true }, sessionId);
+
+  await js("document.querySelector('.w-menu-toggle').focus()");
+  await key('Enter', 13);
+  await eq("document.querySelector('.w-menu-toggle').getAttribute('aria-expanded')",
+    'true', 'Keyboard opens mobile menu');
+  await key('Escape', 27);
+  await eq("document.activeElement?.className", 'w-menu-toggle',
+    'Escape restores menu-toggle focus');
+  await key('Enter', 13);
+  await js("document.querySelector('.w-nav a[href=\"#edit\"]').focus()");
+  await key('Enter', 13);
+  await eq("document.activeElement?.id", 'edit-title',
+    'Mobile section navigation focuses its destination, not a hidden link');
 
   await js("document.querySelector('.w-menu-toggle').click()");
   await eq("document.querySelector('.w-nav').classList.contains('is-open')",
@@ -172,11 +193,21 @@ try {
   await js("document.querySelector('.w-concept-link').click()");
   await waitFor(async () => (await js("document.querySelector('#piece-title')?.textContent"))?.length > 0,
     'Filtered concept detail');
+  await eq("document.activeElement?.id", 'piece-title', 'Detail route heading receives focus');
+  await eq("document.querySelector('.w-detail-back').getAttribute('aria-label')",
+    'Back to collection', 'Icon-only mobile return link has an accessible name');
+  await js('history.back()');
+  await eq("document.querySelectorAll('.w-concept-card').length", 4,
+    'Browser back restores four filtered concepts');
+  await js('history.forward()');
+  await waitFor(async () => (await js("document.querySelector('#piece-title')?.textContent"))?.length > 0,
+    'Browser forward restores detail');
   await js("document.querySelector('.w-detail-back').click()");
   await eq("document.querySelectorAll('.w-filters button')[3].getAttribute('aria-pressed')",
     'true', 'Back-to-collection retains selected filter');
   await eq("document.querySelectorAll('.w-concept-card').length", 4,
     'Back-to-collection retains the four trouser concepts');
+  await eq("document.activeElement?.id", 'edit-title', 'Collection return heading receives focus');
 
   await js("window.location.hash = '#/products/legacy-item'");
   await waitFor(async () => (await js("document.querySelector('main h1')?.innerText"))?.includes('Something new'),

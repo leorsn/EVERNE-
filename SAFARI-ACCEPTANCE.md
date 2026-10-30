@@ -9,8 +9,13 @@
 hat die **Chromium-Offlinetests** erfolgreich bestanden: 20 Konzeptseiten,
 fünf Filter, mobile Breiten 320/390 px, Navigation, FAQ, Style Notes,
 lokale Rechtsseite sowie fehlende externe Netzwerkanfragen und Kaufwege.
-Das ist **kein WebKit-/Safari-Gerätetest**. Sämtliche manuellen Fälle
-S01–S20 bleiben ausdrücklich **UNGETESTET**.
+Zusätzlich wurde V35 mit **echtem Playwright-WebKit 26.5 unter Linux**
+geprüft: **78 PASS / 0 FAIL**, sieben Breiten (320/375/390/430/768/1024/1440 px)
+und 140 direkte Konzeptseiten-Aufrufe. Die Prüfung erfasst unter anderem
+Tastaturfokus, Browser-Zurück/Vorwärts, lokale Bilder, Rechtslinks und
+fehlende externe Anfragen. Zwei nachgewiesene mobile Fokus-/Linknamenfehler
+wurden behoben. Das ist **kein macOS-/iPhone-Safari-Gerätetest**. Sämtliche
+manuellen Fälle S01–S20 bleiben ausdrücklich **UNGETESTET**.
 
 Dieses Dokument gehört zur privaten Vorschau. Es ist kein Bericht über bereits bestandene Gerätetests, keine Verkaufsfreigabe und keine Prüfung realer Lieferantenartikel.
 

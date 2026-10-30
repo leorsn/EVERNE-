@@ -148,3 +148,30 @@ supplier terms are confirmed.
 6. Complete desktop/mobile, Safari/WebKit and end-to-end test orders.
 
 Never turn on purchases merely because the visual preview is ready.
+
+## Independent WebKit acceptance — V35
+
+Actual Playwright 1.62.1 / WebKit 26.5 (Linux WPE, headless) loaded the built
+offline preview at 320, 375, 390, 430, 768, 1024 and 1440 px: **78 PASS / 0 FAIL**,
+including all 20 concept pages at every width (140 route loads). Raw results
+before and after the fixes are in `docs/acceptance/v35-webkit-{before,after}.json`.
+The initial run reproduced two mobile accessibility defects: focus remained on
+a hidden navigation link after section selection, and the compact detail-page
+return link lost its descriptive accessible name. Both are corrected without
+changing the editorial layout. Chromium CI now guards these cases, browser
+history and all seven viewport widths.
+
+`npm run check:browser:matrix` reuses an **already provisioned** Playwright module
+and compatible browser, without downloading anything. Set
+`EVERNE_PLAYWRIGHT_MODULE` to its module path when it is not installed locally;
+`EVERNE_BROWSER_ENGINE` selects `webkit` (default) or `chromium` and
+`EVERNE_BROWSER_EXECUTABLE` optionally selects an existing executable.
+`EVERNE_BROWSER_REPORT` optionally writes the complete JSON report.
+The runner is opt-in and does not add a dependency or a paid CI service.
+
+No HTTP(S) request, local asset failure or uncaught JavaScript exception was
+observed in either WebKit matrix. This is engine acceptance of the actual
+offline build, **not native macOS Safari, iPhone Safari, VoiceOver or a legal
+release review**. S01–S20 remain untested on Apple devices. The existing Mac
+launcher is syntax-checked and safely rejects Linux; actual Mac execution is
+still pending. **SAFARI ACCEPTANCE PENDING / COMMERCE NO-GO.**

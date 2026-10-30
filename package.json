@@ -21,7 +21,8 @@
     "check:ops:dry-run": "node scripts/validate-manual-handoff.mjs",
     "demo:ops:dry-run": "node scripts/run-manual-handoff-demo.mjs",
     "check:offline:package": "node scripts/validate-offline-package.mjs",
-    "check:browser:offline": "node scripts/validate-browser-smoke.mjs"
+    "check:browser:offline": "node scripts/validate-browser-smoke.mjs",
+    "check:browser:matrix": "node scripts/validate-browser-matrix.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",

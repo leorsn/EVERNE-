@@ -69,7 +69,7 @@ export default function ConceptDetailPage() {
       <a className="w-skip-link" href="#detail-main">Skip to content</a>
       <div className="w-announcement"><span>EVERNE WOMAN / THE EDIT</span><span>Collection preview · Shopping not yet available</span><span>Hamburg · Germany</span></div>
       <header className="w-detail-header">
-        <Link className="w-detail-back" to={backTo}>← <span>Back to collection</span></Link>
+        <Link className="w-detail-back" to={backTo} aria-label="Back to collection">← <span>Back to collection</span></Link>
         <Link className="w-logo" to="/" aria-label="EVERNE WOMAN homepage">EVERNE<span>WOMAN</span></Link>
         <span className="w-detail-header-caption">CURATION STUDY / {String(index + 1).padStart(2, '0')}</span>
       </header>
