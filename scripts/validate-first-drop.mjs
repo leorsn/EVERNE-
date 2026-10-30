@@ -53,3 +53,36 @@ for (const item of costs) {
 }
 console.log(`  Undiscounted six-unit basket: €${goodsTotal.toFixed(2)} goods + €${assumption.inboundShippingExVatEur.toFixed(2)} indicative inbound shipping = €${(goodsTotal + assumption.inboundShippingExVatEur).toFixed(2)} excl. VAT.`);
 console.log('  Research only. No sale approval, Shopify import or actual supplier order.');
+
+const sizeResearch = JSON.parse(fs.readFileSync('sourcing/sized-alternatives.json', 'utf8'));
+assert.equal(sizeResearch.status, 'RESEARCH_ONLY', 'Sized alternatives must remain research-only');
+assert.equal(sizeResearch.approvedForSale, false, 'Sized alternatives must not grant retail approval');
+assert.equal(sizeResearch.alternatives.length, 4, 'Expected four researched alternatives');
+const alternativeIds = new Set();
+const alternativeUrls = new Set();
+for (const alternative of sizeResearch.alternatives) {
+  const base = conceptByName.get(alternative.conceptName);
+  assert.ok(base, `Sized alternative needs an existing concept: ${alternative.conceptName}`);
+  assert.ok(!alternativeIds.has(alternative.id), `Duplicate alternative ID: ${alternative.id}`);
+  assert.ok(!alternativeUrls.has(alternative.url), `Duplicate supplier URL: ${alternative.url}`);
+  assert.equal(alternative.baselineRetailGrossEur, base.targetPrice, `Wrong original concept price: ${alternative.id}`);
+  assert.equal(alternative.approvedForSale, false, `Alternative must not be sale-approved: ${alternative.id}`);
+  assert.ok(Number.isInteger(alternative.proposedRetailGrossEur), `Alternative retail price must be whole euro: ${alternative.id}`);
+  assert.ok([4, 9].includes(alternative.proposedRetailGrossEur % 10), `Alternative retail price must end in 4/9: ${alternative.id}`);
+  assert.ok(alternative.proposedRetailGrossEur >= 34 && alternative.proposedRetailGrossEur <= 59, `Alternative outside fashion retail band: ${alternative.id}`);
+  assert.ok(alternative.visibleSizesForSampleColor.length >= 2, `Alternative must have at least two actual size options: ${alternative.id}`);
+  assert.ok(alternative.questions.length >= 2, `Each candidate must have acceptance questions: ${alternative.id}`);
+  assert.ok(alternative.indicativeSupplierNetEur > 0, `Invalid net cost: ${alternative.id}`);
+  alternativeIds.add(alternative.id);
+  alternativeUrls.add(alternative.url);
+  if (alternative.supplier === 'LEIVIP') {
+    const netSale = alternative.proposedRetailGrossEur / (1 + assumption.germanGrossVatRate);
+    const fee = alternative.proposedRetailGrossEur * assumption.paymentFeeGrossRate + assumption.paymentFeeFixedEur;
+    const contribution = netSale - alternative.indicativeSupplierNetEur - assumption.inboundShippingExVatEur / assumption.testBatchUnits - assumption.outboundShippingPerSaleExVatEur - assumption.packagingPerSaleExVatEur - fee - assumption.returnCostReservePerSaleExVatEur;
+    console.log(`  Sized option ${alternative.id}: €${contribution.toFixed(2)} indicative contribution at €${alternative.proposedRetailGrossEur} gross; not approved.`);
+  } else {
+    console.log(`  Sized option ${alternative.id}: shipping unquoted, no contribution calculation; not approved.`);
+  }
+}
+assert.ok(sizeResearch.rejectedOrOnHold.length >= 3, 'Need an explicit rejected or on-hold research trail');
+console.log('  Sized-alternative audit passed: actual variant options, 4/9 price rule, no automatic import.');

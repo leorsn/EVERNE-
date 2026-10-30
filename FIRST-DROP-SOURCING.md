@@ -45,6 +45,11 @@ claims. Product names on the public concept site are not actual SKU identities.
   treatment depends on verified buyer tax status and seller checkout details.
 - A sample purchase requires express user approval. No order was placed.
 
+**30 October sizing review / amendment:** The basket above is a *historical,
+illustrative cost envelope*, not the currently recommended six samples: three
+of the first five products are one-size. Prioritize the actual-sized
+alternatives below before selecting any sample basket or promising delivery.
+
 ### Indicative gross-to-net contribution per shipped sale
 
 These figures are **scenarios, not expected profit**. For each one-item order:
@@ -72,6 +77,49 @@ replace assumptions with actual invoice, packaging, return rates and shipping
 receipts. **Paid ads may make the €44 and €49 pieces unprofitable.**
 
 ## Alternatives and risks
+
+### Real selectable size variants — second research pass (30 October 2026)
+
+The previously displayed XS–XL *generic size guide* on LEIVIP cannot be treated
+as the actual product size range. We checked each live variant list and found:
+
+| EVERNE mapping | Wholesaler / real article | Public cost ex VAT* | Actual variants in selected color | Proposed price | Decision |
+|---|---|---:|---|---:|---|
+| Wide Leg Trouser | [LEIVIP high-waist tailored wide leg](https://leivip.com/products/high-waist-tailored-wide-leg-trousers-wholesale-1) | €23.90 | **Black S/M/L** | €59 | **Sample priority**; better size choice but price must change from €54 by approval |
+| Tailored Everyday Pant | [LEIVIP belted straight-leg in lyocell](https://leivip.com/collections/clothes/products/belted-straight-leg-tailored-trousers) | €20.90 | **Black S/M only** | €59 | Hold until L and reliable supply available; 100% lyocell listed |
+| Wrap Knit Cardigan | [FactoryPrice black short V-neck](https://factoryprice.eu/de/products/schwarzer-kurzer-cardigan-mit-v-ausschnitt-421417.html) | €14.50 | **Black S/M, L/XL** | €54 | Good potential substitute but **not a wrap**; re-name; supplier shipping and B2B returns unresolved |
+| Wrap Knit Cardigan | [FactoryPrice ecru with contrast trim](https://factoryprice.eu/de/products/ecru-eleganter-cardigan-mit-kontrastierendem-besatz-421441.html) | €14.50 | **Ecru S/M, L/XL** | €54 | Alternative color/style; not a wrap; same approval gates |
+
+\* Public price at research, not a confirmed merchant quotation. LEIVIP model
+is 86% polyester/10% viscose/4% elastane. Both FactoryPrice cardigans are
+listed as 50% viscose/40% polyamide/10% elastane and have actual centimeter
+measurements in their product descriptions. Material claims still require
+labels/sample checks. In addition, public inventory cannot replace verified
+merchant stock data.
+
+The LEIVIP S/M/L tailored-trouser replacement yields approximately **€13.52**
+contribution per €59 full-price sale on the same six-unit, one-item-order
+model above. It has a lower model margin than the unisize €54 original, but
+is a more credible apparel pilot. No price was changed on the website.
+
+The FactoryPrice alternatives **cannot** be assigned the same freight and
+margin model: actual German supplier-to-EVERNE freight, dropship fee, return
+flows and merchant checkout pricing are unverified. Their product pages show
+consumer-facing badges mentioning 14-day free returns while the embedded **B2B
+terms** say returns must be initiated within seven working days and sent at
+retailer's expense. The commercial agreement needs written clarification.
+
+Rejected or held: the former unisize wide-leg trousers, the earlier unisize
+LYCHEE cardigan, a sized wool-look palazzo whose listed fibre composition is
+`NULL`, an alternative lyocell culotte with only Olive/S seen in stock, and a
+sized lace-hem turtleneck that does not suit the minimalist concept. The full
+dated comparison is in `sourcing/sized-alternatives.json`.
+
+**Selection rule:** for a launch apparel SKU, require at least two independently
+orderable size variants; prefer S/M/L for bottoms and S/M plus L/XL or more
+for knitwear. A generic size chart must not satisfy this rule. `npm run
+check:sourcing` enforces price/approval/data checks, not the truth of third-party
+stock availability.
 
 - [Hertwill](https://hertwill.com/): an existing Shopify-oriented dropshipping
   option, potentially lower up-front inventory but **actual** womenswear

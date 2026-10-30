@@ -59,6 +59,12 @@ research shortlist with a cost model and explicit non-approval gates. Run
 `npm run check:sourcing` for its reproducible contribution estimates. There are
 no new Shopify products, actual orders or launch approvals.
 
+**Sizing follow-up:** `sourcing/sized-alternatives.json` now compares real
+orderable size variants (not generic XS–XL size charts), including a LEIVIP
+S/M/L tailored trouser and FactoryPrice S/M+L/XL cardigan alternatives.
+Public catalogue, planned prices and checkout stay unchanged until samples and
+supplier terms are confirmed.
+
 ## Required before launch
 
 1. Reconnect and verify the intended Shopify store and publication.
