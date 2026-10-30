@@ -51,6 +51,10 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
 - Local `file://` previews omit canonical and Open Graph page URLs rather than
   attempting to resolve them against the browser's opaque `null` origin;
   ordinary `http(s)` deployments continue to emit their canonical URLs.
+- `npm run check:womenswear:render` additionally renders the actual React
+  homepage, eight- and twenty-concept views, five filtered categories, all
+  twenty detail pages and the unknown-route fallback. It checks truthful
+  non-commerce output and return links, without claiming Safari visual QA.
 - Historical `/products/*` routes show a truthful collection-pending page.
 - Product names and prices in womenswearCatalog.ts are planning concepts,
   not offers, published Shopify items, or verified stock.
