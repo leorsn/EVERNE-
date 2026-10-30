@@ -17,8 +17,16 @@ assert.equal(readiness.recordedExternalActions.supplierOutreachSent, false);
 assert.equal(readiness.recordedExternalActions.samplesPurchased, false);
 assert.equal(readiness.recordedExternalActions.shopifyProductsImported, false);
 assert.equal(readiness.recordedExternalActions.paymentsAuthorized, false);
-assert.equal(readiness.knownTerms.confirmedGermanyDropshipLabelNetEur, null,
-  'An unquoted carrier label must not become an invented amount');
+const realGermanyLabel = readiness.knownTerms.confirmedGermanyDropshipLabelNetEur;
+if (realGermanyLabel === null) {
+  assert.equal(readiness.globalGates.ownLabelGermanyCourierQuote.status, 'PENDING',
+    'Do not mark the German dropship label verified without a quote');
+} else {
+  assert.ok(Number.isFinite(realGermanyLabel) && realGermanyLabel > 0,
+    'A quoted German label cost must be a positive net EUR amount');
+  assert.equal(readiness.globalGates.ownLabelGermanyCourierQuote.status, 'VERIFIED',
+    'A non-null label quote must have dated, reviewed evidence');
+}
 assert.equal(readiness.knownTerms.publishedDropshipHandlingPlnPerParcel,
   logistics.supplierPublishedDropship.feeNetPlnPerParcel, 'Dropship handling tariff mismatch');
 assert.equal(readiness.knownTerms.publishedB2BReturnsCalendarDays,
@@ -28,8 +36,13 @@ assert.equal(readiness.knownTerms.typicalOnlineConsumerWithdrawalDays, 14,
 assert.ok(readiness.knownTerms.publishedB2BReturnsCalendarDays <
   readiness.knownTerms.typicalOnlineConsumerWithdrawalDays,
   'The supplier-versus-consumer return-period gap must remain visible');
-assert.equal(readiness.knownTerms.dropShipReturnConditionsSigned, false,
-  'Unpublished or unsigned dropship return terms cannot be treated as verified');
+if (readiness.knownTerms.dropShipReturnConditionsSigned) {
+  assert.equal(readiness.globalGates.dropshipMerchantReturnContract.status, 'VERIFIED',
+    'A signed merchant return contract must have dated evidence');
+} else {
+  assert.equal(readiness.globalGates.dropshipMerchantReturnContract.status, 'PENDING',
+    'Public or unsigned dropship returns text is not a merchant agreement');
+}
 assert.ok(readiness.sourceUrls.supplierB2BReturns.startsWith('https://factoryprice.eu/'));
 assert.ok(readiness.sourceUrls.euConsumerWithdrawal.startsWith('https://europa.eu/'));
 
