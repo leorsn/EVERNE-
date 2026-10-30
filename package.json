@@ -18,7 +18,8 @@
     "check:first-drop:readiness": "node scripts/validate-first-drop-readiness.mjs",
     "check:courier-ceilings": "node scripts/validate-courier-ceilings.mjs",
     "check:priority-mixed-carts": "node scripts/validate-priority-mixed-carts.mjs",
-    "check:ops:dry-run": "node scripts/validate-manual-handoff.mjs"
+    "check:ops:dry-run": "node scripts/validate-manual-handoff.mjs",
+    "demo:ops:dry-run": "node scripts/run-manual-handoff-demo.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
