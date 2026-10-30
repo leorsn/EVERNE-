@@ -5,6 +5,13 @@
 **Technische Voraussetzung:** `npm run build:offline` einschließlich `check:offline:package` bestanden  
 **Gesamtstatus:** **OFFEN – echte Safari-/iPhone-Sichtprüfung nicht durchgeführt**
 
+**Automatischer Browser-Stand:** GitHub-Actions-Lauf `41129444820`
+hat die **Chromium-Offlinetests** erfolgreich bestanden: 20 Konzeptseiten,
+fünf Filter, mobile Breiten 320/390 px, Navigation, FAQ, Style Notes,
+lokale Rechtsseite sowie fehlende externe Netzwerkanfragen und Kaufwege.
+Das ist **kein WebKit-/Safari-Gerätetest**. Sämtliche manuellen Fälle
+S01–S20 bleiben ausdrücklich **UNGETESTET**.
+
 Dieses Dokument gehört zur privaten Vorschau. Es ist kein Bericht über bereits bestandene Gerätetests, keine Verkaufsfreigabe und keine Prüfung realer Lieferantenartikel.
 
 ## 1. Start auf dem Mac
