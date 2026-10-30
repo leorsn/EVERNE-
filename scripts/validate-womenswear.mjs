@@ -77,6 +77,11 @@ assert.ok(homepage.includes('prefersReducedMotion ? \'auto\' : \'smooth\''), 'Re
 assert.ok(homepage.includes("event.key === 'Escape'"), 'Mobile navigation must close on Escape');
 assert.ok(homepage.includes("document.addEventListener('click', jumpToSection)"), 'Offline hash routes must not swallow in-page editorial anchors');
 assert.ok(homepage.includes('menuToggleRef.current?.focus()'), 'Closing the mobile menu with Escape must restore keyboard focus');
+assert.ok(homepage.includes("document.addEventListener('pointerdown', closeWhenOutside)"),
+  'The mobile menu must close after a tap outside the header');
+assert.ok(homepage.includes('className="w-logo" href="#top" onClick={closeMenu}') &&
+  homepage.includes('className="w-header-cta" href="#edit" onClick={closeMenu}'),
+  'Header shortcut links must dismiss the open mobile menu');
 assert.ok(homepage.includes("aria-controls={'woman-faq-answer-' + index}"), 'FAQ controls need a persistent panel relationship');
 assert.ok(homepage.includes("hidden={openQuestion !== index}"), 'Closed FAQ content must remain associated but hidden');
 assert.ok(!homepage.includes('Autumn / Winter 26'), 'Unconfirmed supplier garments must not be marketed as an approved seasonal collection');
