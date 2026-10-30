@@ -42,6 +42,7 @@ const entry = fs.readFileSync('src/main.tsx', 'utf8');
 const indexHtml = fs.readFileSync('index.html', 'utf8');
 assert.ok(entry.includes('path="/edit/:slug"'), 'A route to the concept detail page is required');
 assert.ok(entry.includes('WomenswearApp'), 'The entry must render the women’s fashion preview');
+assert.ok(entry.includes('<RouteFocus />'), 'Client-side route changes must restore keyboard focus to page headings');
 assert.ok(!entry.includes("import App from './App'"), 'The old store must not be loaded as the active app');
 assert.ok(indexHtml.includes('noindex,nofollow'), 'The fashion preview must stay out of search indexes');
 assert.ok(indexHtml.includes('<html lang="en">'), 'The fashion preview must explicitly use English');
@@ -71,6 +72,7 @@ assert.ok(homepage.includes("hidden={openQuestion !== index}"), 'Closed FAQ cont
 assert.ok(!homepage.includes('Autumn / Winter 26'), 'Unconfirmed supplier garments must not be marketed as an approved seasonal collection');
 assert.ok(homepage.includes('Styling inspiration only.'), 'The styling section must not imply confirmed products');
 assert.ok(homepage.includes('parseEditView(location.search)'), 'The selected edit must be restored from the URL');
+assert.ok(homepage.includes('id="edit-title" tabIndex={-1}'), 'The returned edit heading must allow programmatic keyboard focus');
 assert.ok(homepage.includes('conceptLink(piece.name, editView)'), 'Concept links must retain their originating filter');
 assert.ok(homepage.includes("location.hash !== '#edit'"), 'The collection return hash must be restored on home mount');
 assert.ok(homepage.includes('€34–€59'), 'Homepage must show the updated whole-euro planned price range');
@@ -79,6 +81,16 @@ assert.ok(englishLegal.includes('€34 and €59'), 'Legal prelaunch notice must
 const conceptDetail = fs.readFileSync('src/ConceptDetailPage.tsx', 'utf8');
 assert.ok(conceptDetail.includes('collectionReturnLink(location.search)'), 'Detail links must restore collection filters on return');
 assert.ok(conceptDetail.includes('conceptLink(item.name, originatingView)'), 'Related concepts must retain the originating selection');
+assert.ok(conceptDetail.includes('id="piece-title" tabIndex={-1}'), 'Concept headings must support route-change focus');
+
+const routeFocus = fs.readFileSync('src/RouteFocus.tsx', 'utf8');
+assert.ok(routeFocus.includes('previousPath.current !== location.pathname'), 'Focus should move only when the active page changes');
+assert.ok(routeFocus.includes("location.hash === '#edit'"), 'Returning from a concept should focus the edit heading');
+assert.ok(routeFocus.includes('focus({ preventScroll: true })'), 'Focus must not undo the restored collection scroll position');
+
+const pendingPage = fs.readFileSync('src/CollectionPendingPage.tsx', 'utf8');
+assert.ok(pendingPage.includes('href="#pending-main"'), 'Pending pages need a keyboard skip link');
+assert.ok(pendingPage.includes('tabIndex={-1}'), 'Pending heading must accept route-change focus');
 
 const womenswearCss = fs.readFileSync('src/womenswear.css', 'utf8');
 assert.ok(!womenswearCss.includes('fonts.googleapis.com') && !womenswearCss.includes('@import url('),
