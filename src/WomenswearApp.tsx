@@ -25,7 +25,7 @@ const questions = [
   },
   {
     question: 'Which sizes will be available?',
-    answer: 'We are aiming for a mostly XS–XL size range. Confirmed sizes and detailed size guides will follow once the garments and suppliers have been selected.',
+    answer: 'Our size range is not confirmed yet. Some supplier samples use combined sizes such as S/M and L/XL, while others offer individual sizes. We will publish exact garment measurements and fit guidance only after selecting and checking the final pieces.',
   },
   {
     question: 'How will shipping and returns work?',
