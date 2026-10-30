@@ -18,6 +18,19 @@ assert.equal(readiness.recordedExternalActions.samplesPurchased, false);
 assert.equal(readiness.recordedExternalActions.shopifyProductsImported, false);
 assert.equal(readiness.recordedExternalActions.paymentsAuthorized, false);
 const realGermanyLabel = readiness.knownTerms.confirmedGermanyDropshipLabelNetEur;
+assert.equal(realGermanyLabel, model.realGermanCustomerCourierLabelNetEur,
+  'Independent readiness and economics files must agree on real German courier quotes');
+const integrationFee = model.realShopifyIntegrationSubscriptionEur;
+const integrationGate = readiness.globalGates.shopifyIntegrationRecurringCost;
+if (integrationFee === null) {
+  assert.equal(integrationGate.status, 'PENDING',
+    'An unquoted Shopify integration must not be marked free or verified');
+} else {
+  assert.ok(Number.isFinite(integrationFee) && integrationFee >= 0,
+    'Real Shopify integration cost must be a non-negative EUR number');
+  assert.equal(integrationGate.status, 'VERIFIED',
+    'A confirmed free or paid Shopify integration requires dated source evidence');
+}
 if (realGermanyLabel === null) {
   assert.equal(readiness.globalGates.ownLabelGermanyCourierQuote.status, 'PENDING',
     'Do not mark the German dropship label verified without a quote');
