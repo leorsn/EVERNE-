@@ -22,6 +22,14 @@ function strictKeys(value, keys, field) {
   }
 }
 
+function validEan13(value) {
+  if (typeof value !== 'string' || !/^\d{13}$/.test(value)) return false;
+  const digits = [...value].map((digit) => Number(digit));
+  const weighted = digits.slice(0, 12).reduce((sum, digit, index) =>
+    sum + digit * (index % 2 === 0 ? 1 : 3), 0);
+  return (10 - weighted % 10) % 10 === digits[12];
+}
+
 function approvedReferenceVariants(sourcing, productCode) {
   const matches = [
     ...sourcing.essentialCandidates,
@@ -75,8 +83,7 @@ export function reviewSyntheticOrder(order, context) {
     strictKeys(line, LINE_KEYS, 'Synthetic line ' + (index + 1));
     if (typeof line.supplierProductCode !== 'string' ||
         !/^[A-Z0-9.-]{3,40}$/.test(line.supplierProductCode) ||
-        typeof line.variantEan !== 'string' ||
-        !/^\d{13}$/.test(line.variantEan) ||
+        !validEan13(line.variantEan) ||
         !Number.isInteger(line.quantity) || line.quantity !== 1 ||
         !Number.isInteger(line.unitPriceGrossEur)) {
       throw new Error('Invalid synthetic SKU, variant, quantity or gross price');
