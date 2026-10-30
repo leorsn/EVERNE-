@@ -9,7 +9,8 @@
     "sourcing/capsule-order-economics.json",
     "sourcing/merchandising-cohesion-review.json",
     "sourcing/fulfillment-gates.json",
-    "sourcing/FACTORYPRICE-ENQUIRY-DRAFT.md"
+    "sourcing/FACTORYPRICE-ENQUIRY-DRAFT.md",
+    "sourcing/ZERO-COST-FULFILLMENT-PILOT.md"
   ],
   "sourceUrls": {
     "ownLabelDropship": "https://factoryprice.eu/pl/cms/hurtownia-dropshipping-odziezy-damskiej-nadajemy-na-twojej-etykiecie-783.html",
@@ -24,7 +25,16 @@
     "publishedB2BReturnsCalendarDays": 7,
     "typicalOnlineConsumerWithdrawalDays": 14,
     "dropShipReturnConditionsSigned": false,
-    "caveat": "Supplier's public site states separate dropship return rules will be published; neither this nor the wholesale terms is a signed merchant return agreement. Legal exceptions and refund costs need review."
+    "caveat": "Supplier's public site states separate dropship return rules will be published; neither this nor the wholesale terms is a signed merchant return agreement. Legal exceptions and refund costs need review.",
+    "supplierServiceContradiction": {
+      "status": "OPEN_REQUIRES_WRITTEN_VERIFICATION",
+      "supplierMainSiteClaim": "FactoryPrice's newer main-site own-label dropship page states that shipments to consumers in Germany are supported via merchant-provided labels and 3 PLN handling.",
+      "supplierWarehouseFaqClaim": "A separate official FactoryPrice wholesale FAQ says it does not currently ship directly to final customers; further distribution is the buyer's responsibility.",
+      "newerMainSiteUrl": "https://factoryprice.eu/pl/cms/hurtownia-dropshipping-odziezy-damskiej-nadajemy-na-twojej-etykiecie-783.html",
+      "conflictingFaqUrl": "https://hurtownia.factoryprice.eu/faq/",
+      "ownerSpecificServiceConfirmed": false,
+      "evidenceNote": "The supplier pages may refer to different divisions or operational periods. No authorized merchant confirmation, account capability, merchant-specific dropship agreement or German carrier quote has been obtained; do not invent which wording controls."
+    }
   },
   "globalGates": {
     "authenticatedWholesalePrices": {
