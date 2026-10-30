@@ -167,7 +167,7 @@ export default function WomenswearApp() {
             <div className="w-section-meta"><span>01 / THE NEW EVERYDAY</span><span>Collection study / 2026</span></div>
             <div className="w-hero-main">
               <p className="w-overline">Modern femininity. Your way.</p>
-              <h1 id="hero-title">For every day.<br /><em>Never ordinary.</em></h1>
+              <h1 id="hero-title" tabIndex={-1}>For every day.<br /><em>Never ordinary.</em></h1>
               <p className="w-hero-description">The pieces you reach for again and again. Effortless essentials, fresh silhouettes and a little room to be different.</p>
               <a className="w-solid-link" href="#collection">Explore the collection <Arrow /></a>
             </div>
