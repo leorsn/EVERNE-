@@ -58,6 +58,24 @@ if (readiness.knownTerms.dropShipReturnConditionsSigned) {
 }
 assert.ok(readiness.sourceUrls.supplierB2BReturns.startsWith('https://factoryprice.eu/'));
 assert.ok(readiness.sourceUrls.euConsumerWithdrawal.startsWith('https://europa.eu/'));
+const service = readiness.knownTerms.supplierServiceContradiction;
+assert.ok(service?.newerMainSiteUrl?.startsWith('https://factoryprice.eu/'),
+  'Must retain newer supplier dropship marketing claim');
+assert.ok(service?.conflictingFaqUrl?.startsWith('https://hurtownia.factoryprice.eu/'),
+  'Must retain contradictory official supplier FAQ');
+if (service.ownerSpecificServiceConfirmed === true) {
+  assert.equal(service.status, 'VERIFIED_BY_AUTHENTICATED_MERCHANT',
+    'Only merchant-specific written terms can resolve supplier service conflict');
+  assert.ok(service.evidence?.reference?.length > 5 &&
+    service.evidence.reviewedBy &&
+    /^\d{4}-\d{2}-\d{2}$/.test(service.evidence.verifiedAt),
+    'Service confirmation must have an independently reviewed dated source');
+} else {
+  assert.equal(service.ownerSpecificServiceConfirmed, false);
+  assert.equal(service.status, 'OPEN_REQUIRES_WRITTEN_VERIFICATION',
+    'Contradictory supplier service terms cannot be silently dismissed');
+  assert.equal(service.evidence, null, 'Unconfirmed supplier service must have no verified evidence');
+}
 
 const requiredGlobalGates = [
   'authenticatedWholesalePrices',
