@@ -39,6 +39,13 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
   full-width card rather than silently hiding it. Main menu and filter
   controls have at least 44px tall touch targets in the CSS; Safari visual
   confirmation is still required.
+- The complete edit can now be both expanded and collapsed with a single
+  accessible control; its selection remains shareable in the existing URL.
+- `npm run build:offline` creates a separate zipped Safari review under
+  `offline-review/` with inlined application JS/CSS, local editorial images,
+  local legal pages and hash-based concept routes. The actual Vercel build
+  still uses normal routes. The offline package is for owner review only,
+  has no checkout and is not a substitute for live Safari acceptance.
 - Historical `/products/*` routes show a truthful collection-pending page.
 - Product names and prices in womenswearCatalog.ts are planning concepts,
   not offers, published Shopify items, or verified stock.
