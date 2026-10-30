@@ -305,16 +305,18 @@ exchange-rate and validation assumptions are saved in
 
 ### First capsule beyond black basics — sixth research pass (30 October 2026)
 
-To avoid a visually repetitive first drop, six additional FactoryPrice
+To avoid a visually repetitive first drop, eight additional FactoryPrice
 garments were inspected directly on their public product pages. **These are
 possible physical samples, not approved inventory**; stock counts are a
 30 October snapshot and can change before anyone can actually buy.
 
 | Concept and fixed retail price | Supplier model, listed net price | Public black size stock on 30 Oct | Merchandising judgment |
 |---|---|---|---|
+| **Tailored Everyday Pant €59** | [High-waisted black suit trouser](https://factoryprice.eu/de/products/schwarze-anzughosen-mit-hohem-bund-415870.html), €16.11 | **S 14, M 12, L 11, XL 11** | **Sample option.** 65% viscose / 30% nylon / 5% elastane; straight-leg tailored form with belt detail. Four separate sizes make this a more promising first-drop bottom than the LEIVIP mixed-supplier route. Actual hip fit, construction and fabric require inspection. |
+| **Wide Leg Trouser €54** | [Elegant wide black viscose trouser](https://factoryprice.eu/de/products/schwarze-elegante-hosen-mit-taschen-420890.html), €11.28 | M/L **25**, L/XL **16**, XL/2XL **25** | **Hold: size-label mismatch.** Supplier warns its M/L fits like a typical S/M. No consumer-facing size conversion or product-code assumption without measured fit tests and written confirmation. |
 | **Soft Midi Dress €59** | [RUE PARIS cotton basic dress](https://factoryprice.eu/de/products/schwarzes-sommerkleid-basic-aus-baumwolle-rue-paris-418426.html), €16.11 | S/M **56**, L/XL **52** | **Sample option.** 90% cotton / 10% elastane, straight cut, 111–114 cm. Supplier calls it a summer dress: verify autumn relevance and whether its length is truly midi on intended models. |
 | **Easy Slip Dress €44** | [Acetate-blend satin-look midi](https://factoryprice.eu/de/products/schwarzes-kleid-mit-dunnen-tragern-und-glanz-421453.html), €14.50 | S/M **8**, M/L **8**, L/XL **8** | **Sample option.** 60% acetate / 40% polyester, adjustable straps and 122–124 cm length. Strong occasion silhouette on paper, but gloss, fabric quality and coverage must be inspected. |
-| **Wide Leg Trouser €54** | [Wide-leg black cord trouser](https://factoryprice.eu/de/products/schwarze-cordhosen-mit-weitem-bein-420859.html), €9.67 | S/M **8**, L/XL **9** | **Hold for textile/design review.** 100% polyester and tie waistband might not fit the premium tailored direction. Not a substitute for the LEIVIP tailored trouser. |
+| **Wide Leg Trouser €54** | [Wide-leg black cord trouser](https://factoryprice.eu/de/products/schwarze-cordhosen-mit-weitem-bein-420859.html), €9.67 | S/M **8**, L/XL **9** | **Hold for textile/design review.** 100% polyester and tie waistband might not fit the premium tailored direction. |
 | **Wrap Knit Cardigan €54** | [Short V-neck cardigan](https://factoryprice.eu/de/products/schwarzer-kurzer-cardigan-mit-v-ausschnitt-421417.html), €14.50 | S/M **11**, L/XL **10** | **Hold: name mismatch.** 50% viscose / 40% polyamide / 10% elastane; supplier does not describe a wrap. Would require founder-approved concept rename. |
 | **The Black Mini €49** | [Fitted ribbed knit mini](https://factoryprice.eu/de/products/schwarzes-strickkleid-in-mini-lange-420675.html), €14.50 | S/M **0**, L/XL **14** | **Hold: size unavailable.** Fall-appropriate, but no credible two-size offer while S/M is out of stock. |
 | **The Black Mini €49** | [Cotton collared shirt mini](https://factoryprice.eu/de/products/schwarzes-jeanskleid-im-hemd-schnitt-420734.html), €19.32 | S/M **2**, M/L **2** | **Hold: stock and silhouette.** 100% cotton, but not a minimalist fitted mini. An apparent measurement typo needs confirmation. |
@@ -323,10 +325,11 @@ possible physical samples, not approved inventory**; stock counts are a
 
 1. Essential Rib Top (€34) and Second Skin Body (€39) — the two distinctly
    different foundations with previously documented public black size stock.
-2. Tailored Everyday Pant (€59) — source the earlier [LEIVIP tailored
-   trouser](https://leivip.com/products/high-waist-tailored-wide-leg-trousers-wholesale-1)
-   only after checking its actual sizes, cut, color, and **separate LEIVIP
-   shipping route**; do not assume a combined FactoryPrice parcel.
+2. Tailored Everyday Pant (€59) — consider the [four-size FactoryPrice black
+   suit trouser](https://factoryprice.eu/de/products/schwarze-anzughosen-mit-hohem-bund-415870.html)
+   after inspecting S/M/L/XL fit, belt finish, straight-leg silhouette and
+   true dropship shipping charges. All five provisional pieces now use the
+   same supplier, **but combined parcels are not confirmed**.
 3. Easy Slip Dress (€44) — occasion hero only if satin-like material looks
    premium under real lighting and on-body tests.
 4. Soft Midi Dress (€59) — alternative everyday dress only if its length,
@@ -343,8 +346,9 @@ dropship courier labels have **no confirmed price**. With the *same* payment,
 German VAT, returns, handling and packaging assumptions as the fifth pass,
 to retain €10 per one-item order before paid marketing/fixed costs, the
 illustrative maximum **net** purchased courier label is about **€17.86** for
-the €59 cotton dress, **€7.24** for the €44 slip dress, **€20.23** for the €54
-cord trouser and **€15.40** for the €54 V-neck cardigan. These are *thresholds
+the €59 cotton dress **and** the €59 tailored trouser, **€7.24** for the €44
+slip dress, **€20.23** for the €54 cord trouser and **€15.40** for the €54
+V-neck cardigan. These are *thresholds
 for rejecting bad quotes*, not shipping estimates; the larger numbers do not
 prove sell-through, return rates or perceived value. The validation script
 recalculates them and catches 4/9-price and size/stock mistakes.
@@ -355,6 +359,48 @@ limited basket. No supplier was contacted, sample ordered, inventory imported,
 photo licensed, retail price changed or Shopify collection published during
 this pass. Full source IDs, public size snapshots, garment lengths and
 acceptance questions are in `sourcing/capsule-hero-alternatives.json`.
+
+### Seventh pass — supplier consolidation and cart stress test (30 October 2026)
+
+The earlier mixed-supplier edit had a practical blocker: [LEIVIP](https://leivip.com/pages/why-leivip)
+publishes a **€100 minimum combined goods order**, so its one separately sourced
+trouser is not an independently orderable single-customer dropship model. Its
+[published international delivery tariff](https://leivip.com/de/pages/versand)
+is a separate inbound leg. The proposal now uses FactoryPrice for **all five
+research candidates**, avoiding the *known* need to source individual trousers
+from a second supplier. This does **not** prove FactoryPrice can pack multiple
+different styles into one customer parcel.
+
+FactoryPrice's [own-label dropship program](https://factoryprice.eu/pl/cms/hurtownia-dropshipping-odziezy-damskiej-nadajemy-na-twojej-etykiecie-783.html)
+publishes an extra **PLN 3 net handling charge per parcel** and requires the
+merchant to supply a purchased courier label; there is **no verified German
+customer-shipment label price**. The explicit what-if model is stored in
+`sourcing/capsule-order-economics.json` and includes German gross-to-net VAT,
+public supplier goods prices, payment fees, a provisional per-item returns
+reserve, parcel handling and packaging. It assumes *merchant-paid outbound
+shipping*, with labels of **€5, €7.50 or €10 net per parcel** as hypothetical
+inputs only. These are not freight offers or accounting profit forecasts.
+
+At a **hypothetical €7.50 net label**, the five one-item orders produce the
+following indicative contribution **before advertising, overhead, customer
+support, integration fees and actual return experience**:
+
+| Single-item cart | Retail gross | Indicative contribution | €10 screening buffer |
+|---|---:|---:|---|
+| Essential Rib Top | €34 | **€10.20** | Clears, narrowly |
+| Second Skin Body | €39 | **€12.97** | Clears |
+| Tailored Everyday Pant | €59 | **€20.36** | Clears |
+| Easy Slip Dress | €44 | **€9.74** | **Below** — hold or revise route after real quote, do not change retail price without approval |
+| Soft Midi Dress | €59 | **€20.36** | Clears subject to seasonal/design fit |
+
+For a Top + Trouser basket, one hypothetical €7.50 label gives **€39.69**
+contribution; if the supplier splits it into two parcels at €7.50 each, that
+falls to **€30.81**. Consolidation therefore matters, but even these positive
+numbers are **not actual profit**. Real customer courier charges, mixed-SKU
+parcel capability, returns, integration subscription fees and supplier terms
+are all unresolved. **GO/NO-GO: NO-GO** for sample buying, stock publishing,
+selling or launching until those gates are independently verified and the
+founder approves the expense.
 
 **Selection rule:** for a launch apparel SKU, require at least two independently
 orderable size variants; prefer S/M/L for bottoms and S/M plus L/XL or more
