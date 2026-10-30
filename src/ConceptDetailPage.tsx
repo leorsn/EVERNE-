@@ -87,7 +87,7 @@ export default function ConceptDetailPage() {
           </div>
           <div className="w-detail-content">
             <span className="w-kicker">THE EDIT / {category.title}</span>
-            <h1 id="piece-title">{piece.name}</h1>
+            <h1 id="piece-title" tabIndex={-1}>{piece.name}</h1>
             <p className="w-detail-tagline">{story.line}</p>
             <div className="w-detail-price"><span>Planned price target</span><strong>{formatTargetPrice(piece.targetPrice)}</strong></div>
             <p className="w-detail-body">{story.brief}</p>
