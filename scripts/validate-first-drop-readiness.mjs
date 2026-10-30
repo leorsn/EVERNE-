@@ -103,8 +103,8 @@ for (const item of readiness.items) {
   assert.ok(item.blockingReason.length > 20);
   for (const id of requiredItemGates) {
     assert.ok(Object.hasOwn(item, id), 'Missing item evidence: ' + item.conceptName + ' / ' + id);
-    assert.equal(item[id], 'PENDING', 'Only a separately documented reviewed update may change current item evidence: ' + item.conceptName + ' / ' + id);
-    openItem++;
+    validateGate(item[id], item.conceptName + ' / ' + id);
+    if (item[id].status === 'PENDING') openItem++;
   }
 }
 assert.equal(held, 2, 'The two dresses remain on hold, not launch-ready');
