@@ -20,7 +20,8 @@
     "check:priority-mixed-carts": "node scripts/validate-priority-mixed-carts.mjs",
     "check:ops:dry-run": "node scripts/validate-manual-handoff.mjs",
     "demo:ops:dry-run": "node scripts/run-manual-handoff-demo.mjs",
-    "check:offline:package": "node scripts/validate-offline-package.mjs"
+    "check:offline:package": "node scripts/validate-offline-package.mjs",
+    "check:browser:offline": "node scripts/validate-browser-smoke.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
