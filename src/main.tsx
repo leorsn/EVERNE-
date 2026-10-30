@@ -1,17 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 import WomenswearApp from './WomenswearApp';
 import ConceptDetailPage from './ConceptDetailPage';
 import CollectionPendingPage from './CollectionPendingPage';
 import RouteFocus from './RouteFocus';
 import './womenswear.css';
 
-const basename = import.meta.env.BASE_URL === '/' ? undefined : import.meta.env.BASE_URL.replace(/\/$/, '');
+// A separate, explicit build mode produces a file://-friendly Safari review.
+// The deployed storefront retains its existing BrowserRouter and URL routes.
+const offlinePreview = import.meta.env.VITE_OFFLINE_PREVIEW === '1';
+const Router = offlinePreview ? HashRouter : BrowserRouter;
+const basename = offlinePreview || import.meta.env.BASE_URL === '/'
+  ? undefined
+  : import.meta.env.BASE_URL.replace(/\/$/, '');
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter basename={basename}>
+    <Router basename={basename}>
       <RouteFocus />
       <Routes>
         <Route path="/" element={<WomenswearApp />} />
@@ -19,6 +25,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/products/:handle" element={<CollectionPendingPage />} />
         <Route path="*" element={<CollectionPendingPage />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   </React.StrictMode>,
 );
