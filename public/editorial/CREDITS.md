@@ -7,3 +7,8 @@ Editorial mood images used for the EVERNE WOMAN design preview:
 These photos are used solely as editorial inspiration for an unreleased
 collection. They are not photographs of confirmed products, suppliers or
 inventory. Replace them with approved brand/product imagery before launch.
+
+The `.webp` variants are local quality-78, metadata-stripped derivatives of
+those same three JPEGs. The original JPEG files are retained as references;
+the active design preview loads WebP for faster mobile rendering. This does not
+change the image licensing, source attribution or no-product-photo status.
