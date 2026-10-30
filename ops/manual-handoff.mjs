@@ -70,6 +70,7 @@ export function reviewSyntheticOrder(order, context) {
   const lines = order.lines.map((line, index) => {
     strictKeys(line, LINE_KEYS, 'Synthetic line ' + (index + 1));
     if (typeof line.supplierProductCode !== 'string' ||
+        !/^[A-Z0-9.-]{3,40}$/.test(line.supplierProductCode) ||
         typeof line.variantEan !== 'string' ||
         !/^\d{13}$/.test(line.variantEan) ||
         !Number.isInteger(line.quantity) || line.quantity < 1 || line.quantity > 2 ||
