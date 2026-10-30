@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { applySeo } from './seo';
+import { collectionReturnLink, conceptLink, parseEditView } from './womenswearNavigation';
 import {
   conceptPieces,
   conceptSlug,
@@ -40,7 +41,10 @@ const direction: Record<FashionCategory, { line: string; brief: string; photo: s
 
 export default function ConceptDetailPage() {
   const { slug } = useParams();
+  const location = useLocation();
   const piece = conceptPieces.find((item) => conceptSlug(item.name) === slug);
+  const backTo = collectionReturnLink(location.search);
+  const originatingView = parseEditView(location.search);
 
   useEffect(() => {
     applySeo({
@@ -50,7 +54,7 @@ export default function ConceptDetailPage() {
       type: 'website',
       indexable: false,
     });
-    window.scrollTo({ top: 0, behavior: 'instant' });
+    window.scrollTo(0, 0);
   }, [piece, slug]);
 
   if (!piece) return <CollectionPendingPage />;
@@ -65,7 +69,7 @@ export default function ConceptDetailPage() {
       <a className="w-skip-link" href="#detail-main">Skip to content</a>
       <div className="w-announcement"><span>EVERNE WOMAN / THE EDIT</span><span>Collection preview · Shopping not yet available</span><span>Hamburg · Germany</span></div>
       <header className="w-detail-header">
-        <Link className="w-detail-back" to="/">← <span>Back to collection</span></Link>
+        <Link className="w-detail-back" to={backTo}>← <span>Back to collection</span></Link>
         <Link className="w-logo" to="/" aria-label="EVERNE WOMAN homepage">EVERNE<span>WOMAN</span></Link>
         <span className="w-detail-header-caption">CURATION STUDY / {String(index + 1).padStart(2, '0')}</span>
       </header>
@@ -94,7 +98,7 @@ export default function ConceptDetailPage() {
               <div><dt>Sizes & colours</dt><dd>To be confirmed after sample review</dd></div>
               <div><dt>Shipping</dt><dd>Details available before launch</dd></div>
             </dl>
-            <Link className="w-solid-link w-detail-cta" to="/">Explore more design concepts <span aria-hidden="true">→</span></Link>
+            <Link className="w-solid-link w-detail-cta" to={backTo}>Explore more design concepts <span aria-hidden="true">→</span></Link>
           </div>
         </section>
 
@@ -103,7 +107,7 @@ export default function ConceptDetailPage() {
           <div className="w-detail-editorial-image"><img src={import.meta.env.BASE_URL + 'editorial/' + story.photo + '.jpg'} alt="Editorial style reference for the planned collection, not a product photograph" loading="lazy"/></div>
         </section>
 
-        <section className="w-detail-related"><div className="w-kicker">EXPLORE THE EDIT</div><h2>More <em>ideas.</em></h2><div className="w-detail-related-grid">{related.map((item) => <Link key={item.name} to={'/edit/' + conceptSlug(item.name)} className="w-detail-related-card"><div className={'w-concept-visual tone-' + item.tone}><span className="w-concept-watermark">E.</span><span className="w-concept-label">DESIGN CONCEPT ↗</span></div><span>{item.name}</span><small>Price target {formatTargetPrice(item.targetPrice)}</small></Link>)}</div></section>
+        <section className="w-detail-related"><div className="w-kicker">EXPLORE THE EDIT</div><h2>More <em>ideas.</em></h2><div className="w-detail-related-grid">{related.map((item) => <Link key={item.name} to={conceptLink(item.name, originatingView)} className="w-detail-related-card"><div className={'w-concept-visual tone-' + item.tone}><span className="w-concept-watermark">E.</span><span className="w-concept-label">DESIGN CONCEPT ↗</span></div><span>{item.name}</span><small>Price target {formatTargetPrice(item.targetPrice)}</small></Link>)}</div></section>
       </main>
 
       <footer className="w-detail-footer"><Link to="/">EVERNE WOMAN</Link><span>Collection preview · No active sales</span><a href={import.meta.env.BASE_URL + 'legal.html'}>Legal information</a></footer>
