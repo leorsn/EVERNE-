@@ -443,6 +443,41 @@ must not be represented as predictions or guarantees. The three stress rates,
 two goods-recovery cases and calculations are reproducible through
 `npm run check:sourcing` using `sourcing/capsule-order-economics.json`.
 
+### Ninth pass — November-season replacement screen (30 October 2026)
+
+The suggested **Soft Midi Dress (€59)** still points at a short-sleeve **summer**
+cotton item. Rather than silently relabeling it an autumn dress, three more
+FactoryPrice listings were inspected as *potential*, not accepted, replacements:
+
+| Researched listing | Supplier public black size stock on inspected page | Listed net goods | Decision |
+|---|---|---:|---|
+| [Black straight jersey-knit midi with belt](https://factoryprice.eu/de/products/schwarzes-schlichtes-kleid-aus-jersey-421034.html) | S/M **5**, L/XL **4** | €20.93 | **Hold.** The supplier calls it short-sleeve (34 cm), despite the knit texture. Both sizes are thinly stocked, and goods cost €4.82 more than the current cotton dress. |
+| [Black oversized knitted high-neck dress](https://factoryprice.eu/de/products/schwarzes-oversize-strickkleid-420597.html) | S/M **6**, L/XL **8** | €20.93 | **Hold: wrong concept.** Three-quarter sleeves, oversized shape, 96–97 cm length and supplier classification **above the knee**, not a legitimate direct replacement for *Soft Midi Dress*. |
+| [Nahia belted viscose dress](https://factoryprice.eu/de/products/schwarzes-kleid-mit-gurtel-nahia-377592.html) | S/M **8**, L/XL **0** | €6.54 | **Hold: unavailable L/XL and color conflict.** Supplier title/description say black, but the actual chosen variant/color is labeled **multicolored**. No solid-black claim permitted. |
+
+At our purely hypothetical €7.50 net customer shipping-label rate, the first
+two knit alternatives return about **€15.54** per retained single-item order
+under the baseline **€2.50 flat return-reserve** model, versus **€20.36** for
+the existing cotton dress. The lower supplier price on the third option does
+not compensate for the unverified black color and missing size. These model
+figures are **not profit predictions or observed selling economics**.
+
+There was also a **stock-evidence conflict** on the previously held [black
+ribbed mini](https://factoryprice.eu/de/products/schwarzes-strickkleid-in-mini-lange-420675.html):
+one search-index crawl displayed S/M **23**, L/XL **24**, whereas the direct
+supplier page inspected in this pass displayed S/M **unavailable**, L/XL **14**,
+matching our original recorded snapshot. **Keep the mini on hold.** A search
+result is not a reservable stock statement. Supplier authenticated variant
+availability is required before launch or sample authorization.
+
+**Decision: do not auto-replace any of the five provisional concepts.** The
+existing cotton dress remains conditional on the founder's seasonal/fit
+approval and can be removed from the first drop if it looks too summery. The
+new structured research and contradictory inventory evidence are saved in
+`sourcing/seasonal-replacement-screen.json` and checked by
+`npm run check:sourcing`. No live storefront product, price, stock, shipping
+offer, customer claim or external supplier relationship was changed.
+
 **Selection rule:** for a launch apparel SKU, require at least two independently
 orderable size variants; prefer S/M/L for bottoms and S/M plus L/XL or more
 for knitwear. A generic size chart must not satisfy this rule. `npm run
