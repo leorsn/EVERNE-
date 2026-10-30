@@ -15,10 +15,11 @@ export default function CollectionPendingPage() {
 
   return (
     <div className="w-pending">
+      <a className="w-skip-link" href="#pending-main">Skip to content</a>
       <header><Link to="/" className="w-footer-logo">EVERNE</Link><span>WOMAN / COL. 01</span></header>
-      <main>
+      <main id="pending-main">
         <span className="w-overline">A NEW CHAPTER IS TAKING SHAPE</span>
-        <h1>Something new<br /><em>is coming.</em></h1>
+        <h1 tabIndex={-1}>Something new<br /><em>is coming.</em></h1>
         <p>Our former garment-care collection is being reimagined. The new womenswear edit is still in the making, and orders are not yet available.</p>
         <Link to="/" className="w-solid-link">Explore the preview <span aria-hidden="true">→</span></Link>
       </main>
