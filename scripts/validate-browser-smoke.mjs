@@ -73,7 +73,9 @@ async function navigate(url) {
 async function key(name, code) {
   for (const type of ['keyDown', 'keyUp']) {
     await cdp('Input.dispatchKeyEvent',
-      { type, key: name, code: name, windowsVirtualKeyCode: code }, sessionId);
+      { type, key: name, code: name, windowsVirtualKeyCode: code,
+        ...(type === 'keyDown' && name === 'Enter'
+          ? { text: '\r', unmodifiedText: '\r' } : {}) }, sessionId);
   }
 }
 try {
@@ -109,6 +111,8 @@ try {
   await cdp('Page.enable', {}, sessionId);
   await cdp('Runtime.enable', {}, sessionId);
   await cdp('Network.enable', {}, sessionId);
+  await cdp('Page.bringToFront', {}, sessionId);
+  await cdp('Emulation.setFocusEmulationEnabled', { enabled: true }, sessionId);
   await cdp('Emulation.setDeviceMetricsOverride',
     { width: 390, height: 844, deviceScaleFactor: 2, mobile: true }, sessionId);
 
@@ -136,6 +140,8 @@ try {
   await eq("document.querySelector('.w-menu-toggle').getAttribute('aria-expanded')",
     'true', 'Keyboard opens mobile menu');
   await key('Escape', 27);
+  await eq("document.querySelector('.w-menu-toggle').getAttribute('aria-expanded')",
+    'false', 'Escape closes mobile menu');
   await eq("document.activeElement?.className", 'w-menu-toggle',
     'Escape restores menu-toggle focus');
   await key('Enter', 13);

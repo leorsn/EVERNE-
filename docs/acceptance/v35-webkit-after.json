@@ -3,8 +3,8 @@
   "browserVersion": "26.5",
   "platform": "linux",
   "playwrightVersion": "1.62.1",
-  "testedAt": "2026-10-30T21:26:08.131Z",
-  "artifactSha256": "c04ac71bd77a03f2b26e9182fce53d001f08abdc46040777a72f2b3a98094d90",
+  "testedAt": "2026-10-30T21:32:24.441Z",
+  "artifactSha256": "a3657b53679f7a41d0bb087af02d7777e540d28025f94cfc3f5341af48f8cb39",
   "transport": "file://, actual inlined production offline build",
   "widths": [
     320,

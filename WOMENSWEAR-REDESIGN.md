@@ -175,3 +175,12 @@ offline build, **not native macOS Safari, iPhone Safari, VoiceOver or a legal
 release review**. S01–S20 remain untested on Apple devices. The existing Mac
 launcher is syntax-checked and safely rejects Linux; actual Mac execution is
 still pending. **SAFARI ACCEPTANCE PENDING / COMMERCE NO-GO.**
+
+The inherited install reported two high-severity dependency entries. Targeted
+patch updates now lock Vite 8.3.5 and source-map-js 1.2.2 (plus Vite's required
+build-tool patches); `npm audit --json` reports **0 vulnerabilities**. No new
+package or major-version upgrade was introduced. Chromium's new Enter-key
+regression also sends the CDP text event and explicitly focuses the page;
+the initial V35 CI failure was a driver-input defect, not a storefront render
+failure. The corrected built-in runner passed **110 assertions** locally in
+Chrome Headless Shell 142.0.7444.175.
