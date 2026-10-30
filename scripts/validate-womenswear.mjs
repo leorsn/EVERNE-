@@ -2,6 +2,14 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { conceptPieces, conceptSlug, fashionCategories, formatTargetPrice } from '../src/womenswearCatalog.ts';
 import { collectionReturnLink, conceptLink, editViewSearch, parseEditView } from '../src/womenswearNavigation.ts';
+import { publicSeoUrl } from '../src/seo.ts';
+
+assert.equal(publicSeoUrl('/', { protocol: 'file:', origin: 'null' }), null,
+  'Opening the offline Safari preview via file:// must not generate an invalid canonical URL');
+assert.equal(publicSeoUrl('/edit/rib-top', { protocol: 'file:', origin: 'null' }), null,
+  'Offline concept routes must not leak local filesystem paths into SEO');
+assert.equal(publicSeoUrl('/edit/rib-top', { protocol: 'https:', origin: 'https://everne.example' }),
+  'https://everne.example/edit/rib-top', 'Normal deployed concept URLs must retain canonical metadata');
 
 assert.deepEqual(parseEditView(''), { category: 'all', showAll: false });
 assert.deepEqual(parseEditView('?category=trousers'), { category: 'trousers', showAll: false });
