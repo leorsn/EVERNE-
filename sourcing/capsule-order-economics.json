@@ -27,6 +27,19 @@
   "assumedFreeDeliveryToEndCustomer": true,
   "courierWhatIfNetEur": [5, 7.5, 10],
   "illustrativeMinimumContributionBeforeAdsAndFixedOverheadEur": 10,
+  "returnRateSensitivity": {
+    "illustrativeRates": [0.1, 0.2, 0.3],
+    "outboundCourierNetEurPerOrderAssumption": 7.5,
+    "reverseCourierNetEurPerReturnedOrderAssumption": 5,
+    "inspectionAndHandlingNetEurPerReturnedItemAssumption": 3,
+    "customerRefundsFullGrossRetailAssumption": true,
+    "paymentFeeNotRefundedAssumption": true,
+    "recoveryCases": [
+      { "id": "RETURNED_GOODS_RESELLABLE", "recoverableGoodsCostShare": 1 },
+      { "id": "RETURNED_GOODS_UNSELLABLE", "recoverableGoodsCostShare": 0 }
+    ],
+    "limitations": "Hypothetical order-level return rates, not forecast rates. This scenario replaces the flat EUR 2.50/item return reserve rather than adding it. Resellable-goods recovery is inventory value, not immediate cash; assumes no resale discount. Unrecoverable scenario assumes the full supplier goods cost is lost. Neither includes legal exceptions, VAT reclaim details, chargebacks, partial returns, marketing, warehouse fees, or fixed overhead."
+  },
   "items": [
     { "conceptName": "Essential Rib Top", "supplierProductCode": "RV-TP-A1363.01P", "retailGrossEur": 34, "supplierPublicCostNetEur": 5.89, "supplier": "FactoryPrice" },
     { "conceptName": "Second Skin Body", "supplierProductCode": "RV-BO-A1441.81", "retailGrossEur": 39, "supplierPublicCostNetEur": 7.2, "supplier": "FactoryPrice" },
@@ -51,6 +64,7 @@
     "The supplier's ability to put TWO or more distinct SKUs in one dropship parcel is unconfirmed; model both one- and two-parcel scenarios for mixed carts.",
     "No marketing, chargebacks, fixed overhead, tax-accounting adjustments, supplier integration app fees, reshipments, unsold goods or worst-case returns are included; numbers are not profits.",
     "Returns reserve is per item rather than per customer order and is only an estimate; actual return handling could be much more expensive.",
+    "Return-rate stress tests treat returned orders as fully refunded and assume payment fees and outbound labels cannot be recovered; the recoverable-goods case is retained stock value, not cash.",
     "No discounts, free-shipping guarantees, live purchases or customer-facing offers are authorized by this file."
   ]
 }
