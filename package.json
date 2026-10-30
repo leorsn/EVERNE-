@@ -9,7 +9,7 @@
     "check:womenswear": "node scripts/validate-womenswear.mjs",
     "check:womenswear:render": "node scripts/validate-womenswear-render.mjs",
     "check:preview-boundary": "node scripts/validate-preview-boundary.mjs",
-    "check:sourcing": "node scripts/validate-first-drop.mjs && npm run check:first-drop:readiness && npm run check:courier-ceilings && npm run check:priority-mixed-carts",
+    "check:sourcing": "node scripts/validate-first-drop.mjs && npm run check:first-drop:readiness && npm run check:courier-ceilings && npm run check:priority-mixed-carts && npm run check:ops:dry-run",
     "build": "npm run check:storefront && npm run check:womenswear && npm run check:womenswear:render && npm run check:preview-boundary && npm run check:sourcing && tsc -b && vite build",
     "build:offline": "npm run check:womenswear && npm run check:womenswear:render && npm run check:preview-boundary && npm run check:sourcing && tsc -b && VITE_OFFLINE_PREVIEW=1 vite build --base ./ --outDir dist-offline && node scripts/pack-offline-preview.mjs && (cd offline-review && zip -qr -FS everne-woman-safari-preview.zip everne-woman-safari-preview)",
     "postbuild": "node -e \"require('fs').copyFileSync('dist/index.html','dist/404.html')\"",
@@ -17,7 +17,8 @@
     "typecheck": "tsc -b --pretty false",
     "check:first-drop:readiness": "node scripts/validate-first-drop-readiness.mjs",
     "check:courier-ceilings": "node scripts/validate-courier-ceilings.mjs",
-    "check:priority-mixed-carts": "node scripts/validate-priority-mixed-carts.mjs"
+    "check:priority-mixed-carts": "node scripts/validate-priority-mixed-carts.mjs",
+    "check:ops:dry-run": "node scripts/validate-manual-handoff.mjs"
   },
   "dependencies": {
     "@vitejs/plugin-react": "latest",
