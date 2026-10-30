@@ -342,3 +342,47 @@ for (const cart of cartEconomics.whatIfCarts) {
   }
 }
 console.log('  Cart-economics audit passed: all five products match researched supplier SKUs, one-supplier alternative replaces under-MOQ LEIVIP mixed route; courier prices hypothetical and no purchase authorized.');
+
+const returnRisk = cartEconomics.returnRateSensitivity;
+assert.ok(returnRisk && returnRisk.customerRefundsFullGrossRetailAssumption && returnRisk.paymentFeeNotRefundedAssumption,
+  'Stress test must explicitly assume full-refund returns and retained payment fees');
+assert.deepEqual(returnRisk.illustrativeRates, [0.1, 0.2, 0.3], 'Return rates are hypothetical 10/20/30%, not an observed forecast');
+assert.equal(returnRisk.outboundCourierNetEurPerOrderAssumption, 7.5, 'Return stress courier baseline must match one explicit what-if scenario');
+assert.ok(returnRisk.reverseCourierNetEurPerReturnedOrderAssumption > 0 && returnRisk.inspectionAndHandlingNetEurPerReturnedItemAssumption > 0,
+  'Never omit reverse shipping and inspection costs');
+assert.deepEqual(returnRisk.recoveryCases.map((item) => [item.id, item.recoverableGoodsCostShare]), [
+  ['RETURNED_GOODS_RESELLABLE', 1], ['RETURNED_GOODS_UNSELLABLE', 0],
+], 'Evaluate returned stock recovery and complete goods loss separately');
+assert.ok(returnRisk.limitations.includes('replaces the flat EUR 2.50'), 'Stress test must not double-count the separate flat returns reserve');
+
+for (const item of cartEconomics.items) {
+  const netRevenue = item.retailGrossEur / (1 + cartEconomics.retailVatRateAssumption);
+  const fee = item.retailGrossEur * cartEconomics.paymentFeeGrossRateAssumption + cartEconomics.paymentFeeFixedEurPerOrderAssumption;
+  const fulfillmentCost = returnRisk.outboundCourierNetEurPerOrderAssumption + handlingEur + cartEconomics.packagingBufferEurPerParcelExVatAssumption;
+  // Unlike the basic cart model, this sensitivity replaces, rather than adds,
+  // the flat per-item returns reserve with explicit returned-order outcomes.
+  const keptContribution = netRevenue - item.supplierPublicCostNetEur - fee - fulfillmentCost;
+  let previousWorstCase = keptContribution;
+  for (const rate of returnRisk.illustrativeRates) {
+    let resellableExpected = null;
+    let unsellableExpected = null;
+    for (const recovery of returnRisk.recoveryCases) {
+      const returnedContribution = -item.supplierPublicCostNetEur * (1 - recovery.recoverableGoodsCostShare)
+        - fee - fulfillmentCost - returnRisk.reverseCourierNetEurPerReturnedOrderAssumption
+        - returnRisk.inspectionAndHandlingNetEurPerReturnedItemAssumption;
+      const expected = (1 - rate) * keptContribution + rate * returnedContribution;
+      assert.ok(Number.isFinite(expected) && expected < keptContribution, `Return risk must reduce contribution: ${item.conceptName}`);
+      if (recovery.id === 'RETURNED_GOODS_RESELLABLE') resellableExpected = expected;
+      if (recovery.id === 'RETURNED_GOODS_UNSELLABLE') unsellableExpected = expected;
+    }
+    assert.ok(Number.isFinite(resellableExpected) && Number.isFinite(unsellableExpected)
+      && unsellableExpected <= resellableExpected && unsellableExpected < previousWorstCase,
+    `Return goods-loss case must be no better and should worsen as return rate rises: ${item.conceptName}`);
+    previousWorstCase = unsellableExpected;
+    if (rate === 0.2) {
+      const cutoff = cartEconomics.illustrativeMinimumContributionBeforeAdsAndFixedOverheadEur;
+      console.log(`  Return stress ${item.conceptName.padEnd(22)} 20% HYPOTHETICAL full refunds @ €7.50 outbound: €${resellableExpected.toFixed(2)} if goods remain resellable, €${unsellableExpected.toFixed(2)} if goods are lost | €10 buffer ${unsellableExpected >= cutoff ? 'CLEARED' : 'MISSED'} in goods-loss case.`);
+    }
+  }
+}
+console.log('  Return-sensitivity audit passed: full-refund/fee/reverse-label risk, 10/20/30% assumptions, no duplicate €2.50 reserve, no live changes.');
