@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { applySeo } from './seo';
 import {
@@ -62,6 +62,7 @@ export default function WomenswearApp() {
   const [category, setCategory] = useState<FashionCategory | 'all'>('all');
   const [showAll, setShowAll] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const menuToggleRef = useRef<HTMLButtonElement>(null);
   const [openQuestion, setOpenQuestion] = useState<number | null>(null);
   const [activeStyle, setActiveStyle] = useState(0);
 
@@ -78,7 +79,10 @@ export default function WomenswearApp() {
   useEffect(() => {
     if (!menuOpen) return;
     function closeOnEscape(event: KeyboardEvent) {
-      if (event.key === 'Escape') setMenuOpen(false);
+      if (event.key === 'Escape') {
+        setMenuOpen(false);
+        menuToggleRef.current?.focus();
+      }
     }
     window.addEventListener('keydown', closeOnEscape);
     return () => window.removeEventListener('keydown', closeOnEscape);
@@ -114,6 +118,7 @@ export default function WomenswearApp() {
 
       <header className="w-header">
         <button
+          ref={menuToggleRef}
           className="w-menu-toggle"
           type="button"
           onClick={() => setMenuOpen((value) => !value)}
