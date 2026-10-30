@@ -25,5 +25,17 @@ assert.ok(entry.includes('path="/edit/:slug"'), 'A route to the concept detail p
 assert.ok(entry.includes('WomenswearApp'), 'The entry must render the women’s fashion preview');
 assert.ok(!entry.includes("import App from './App'"), 'The old store must not be loaded as the active app');
 assert.ok(indexHtml.includes('noindex,nofollow'), 'The fashion preview must stay out of search indexes');
+assert.ok(indexHtml.includes('<html lang="en">'), 'The fashion preview must explicitly use English');
 
-console.log(`EVERNE WOMAN validation passed: ${conceptPieces.length} concepts, ${fashionCategories.length} category counts, distinct routes, €30–60 targets, noindex and active app guard.`);
+const englishLegal = fs.readFileSync('public/legal.html', 'utf8');
+assert.ok(englishLegal.includes('<html lang="en">'), 'An English legal information page is required');
+assert.ok(englishLegal.includes('noindex,nofollow'), 'English prelaunch legal information must remain unindexed');
+for (const anchor of ['imprint', 'privacy', 'returns', 'shipping']) {
+  assert.ok(englishLegal.includes(`id="${anchor}"`), `Missing legal footer target: ${anchor}`);
+}
+
+const homepage = fs.readFileSync('src/WomenswearApp.tsx', 'utf8');
+assert.ok(homepage.includes('legal.html#imprint'), 'The English footer must link to the English legal notice');
+assert.ok(homepage.includes('Shopping not yet available'), 'The preview status must remain clear in English');
+
+console.log(`EVERNE WOMAN validation passed: ${conceptPieces.length} concepts, ${fashionCategories.length} category counts, distinct routes, €30–60 targets, English pages, noindex and active app guard.`);

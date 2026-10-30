@@ -18,11 +18,11 @@ export const fashionCategories: Array<{
   priceRange: string;
   description: string;
 }> = [
-  { id: 'tops', title: 'Tops & Bodys', count: 5, priceRange: '34,90–39,90 €', description: 'Die erste Schicht. Nie nur ein Basic.' },
-  { id: 'knitwear', title: 'Strick', count: 5, priceRange: '44,90–59,90 €', description: 'Weiche Silhouetten für jeden Tag.' },
-  { id: 'trousers', title: 'Hosen & Denim', count: 4, priceRange: '49,90–59,90 €', description: 'Klare Linien. Bewegungsfreiheit.' },
-  { id: 'dresses', title: 'Kleider', count: 3, priceRange: '44,90–59,90 €', description: 'Von spontan bis besonders.' },
-  { id: 'skirts', title: 'Röcke', count: 3, priceRange: '39,90–54,90 €', description: 'Leichtigkeit mit Haltung.' },
+  { id: 'tops', title: 'Tops & Bodysuits', count: 5, priceRange: '€34.90–€39.90', description: 'The first layer. Never just a basic.' },
+  { id: 'knitwear', title: 'Knitwear', count: 5, priceRange: '€44.90–€59.90', description: 'Soft silhouettes for every day.' },
+  { id: 'trousers', title: 'Trousers & Denim', count: 4, priceRange: '€49.90–€59.90', description: 'Clean lines. Room to move.' },
+  { id: 'dresses', title: 'Dresses', count: 3, priceRange: '€44.90–€59.90', description: 'For ordinary days and extraordinary moments.' },
+  { id: 'skirts', title: 'Skirts', count: 3, priceRange: '€39.90–€54.90', description: 'Ease with an edge.' },
 ];
 
 // Concepts only: these are not Shopify inventory, confirmed supplier products,
@@ -51,7 +51,7 @@ export const conceptPieces: ConceptPiece[] = [
 ];
 
 export function formatTargetPrice(value: number): string {
-  return new Intl.NumberFormat('de-DE', {
+  return new Intl.NumberFormat('en-IE', {
     style: 'currency',
     currency: 'EUR',
     minimumFractionDigits: 2,

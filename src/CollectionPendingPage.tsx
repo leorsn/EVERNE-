@@ -6,8 +6,8 @@ export default function CollectionPendingPage() {
   useEffect(() => {
     clearProductStructuredData();
     applySeo({
-      title: 'EVERNE WOMAN — Kollektion in Vorbereitung',
-      description: 'Die neue EVERNE Damenmode-Kollektion wird derzeit kuratiert.',
+      title: 'EVERNE WOMAN — Collection Coming Soon',
+      description: 'The new EVERNE womenswear collection is currently being curated.',
       path: window.location.pathname,
       indexable: false,
     });
@@ -18,11 +18,11 @@ export default function CollectionPendingPage() {
       <header><Link to="/" className="w-footer-logo">EVERNE</Link><span>WOMAN / COL. 01</span></header>
       <main>
         <span className="w-overline">A NEW CHAPTER IS TAKING SHAPE</span>
-        <h1>Etwas Neues<br /><em>kommt.</em></h1>
-        <p>Unsere bisherige Pflegekollektion wird überarbeitet. Die neue Damenmode-Auswahl befindet sich noch in Vorbereitung; Bestellungen sind derzeit nicht möglich.</p>
-        <Link to="/" className="w-solid-link">Zur neuen Vorschau <span aria-hidden="true">→</span></Link>
+        <h1>Something new<br /><em>is coming.</em></h1>
+        <p>Our former garment-care collection is being reimagined. The new womenswear edit is still in the making, and orders are not yet available.</p>
+        <Link to="/" className="w-solid-link">Explore the preview <span aria-hidden="true">→</span></Link>
       </main>
-      <footer>© 2026 EVERNE · DESIGNVORSCHAU</footer>
+      <footer>© 2026 EVERNE · COLLECTION PREVIEW</footer>
     </div>
   );
 }

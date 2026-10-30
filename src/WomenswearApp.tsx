@@ -16,20 +16,20 @@ const editorialImage = (name: string) => base + 'editorial/' + name + '.jpg';
 
 const questions = [
   {
-    question: 'Kann ich die neue Kollektion bereits bestellen?',
-    answer: 'Noch nicht. Dies ist eine Design- und Sortimentsvorschau. Wir prüfen derzeit konkrete Artikel, Größen, Lieferanten und den Versand. Erst danach öffnen wir den Checkout.',
+    question: 'Can I shop the new collection yet?',
+    answer: 'Not yet. This is a preview of our creative direction and planned assortment. We are reviewing actual garments, sizes, suppliers and delivery arrangements before opening checkout.',
   },
   {
-    question: 'Wie viel werden die Stücke kosten?',
-    answer: 'Die geplante Preisspanne liegt zwischen 30 und 60 Euro inklusive Umsatzsteuer. Gezeigte Einzelpreise sind Preisziele und noch keine verbindlichen Angebote.',
+    question: 'How much will the pieces cost?',
+    answer: 'Our planned price range is €30–€60, including VAT. Individual prices shown are targets only, not confirmed retail prices or offers for sale.',
   },
   {
-    question: 'Welche Größen wird es geben?',
-    answer: 'Wir planen überwiegend XS bis XL. Verbindliche Größen und Maßtabellen erscheinen erst nach Auswahl des jeweiligen Lieferanten und tatsächlichen Artikels.',
+    question: 'Which sizes will be available?',
+    answer: 'We are aiming for a mostly XS–XL size range. Confirmed sizes and detailed size guides will follow once the garments and suppliers have been selected.',
   },
   {
-    question: 'Wie funktionieren Lieferung und Retoure?',
-    answer: 'Vor Verkaufsstart veröffentlichen wir die konkreten Lieferzeiten, Versandkosten, Rücksendeadresse und Widerrufsinformationen. Momentan nehmen wir keine Bestellungen an.',
+    question: 'How will shipping and returns work?',
+    answer: 'Before launch, we will publish confirmed delivery times, shipping fees, a return address and withdrawal information. We are not accepting orders at present.',
   },
 ];
 
@@ -46,7 +46,7 @@ export default function WomenswearApp() {
   useEffect(() => {
     applySeo({
       title: 'EVERNE WOMAN — Modern essentials & new expressions',
-      description: 'EVERNE WOMAN: eine Vorschau auf moderne Damenmode zwischen 30 und 60 Euro. Essentials und Trendteile, neu kuratiert.',
+      description: 'Discover the EVERNE WOMAN preview: modern wardrobe essentials and expressive pieces, with planned prices between €30 and €60.',
       path: '/',
       type: 'website',
       indexable: false,
@@ -71,12 +71,12 @@ export default function WomenswearApp() {
 
   return (
     <div className="everne-woman" id="top">
-      <a className="w-skip-link" href="#main">Zum Inhalt springen</a>
+      <a className="w-skip-link" href="#main">Skip to content</a>
 
       <div className="w-announcement">
         <span>EVERNE WOMAN / COLLECTION 01</span>
-        <span>Designvorschau · Bestellungen noch geschlossen</span>
-        <span>Hamburg · DE</span>
+        <span>Collection preview · Shopping not yet available</span>
+        <span>Hamburg · Germany</span>
       </div>
 
       <header className="w-header">
@@ -87,14 +87,14 @@ export default function WomenswearApp() {
           aria-expanded={menuOpen}
           aria-controls="woman-nav"
         >
-          {menuOpen ? 'Schließen' : 'Menü'} <span aria-hidden="true">{menuOpen ? '×' : '☰'}</span>
+          {menuOpen ? 'Close' : 'Menu'} <span aria-hidden="true">{menuOpen ? '×' : '☰'}</span>
         </button>
-        <nav id="woman-nav" className={menuOpen ? 'w-nav is-open' : 'w-nav'} aria-label="Hauptnavigation">
-          <a href="#collection" onClick={closeMenu}>Kollektion</a>
-          <a href="#story" onClick={closeMenu}>Unsere Welt</a>
+        <nav id="woman-nav" className={menuOpen ? 'w-nav is-open' : 'w-nav'} aria-label="Main navigation">
+          <a href="#collection" onClick={closeMenu}>Collection</a>
+          <a href="#story" onClick={closeMenu}>Our World</a>
           <a href="#edit" onClick={closeMenu}>The Edit</a>
         </nav>
-        <a className="w-logo" href="#top" aria-label="EVERNE Startseite">EVERNE<span>WOMAN</span></a>
+        <a className="w-logo" href="#top" aria-label="EVERNE homepage">EVERNE<span>WOMAN</span></a>
         <a className="w-header-cta" href="#edit">The Edit <Arrow diagonal /></a>
       </header>
 
@@ -104,23 +104,23 @@ export default function WomenswearApp() {
             <div className="w-section-meta"><span>01 / THE NEW EVERYDAY</span><span>Autumn / Winter 26</span></div>
             <div className="w-hero-main">
               <p className="w-overline">Modern femininity. Your way.</p>
-              <h1 id="hero-title">Für jeden Tag.<br /><em>Nicht alltäglich.</em></h1>
-              <p className="w-hero-description">Die Pieces, zu denen du immer wieder greifst. Klare Essentials, neue Silhouetten und ein bisschen Mut zum Anderssein.</p>
-              <a className="w-solid-link" href="#collection">Kollektion entdecken <Arrow /></a>
+              <h1 id="hero-title">For every day.<br /><em>Never ordinary.</em></h1>
+              <p className="w-hero-description">The pieces you reach for again and again. Effortless essentials, fresh silhouettes and a little room to be different.</p>
+              <a className="w-solid-link" href="#collection">Explore the collection <Arrow /></a>
             </div>
             <div className="w-hero-foot">
               <span>ESSENTIALS × EXPRESSION</span>
-              <span>30–60 € · Geplante Preisspanne</span>
+              <span>€30–€60 · Planned price range</span>
             </div>
           </div>
           <div className="w-hero-media">
-            <img src={editorialImage('tailored')} alt="Zwei Frauen in elegant geschnittenen, neutralen Outfits vor einem hellen Torbogen – Editorial-Stilreferenz" fetchPriority="high" />
+            <img src={editorialImage('tailored')} alt="Two women in tailored neutral outfits by a light stone archway — editorial style reference" fetchPriority="high" />
             <div className="w-image-stamp"><span>EVERNE</span><small>THE WOMAN EDITION</small></div>
             <span className="w-vertical-caption">A MORE PERSONAL UNIFORM — 2026</span>
           </div>
         </section>
 
-        <div className="w-marquee" aria-label="Markenwerte">
+        <div className="w-marquee" aria-label="Brand philosophy">
           <span>EVERYDAY, ELEVATED</span><span className="w-star">✳</span>
           <span>YOUR STYLE. YOUR RULES.</span><span className="w-star">✳</span>
           <span>ESSENTIALS WITH ATTITUDE</span><span className="w-star">✳</span>
@@ -130,12 +130,12 @@ export default function WomenswearApp() {
         <section className="w-intro" id="collection">
           <div className="w-kicker">01 — THE WARDROBE</div>
           <div className="w-intro-content">
-            <h2>Eine Garderobe.<br /><em>Viele Versionen von dir.</em></h2>
-            <p>Mal reduziert, mal ausdrucksstark. EVERNE verbindet unkomplizierte Lieblingsstücke mit ausgewählten Trends. Nicht für einen einzigen Look – sondern für deinen.</p>
+            <h2>One wardrobe.<br /><em>Every version of you.</em></h2>
+            <p>Some days understated. Others unapologetic. EVERNE brings together effortless favourites and considered trends. Not for one particular look — for yours.</p>
           </div>
         </section>
 
-        <section className="w-category-section" aria-label="Geplante Modekategorien">
+        <section className="w-category-section" aria-label="Planned fashion categories">
           <div className="w-category-grid">
             {fashionCategories.map((item, index) => (
               <button
@@ -143,7 +143,7 @@ export default function WomenswearApp() {
                 type="button"
                 className={'w-category-card w-category-' + item.id}
                 onClick={() => selectCategory(item.id)}
-                aria-label={item.title + ': Entwürfe ansehen'}
+                aria-label={item.title + ': view design concepts'}
               >
                 {index === 0 && <img src={editorialImage('trench')} alt="" loading="lazy" />}
                 {index === 1 && <img src={editorialImage('knit')} alt="" loading="lazy" />}
@@ -151,25 +151,25 @@ export default function WomenswearApp() {
                 <span className="w-category-no">0{index + 1} / {String(item.count).padStart(2, '0')} PIECES</span>
                 <span className="w-category-info">
                   <span className="w-category-title">{item.title} <Arrow diagonal /></span>
-                  <span className="w-category-price">Preisziele {item.priceRange}</span>
+                  <span className="w-category-price">Target prices {item.priceRange}</span>
                 </span>
               </button>
             ))}
           </div>
-          <p className="w-media-note">Editorial-Bilder zeigen die Stilrichtung, nicht die späteren Verkaufsartikel.</p>
+          <p className="w-media-note">Editorial photography illustrates our style direction, not garments available for purchase.</p>
         </section>
 
         <section className="w-story" id="story">
           <div className="w-story-photo">
-            <img src={editorialImage('trench')} alt="Frau in beigefarbenem Mantel und Sonnenbrille – urbane Mode-Stilreferenz" loading="lazy" />
+            <img src={editorialImage('trench')} alt="Woman wearing a beige coat and sunglasses — urban fashion style reference" loading="lazy" />
             <span>THE LOOK / 001</span>
           </div>
           <div className="w-story-copy">
             <div className="w-kicker">02 — THE POINT OF VIEW</div>
             <h2>Quiet pieces.<br /><em>Bold energy.</em></h2>
-            <p>70 Prozent zeitlose Essentials. 30 Prozent neue Impulse. Unser Ansatz für Outfits, die sich mühelos kombinieren lassen und trotzdem nach dir aussehen.</p>
+            <p>70% enduring essentials. 30% fresh perspective. Our formula for a wardrobe that works effortlessly together while still feeling entirely your own.</p>
             <div className="w-story-rule"><span>01 / Wear it your way</span><span>02 / Repeat your favourites</span><span>03 / Make it yours</span></div>
-            <a className="w-text-link" href="#edit">In die Auswahl schauen <Arrow diagonal /></a>
+            <a className="w-text-link" href="#edit">Explore the edit <Arrow diagonal /></a>
           </div>
         </section>
 
@@ -180,13 +180,13 @@ export default function WomenswearApp() {
               <h2>The <em>Edit.</em></h2>
             </div>
             <div className="w-edit-description">
-              <p>20 geplante Pieces. Eine erste Kuratierung – noch keine lieferbaren Produkte.</p>
+              <p>20 planned pieces. An early edit — not yet available to buy.</p>
               <span>PREVIEW / NO CHECKOUT</span>
             </div>
           </div>
 
-          <div className="w-filters" role="group" aria-label="Kategorie auswählen">
-            <button type="button" className={category === 'all' ? 'is-active' : ''} onClick={() => selectCategory('all')}>Alle <span>20</span></button>
+          <div className="w-filters" role="group" aria-label="Choose a category">
+            <button type="button" className={category === 'all' ? 'is-active' : ''} onClick={() => selectCategory('all')}>All <span>20</span></button>
             {fashionCategories.map((item) => (
               <button key={item.id} type="button" className={category === item.id ? 'is-active' : ''} onClick={() => selectCategory(item.id)}>{item.title} <span>{item.count}</span></button>
             ))}
@@ -197,15 +197,15 @@ export default function WomenswearApp() {
               const index = conceptPieces.indexOf(piece);
               return (
                 <article className="w-concept-card" key={piece.name}>
-                  <Link className="w-concept-link" to={'/edit/' + conceptSlug(piece.name)} aria-label={'Designstudie ' + piece.name + ' ansehen'}>
+                  <Link className="w-concept-link" to={'/edit/' + conceptSlug(piece.name)} aria-label={'View the ' + piece.name + ' design concept'}>
                     <div className={'w-concept-visual tone-' + piece.tone} aria-hidden="true">
                       <span className="w-concept-watermark">E.</span>
                       <span className="w-concept-index">{String(index + 1).padStart(2, '0')}</span>
-                      <span className="w-concept-label">STUDIE ANSEHEN ↗</span>
+                      <span className="w-concept-label">VIEW CONCEPT ↗</span>
                     </div>
                     <div className="w-concept-meta">
                       <div><span>{fashionCategories.find((item) => item.id === piece.category)?.title}</span><h3>{piece.name}</h3></div>
-                      <div className="w-target-price"><span>Preisziel</span><strong>{formatTargetPrice(piece.targetPrice)}</strong></div>
+                      <div className="w-target-price"><span>Price target</span><strong>{formatTargetPrice(piece.targetPrice)}</strong></div>
                     </div>
                   </Link>
                 </article>
@@ -214,25 +214,25 @@ export default function WomenswearApp() {
           </div>
 
           {category === 'all' && !showAll &&
-            <button className="w-show-all" type="button" onClick={() => setShowAll(true)}>Alle 20 Konzepte ansehen <Arrow /></button>
+            <button className="w-show-all" type="button" onClick={() => setShowAll(true)}>View all 20 concepts <Arrow /></button>
           }
-          <p className="w-disclaimer">Diese Auswahl ist ein Gestaltungs- und Einkaufsplan. Namen, Preise, Material, Größen und Verfügbarkeit werden erst nach bestätigter Beschaffung verbindlich veröffentlicht.</p>
+          <p className="w-disclaimer">This edit is a creative and sourcing plan. Product names, final prices, fabrics, sizing and availability will only be confirmed after sourcing is complete.</p>
         </section>
 
         <section className="w-bottom-editorial">
           <div className="w-bottom-copy">
             <span className="w-overline">EVERNE WOMAN / COL. 01</span>
             <h2>Dress like<br /><em>yourself.</em></h2>
-            <p>Der nächste Drop ist in Vorbereitung. Bald mit echten Artikeln, klaren Größeninformationen und transparenten Lieferbedingungen.</p>
-            <a className="w-outline-link" href="#faq">Mehr erfahren <Arrow /></a>
+            <p>Our first drop is taking shape. Actual garments, detailed sizing and clear delivery information are coming soon.</p>
+            <a className="w-outline-link" href="#faq">Find out more <Arrow /></a>
           </div>
           <div className="w-bottom-photo">
-            <img src={editorialImage('knit')} alt="Frau in auffälligem Strickpullover – Editorial-Stilreferenz für Trendteile" loading="lazy" />
+            <img src={editorialImage('knit')} alt="Woman wearing a statement knit sweater — editorial trend reference" loading="lazy" />
           </div>
         </section>
 
         <section className="w-faq" id="faq">
-          <div><div className="w-kicker">04 — GOOD TO KNOW</div><h2>Die wichtigen<br /><em>Details.</em></h2></div>
+          <div><div className="w-kicker">04 — GOOD TO KNOW</div><h2>The little<br /><em>details.</em></h2></div>
           <div className="w-faq-list">
             {questions.map((item, index) => (
               <div className="w-faq-item" key={item.question}>
@@ -249,10 +249,10 @@ export default function WomenswearApp() {
       <footer className="w-footer">
         <div className="w-footer-top">
           <div><a href="#top" className="w-footer-logo">EVERNE</a><p>Modern essentials.<br />New expressions.</p></div>
-          <div><span>Explore</span><a href="#collection">Kollektion</a><a href="#edit">The Edit</a><a href="#story">Unsere Welt</a></div>
-          <div><span>Information</span><a href={base + 'rechtliches.html#impressum'}>Impressum</a><a href={base + 'rechtliches.html#datenschutz'}>Datenschutz</a><a href={base + 'rechtliches.html#widerruf'}>Widerruf</a><a href={base + 'rechtliches.html#versand'}>Versand & Retouren</a></div>
+          <div><span>Explore</span><a href="#collection">Collection</a><a href="#edit">The Edit</a><a href="#story">Our World</a></div>
+          <div><span>Information</span><a href={base + 'legal.html#imprint'}>Legal notice</a><a href={base + 'legal.html#privacy'}>Privacy</a><a href={base + 'legal.html#returns'}>Returns</a><a href={base + 'legal.html#shipping'}>Shipping & returns</a></div>
         </div>
-        <div className="w-footer-bottom"><span>© 2026 EVERNE · Hamburg</span><span>Designvorschau · Kein aktiver Verkauf</span><span>Commerce foundation by Shopify</span></div>
+        <div className="w-footer-bottom"><span>© 2026 EVERNE · Hamburg</span><span>Collection preview · No active sales</span><span>Commerce foundation by Shopify</span></div>
       </footer>
     </div>
   );

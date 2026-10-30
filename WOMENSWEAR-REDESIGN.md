@@ -8,7 +8,7 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
 - Planned customer price range: EUR 30–60 including tax.
 - First curation: 20 concepts in five categories: tops, knitwear,
   trousers and denim, dresses, skirts.
-- German-first copy, quiet editorial typography, ivory, ink, stone and wine.
+- English-first copy, quiet editorial typography, ivory, ink, stone and wine.
 
 ## Architecture and safety
 
@@ -23,7 +23,7 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
 - The new frontend does not call Shopify or expose purchase actions. Old
   launch gates remain unchanged and cannot activate this preview.
 - noindex,nofollow stays active until a genuine launch is approved.
-- Existing legal pages contain prelaunch placeholders and require review.
+- The English `/legal.html` page is linked in the fashion preview, with the original German `/rechtliches.html` preserved for reference. Both contain prelaunch placeholders and require review.
 - The build validates concept counts, route slugs, target price range, and
   noindex separately from the preserved garment-care configuration.
 
