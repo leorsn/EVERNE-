@@ -63,6 +63,20 @@ shipping and partial returns**. Figures are **NOT carrier quotations, actual
 profits or authorization for live bundles**, discounts or free shipping.
 The two dresses remain on HOLD and the full release decision stays NO-GO.
 
+## Schriftliche Preisnachweise nachtragen
+
+Der konkrete, **noch nicht durchgeführte** Ablauf zur Aufnahme eines
+authentifizierten Händleretikett-Preises und einer tatsächlichen
+Shopify-Integrationsgebühr ist in
+`sourcing/REAL-QUOTE-INTAKE.md` dokumentiert. Werte müssen
+**in allen beteiligten Modellen übereinstimmen** und eine datierte Quelle
+sowie einen verantwortlichen Prüfer enthalten. Ein Nullbetrag für eine
+Integration darf ausschließlich nach schriftlich bestätigtem kostenfreien
+Betrieb eingetragen werden. Bloße positive Testergebnisse oder ein günstiges
+Angebot erlauben **weder Shopify-Publikation noch Checkout-Freigabe**.
+Der komplette `check:sourcing`-Verbund akzeptiert dokumentierte
+Nachweise, blockiert aber widersprüchliche, unbelegte Angaben.
+
 ## Owner approval and data gates
 
 There are **12 global checks** and **30 per-product evidence checks**. Each starts `PENDING`, and it may only become `VERIFIED` with an evidence reference, verification date and reviewer. The full machine-readable set is:
