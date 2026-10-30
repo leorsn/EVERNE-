@@ -48,6 +48,15 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
   This guide is now the ninth file inside the portable ZIP and includes
   trusted-LAN iPhone test instructions instead of assuming AirDrop/Files
   provides a complete JavaScript browser runtime.
+- The PR workflow also runs `npm run check:browser:offline` against
+  the **actual built offline HTML** in headless Chromium using Node 22's
+  native DevTools WebSocket; no new npm/browser service subscription.
+  It interacts with all 20 detail routes, the five filters (actual counts
+  5/5/4/3/3), mobile 320/390 px viewports, mobile menu, FAQ, styling
+  selection, filtered back-navigation and the local legal page, and fails
+  on browser JS exceptions, live checkout or remote requests.
+  GitHub Actions run `41129444820` **PASSED** on the first corrected
+  test iteration. This is **Chromium**, not WebKit/Safari device QA.
 - The GitHub PR workflow now runs `npm run build:offline` and
   `npm run check:offline:package`, checking byte-for-byte ZIP integrity,
   local editorial assets and legal links, build inline CSS/JS and the
