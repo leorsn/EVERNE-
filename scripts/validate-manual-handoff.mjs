@@ -48,6 +48,35 @@ const body = line('Second Skin Body', 'L/XL');
 const pant = line('Tailored Everyday Pant', 'M');
 const dress = line('Easy Slip Dress', 'S/M');
 
+// Exercise every publicly observed size EAN for the THREE preferred research
+// styles. A valid EAN checksum is not proof of actual retail inventory.
+const preferredCodes = new Set(readiness.items
+  .filter((item) => item.reviewStage === 'SAMPLE_RESEARCH_PRIORITY')
+  .map((item) => item.supplierProductCode));
+const verifiedResearchEans = new Set();
+let sizeCases = 0;
+for (const candidate of [...essential.candidates, ...capsule.candidates]) {
+  if (!preferredCodes.has(candidate.supplierProductCode)) continue;
+  for (const size of candidate.visibleSizesForSampleColor) {
+    const ean = candidate.variantIdentifiersBySize[size];
+    assert.ok(!verifiedResearchEans.has(ean), 'An EAN must not identify multiple mock research variants');
+    verifiedResearchEans.add(ean);
+    const plan = economics.items.find((item) =>
+      item.supplierProductCode === candidate.supplierProductCode);
+    const result = reviewSyntheticOrder(scenario([{
+      supplierProductCode: plan.supplierProductCode,
+      variantEan: ean,
+      quantity: 1,
+      unitPriceGrossEur: plan.retailGrossEur,
+    }]), context);
+    assert.equal(result.lines[0].mapping, 'RESEARCH_REFERENCE_ONLY');
+    assert.equal(result.status, 'HOLD_NO_GO');
+    sizeCases++;
+  }
+}
+assert.equal(sizeCases, 8, 'Two rib, two body, four trouser supplier size variants expected');
+
+
 const single = reviewSyntheticOrder(scenario([top]), context);
 assert.equal(single.status, 'HOLD_NO_GO');
 assert.equal(single.workflowMode, 'OFFLINE_MOCK_ONLY');
