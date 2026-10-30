@@ -33,6 +33,8 @@ jobs:
         run: npm run typecheck
       - name: Build
         run: npm run build
+      - name: Build and verify offline Safari ZIP
+        run: npm run build:offline
       # Legacy garment-care collection is not a requirement of the new womenswear preview.
       # It is intentionally still testable through an explicit manual dispatch.
       - name: Verify legacy Shopify Storefront catalog (manual opt-in)
