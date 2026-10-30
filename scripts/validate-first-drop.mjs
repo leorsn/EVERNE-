@@ -131,3 +131,48 @@ assert.equal(topsCount, 3, 'Expected three top candidates');
 assert.equal(denimCount, 3, 'Expected three denim candidates');
 assert.ok(topsDenimResearch.rejectedOrOnHold.length >= 4, 'Must retain rejected listing evidence');
 console.log('  Tops and denim audit passed: real size variants, margin/label blockers, no automatic Shopify import.');
+
+const essentials = JSON.parse(fs.readFileSync('sourcing/essential-basics-alternatives.json', 'utf8'));
+assert.equal(essentials.status, 'RESEARCH_ONLY', 'Essentials must be research-only');
+assert.equal(essentials.approvedForSale, false, 'Essentials must never be sale-approved');
+assert.equal(essentials.supplier, 'FactoryPrice', 'Essentials supplier identity must be explicit');
+assert.equal(essentials.fulfilmentStatus, 'UNQUOTED_GERMANY_SHIPPING_AND_B2B_RETURNS', 'Unquoted shipping and B2B returns must remain visible');
+assert.ok(essentials.shippingAndReturnWarnings.length >= 4, 'Document wholesale logistics/returns before any launch');
+assert.ok(essentials.model.excludedCosts.some((cost) => cost.includes('inbound shipping')), 'FactoryPrice inbound shipping must remain excluded from the ceiling');
+assert.equal(essentials.candidates.length, 5, 'Expected three essential models and two alternatives');
+const essentialIds = new Set();
+const essentialUrls = new Set();
+const matchedConcepts = new Set();
+for (const item of essentials.candidates) {
+  const concept = conceptByName.get(item.conceptName);
+  assert.ok(concept && concept.category === 'tops', `Only existing top concepts allowed: ${item.id}`);
+  assert.ok(!essentialIds.has(item.id) && !essentialUrls.has(item.url), `Duplicate essentials listing: ${item.id}`);
+  assert.equal(item.approvedForSale, false, `No SKU may be sale-approved: ${item.id}`);
+  assert.equal(item.baselineRetailGrossEur, concept.targetPrice, `Wrong baseline retail: ${item.id}`);
+  assert.equal(item.proposedRetailGrossEur, concept.targetPrice, `Price was changed without authorization: ${item.id}`);
+  assert.ok(Number.isInteger(item.proposedRetailGrossEur) && [4, 9].includes(item.proposedRetailGrossEur % 10), `Whole-euro 4/9 price required: ${item.id}`);
+  assert.ok(item.url.startsWith('https://factoryprice.eu/de/products/'), `Official supplier listing required: ${item.id}`);
+  assert.ok(Number.isFinite(item.indicativeSupplierNetEur) && item.indicativeSupplierNetEur > 0, `Valid public cost required: ${item.id}`);
+  assert.ok(item.listedComposition.length >= 15 && item.listedTexture.length >= 15, `Fabric and description evidence required: ${item.id}`);
+  assert.ok(item.visibleSizesForSampleColor.length >= 2, `Actual color variants required: ${item.id}`);
+  assert.ok(item.questions.length >= 3, `Open sample/fulfillment gates required: ${item.id}`);
+  assert.ok(item.candidateStatus !== 'APPROVED', `Never approve research-only candidates: ${item.id}`);
+  assert.ok(item.visibleSizesForSampleColor.every((size) => size !== 'ONESIZE'
+    && Number.isInteger(item.publicStockObservedBySize[size]) && item.publicStockObservedBySize[size] > 0
+    && typeof item.variantIdentifiersBySize[size] === 'string' && item.variantIdentifiersBySize[size].length >= 10
+    && item.listedGarmentMeasurementsCmBySize[size]?.length > 0), `Each variant requires public stock, ID and garment length: ${item.id}`);
+  const lowStock = item.visibleSizesForSampleColor.some((size) => item.publicStockObservedBySize[size] < 5);
+  if (lowStock) assert.ok(item.candidateStatus.includes('LOW_'), `Low-stock variant must block or qualify sample decision: ${item.id}`);
+  essentialIds.add(item.id);
+  essentialUrls.add(item.url);
+  matchedConcepts.add(item.conceptName);
+
+  const m = essentials.model;
+  const netRevenue = item.proposedRetailGrossEur / (1 + m.germanGrossVatRateAssumption);
+  const paymentFee = item.proposedRetailGrossEur * m.paymentFeeGrossRateAssumption + m.paymentFeeFixedEurAssumption;
+  const ceiling = netRevenue - item.indicativeSupplierNetEur - m.outboundShippingPerSaleExVatEurAssumption - m.packagingPerSaleExVatEurAssumption - paymentFee - m.returnCostReservePerSaleExVatEurAssumption;
+  assert.ok(Number.isFinite(ceiling), `Contribution ceiling must be calculable: ${item.id}`);
+  console.log(`  Essential ${item.conceptName.padEnd(20)} gross €${item.proposedRetailGrossEur} | public net goods €${item.indicativeSupplierNetEur.toFixed(2)} | ceiling before INBOUND/ads €${ceiling.toFixed(2)} | ${item.candidateStatus}`);
+}
+assert.deepEqual([...matchedConcepts].sort(), ['Essential Rib Top', 'Everyday Tank', 'Second Skin Body'].sort(), 'Cover exactly three outstanding essential concepts');
+console.log('  Essentials audit passed: real size/stock snapshots, 4/9 prices, unknown inbound freight EXCLUDED, no Shopify import or purchase.');

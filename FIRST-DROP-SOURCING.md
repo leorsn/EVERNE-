@@ -161,13 +161,70 @@ supplier listings or a different fulfillment model.
 4. Require replenishment evidence for the CIVICO wide-leg's size L before
    marketing a consistent S/M/L range.
 
-**Still missing:** a clean size-led Everyday Tank, an authentic Essential Rib
-Top, and a Second Skin Body. The tempting LEIVIP scoop-neck tank and ribbed
-knits proved to be **one-size only**; the baroque-print sheer bodysuit has
-S/M but is not a truthful match for the proposed minimal black body.
+**Third-pass status, now superseded by the fourth pass below:** the
+size-led Everyday Tank, authentic Essential Rib Top, and Second Skin Body
+had no credible matching candidate. LEIVIP's scoop-neck tank and ribbed
+knits proved to be **one-size only**; the baroque-print sheer bodysuit was
+not a truthful match for the proposed minimal black body.
 
 No products were purchased, imported into Shopify, renamed on the live site,
 or offered as orderable. This work only enriches the research gate.
+
+### Essential cotton basics — fourth research pass (30 October 2026)
+
+**Result:** All three previously uncovered essentials now have a *supplier
+listing worth sampling* at the existing retail-price points **€34 / €39**.
+These are **not accepted garments or a supplier contract**. Unlike the former
+LEIVIP top alternatives, FactoryPrice's public net unit prices leave a larger
+theoretical buffer, but inbound shipping and any direct-to-consumer
+fulfillment charges are still **unknown**.
+
+| Concept | Best current candidate (actual black variant) | Public supplier unit net* | Concept retail gross | Public stock snapshot | Status |
+|---|---|---:|---:|---|---|
+| **Essential Rib Top** | [RUE PARIS ribbed cotton tank](https://factoryprice.eu/de/products/schwarzes-damen-tanktop-basic-im-streifen-rue-paris-419503.html), `RV-TP-A1363.01P` | **€5.89** | **€34** | S/M **35**, L/XL **31** | Preferred sample candidate; verify ribbing, fabric and fit |
+| **Second Skin Body** | [RUE PARIS plain cotton body](https://factoryprice.eu/de/products/schwarzes-damen-basic-body-ohne-armel-rue-paris-419790.html), `RV-BO-A1441.81` | **€7.20** | **€39** | S/M **13**, L/XL **14** | Preferred sample candidate; verify gusset, fastener and returns |
+| **Everyday Tank** | [RUE PARIS sleeveless cotton tank](https://factoryprice.eu/de/products/schwarzes-damen-basic-top-ohne-armel-rue-paris-419774.html), `RV-TP-A1466.74` | **€8.06** | **€34** | S/M **29**, L/XL **36** | Preferred sample candidate; compare appearance to the ribbed top |
+| Second Skin Body — backup | [BERRAK black viscose body](https://factoryprice.eu/de/products/schwarzes-basic-body-aus-viskose-387525.html), `BR-BO-2055` | **€8.06** | **€39** | S **44**, M **24**, L **17**, XL **3** | Backup only: XL replenishment needed |
+| Essential Rib Top — backup | [RUE PARIS fitted ribbed tank](https://factoryprice.eu/de/products/schwarzes-figurbetontes-top-mit-streifen-rue-paris-419840.html), `RV-TP-A1439.97` | **€8.06** | **€34** | S/M **1**, L/XL **1** | **Hold** — too little stock in both sizes |
+
+\* These are public **net** listing prices and **volatile public quantity
+snapshots**, observed on the research date. Supplier requires login for actual
+merchant pricing. The first and third top models are distinct fabric designs
+despite both being sleeveless. Both preferred black tanks and the cotton body
+list **90% cotton / 10% elastane**; the BERRAK backup lists **95% viscose /
+5% elastane**. Supplier centimeter measurements and exact selectable variant
+identifiers are recorded in `sourcing/essential-basics-alternatives.json`.
+
+**Fourth-pass financial screen — contribution ceiling, *not profit*.** Assume
+gross retail includes German 19% VAT, outbound shipping €4.90 net, packaging
+€0.70 net, processing 2.5% of gross plus €0.25, and a provisional €2.50
+net return-cost reserve. After deducting the listed unit cost, but **before
+any FactoryPrice inbound freight, dropshipping charges, paid acquisition,
+staff work and overhead**, the modeled remaining amounts are:
+
+| Sample concept | Retail gross | Maximum modeled amount **before inbound/ads** |
+|---|---:|---:|
+| Essential Rib Top, preferred | €34 | **€13.48** |
+| Second Skin Body, preferred | €39 | **€16.25** |
+| Everyday Tank, preferred | €34 | **€11.31** |
+| Second Skin Body, BERRAK backup | €39 | **€15.39** |
+| Essential Rib Top, low-stock backup | €34 | **€11.31** |
+
+**FactoryPrice-specific unresolved commercial gates:** receive a real
+Germany delivery/dropship quote for the exact units and shipment model;
+confirm price after trade login, MOQ and availability; establish whether
+image rights permit ecommerce resale presentation; and agree in writing how
+returns and customer defects are handled. Do **not** reuse LEIVIP's separate
+€14/6-item freight assumption. FactoryPrice's product-page wholesale terms
+currently state **7 working days**, unused goods in original packaging and
+buyer-funded B2B return shipping; promotional *14-day free returns* badges
+are therefore not safe evidence of the wholesale return policy. EVERNE's own
+customer-facing obligations remain separate. None of these products is
+launch-approved or stocked.
+
+**Suggested next controlled action:** obtain a trade quote and return/shipping
+terms for the three preferred model SKUs, then seek founder approval for a
+small **sample-only** basket. Price labels and storefront remain unchanged.
 
 **Selection rule:** for a launch apparel SKU, require at least two independently
 orderable size variants; prefer S/M/L for bottoms and S/M plus L/XL or more
