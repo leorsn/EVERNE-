@@ -35,6 +35,10 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
   derivatives (the JPEG originals remain intact), reducing combined image
   bytes by roughly two thirds without changing the represented garments.
   Signature and size-reduction tests run in `check:womenswear`.
+- Narrow phone screens now retain the third related concept as a compact
+  full-width card rather than silently hiding it. Main menu and filter
+  controls have at least 44px tall touch targets in the CSS; Safari visual
+  confirmation is still required.
 - Historical `/products/*` routes show a truthful collection-pending page.
 - Product names and prices in womenswearCatalog.ts are planning concepts,
   not offers, published Shopify items, or verified stock.
