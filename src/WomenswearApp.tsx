@@ -21,7 +21,7 @@ const questions = [
   },
   {
     question: 'How much will the pieces cost?',
-    answer: 'Our planned price range is €30–€60, including VAT. Individual prices shown are targets only, not confirmed retail prices or offers for sale.',
+    answer: 'Our planned price range is €34–€59, including VAT. Individual prices shown are targets only, not confirmed retail prices or offers for sale.',
   },
   {
     question: 'Which sizes will be available?',
@@ -68,7 +68,7 @@ export default function WomenswearApp() {
   useEffect(() => {
     applySeo({
       title: 'EVERNE WOMAN — Modern essentials & new expressions',
-      description: 'Discover the EVERNE WOMAN preview: modern wardrobe essentials and expressive pieces, with planned prices between €30 and €60.',
+      description: 'Discover the EVERNE WOMAN preview: modern wardrobe essentials and expressive pieces, with planned prices between €34 and €59.',
       path: '/',
       type: 'website',
       indexable: false,
@@ -134,7 +134,7 @@ export default function WomenswearApp() {
             </div>
             <div className="w-hero-foot">
               <span>ESSENTIALS × EXPRESSION</span>
-              <span>€30–€60 · Planned price range</span>
+              <span>€34–€59 · Planned price range</span>
             </div>
           </div>
           <div className="w-hero-media">

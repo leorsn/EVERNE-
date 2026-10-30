@@ -5,7 +5,8 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
 ## Brand direction
 
 - Style C: approximately 70% enduring essentials, 30% trend accents.
-- Planned customer price range: EUR 30–60 including tax.
+- Planned customer price range: EUR 34–59 including tax; every concept price is a
+  whole euro ending in 4 or 9 (former .90 prices rounded down).
 - First curation: 20 concepts in five categories: tops, knitwear,
   trousers and denim, dresses, skirts.
 - English-first copy, quiet editorial typography, ivory, ink, stone and wine.
