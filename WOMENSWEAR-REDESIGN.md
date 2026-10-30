@@ -46,6 +46,9 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
   local legal pages and hash-based concept routes. The actual Vercel build
   still uses normal routes. The offline package is for owner review only,
   has no checkout and is not a substitute for live Safari acceptance.
+- Local `file://` previews omit canonical and Open Graph page URLs rather than
+  attempting to resolve them against the browser's opaque `null` origin;
+  ordinary `http(s)` deployments continue to emit their canonical URLs.
 - Historical `/products/*` routes show a truthful collection-pending page.
 - Product names and prices in womenswearCatalog.ts are planning concepts,
   not offers, published Shopify items, or verified stock.
