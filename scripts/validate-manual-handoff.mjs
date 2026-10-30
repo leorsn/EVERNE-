@@ -80,11 +80,18 @@ for (const result of [single, two, alternate]) {
 const unrecognizedVariant = reviewSyntheticOrder(
   scenario([{ ...top, variantEan: '9999999999999' }]), context);
 assert.ok(unrecognizedVariant.blockers.includes('VARIANT_EAN_NOT_VERIFIED_FROM_RESEARCH'));
+assert.equal(unrecognizedVariant.lines[0].mapping, 'UNVERIFIED_VARIANT');
 const unknownProduct = reviewSyntheticOrder(
   scenario([{ ...top, supplierProductCode: 'UNKNOWN-SKU-000' }]), context);
 assert.ok(unknownProduct.blockers.includes('UNKNOWN_SUPPLIER_PRODUCT'));
 const wrongPrice = reviewSyntheticOrder(scenario([{ ...top, unitPriceGrossEur: 49 }]), context);
 assert.ok(wrongPrice.blockers.includes('RETAIL_PRICE_NOT_MATCHED'));
+assert.equal(wrongPrice.lines[0].mapping, 'PRICE_MISMATCH');
+const bothInvalid = reviewSyntheticOrder(
+  scenario([{ ...top, variantEan: '9999999999999', unitPriceGrossEur: 49 }]), context);
+assert.equal(bothInvalid.lines[0].mapping, 'PRICE_AND_VARIANT_UNVERIFIED');
+assert.ok(bothInvalid.blockers.includes('RETAIL_PRICE_NOT_MATCHED'));
+assert.ok(bothInvalid.blockers.includes('VARIANT_EAN_NOT_VERIFIED_FROM_RESEARCH'));
 const heldDress = reviewSyntheticOrder(scenario([dress]), context);
 assert.ok(heldDress.blockers.includes('CONCEPT_ON_HOLD'));
 assert.ok(heldDress.blockers.includes('NOT_A_PRIORITY_SAMPLE_CANDIDATE'));
@@ -108,6 +115,12 @@ assert.throws(() => reviewSyntheticOrder(scenario([top, body, pant]), context),
 assert.throws(() => reviewSyntheticOrder(
   scenario([{ ...top, quantity: 0 }]), context), /Invalid synthetic/);
 assert.throws(() => reviewSyntheticOrder(
+  scenario([{ ...top, quantity: 2 }]), context), /Invalid synthetic/);
+// A single line with two garments previously created an unjustified
+// one-parcel assumption, although the reviewed economics model one unit/line.
+assert.throws(() => reviewSyntheticOrder(
+  scenario([{ ...top, quantity: 500 }]), context), /Invalid synthetic/);
+assert.throws(() => reviewSyntheticOrder(
   scenario([{ ...top, supplierProductCode: '<script>' }]), context), /Invalid synthetic/);
 assert.throws(() => reviewSyntheticOrder(scenario([top]),
   { ...context, readiness: { ...readiness, approvedForSale: true } }), /may not run/);
@@ -118,4 +131,4 @@ assert.doesNotMatch(moduleSource,
   'Offline reviewer cannot issue network requests');
 assert.doesNotMatch(moduleSource, /process\.env|SHOPIFY_ACCESS_TOKEN|CUSTOMER_EMAIL/,
   'Offline reviewer cannot read live Shopify environment or customer secrets');
-console.log('EVERNE manual fulfillment MOCK checks passed: approved references, variant matching, no-go, payment/stock exceptions, PII refusal, no external actions.');
+console.log('EVERNE manual fulfillment MOCK checks passed: approved references, variant/price mapping, one-unit limit, no-go, PII refusal, no external actions.');
