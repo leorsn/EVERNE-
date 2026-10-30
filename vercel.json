@@ -5,7 +5,8 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/products/:path*", "destination": "/" }
+    { "source": "/products/:path*", "destination": "/" },
+    { "source": "/edit/:path*", "destination": "/" }
   ],
   "headers": [
     {

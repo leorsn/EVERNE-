@@ -75,6 +75,10 @@ if (!vercelConfig.rewrites?.some((rule) => rule.source === '/products/:path*' &&
   failures.push('Vercel product deep-link rewrite is missing');
 }
 
+if (!vercelConfig.rewrites?.some((rule) => rule.source === '/edit/:path*' && rule.destination === '/')) {
+  failures.push('Vercel concept deep-link rewrite is missing');
+}
+
 for (const route of ['/rechtliches', '/rechtliches.html']) {
   const headers = vercelConfig.headers?.find((entry) => entry.source === route)?.headers;
   if (!headers?.some((header) => header.key.toLowerCase() === 'x-robots-tag' && header.value === 'noindex, nofollow')) {

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import WomenswearApp from './WomenswearApp';
+import ConceptDetailPage from './ConceptDetailPage';
 import CollectionPendingPage from './CollectionPendingPage';
 import './womenswear.css';
 
@@ -12,6 +13,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <BrowserRouter basename={basename}>
       <Routes>
         <Route path="/" element={<WomenswearApp />} />
+        <Route path="/edit/:slug" element={<ConceptDetailPage />} />
         <Route path="/products/:handle" element={<CollectionPendingPage />} />
         <Route path="*" element={<CollectionPendingPage />} />
       </Routes>

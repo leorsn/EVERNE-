@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { applySeo } from './seo';
 import {
   conceptPieces,
+  conceptSlug,
   fashionCategories,
   formatTargetPrice,
   type FashionCategory,
@@ -195,15 +197,17 @@ export default function WomenswearApp() {
               const index = conceptPieces.indexOf(piece);
               return (
                 <article className="w-concept-card" key={piece.name}>
-                  <div className={'w-concept-visual tone-' + piece.tone} aria-hidden="true">
-                    <span className="w-concept-watermark">E.</span>
-                    <span className="w-concept-index">{String(index + 1).padStart(2, '0')}</span>
-                    <span className="w-concept-label">CURATION STUDY</span>
-                  </div>
-                  <div className="w-concept-meta">
-                    <div><span>{fashionCategories.find((item) => item.id === piece.category)?.title}</span><h3>{piece.name}</h3></div>
-                    <div className="w-target-price"><span>Preisziel</span><strong>{formatTargetPrice(piece.targetPrice)}</strong></div>
-                  </div>
+                  <Link className="w-concept-link" to={'/edit/' + conceptSlug(piece.name)} aria-label={'Designstudie ' + piece.name + ' ansehen'}>
+                    <div className={'w-concept-visual tone-' + piece.tone} aria-hidden="true">
+                      <span className="w-concept-watermark">E.</span>
+                      <span className="w-concept-index">{String(index + 1).padStart(2, '0')}</span>
+                      <span className="w-concept-label">STUDIE ANSEHEN ↗</span>
+                    </div>
+                    <div className="w-concept-meta">
+                      <div><span>{fashionCategories.find((item) => item.id === piece.category)?.title}</span><h3>{piece.name}</h3></div>
+                      <div className="w-target-price"><span>Preisziel</span><strong>{formatTargetPrice(piece.targetPrice)}</strong></div>
+                    </div>
+                  </Link>
                 </article>
               );
             })}

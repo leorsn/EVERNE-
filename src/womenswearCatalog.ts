@@ -7,6 +7,10 @@ export type ConceptPiece = {
   tone: 'oat' | 'ink' | 'stone' | 'wine' | 'cocoa' | 'chalk';
 };
 
+export function conceptSlug(name: string): string {
+  return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+}
+
 export const fashionCategories: Array<{
   id: FashionCategory;
   title: string;
