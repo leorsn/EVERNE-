@@ -1,6 +1,20 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { conceptPieces, conceptSlug, fashionCategories, formatTargetPrice } from '../src/womenswearCatalog.ts';
+import { collectionReturnLink, conceptLink, editViewSearch, parseEditView } from '../src/womenswearNavigation.ts';
+
+assert.deepEqual(parseEditView(''), { category: 'all', showAll: false });
+assert.deepEqual(parseEditView('?category=trousers'), { category: 'trousers', showAll: false });
+assert.deepEqual(parseEditView('?view=all'), { category: 'all', showAll: true });
+assert.deepEqual(parseEditView('?category=unknown&view=all'), { category: 'all', showAll: true });
+assert.deepEqual(parseEditView('?category=tops&view=all'), { category: 'tops', showAll: false });
+assert.equal(editViewSearch({ category: 'all', showAll: false }), '');
+assert.equal(editViewSearch({ category: 'all', showAll: true }), '?view=all');
+assert.equal(editViewSearch({ category: 'knitwear', showAll: false }), '?category=knitwear');
+assert.equal(conceptLink('Essential Rib Top', { category: 'tops', showAll: false }), '/edit/essential-rib-top?category=tops');
+assert.equal(collectionReturnLink('?category=tops'), '/?category=tops#edit');
+assert.equal(collectionReturnLink('?view=all'), '/?view=all#edit');
+assert.equal(collectionReturnLink('?category=no-such-category'), '/#edit');
 
 assert.equal(conceptPieces.length, 20, 'The first fashion edit must have 20 planning concepts');
 assert.equal(fashionCategories.length, 5, 'The fashion edit must have five categories');
@@ -56,8 +70,15 @@ assert.ok(homepage.includes("aria-controls={'woman-faq-answer-' + index}"), 'FAQ
 assert.ok(homepage.includes("hidden={openQuestion !== index}"), 'Closed FAQ content must remain associated but hidden');
 assert.ok(!homepage.includes('Autumn / Winter 26'), 'Unconfirmed supplier garments must not be marketed as an approved seasonal collection');
 assert.ok(homepage.includes('Styling inspiration only.'), 'The styling section must not imply confirmed products');
+assert.ok(homepage.includes('parseEditView(location.search)'), 'The selected edit must be restored from the URL');
+assert.ok(homepage.includes('conceptLink(piece.name, editView)'), 'Concept links must retain their originating filter');
+assert.ok(homepage.includes("location.hash !== '#edit'"), 'The collection return hash must be restored on home mount');
 assert.ok(homepage.includes('€34–€59'), 'Homepage must show the updated whole-euro planned price range');
 assert.ok(englishLegal.includes('€34 and €59'), 'Legal prelaunch notice must show the updated planned price range');
+
+const conceptDetail = fs.readFileSync('src/ConceptDetailPage.tsx', 'utf8');
+assert.ok(conceptDetail.includes('collectionReturnLink(location.search)'), 'Detail links must restore collection filters on return');
+assert.ok(conceptDetail.includes('conceptLink(item.name, originatingView)'), 'Related concepts must retain the originating selection');
 
 const womenswearCss = fs.readFileSync('src/womenswear.css', 'utf8');
 assert.ok(!womenswearCss.includes('fonts.googleapis.com') && !womenswearCss.includes('@import url('),
