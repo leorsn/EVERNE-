@@ -19,7 +19,7 @@ const expectedModules = new Set([
   'src/womenswearCatalog.ts',
   'src/seo.ts',
 ]);
-const expectedStyles = new Set(['src/womenswear.css']);
+const expectedStyles = new Set(['src/womenswear.css', 'src/fashion-storefront.css']);
 const allowedPackages = new Set(['react', 'react-dom/client', 'react-router-dom']);
 const visited = new Set();
 const styles = new Set();
