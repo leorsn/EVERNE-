@@ -74,8 +74,8 @@
 .everne-woman .w-overline { color: #f3f2ec; font-size: 10px; letter-spacing: .11em; }
 .everne-woman .w-hero h1 {
   margin: 22px 0 22px;
-  font: 700 clamp(76px,10.8vw,176px)/.81 var(--sans);
-  letter-spacing: -.085em;
+  font: 700 clamp(62px,6.8vw,100px)/.87 var(--sans);
+  letter-spacing: -.075em;
   text-wrap: initial;
   text-shadow: none;
 }
@@ -341,7 +341,7 @@
   .everne-woman .w-hero-copy { padding: 19px 5% 20px; }
   .everne-woman .w-section-meta span:last-child { display: none; }
   .everne-woman .w-hero-main { padding: 40px 0 31px; }
-  .everne-woman .w-hero h1 { font-size: clamp(61px,16vw,94px); margin: 16px 0 19px; }
+  .everne-woman .w-hero h1 { font-size: clamp(48px,12vw,71px); margin: 16px 0 19px; }
   .everne-woman .w-hero-description { max-width: 290px; font-size: 12px; }
   .everne-woman .w-solid-link { min-width: 218px; }
   .everne-woman .w-hero-foot { font-size: 8px; }
