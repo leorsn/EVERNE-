@@ -40,8 +40,16 @@ function removeProductStructuredData() {
   document.head.querySelector('script[data-everne-product-schema]')?.remove();
 }
 
+// An offline review opened via file:// has origin "null". There is no
+// meaningful public canonical/OG URL for such a page, so omit both rather
+// than throwing during the React effect or leaking the owner's file path.
+export function publicSeoUrl(path: string, location: Pick<Location, 'protocol' | 'origin'>): string | null {
+  if (location.protocol !== 'http:' && location.protocol !== 'https:') return null;
+  return new URL(path, location.origin).toString();
+}
+
 export function applySeo({ title, description, image, path = '/', type = 'website', indexable = true }: SeoInput) {
-  const url = new URL(path, window.location.origin).toString();
+  const url = publicSeoUrl(path, window.location);
   document.title = title;
 
   ensureMeta('meta[name="description"]', { name: 'description', content: description });
@@ -49,7 +57,11 @@ export function applySeo({ title, description, image, path = '/', type = 'websit
   ensureMeta('meta[property="og:title"]', { property: 'og:title', content: title });
   ensureMeta('meta[property="og:description"]', { property: 'og:description', content: description });
   ensureMeta('meta[property="og:type"]', { property: 'og:type', content: type });
-  ensureMeta('meta[property="og:url"]', { property: 'og:url', content: url });
+  if (url) {
+    ensureMeta('meta[property="og:url"]', { property: 'og:url', content: url });
+  } else {
+    document.head.querySelector('meta[property="og:url"]')?.remove();
+  }
   ensureMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: image ? 'summary_large_image' : 'summary' });
   ensureMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: title });
   ensureMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: description });
@@ -59,7 +71,11 @@ export function applySeo({ title, description, image, path = '/', type = 'websit
     ensureMeta('meta[name="twitter:image"]', { name: 'twitter:image', content: image });
   }
 
-  ensureCanonical(url);
+  if (url) {
+    ensureCanonical(url);
+  } else {
+    document.head.querySelector('link[rel="canonical"]')?.remove();
+  }
 }
 
 export function applyProductStructuredData({

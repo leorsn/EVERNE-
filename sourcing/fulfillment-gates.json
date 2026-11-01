@@ -1,0 +1,65 @@
+{
+  "reviewedAt": "2026-10-30",
+  "status": "RESEARCH_ONLY",
+  "approvedForSale": false,
+  "supplier": "FactoryPrice",
+  "sourceUrls": {
+    "publishedShipping": "https://factoryprice.eu/de/terms/versandkosten-610.html",
+    "publishedReturnPolicy": "https://factoryprice.eu/de/terms/ruckgabebestimmungen-772.html",
+    "ownLabelDropshipProgram": "https://factoryprice.eu/pl/cms/hurtownia-dropshipping-odziezy-damskiej-nadajemy-na-twojej-etykiecie-783.html",
+    "ecbReference": "https://www.ecb.europa.eu/stats/shared/pdf/eurofxref.pdf"
+  },
+  "currencyReference": {
+    "rateDate": "2026-10-29",
+    "plnPerEur": 4.3938,
+    "disclaimer": "ECB reference rate for illustrative conversion only, not a payment provider's actual FX rate"
+  },
+  "supplierPublishedGermanyFreight": {
+    "carrier": "DHL",
+    "upToKg": 10,
+    "netPlnPerParcel": 32,
+    "listedTransitBusinessDays": 2,
+    "merchantOrderConfirmed": false,
+    "disclaimer": "Current public standard-rate table, net; actual basket weight, carrier choice, VAT and checkout rate unverified"
+  },
+  "supplierPublishedDropship": {
+    "claimsOnePieceNoMinimum": true,
+    "claimsFreeMerchantAccount": true,
+    "shopifyIntegrationClaim": "XML/API compatible; via BaseLinker or dedicated app; actual third-party subscription costs and implementation unverified",
+    "merchantProvidesCourierLabel": true,
+    "feeNetPlnPerParcel": 3,
+    "claimedProcessingHours": 24,
+    "ownLabelCourierRateEur": null,
+    "returnsContractVerified": false,
+    "disclaimer": "Self-supplied courier label and shipping responsibility stay with the merchant; standard supplier DHL tariff is NOT confirmed for this dropshipping flow"
+  },
+  "returns": {
+    "generalWholesalePolicyDays": 7,
+    "productPageWorkingDays": 7,
+    "planningRule": "Apply the stricter seven-calendar-day limit until the supplier resolves its conflicting text in writing",
+    "buyerPaysReturnFreight": true,
+    "unusedOriginalTagsAndPackagingRequired": true,
+    "consumerCustomerClaimsHandledByEverne": true
+  },
+  "examples": {
+    "oneOfEachSizeForThreePreferredConcepts": {
+      "sampleUnits": 6,
+      "itemsPerConcept": 2,
+      "goodsSubtotalListedNetEur": 42.3,
+      "totalWeightAssumedWithinOneDhl10KgParcel": true,
+      "approvedToPurchase": false,
+      "disclaimer": "Illustrative only; no supplier basket, goods reservation or expenditure"
+    },
+    "dropshipIllustrativeMinimumContributionBeforeAdsAndFixedOverheadEur": 10,
+    "dropshipConservativePackagingBufferEur": 0.7,
+    "disclaimer": "The €10 buffer is a decision scenario, not a verified target or actual profit. Dropship label price, taxes, actual merchant billing and all return losses are unverified."
+  },
+  "decisionGates": [
+    "Ask for authenticated wholesale prices and stock for the exact three preferred concept SKUs and six size variants.",
+    "Obtain actual prepaid Germany parcel quote for six samples, weights, and business VAT treatment before buying.",
+    "Separately verify own-label dropship courier rate to German consumers, PLN 3 handling fee, carrier label upload, Shopify inventory-sync cost and whether dropship returns can be restocked.",
+    "Clarify B2B seven calendar versus seven working day return wording, defects handling and end-consumer claims in writing.",
+    "Confirm image commercial permissions and textile labeling; inspect, photograph and wash-test samples only after founder approves spending.",
+    "Keep all women's fashion SKUs unlisted until the approval and legal gates pass."
+  ]
+}

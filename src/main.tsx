@@ -1,30 +1,35 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import './careSetProduct';
-import './manualCareProducts';
-import App from './App';
-import ProductDetailPage from './ProductDetailPage';
-import NotFoundPage from './NotFoundPage';
-import './styles.css';
-import './preview.css';
-import './legal-footer.css';
-import './editorial-polish.css';
-import './storefront-restructure.css';
-import './product-detail.css';
-import './impact-pass.css';
-import './final-refinements.css';
+import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
+import WomenswearApp from './WomenswearApp';
+import ConceptDetailPage from './ConceptDetailPage';
+import CollectionPendingPage from './CollectionPendingPage';
+import CarePage from './CarePage';
+import StandardsPage from './StandardsPage';
+import RouteFocus from './RouteFocus';
+import './womenswear.css';
+import './fashion-storefront.css';
 
-const basename = import.meta.env.BASE_URL === '/' ? undefined : import.meta.env.BASE_URL.replace(/\/$/, '');
+// A separate, explicit build mode produces a file://-friendly Safari review.
+// The deployed storefront retains its existing BrowserRouter and URL routes.
+const offlinePreview = import.meta.env.VITE_OFFLINE_PREVIEW === '1';
+const Router = offlinePreview ? HashRouter : BrowserRouter;
+const basename = offlinePreview || import.meta.env.BASE_URL === '/'
+  ? undefined
+  : import.meta.env.BASE_URL.replace(/\/$/, '');
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
-    <BrowserRouter basename={basename}>
+    <Router basename={basename}>
+      <RouteFocus />
       <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/products/:handle" element={<ProductDetailPage />} />
-        <Route path="*" element={<NotFoundPage />} />
+        <Route path="/" element={<WomenswearApp />} />
+        <Route path="/edit/:slug" element={<ConceptDetailPage />} />
+        <Route path="/care" element={<CarePage />} />
+        <Route path="/standards" element={<StandardsPage />} />
+        <Route path="/products/:handle" element={<CollectionPendingPage />} />
+        <Route path="*" element={<CollectionPendingPage />} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   </React.StrictMode>,
 );

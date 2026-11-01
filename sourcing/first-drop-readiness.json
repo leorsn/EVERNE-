@@ -1,0 +1,277 @@
+{
+  "asOf": "2026-10-30",
+  "status": "NO_GO",
+  "approvedForSale": false,
+  "storefrontPublicationAuthorized": false,
+  "supplier": "FactoryPrice",
+  "scope": "FIVE_CONCEPT_FACTORYPRICE_RESEARCH_ONLY",
+  "referenceDocuments": [
+    "sourcing/capsule-order-economics.json",
+    "sourcing/merchandising-cohesion-review.json",
+    "sourcing/fulfillment-gates.json",
+    "sourcing/FACTORYPRICE-ENQUIRY-DRAFT.md",
+    "sourcing/ZERO-COST-FULFILLMENT-PILOT.md"
+  ],
+  "sourceUrls": {
+    "ownLabelDropship": "https://factoryprice.eu/pl/cms/hurtownia-dropshipping-odziezy-damskiej-nadajemy-na-twojej-etykiecie-783.html",
+    "supplierB2BReturns": "https://factoryprice.eu/de/terms/ruckgabebestimmungen-772.html",
+    "euConsumerWithdrawal": "https://europa.eu/youreurope/citizens/consumers/shopping/returns/index_de.htm"
+  },
+  "knownTerms": {
+    "claimsNoMinimumDropShip": true,
+    "publishedDropshipHandlingPlnPerParcel": 3,
+    "merchantPaysAndProvidesCarrierLabel": true,
+    "confirmedGermanyDropshipLabelNetEur": null,
+    "publishedB2BReturnsCalendarDays": 7,
+    "typicalOnlineConsumerWithdrawalDays": 14,
+    "dropShipReturnConditionsSigned": false,
+    "caveat": "Supplier's public site states separate dropship return rules will be published; neither this nor the wholesale terms is a signed merchant return agreement. Legal exceptions and refund costs need review.",
+    "supplierServiceContradiction": {
+      "status": "OPEN_REQUIRES_WRITTEN_VERIFICATION",
+      "supplierMainSiteClaim": "FactoryPrice's newer main-site own-label dropship page states that shipments to consumers in Germany are supported via merchant-provided labels and 3 PLN handling.",
+      "supplierWarehouseFaqClaim": "A separate official FactoryPrice wholesale FAQ says it does not currently ship directly to final customers; further distribution is the buyer's responsibility.",
+      "newerMainSiteUrl": "https://factoryprice.eu/pl/cms/hurtownia-dropshipping-odziezy-damskiej-nadajemy-na-twojej-etykiecie-783.html",
+      "conflictingFaqUrl": "https://hurtownia.factoryprice.eu/faq/",
+      "ownerSpecificServiceConfirmed": false,
+      "evidenceNote": "The supplier pages may refer to different divisions or operational periods. No authorized merchant confirmation, account capability, merchant-specific dropship agreement or German carrier quote has been obtained; do not invent which wording controls.",
+      "evidence": null
+    }
+  },
+  "globalGates": {
+    "authenticatedWholesalePrices": {
+      "status": "PENDING",
+      "evidence": null,
+      "reason": "Authenticate net prices and per-size availability without inferring stock reservation."
+    },
+    "ownLabelGermanyCourierQuote": {
+      "status": "PENDING",
+      "evidence": null,
+      "reason": "Obtain the actual merchant-paid parcel-label rate from Poland to Germany, not the standard supplier DHL warehouse tariff."
+    },
+    "dropshipMultiSkuPackaging": {
+      "status": "PENDING",
+      "evidence": null,
+      "reason": "Confirm whether different SKUs can share a single parcel and label."
+    },
+    "shopifyIntegrationRecurringCost": {
+      "status": "PENDING",
+      "evidence": null,
+      "reason": "Confirm whether the Shopify stock/order workflow works at EUR 0 additional recurring cost and how tracking syncs."
+    },
+    "dropshipMerchantReturnContract": {
+      "status": "PENDING",
+      "evidence": null,
+      "reason": "Obtain written merchant own-label dropshipping returns and defect handling terms; standard B2B seven-day text is insufficient."
+    },
+    "consumerWithdrawalWorkflow": {
+      "status": "PENDING",
+      "evidence": null,
+      "reason": "Approve a working consumer withdrawal/refund process covering the normal 14-day statutory window and exceptions."
+    },
+    "germanyReturnAddressAndCosts": {
+      "status": "PENDING",
+      "evidence": null,
+      "reason": "Confirm German consumer return destination, reverse shipping, goods inspection, merchant reimbursement and carrier costs."
+    },
+    "commercialImageAndCopyRights": {
+      "status": "PENDING",
+      "evidence": null,
+      "reason": "Obtain commercially usable product photographs and accurate original material/fit information."
+    },
+    "textileAndProductSafetyLabels": {
+      "status": "PENDING",
+      "evidence": null,
+      "reason": "Verify fibre and care labels and legally required responsible-operator/product-safety information."
+    },
+    "finalLandingCostAndReturnEconomics": {
+      "status": "PENDING",
+      "evidence": null,
+      "reason": "Recalculate true per-item and mixed-cart costs using actual merchant quotes and plausible returns."
+    },
+    "shopifyTestOrderAndPrivacy": {
+      "status": "PENDING",
+      "evidence": null,
+      "reason": "Verify order, tracking, merchant billing, privacy and refunds before enabling commerce."
+    },
+    "founderWrittenRelease": {
+      "status": "PENDING",
+      "evidence": null,
+      "reason": "Require explicit separate release decision after all evidence, never auto-launch from a script."
+    }
+  },
+  "items": [
+    {
+      "conceptName": "Essential Rib Top",
+      "supplierProductCode": "RV-TP-A1363.01P",
+      "plannedGrossEur": 34,
+      "publicSupplierNetEur": 5.89,
+      "reviewStage": "SAMPLE_RESEARCH_PRIORITY",
+      "supplierQuote": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "fitAndFabricSample": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "verifiedVariantStock": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "licensedProductPhotography": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "labelAndSafetyEvidence": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "founderMerchandisingApproval": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "blockingReason": "The hypothetical 20% full-refund, unsellable-goods case yields only €5.38 contribution per placed order before advertising and overhead; do not approve paid acquisition on this assumption.",
+      "approvedForSale": false
+    },
+    {
+      "conceptName": "Second Skin Body",
+      "supplierProductCode": "RV-BO-A1441.81",
+      "plannedGrossEur": 39,
+      "publicSupplierNetEur": 7.2,
+      "reviewStage": "SAMPLE_RESEARCH_PRIORITY",
+      "supplierQuote": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "fitAndFabricSample": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "verifiedVariantStock": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "licensedProductPhotography": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "labelAndSafetyEvidence": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "founderMerchandisingApproval": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "blockingReason": "The hypothetical 20% full-refund, unsellable-goods case yields €7.31 contribution per placed order before advertising and overhead; require fit evidence, not just nominal unit margin.",
+      "approvedForSale": false
+    },
+    {
+      "conceptName": "Tailored Everyday Pant",
+      "supplierProductCode": "IT-SP-FL7371.61",
+      "plannedGrossEur": 59,
+      "publicSupplierNetEur": 16.11,
+      "reviewStage": "SAMPLE_RESEARCH_PRIORITY",
+      "supplierQuote": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "fitAndFabricSample": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "verifiedVariantStock": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "licensedProductPhotography": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "labelAndSafetyEvidence": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "founderMerchandisingApproval": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "blockingReason": "The hypothetical 20% full-refund, unsellable-goods case leaves €11.35 per placed order before advertising/overhead, a narrow buffer and not profit.",
+      "approvedForSale": false
+    },
+    {
+      "conceptName": "Easy Slip Dress",
+      "supplierProductCode": "IR-SK-M116227.21",
+      "plannedGrossEur": 44,
+      "publicSupplierNetEur": 14.5,
+      "reviewStage": "HOLD",
+      "supplierQuote": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "fitAndFabricSample": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "verifiedVariantStock": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "licensedProductPhotography": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "labelAndSafetyEvidence": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "founderMerchandisingApproval": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "blockingReason": "Unverified high gloss may conflict with the restrained editorial look; thin straps require styling context for autumn/winter and the €44 price is fragile in return stress tests.",
+      "approvedForSale": false
+    },
+    {
+      "conceptName": "Soft Midi Dress",
+      "supplierProductCode": "RV-SK-A1231.19",
+      "plannedGrossEur": 59,
+      "publicSupplierNetEur": 16.11,
+      "reviewStage": "HOLD",
+      "supplierQuote": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "fitAndFabricSample": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "verifiedVariantStock": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "licensedProductPhotography": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "labelAndSafetyEvidence": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "founderMerchandisingApproval": {
+        "status": "PENDING",
+        "evidence": null
+      },
+      "blockingReason": "Supplier calls the garment a summer dress with short sleeves; a 111–114 cm garment length is not midi on every person and does not by itself anchor a November capsule.",
+      "approvedForSale": false
+    }
+  ],
+  "recordedExternalActions": {
+    "supplierOutreachSent": false,
+    "samplesPurchased": false,
+    "shopifyProductsImported": false,
+    "paymentsAuthorized": false
+  },
+  "nextZeroCostAction": "Prepare a structured request for exact five-SKU merchant prices, Germany prepaid-label quote, own-label returns routing, size availability, photo licences and zero-fee Shopify integration. Do not send without founder approval.",
+  "releaseRule": "All global and per-item evidence must be VERIFIED, documents reviewed, and founder written release separately authorized. Scripts report readiness only; they cannot approve product sales or publish Shopify."
+}

@@ -1,0 +1,92 @@
+{
+  "reviewedAt": "2026-10-30",
+  "status": "RESEARCH_ONLY",
+  "approvedForSale": false,
+  "decision": "THREE_RESEARCH_PRIORITIES_TWO_HELD",
+  "scope": "Editorial fit of the five provisional FactoryPrice-linked concept pieces; no actual garment has been physically inspected, purchased, photographed or approved.",
+  "collectionDirection": {
+    "workingTheme": "Black foundations with differentiated surfaces: ribbed cotton, smooth cotton and structured woven tailoring",
+    "actualSupplierColorOfFiveCandidates": "Black",
+    "conceptSwatchesAreNotSupplierColorVariants": true,
+    "conceptTonesByName": {
+      "Essential Rib Top": "chalk",
+      "Second Skin Body": "ink",
+      "Tailored Everyday Pant": "cocoa",
+      "Easy Slip Dress": "wine",
+      "Soft Midi Dress": "stone"
+    },
+    "publicRepresentationRule": "Abstract editorial concept swatches must not be labeled or advertised as purchasable colorways. Require licensed, color-accurate original product photography and supplier-confirmed color variants before creating real offers."
+  },
+  "items": [
+    {
+      "conceptName": "Essential Rib Top",
+      "supplierProductCode": "RV-TP-A1363.01P",
+      "role": "TEXTURAL_FOUNDATION",
+      "researchPriority": "PRIORITY_FOR_FIT_AND_QUALITY_REVIEW_ONLY",
+      "whyItBelongs": "A ribbed cotton texture balances the smoother bodysuit and tailored trouser without adding a competing statement silhouette.",
+      "styleRisks": ["The candidate is a strapped tank rather than a sleeved autumn layer", "Rib rebound, opacity, seam alignment and fit are untested", "S/M and L/XL are grouped supplier sizes, not confirmed XS–XL availability"],
+      "commercialGate": "The hypothetical 20% full-refund, unsellable-goods case yields only €5.38 contribution per placed order before advertising and overhead; do not approve paid acquisition on this assumption.",
+      "mustVerify": ["True garment measurements and size fit", "Opaque coverage and rib stretch after washing", "Authenticated price, stock and parcel-label cost", "Customer-safe returns workflow"],
+      "approvedForSale": false
+    },
+    {
+      "conceptName": "Second Skin Body",
+      "supplierProductCode": "RV-BO-A1441.81",
+      "role": "SMOOTH_FOUNDATION",
+      "researchPriority": "PRIORITY_WITH_ASSORTMENT_OVERLAP_WARNING",
+      "whyItBelongs": "A tucked-in smooth line with the tailored trouser could define a second, dressier look.",
+      "styleRisks": ["Another black sleeveless foundation can look redundant next to the rib top", "Closure position, gusset comfort, coverage and hygiene/returns handling are unverified", "Only two combined size variants are publicly listed"],
+      "commercialGate": "The hypothetical 20% full-refund, unsellable-goods case yields €7.31 contribution per placed order before advertising and overhead; require fit evidence, not just nominal unit margin.",
+      "mustVerify": ["Closure, gusset and fit under trousers", "Post-wash recovery and material opacity", "Written merchant returns/defect procedure for bodysuits", "Authenticated variant allocation and German fulfillment terms"],
+      "approvedForSale": false
+    },
+    {
+      "conceptName": "Tailored Everyday Pant",
+      "supplierProductCode": "IT-SP-FL7371.61",
+      "role": "SILHOUETTE_ANCHOR",
+      "researchPriority": "HIGHEST_VISUAL_RESEARCH_PRIORITY",
+      "whyItBelongs": "A straight tailored trouser gives both proposed foundations a coherent full outfit and introduces shape against close-fit tops.",
+      "styleRisks": ["Supplier design is straight-leg with a belt detail, not wide-leg", "Narrow published hip measures and inconsistent inseam figures require real fitting across S/M/L/XL", "Belt, zipper and drape quality have not been inspected"],
+      "commercialGate": "The hypothetical 20% full-refund, unsellable-goods case leaves €11.35 per placed order before advertising/overhead, a narrow buffer and not profit.",
+      "mustVerify": ["Waist, hip, inseam and fit on at least two heights", "Belt and fastening construction", "Verified composition and care labels", "Actual German carrier costs and stock allocation"],
+      "approvedForSale": false
+    },
+    {
+      "conceptName": "Easy Slip Dress",
+      "supplierProductCode": "IR-SK-M116227.21",
+      "role": "OCCASION_OPTION",
+      "researchPriority": "HOLD_COMMERCIAL_AND_HAND_FEEL",
+      "whyItIsHeld": "Unverified high gloss may conflict with the restrained editorial look; thin straps require styling context for autumn/winter and the €44 price is fragile in return stress tests.",
+      "styleRisks": ["Acetate/polyester gloss, seams and opacity not physically reviewed", "Low supplier-reported quantity of eight per combined size", "Concept wine tone does not establish a wine-colored actual SKU"],
+      "commercialGate": "The hypothetical 20% full-refund, unsellable-goods case leaves €3.25 per placed order before advertising/overhead, below the €10 internal screening buffer.",
+      "reopenOnlyIf": ["Founder approves real finish and seasonality after a physical sample", "Written fulfillment and return costs improve the stress case", "Live orderable sizes and image rights are verified"],
+      "approvedForSale": false
+    },
+    {
+      "conceptName": "Soft Midi Dress",
+      "supplierProductCode": "RV-SK-A1231.19",
+      "role": "SOFT_DAY_OPTION",
+      "researchPriority": "HOLD_SEASONAL_AND_LENGTH_FIT",
+      "whyItIsHeld": "Supplier calls the garment a summer dress with short sleeves; a 111–114 cm garment length is not midi on every person and does not by itself anchor a November capsule.",
+      "styleRisks": ["Current black cotton listing is a summer item", "Loose straight cut and hem position need model-based fit verification", "Concept stone tone does not establish a stone-colored actual SKU"],
+      "commercialGate": "The hypothetical 20% full-refund, unsellable-goods case leaves €11.35 before advertising/overhead, but healthy illustrative math cannot substitute for seasonal and quality fit.",
+      "reopenOnlyIf": ["Founder confirms it suits the intended season after seeing real samples", "Measured hem length and drape support honest customer-facing naming", "Material, fulfillment and returns checks pass"],
+      "approvedForSale": false
+    }
+  ],
+  "outfitResearch": [
+    { "look": "EVERYDAY_UNIFORM", "conceptNames": ["Essential Rib Top", "Tailored Everyday Pant"], "status": "STYLING_CONCEPT_ONLY" },
+    { "look": "CLEAN_EVENING", "conceptNames": ["Second Skin Body", "Tailored Everyday Pant"], "status": "STYLING_CONCEPT_ONLY" }
+  ],
+  "founderDecisionsNeeded": [
+    "Is a black-only sample direction acceptable despite the concept site's abstract chalk, cocoa, wine and stone tones?",
+    "Should the first capsule prioritize the three foundations and omit both dresses until a seasonal replacement is proven?",
+    "If the rib top and bodysuit look too similar on real samples, which one should carry the basic-layer position?"
+  ],
+  "nonNegotiableLaunchGates": [
+    "No samples, supplier messages or spend without express founder approval",
+    "No Shopify imports, real inventory, checkout or customer-facing claims before documented final fit, material, quantity and legal review",
+    "No licensed supplier photograph assumed and no abstract concept swatch treated as a real color",
+    "A dated public stock snapshot is not an authenticated allocation or fulfillment guarantee"
+  ]
+}

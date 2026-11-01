@@ -1,0 +1,98 @@
+{
+  "modelDate": "2026-10-30",
+  "status": "RESEARCH_ONLY_NO_GO",
+  "approvedForSale": false,
+  "scope": "ONLY_THREE_SAMPLE_RESEARCH_PRIORITIES",
+  "source": "sourcing/capsule-order-economics.json",
+  "readinessSource": "sourcing/first-drop-readiness.json",
+  "publishedPricesChanged": false,
+  "courierLabelQuoted": false,
+  "shopifyIntegrationCostQuoted": false,
+  "allowFreeShippingClaim": false,
+  "scenarios": {
+    "parcelCounts": [
+      1,
+      2
+    ],
+    "labelNetEurEachParcel": [
+      5,
+      7.5,
+      10
+    ],
+    "fullOrderRefundRates": [
+      0.1,
+      0.2,
+      0.3
+    ],
+    "baseline": {
+      "returnRate": 0.2,
+      "labelNetEurEachParcel": 7.5,
+      "returnedGoodsRecoveryShare": 0
+    },
+    "reverseShippingAssumedPerReturnedParcel": true,
+    "partialReturnStress": "alternative (not additive) 20% one-item return, worst case most expensive line; full goods loss; one reverse label",
+    "contributionTargetPerItemBeforeAdvertisingAndOverheadEur": 10,
+    "explanatoryLimitations": "Hypothetical full-order vs one-item partial returns are mutually exclusive alternative stress cases, not observed rates or additive events. Model includes payment fees, merchant-paid outward labels, 3 PLN handling and 0.70 EUR packaging per parcel, and conditional reversal 5 EUR shipping per returned parcel plus 3 EUR per returned garment. Refund amounts use a simplified assumed 19% VAT framework; excludes actual tax settlements, shipping tax, customer fees, discounts, ads, fixed/app costs, partial restocking, replacement shipping, real carrier quotes."
+  },
+  "pairs": [
+    {
+      "id": "rib-body",
+      "itemConceptNames": [
+        "Essential Rib Top",
+        "Second Skin Body"
+      ],
+      "baseline20PercentFullLoss": {
+        "oneParcelContributionEur": 22.83,
+        "twoParcelsContributionEur": 12.95
+      },
+      "baseline20PercentPartialOneItem": {
+        "oneParcelContributionEur": 29.14,
+        "twoParcelsContributionEur": 20.26
+      },
+      "separateSingleItemOrdersFullLossContributionEur": 12.7,
+      "comment": "Two black sleeveless basics risk assortment redundancy; a combined parcel cannot justify customer-facing bundle or free-shipping promises."
+    },
+    {
+      "id": "rib-pant",
+      "itemConceptNames": [
+        "Essential Rib Top",
+        "Tailored Everyday Pant"
+      ],
+      "baseline20PercentFullLoss": {
+        "oneParcelContributionEur": 26.86,
+        "twoParcelsContributionEur": 16.98
+      },
+      "baseline20PercentPartialOneItem": {
+        "oneParcelContributionEur": 33.18,
+        "twoParcelsContributionEur": 24.29
+      },
+      "separateSingleItemOrdersFullLossContributionEur": 16.73,
+      "comment": "Editorial everyday outfit only: supplier's straight-leg trouser is not a wide-leg model; sample fit unverified."
+    },
+    {
+      "id": "body-pant",
+      "itemConceptNames": [
+        "Second Skin Body",
+        "Tailored Everyday Pant"
+      ],
+      "baseline20PercentFullLoss": {
+        "oneParcelContributionEur": 28.79,
+        "twoParcelsContributionEur": 18.91
+      },
+      "baseline20PercentPartialOneItem": {
+        "oneParcelContributionEur": 35.94,
+        "twoParcelsContributionEur": 27.06
+      },
+      "separateSingleItemOrdersFullLossContributionEur": 18.66,
+      "comment": "High total AOV but bodysuit fit/hygiene returns and trouser measurements remain independent NO-GO blockers."
+    }
+  ],
+  "routeGates": {
+    "multiSkuSingleParcelVerified": false,
+    "actualMerchantGermanLabelPriceNetEur": null,
+    "signedDropshipReturnTerms": false,
+    "verifiedPartialReturnHandling": false,
+    "founderCombinedOutfitApproval": false
+  },
+  "ownerActions": "Request FactoryPrice written confirmation of multi-SKU one-parcel picking/packing, single charge/label, split-ship rules, reverse shipping, mixed-item partial returns and recurring software fees. No outreach sent; no orders, live data, paid integrations, price edits, cart/checkout activation or PR merge."
+}

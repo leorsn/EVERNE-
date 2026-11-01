@@ -1,0 +1,89 @@
+{
+  "reviewedAt": "2026-10-30",
+  "status": "RESEARCH_ONLY",
+  "approvedForSale": false,
+  "screenedConceptName": "Soft Midi Dress",
+  "currentConditionalModel": {
+    "supplierProductCode": "RV-SK-A1231.19",
+    "retailGrossEur": 59,
+    "supplierPublicCostNetEur": 16.11,
+    "objection": "The supplier describes it as a short-sleeve cotton summer dress. Public black stock is deep, but actual seasonal suitability and midi fit are unverified."
+  },
+  "alternatives": [
+    {
+      "id": "factoryprice-black-straight-jersey-knit-midi-sleeve-gate",
+      "conceptName": "Soft Midi Dress",
+      "supplierProductCode": "IR-SK-W2578.80",
+      "url": "https://factoryprice.eu/de/products/schwarzes-schlichtes-kleid-aus-jersey-421034.html",
+      "colorInSupplierSelector": "Black",
+      "listedComposition": "50% viscose, 28% polyester, 22% polyamide",
+      "listedCutAndSeason": "Straight knit midi, belt and round neckline; supplier says SHORT sleeve despite knit material",
+      "visibleSizesForColor": ["S/M", "L/XL"],
+      "variantIdentifiersBySize": { "S/M": "5906694149368", "L/XL": "5906694149412" },
+      "publicStockObservedBySize": { "S/M": 5, "L/XL": 4 },
+      "listedMeasurementsCmBySize": { "S/M": { "length": 106, "sleeve": 34 }, "L/XL": { "length": 106, "sleeve": 34 } },
+      "indicativeSupplierNetEur": 20.93,
+      "baselineRetailGrossEur": 59,
+      "proposedRetailGrossEur": 59,
+      "candidateStatus": "HOLD_SHORT_SLEEVES_LOW_STOCK_AND_HIGHER_COST",
+      "whyNotPromoted": "S/M five and L/XL four units leave little stock buffer; short sleeves are not a compelling November seasonal upgrade; net goods cost €4.82 higher than the existing summer-weight cotton dress. Could be considered for a separate knit capsule after physical review.",
+      "approvedForSale": false
+    },
+    {
+      "id": "factoryprice-black-oversize-knit-before-knee",
+      "conceptName": "Soft Midi Dress",
+      "supplierProductCode": "IR-SK-W2539.11",
+      "url": "https://factoryprice.eu/de/products/schwarzes-oversize-strickkleid-420597.html",
+      "colorInSupplierSelector": "Black",
+      "listedComposition": "50% viscose, 28% polyester, 22% polyamide",
+      "listedCutAndSeason": "Oversized high-neck dress with 3/4 sleeves, belt and 96/97 cm length; supplier explicitly calls it BEFORE THE KNEE, not midi",
+      "visibleSizesForColor": ["S/M", "L/XL"],
+      "variantIdentifiersBySize": { "S/M": "5906694141911", "L/XL": "5906694141928" },
+      "publicStockObservedBySize": { "S/M": 6, "L/XL": 8 },
+      "listedMeasurementsCmBySize": { "S/M": { "length": 96, "sleeve": 47 }, "L/XL": { "length": 97, "sleeve": 48 } },
+      "indicativeSupplierNetEur": 20.93,
+      "baselineRetailGrossEur": 59,
+      "proposedRetailGrossEur": 59,
+      "candidateStatus": "HOLD_BEFORE_KNEE_LENGTH_CONCEPT_MISMATCH",
+      "whyNotPromoted": "More autumnal texture, but 96–97 cm and an oversized cut would misrepresent the existing Soft Midi Dress concept. Founder would need to approve a newly named product instead of quietly replacing its SKU.",
+      "approvedForSale": false
+    },
+    {
+      "id": "factoryprice-nahia-multicolor-no-lxl",
+      "conceptName": "Soft Midi Dress",
+      "supplierProductCode": "EM-SK-003N-4.26",
+      "url": "https://factoryprice.eu/de/products/schwarzes-kleid-mit-gurtel-nahia-377592.html",
+      "colorInSupplierSelector": "Multicolored — conflicts with black product-page name and description",
+      "listedComposition": "95% viscose, 5% elastane",
+      "listedCutAndSeason": "Long-sleeve 109 cm belted shirtdress, but selector describes a multicolored printed product",
+      "visibleSizesForColor": ["S/M", "L/XL"],
+      "variantIdentifiersBySize": { "S/M": "2016103042005", "L/XL": "2016103042012" },
+      "publicStockObservedBySize": { "S/M": 8, "L/XL": 0 },
+      "listedMeasurementsCmBySize": { "S/M": { "length": 109, "sleeve": 60 }, "L/XL": { "length": null, "sleeve": null } },
+      "indicativeSupplierNetEur": 6.54,
+      "baselineRetailGrossEur": 59,
+      "proposedRetailGrossEur": 59,
+      "candidateStatus": "HOLD_NO_L_XL_AND_BLACK_COLOR_NOT_VERIFIED",
+      "whyNotPromoted": "The current color selector says multicolored rather than solid black, and L/XL is unavailable. Low public cost does not justify a misleading color claim or incomplete sizes.",
+      "approvedForSale": false
+    }
+  ],
+  "stockReliabilityIncident": {
+    "existingCandidateId": "factoryprice-black-ribbed-knit-mini-stock-gap",
+    "url": "https://factoryprice.eu/de/products/schwarzes-strickkleid-in-mini-lange-420675.html",
+    "productCode": "IR-SK-57884.04",
+    "originalDocumentedSnapshot": { "S/M": 0, "L/XL": 14 },
+    "searchIndexSnippetFromDifferentCrawl": { "S/M": 23, "L/XL": 24 },
+    "directPageOpenOnReview": { "S/M": 0, "L/XL": 14 },
+    "candidateStillBlocked": true,
+    "lesson": "Search snippets and a directly fetched live supplier page disagree. Do not silently overwrite stock with the larger figures or promote an item without an authenticated, timestamped variant quote."
+  },
+  "decision": "KEEP_PREVIOUS_CONDITIONAL_COTTON_DRESS_FOR_NOW_BUT_REQUIRE_SEASONAL_FOUNDER_REVIEW",
+  "decisionBasis": "None of the three newly screened replacements solves the combination of November relevance, accurate midi identity, both sizes in usable stock, and acceptable economics. The prior cotton dress is not approved either; it remains conditional and may be excluded from the first drop.",
+  "unresolvedBeforeAnySale": [
+    "Founder approval of actual autumn/winter silhouettes; do not turn short-length stock into a midi offer by renaming without review",
+    "Physical garment sample, material/opacity/pilling/wash inspection and model fit across sizes",
+    "Authenticated wholesale price, reservable variant stock and merchant-paid German courier quote",
+    "Consumer return handling, accurate manufacturer and fibre labelling, product photo rights, and realistic inventory sync"
+  ]
+}

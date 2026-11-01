@@ -5,7 +5,10 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "rewrites": [
-    { "source": "/products/:path*", "destination": "/" }
+    { "source": "/products/:path*", "destination": "/" },
+    { "source": "/care", "destination": "/" },
+    { "source": "/standards", "destination": "/" },
+    { "source": "/edit/:path*", "destination": "/" }
   ],
   "headers": [
     {
@@ -16,6 +19,18 @@
     },
     {
       "source": "/rechtliches",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    },
+    {
+      "source": "/legal",
+      "headers": [
+        { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
+      ]
+    },
+    {
+      "source": "/legal.html",
       "headers": [
         { "key": "X-Robots-Tag", "value": "noindex, nofollow" }
       ]

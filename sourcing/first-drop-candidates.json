@@ -1,0 +1,112 @@
+{
+  "reviewedAt": "2026-10-30",
+  "status": "RESEARCH_ONLY",
+  "approvedForSale": false,
+  "supplier": {
+    "name": "LEIVIP",
+    "site": "https://leivip.com",
+    "minimumOrderExVatEur": 100,
+    "germanyStandardShippingIndicativeEur": 14,
+    "shippingBand": "0.001–5 kg; actual rate and package weight must be confirmed at checkout",
+    "currency": "EUR",
+    "wholesalePrices": "Public variant listings excluding VAT; not authenticated B2B quotations",
+    "returnPolicy": "B2B return request within 14 days of receipt, subject to authorization and eligibility; not consumer return fulfillment",
+    "photoLicense": "Commercial storefront usage not verified"
+  },
+  "modelAssumptions": {
+    "germanGrossVatRate": 0.19,
+    "testBatchUnits": 6,
+    "inboundShippingExVatEur": 14,
+    "outboundShippingPerSaleExVatEur": 4.9,
+    "packagingPerSaleExVatEur": 0.7,
+    "paymentFeeGrossRate": 0.025,
+    "paymentFeeFixedEur": 0.25,
+    "returnCostReservePerSaleExVatEur": 2.5,
+    "customerPaidShippingRevenueEur": 0,
+    "advertisingCostEur": 0,
+    "note": "Scenario only: assumes VAT-registered German retailer, no shipping charged to customers, one item/order, full-price sell-through and inputs as stated; excludes ads, labor, warehousing, discounting, taxes on profits, unsold stock and reverse logistics beyond reserve."
+  },
+  "candidates": [
+    {
+      "conceptName": "Ribbed Turtleneck",
+      "supplierTitle": "Ribbed turtleneck sleeve knit top",
+      "supplierUrl": "https://leivip.com/collections/glammy/products/ribbed-turtleneck-sleeve-knit-top-wholesale",
+      "listedSku": "GLSW1024-BLK-U",
+      "listedSkuPrecision": "Black / one-size on public page",
+      "colorToSample": "Black",
+      "listedSizes": ["ONE SIZE"],
+      "listedComposition": "50% viscose, 28% polyester, 22% nylon",
+      "listedCostExVatEur": 14.9,
+      "targetRetailGrossEur": 44,
+      "conceptMatch": "POTENTIAL",
+      "majorRisks": ["One-size fit needs garment measurements and model tests", "Check sleeve length and material feel"],
+      "approvedForSale": false
+    },
+    {
+      "conceptName": "Wrap Knit Cardigan",
+      "supplierTitle": "Classic button front knit cardigan",
+      "supplierUrl": "https://leivip.com/products/classic-button-front-knit-cardigan-wholesale",
+      "listedSku": "LYCSW8812-PNK-U",
+      "listedSkuPrecision": "Pink / one-size page identifier; coffee variant SKU NOT verified",
+      "colorToSample": "Coffee",
+      "listedSizes": ["ONE SIZE"],
+      "listedComposition": "45% acrylic, 37% polyamide, 15% alpaca, 3% elastane",
+      "listedCostExVatEur": 16.9,
+      "targetRetailGrossEur": 54,
+      "conceptMatch": "MISMATCH_RENAME_REQUIRED",
+      "majorRisks": ["Button-front cardigan is not a wrap style; rename/re-shoot if selected", "Coffee SKU unverified", "One-size fit and alpaca care need checks"],
+      "approvedForSale": false
+    },
+    {
+      "conceptName": "Wide Leg Trouser",
+      "supplierTitle": "Pleated wide-leg tailored trousers",
+      "supplierUrl": "https://leivip.com/collections/clothes/products/pleated-wide-leg-tailored-trousers-wholesale-1",
+      "listedSku": "JAMVS195L-BLK",
+      "listedSkuPrecision": "Black product identifier; confirm variant at checkout",
+      "colorToSample": "Black",
+      "listedSizes": ["ONE SIZE"],
+      "listedComposition": "96% polyester, 4% elastane",
+      "listedCostExVatEur": 16.9,
+      "targetRetailGrossEur": 54,
+      "conceptMatch": "POTENTIAL",
+      "majorRisks": ["One size is especially risky for trousers", "Verify opacity, fabric hand-feel, waist and inseam measurements"],
+      "approvedForSale": false
+    },
+    {
+      "conceptName": "Straight Leg Denim",
+      "supplierTitle": "Classic straight-cut mid-rise denim jeans",
+      "supplierUrl": "https://leivip.com/collections/aw26-denim/products/classic-straight-cut-mid-rise-denim-jeans-wholesale",
+      "listedSku": "CIVMP1075L-1",
+      "listedSkuPrecision": "Product identifier; size-specific IDs unverified",
+      "colorToSample": "Dark blue",
+      "listedSizes": ["S", "M", "L", "XL", "XXL"],
+      "listedComposition": "68% cotton, 30% polyester, 2% elastane",
+      "listedCostExVatEur": 13.9,
+      "targetRetailGrossEur": 59,
+      "conceptMatch": "POTENTIAL",
+      "majorRisks": ["M shown unavailable at research; confirm live size stock", "No listed XS; verify size charts against actual measurements"],
+      "approvedForSale": false
+    },
+    {
+      "conceptName": "The Black Mini",
+      "supplierTitle": "Minimalist spaghetti strap layered mini dress",
+      "supplierUrl": "https://leivip.com/products/minimalist-spaghetti-strap-layered-mini-dress-wholesale",
+      "listedSku": "CHE4945L-1",
+      "listedSkuPrecision": "Product identifier; black size-specific IDs unverified",
+      "colorToSample": "Black",
+      "listedSizes": ["S", "M", "L"],
+      "listedComposition": "95% polyester, 5% elastane",
+      "listedCostExVatEur": 18.9,
+      "targetRetailGrossEur": 49,
+      "conceptMatch": "POTENTIAL",
+      "majorRisks": ["No listed XS/XL", "Verify dress opacity, seams, fit and exact product silhouette"],
+      "approvedForSale": false
+    }
+  ],
+  "minimumOrderIllustration": {
+    "description": "One of each five candidates plus a second black mini dress; only if supplier allows mixed quantities",
+    "additionalProductConceptName": "The Black Mini",
+    "additionalUnits": 1,
+    "discountsExcluded": true
+  }
+}
