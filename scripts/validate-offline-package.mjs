@@ -19,6 +19,16 @@ const files = [
   'editorial/knit.webp',
   'editorial/tailored.webp',
   'editorial/trench.webp',
+  'editorial/dark-hero.webp',
+  'editorial/dark-coat.webp',
+  'editorial/dark-knit.webp',
+  'editorial/dark-dress.webp',
+  'editorial/dark-skirt.webp',
+  'products/garment-brush/catalog.webp',
+  'products/cashmere-comb/catalog.webp',
+  'products/cedar-wardrobe-set/catalog.webp',
+  'products/renewal-set/catalog.webp',
+  'products/renewal-set/lifestyle.webp',
 ];
 
 assert.ok(fs.statSync(folder).isDirectory(), 'Offline review folder is missing');
@@ -83,11 +93,23 @@ assert.equal((checklist.match(/\| S\d{2} \|/g) ?? []).length, 20,
 assert.match(checklist, /UNGETESTET/, 'A CI pass must never claim a real Safari browser/device review');
 assert.match(checklist, /NO-GO/, 'Device acceptance must not imply supplier or checkout approval');
 
-for (const picture of ['knit', 'tailored', 'trench']) {
+for (const picture of ['knit', 'tailored', 'trench', 'dark-hero', 'dark-coat', 'dark-knit', 'dark-dress', 'dark-skirt']) {
   const relative = 'editorial/' + picture + '.webp';
   const packed = fs.readFileSync(path.join(folder, relative));
   const original = fs.readFileSync(path.join('public', relative));
   assert.ok(packed.equals(original), 'Packaged picture is stale or different: ' + relative);
+  assert.equal(packed.subarray(0, 4).toString('ascii'), 'RIFF');
+  assert.equal(packed.subarray(8, 12).toString('ascii'), 'WEBP');
+}
+for (const [folderName, picture] of [
+  ['garment-brush', 'catalog'], ['cashmere-comb', 'catalog'],
+  ['cedar-wardrobe-set', 'catalog'], ['renewal-set', 'catalog'],
+  ['renewal-set', 'lifestyle'],
+]) {
+  const relative = `products/${folderName}/${picture}.webp`;
+  const packed = fs.readFileSync(path.join(folder, relative));
+  const original = fs.readFileSync(path.join('public', relative));
+  assert.ok(packed.equals(original), 'Care product image must match the project source: ' + relative);
   assert.equal(packed.subarray(0, 4).toString('ascii'), 'RIFF');
   assert.equal(packed.subarray(8, 12).toString('ascii'), 'WEBP');
 }
@@ -110,4 +132,4 @@ for (const file of files) {
   const staged = fs.readFileSync(path.join(folder, file));
   assert.ok(archived.equals(staged), 'ZIP content differs from the validated staged file: ' + file);
 }
-console.log('EVERNE Safari ZIP acceptance passed: 9 exact files, including manual Safari review, independent inlined assets, three local WebP images, legal links, noindex and byte-for-byte archive integrity. Real Safari display review remains outstanding.');
+console.log(`EVERNE Safari ZIP acceptance passed: ${files.length} exact files, 13 local WebP images, Standards/CARE routes, legal links, noindex and byte-for-byte archive integrity. Real Safari display review remains outstanding.`);

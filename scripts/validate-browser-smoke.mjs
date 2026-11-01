@@ -215,6 +215,21 @@ try {
     'Back-to-collection retains the four trouser concepts');
   await eq("document.activeElement?.id", 'edit-title', 'Collection return heading receives focus');
 
+  await js("window.location.hash = '#/standards'");
+  await eq("Boolean(document.querySelector('.w-standards-intro h1')?.textContent?.includes('proof.'))",
+    true, 'Standards route loads from the portable review');
+  yes(await js("document.body.innerText.includes('What is not yet verified')"),
+    'Standards page clearly discloses unknown product facts');
+  await js("window.location.hash = '#/care'");
+  await eq("document.querySelectorAll('.w-care-catalog-product').length", 4,
+    'All four CARE catalog previews load offline');
+  await js("document.querySelectorAll('.w-care-catalog-product img').forEach(i => i.loading = 'eager')");
+  await waitFor(async () => await js(
+    "Array.from(document.querySelectorAll('.w-care-catalog-product img')).every(i => i.complete && i.naturalWidth > 0)"),
+    'CARE images loaded locally');
+  yes(await js("document.querySelector('.w-care-page-hero-photo img')?.naturalWidth > 0"),
+    'CARE hero image loaded locally');
+
   await js("window.location.hash = '#/products/legacy-item'");
   await waitFor(async () => (await js("document.querySelector('main h1')?.innerText"))?.includes('Something new'),
     'Legacy route uses truthful pending page');

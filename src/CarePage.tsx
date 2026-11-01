@@ -124,6 +124,7 @@ export default function CarePage() {
       <footer className="w-detail-footer">
         <Link to="/">EVERNE</Link>
         <span>Collection preview · No active sales</span>
+        <Link to="/standards">Our Standard</Link>
         <a href={base + 'legal.html'}>Legal information</a>
       </footer>
     </div>

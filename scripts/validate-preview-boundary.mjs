@@ -12,6 +12,7 @@ const expectedModules = new Set([
   'src/WomenswearApp.tsx',
   'src/ConceptDetailPage.tsx',
   'src/CarePage.tsx',
+  'src/StandardsPage.tsx',
   'src/CollectionPendingPage.tsx',
   'src/RouteFocus.tsx',
   'src/womenswearNavigation.ts',

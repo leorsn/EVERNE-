@@ -97,3 +97,20 @@ Before publishing a change run `npm run build`, which includes source, render, p
 ## Security rule
 
 Never commit Shopify Admin API keys, private Storefront tokens, payment credentials, supplier credentials or customer data to this repository.
+
+# Customer trust and UX acceptance
+
+The current EVERNE WOMAN site is an editorial preview, not a transactional
+store. Its customer-first navigation, selection standards and deliberate
+non-commerce boundaries are documented in:
+
+- `docs/everne-customer-trust-blueprint.md` — intended home → category → detail
+  → verified checkout experience.
+- `docs/everne-product-evidence-audit.md` — supplier facts, missing product
+  evidence and the five-research-item NO-GO.
+- `docs/everne-human-usability-test.md` — independent real-user test script and
+  empty scorecard (**no participants tested yet**).
+
+The deployed `/standards` page explains the curation and outstanding checks to
+visitors. `npm run check:trust` fails if the preview starts claiming verified
+stock, completed legal contacts or a completed human study without evidence.

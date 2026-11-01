@@ -35,6 +35,10 @@ const questions = [
     question: 'What is EVERNE CARE?',
     answer: 'EVERNE CARE is our dedicated garment-care studio, built around the original care collection. Explore the separate CARE page; ordering will only be enabled once Shopify and fulfillment details have been verified.',
   },
+  {
+    question: 'Who is behind EVERNE and how are pieces selected?',
+    answer: 'EVERNE is an independent womenswear curation project being developed in Hamburg. We review external supplier garments, and do not present a concept as a confirmed product. Our selection process and the outstanding checks are explained under Our Standard.',
+  },
 ];
 
 const styleNotes = [
@@ -168,10 +172,10 @@ export default function WomenswearApp() {
           {menuOpen ? 'Close' : 'Menu'} <span aria-hidden="true">{menuOpen ? '×' : '☰'}</span>
         </button>
         <nav id="woman-nav" className={menuOpen ? 'w-nav is-open' : 'w-nav'} aria-label="Main navigation">
-          <a href="#collection" onClick={closeMenu}>Collection</a>
+          <a href="#edit" onClick={closeMenu}>The Edit</a>
           <a href="#story" onClick={closeMenu}>Our World</a>
           <a href="#style-notes" onClick={closeMenu}>Style Notes</a>
-          <a href="#edit" onClick={closeMenu}>The Edit</a>
+          <Link to="/standards" onClick={() => setMenuOpen(false)}>Our Standard</Link>
           <Link to="/care" onClick={() => setMenuOpen(false)}>Everne Care</Link>
         </nav>
         <a className="w-logo" href="#top" onClick={closeMenu} aria-label="EVERNE homepage">EVERNE<span>WOMAN</span></a>
@@ -185,8 +189,8 @@ export default function WomenswearApp() {
             <div className="w-hero-main">
               <p className="w-overline">THE ART OF BEING UNFORGETTABLE</p>
               <h1 id="hero-title" tabIndex={-1}>A darker<br /><em>kind of elegance.</em></h1>
-              <p className="w-hero-description">An uncompromising point of view. Sculpted silhouettes, tactile layers and essentials with a quiet edge. This is EVERNE, in its most considered form.</p>
-              <a className="w-solid-link" href="#collection">Discover Collection 01 <Arrow /></a>
+              <p className="w-hero-description">A considered edit of womenswear: sculpted silhouettes, tactile layers and essentials with a quiet edge. Explore 20 styles in development before our first collection is ready to shop.</p>
+              <a className="w-solid-link" href="#edit">Explore the 20-piece edit <Arrow /></a>
             </div>
             <div className="w-hero-foot">
               <span>SUBSTANCE OVER SPECTACLE</span>
@@ -206,6 +210,12 @@ export default function WomenswearApp() {
           <span>LESS NOISE. MORE PRESENCE.</span><span className="w-star">✦</span>
           <span>FORM. FEELING. FREEDOM.</span>
         </div>
+
+        <section className="w-trust-rail" aria-label="What visitors can expect from this preview">
+          <div><strong>20 planned pieces</strong><span>Explore the first womenswear direction</span></div>
+          <div><strong>Selection before sales</strong><span>No checkout until actual garments are verified</span></div>
+          <div><strong>Clarity before checkout</strong><span>Real sizing, delivery and returns information required</span></div>
+        </section>
 
         <section className="w-intro" id="collection">
           <div className="w-kicker">01 — THE WARDROBE</div>
@@ -250,9 +260,9 @@ export default function WomenswearApp() {
           <div className="w-story-copy">
             <div className="w-kicker">02 — THE POINT OF VIEW</div>
             <h2>Presence<br /><em>without noise.</em></h2>
-            <p>We believe refinement lives in the details: the line of a shoulder, the weight of a fabric, the confidence of an almost monochrome palette. Never loud. Always felt.</p>
-            <div className="w-story-rule"><span>01 / Intentional silhouettes</span><span>02 / Texture in every layer</span><span>03 / Elegance on your terms</span></div>
-            <a className="w-text-link" href="#edit">Explore the edit <Arrow diagonal /></a>
+            <p>EVERNE is being developed in Hamburg as an independent curated fashion label. We select from external suppliers, and we believe a beautiful silhouette deserves equally clear information about its fabric, fit and delivery.</p>
+            <div className="w-story-rule"><span>01 / Sample before claims</span><span>02 / Measurements before size advice</span><span>03 / Clear terms before checkout</span></div>
+            <Link className="w-text-link" to="/standards">How we select <Arrow diagonal /></Link>
           </div>
         </section>
 
@@ -319,6 +329,14 @@ export default function WomenswearApp() {
             </div>
           </div>
 
+          <div className="w-edit-confidence">
+            <div>
+              <span className="w-kicker">CURATION, WITH CONTEXT</span>
+              <p>Each card is a design direction, not a stocked garment. Final photographs, garment composition, measurements and purchase information follow only after review.</p>
+            </div>
+            <Link to="/standards">Read our selection standard <Arrow diagonal /></Link>
+          </div>
+
           <div className="w-filters" role="group" aria-label="Choose a category">
             <button type="button" aria-pressed={category === 'all'} className={category === 'all' ? 'is-active' : ''} onClick={() => selectCategory('all')}>All <span>20</span></button>
             {fashionCategories.map((item) => (
@@ -339,7 +357,7 @@ export default function WomenswearApp() {
                     <div className={'w-concept-visual tone-' + piece.tone} aria-hidden="true">
                       <span className="w-concept-watermark">E.</span>
                       <span className="w-concept-index">{String(index + 1).padStart(2, '0')}</span>
-                      <span className="w-concept-label">VIEW CONCEPT ↗</span>
+                      <span className="w-concept-label">CONCEPT ONLY ↗</span>
                     </div>
                     <div className="w-concept-meta">
                       <div><span>{fashionCategories.find((item) => item.id === piece.category)?.title}</span><h3>{piece.name}</h3></div>
@@ -417,7 +435,7 @@ export default function WomenswearApp() {
       <footer className="w-footer">
         <div className="w-footer-top">
           <div><a href="#top" className="w-footer-logo">EVERNE</a><p>In the details.<br />In the feeling.</p></div>
-          <div><span>Explore</span><a href="#collection">Collection</a><a href="#edit">The Edit</a><a href="#style-notes">Style Notes</a><a href="#story">Our World</a><Link to="/care">Everne Care</Link></div>
+          <div><span>Explore</span><a href="#collection">Categories</a><a href="#edit">The Edit</a><a href="#style-notes">Style Notes</a><a href="#story">Our World</a><Link to="/standards">Our Standard</Link><Link to="/care">Everne Care</Link></div>
           <div><span>Information</span><a href={base + 'legal.html#imprint'}>Legal notice</a><a href={base + 'legal.html#privacy'}>Privacy</a><a href={base + 'legal.html#returns'}>Returns</a><a href={base + 'legal.html#shipping'}>Shipping & returns</a></div>
         </div>
         <div className="w-footer-bottom"><span>© 2026 EVERNE · Hamburg</span><span>Collection preview · No active sales</span><span>Commerce foundation by Shopify</span></div>

@@ -96,8 +96,14 @@ export default function ConceptDetailPage() {
               <div><dt>Category</dt><dd>{category.title}</dd></div>
               <div><dt>Fabric & care</dt><dd>To be confirmed after sourcing</dd></div>
               <div><dt>Sizes & colours</dt><dd>To be confirmed after sample review</dd></div>
-              <div><dt>Shipping</dt><dd>Details available before launch</dd></div>
+              <div><dt>Availability</dt><dd>No inventory confirmed</dd></div>
+              <div><dt>Delivery & returns</dt><dd>Terms not yet confirmed</dd></div>
             </dl>
+            <div className="w-detail-decision" aria-label="What we check before a garment becomes available">
+              <span>BEFORE THIS PIECE CAN BE ORDERED</span>
+              <p>We need to inspect a real sample, confirm garment measurements and fabric composition, and verify delivery costs and a workable return process.</p>
+              <Link to="/standards">Read the EVERNE Standard <span aria-hidden="true">↗</span></Link>
+            </div>
             <Link className="w-solid-link w-detail-cta" to={backTo}>Explore more design concepts <span aria-hidden="true">→</span></Link>
           </div>
         </section>
@@ -110,7 +116,7 @@ export default function ConceptDetailPage() {
         <section className="w-detail-related"><div className="w-kicker">EXPLORE THE EDIT</div><h2>More <em>ideas.</em></h2><div className="w-detail-related-grid">{related.map((item) => <Link key={item.name} to={conceptLink(item.name, originatingView)} className="w-detail-related-card"><div className={'w-concept-visual tone-' + item.tone}><span className="w-concept-watermark">E.</span><span className="w-concept-label">DESIGN CONCEPT ↗</span></div><span>{item.name}</span><small>Price target {formatTargetPrice(item.targetPrice)}</small></Link>)}</div></section>
       </main>
 
-      <footer className="w-detail-footer"><Link to="/">EVERNE WOMAN</Link><span>Collection preview · No active sales</span><a href={import.meta.env.BASE_URL + 'legal.html'}>Legal information</a></footer>
+      <footer className="w-detail-footer"><Link to="/">EVERNE WOMAN</Link><span>Collection preview · No active sales</span><Link to="/standards">Our Standard</Link><a href={import.meta.env.BASE_URL + 'legal.html'}>Legal information</a></footer>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import WomenswearApp from './WomenswearApp';
 import ConceptDetailPage from './ConceptDetailPage';
 import CollectionPendingPage from './CollectionPendingPage';
 import CarePage from './CarePage';
+import StandardsPage from './StandardsPage';
 import RouteFocus from './RouteFocus';
 import './womenswear.css';
 
@@ -24,6 +25,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<WomenswearApp />} />
         <Route path="/edit/:slug" element={<ConceptDetailPage />} />
         <Route path="/care" element={<CarePage />} />
+        <Route path="/standards" element={<StandardsPage />} />
         <Route path="/products/:handle" element={<CollectionPendingPage />} />
         <Route path="*" element={<CollectionPendingPage />} />
       </Routes>

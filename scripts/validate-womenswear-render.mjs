@@ -15,10 +15,11 @@ const vite = await createServer({
 });
 
 try {
-  const [{ default: WomenswearApp }, { default: ConceptDetailPage }, { default: CarePage }, catalog] = await Promise.all([
+  const [{ default: WomenswearApp }, { default: ConceptDetailPage }, { default: CarePage }, { default: StandardsPage }, catalog] = await Promise.all([
     vite.ssrLoadModule('/src/WomenswearApp.tsx'),
     vite.ssrLoadModule('/src/ConceptDetailPage.tsx'),
     vite.ssrLoadModule('/src/CarePage.tsx'),
+    vite.ssrLoadModule('/src/StandardsPage.tsx'),
     vite.ssrLoadModule('/src/womenswearCatalog.ts'),
   ]);
 
@@ -26,7 +27,8 @@ try {
     const home = React.createElement(Route, { path: '/', element: React.createElement(WomenswearApp) });
     const detail = React.createElement(Route, { path: '/edit/:slug', element: React.createElement(ConceptDetailPage) });
     const care = React.createElement(Route, { path: '/care', element: React.createElement(CarePage) });
-    const routes = React.createElement(Routes, null, home, detail, care);
+    const standards = React.createElement(Route, { path: '/standards', element: React.createElement(StandardsPage) });
+    const routes = React.createElement(Routes, null, home, detail, care, standards);
     return renderToStaticMarkup(React.createElement(MemoryRouter, { initialEntries: [url] }, routes));
   }
 
@@ -49,6 +51,15 @@ try {
   assert.match(landing, /aria-expanded="false" aria-controls="w-concepts"/, 'The collapsed edit toggle must expose its state');
   assertNoCommerce(landing, '/');
   assert.match(landing, /href="\/care"/, 'Home must offer a working CARE route');
+  assert.match(landing, /href="\/standards"/, 'Home must offer a transparent selection-standard route');
+  assert.match(landing, /Selection before sales/, 'The preview must tell customers why ordering is closed');
+
+  const standards = renderPage('/standards');
+  assert.match(standards, /The standard/, 'A distinct EVERNE selection-standard page must render');
+  assert.match(standards, /external suppliers/, 'The selection standard must disclose the external supplier model');
+  assert.match(standards, /What is not yet verified/, 'The selection standard must distinguish facts from unknowns');
+  assert.match(standards, /return address/, 'The standard must include return handling among launch checks');
+  assertNoCommerce(standards, '/standards');
 
   const care = renderPage('/care');
   assert.match(care, /The things/, 'The CARE studio must render its distinct editorial page');
@@ -82,6 +93,8 @@ try {
     assert.ok(html.includes(piece.name), `${piece.name} must render without a missing styling reference`);
     assert.match(html, /Not a photograph of an available garment/, `${piece.name} must identify its conceptual artwork`);
     assert.match(html, /In curation — not available to order/, `${piece.name} must not imply stock availability`);
+    assert.match(html, /No inventory confirmed/, `${piece.name} must explicitly disclose unknown inventory`);
+    assert.match(html, /Read the EVERNE Standard/, `${piece.name} must explain pre-sale quality gates`);
     assert.match(html, new RegExp(`href="/\\?category=${piece.category}#edit"`),
       `${piece.name} must offer a return to the originating collection filter`);
     assert.equal((html.match(/class="w-detail-related-card"/g) ?? []).length, 3,

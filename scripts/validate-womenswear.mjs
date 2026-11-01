@@ -50,6 +50,7 @@ const entry = fs.readFileSync('src/main.tsx', 'utf8');
 const indexHtml = fs.readFileSync('index.html', 'utf8');
 assert.ok(entry.includes('path="/edit/:slug"'), 'A route to the concept detail page is required');
 assert.ok(entry.includes('path="/care"'), 'The original garment-care collection needs a separate route');
+assert.ok(entry.includes('path="/standards"'), 'The prelaunch customer trust standard needs a separate route');
 assert.ok(entry.includes('WomenswearApp'), 'The entry must render the women’s fashion preview');
 assert.ok(entry.includes('<RouteFocus />'), 'Client-side route changes must restore keyboard focus to page headings');
 assert.ok(entry.includes('HashRouter') && entry.includes('VITE_OFFLINE_PREVIEW'), 'A portable review build must use hash routes without changing deployed routes');
@@ -68,6 +69,8 @@ for (const anchor of ['imprint', 'privacy', 'returns', 'shipping']) {
 const homepage = fs.readFileSync('src/WomenswearApp.tsx', 'utf8');
 assert.ok(homepage.includes('legal.html#imprint'), 'The English footer must link to the English legal notice');
 assert.ok(homepage.includes('to="/care"'), 'The womenswear preview must link to the dedicated CARE studio');
+assert.ok(homepage.includes('to="/standards"'), 'The womenswear preview must show its selection standards');
+assert.ok(homepage.includes('No checkout until actual garments are verified'), 'The trust rail must not imply goods are approved');
 assert.ok(homepage.includes('Shopping not yet available'), 'The preview status must remain clear in English');
 assert.ok(homepage.includes('Our size range is not confirmed yet.'), 'Size FAQ must clearly state sizes are not confirmed');
 assert.ok(homepage.includes('exact garment measurements and fit guidance'), 'Size FAQ must promise product-specific measurements before launch');
