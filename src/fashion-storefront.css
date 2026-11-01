@@ -1,0 +1,392 @@
+/* EVERNE Collection 01 — restrained fashion-storefront treatment.
+   Deliberately no synthetic product photos, faux scarcity or checkout controls. */
+.everne-woman {
+  --fashion-ground: #232420;
+  --fashion-panel: #30312c;
+  --fashion-mist: #d0cec6;
+  --fashion-rule: #51534d;
+  --fashion-text: #f0f0e9;
+  --fashion-muted: #b4b5ad;
+  color: var(--fashion-text);
+  background: var(--fashion-ground);
+  font-family: var(--sans);
+}
+.everne-woman .w-announcement {
+  min-height: 27px;
+  padding: 6px 3.5%;
+  color: #dad9d2;
+  background: #22231f;
+  border-bottom: 1px solid #43443f;
+  font-size: 9px;
+  font-weight: 500;
+  letter-spacing: .08em;
+}
+.everne-woman .w-announcement span:first-child,
+.everne-woman .w-announcement span:last-child { color: #92948d; }
+.everne-woman .w-header {
+  height: 76px;
+  padding: 0 3.5%;
+  background: #e1dfd7;
+  border: 0;
+  color: #242520;
+}
+.everne-woman .w-nav { gap: clamp(15px,2.1vw,33px); }
+.everne-woman .w-nav a,
+.everne-woman .w-header-cta {
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: .015em;
+  text-transform: uppercase;
+  color: #252621;
+}
+.everne-woman .w-nav a:hover,
+.everne-woman .w-header-cta:hover { color: #77796f; }
+.everne-woman .w-logo {
+  display: block;
+  padding-left: .13em;
+  font: 700 clamp(25px,2.4vw,35px)/1 var(--sans);
+  letter-spacing: .13em;
+}
+.everne-woman .w-header-cta { gap: 12px; }
+.everne-woman .w-header-cta span { font-size: 18px; }
+.everne-woman .w-hero {
+  height: min(820px,84svh);
+  min-height: 610px;
+  background: #292a27;
+  color: #fff;
+}
+.everne-woman .w-hero-media>img { object-position: center 44%; }
+.everne-woman .w-hero-media::after {
+  background: linear-gradient(90deg,rgba(13,14,14,.66),rgba(13,14,14,.13) 52%,transparent 78%),
+    linear-gradient(0deg,rgba(13,14,14,.40),transparent 39%);
+}
+.everne-woman .w-hero-copy {
+  min-height: 100%;
+  padding: 36px 4.5% 35px;
+}
+.everne-woman .w-section-meta,
+.everne-woman .w-hero-foot { color: #deded8; letter-spacing: .09em; font-size: 10px; }
+.everne-woman .w-hero-main {
+  max-width: 760px;
+  margin: auto 0 0;
+  padding: 100px 0 65px;
+}
+.everne-woman .w-overline { color: #f3f2ec; font-size: 10px; letter-spacing: .11em; }
+.everne-woman .w-hero h1 {
+  margin: 22px 0 22px;
+  font: 700 clamp(76px,10.8vw,176px)/.81 var(--sans);
+  letter-spacing: -.085em;
+  text-wrap: initial;
+  text-shadow: none;
+}
+.everne-woman .w-hero-description {
+  max-width: 360px;
+  margin-bottom: 26px;
+  color: #f0eee8;
+  font: 400 15px/1.5 var(--sans);
+  letter-spacing: 0;
+}
+.everne-woman .w-solid-link {
+  min-width: 245px;
+  min-height: 45px;
+  padding: 12px 18px;
+  gap: 26px;
+  background: #ebeae4;
+  color: #20211e;
+  border: 1px solid #ebeae4;
+  font: 700 11px/1.2 var(--sans);
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  transition: background .18s,color .18s;
+}
+.everne-woman .w-solid-link:hover { background: transparent; color: #fff; transform: none; }
+.everne-woman .w-solid-link span { font-size: 17px; }
+.everne-woman .w-hero-foot { border-color: rgba(255,255,255,.37); }
+.everne-woman .w-trust-rail {
+  grid-template-columns: 1fr 1.4fr 1fr;
+  padding: 0 4.5%;
+  background: #d0cec6;
+  color: #282922;
+  border: 0;
+}
+.everne-woman .w-trust-rail>div {
+  min-height: 77px;
+  padding: 14px 24px;
+  border-color: #a9aba1;
+}
+.everne-woman .w-trust-rail>div:first-child { padding-left: 0; }
+.everne-woman .w-trust-rail strong {
+  margin-bottom: 5px;
+  color: #24251f;
+  font: 700 12px/1.25 var(--sans);
+  letter-spacing: .015em;
+  text-transform: uppercase;
+}
+.everne-woman .w-trust-rail span,
+.everne-woman .w-trust-rail a { color: #484b42; font: 400 11px/1.4 var(--sans); }
+.everne-woman .w-trust-rail a:hover { text-decoration: underline; }
+.everne-woman .w-category-section { padding: 89px 3.5% 104px; background: #242521; }
+.everne-woman .w-category-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 30px;
+  margin-bottom: 25px;
+}
+.everne-woman .w-category-heading h2 {
+  margin: 0;
+  font: 700 clamp(24px,3.2vw,45px)/1 var(--sans);
+  letter-spacing: -.04em;
+}
+.everne-woman .w-category-heading p { margin: 0; color: var(--fashion-muted); font-size: 12px; }
+.everne-woman .w-category-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; }
+.everne-woman .w-category-card,
+.everne-woman .w-category-card:nth-child(n+4) {
+  min-height: 550px;
+  grid-column: auto;
+  padding: 25px;
+  border: 0;
+  background: #55554e;
+}
+.everne-woman .w-category-card:before { background: linear-gradient(0deg,rgba(0,0,0,.68),transparent 50%); }
+.everne-woman .w-category-card img { object-position: center 39%; }
+.everne-woman .w-category-dresses img { object-position: center 35%; }
+.everne-woman .w-category-title {
+  font: 700 clamp(23px,3.3vw,47px)/1 var(--sans);
+  letter-spacing: -.035em;
+  text-transform: uppercase;
+}
+.everne-woman .w-category-title>span { font: 400 25px var(--sans); }
+.everne-woman .w-category-price { font: 650 11px var(--sans); letter-spacing: .05em; }
+.everne-woman .w-category-shortcuts { display: grid; grid-template-columns: repeat(5,minmax(0,1fr)); gap: 0; margin-top: 29px; border-top: 1px solid var(--fashion-rule); }
+.everne-woman .w-category-shortcuts button {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 107px;
+  padding: 19px 15px 15px;
+  border: 0;
+  border-right: 1px solid var(--fashion-rule);
+  background: transparent;
+  color: #e8e7e0;
+  font: 600 12px/1.35 var(--sans);
+  text-align: left;
+}
+.everne-woman .w-category-shortcuts button:first-child { padding-left: 0; }
+.everne-woman .w-category-shortcuts button:last-child { border-right: 0; }
+.everne-woman .w-category-shortcuts button>span { display: flex; justify-content: space-between; color: #abaea3; font-size: 11px; }
+.everne-woman .w-category-shortcuts button[aria-pressed="true"],
+.everne-woman .w-category-shortcuts button:hover { color: #fff; background: #343630; }
+.everne-woman .w-media-note { margin-top: 15px; color: #aeb0a7; font-size: 11px; letter-spacing: 0; }
+.everne-woman .w-edit { padding: 103px 3.5% 120px; background: #d0cec6; color: #22231e; }
+.everne-woman .w-edit-header { margin-bottom: 43px; }
+.everne-woman .w-kicker { color: #74776d; letter-spacing: .09em; }
+.everne-woman .w-edit h2,
+.everne-woman .w-story h2,
+.everne-woman .w-care h2,
+.everne-woman .w-faq h2 {
+  font: 700 clamp(48px,7vw,104px)/.9 var(--sans);
+  letter-spacing: -.072em;
+}
+.everne-woman .w-edit h2 { margin: 13px 0 0; }
+.everne-woman .w-edit-description p { color: #41433a; line-height: 1.45; }
+.everne-woman .w-edit-description>span { color: #55584e; font-size: 9px; }
+.everne-woman .w-edit-confidence {
+  margin: 0 0 28px;
+  padding: 19px 0;
+  border-color: #a5a79d;
+}
+.everne-woman .w-edit-confidence p { color: #4d5046; font-size: 12px; line-height: 1.6; }
+.everne-woman .w-edit-confidence>a { color: #282b26; font-size: 11px; }
+.everne-woman .w-edit-confidence>a:hover { color: #5c5f53; }
+.everne-woman .w-filters { padding-bottom: 17px; border-color: #a5a79d; gap: 7px; }
+.everne-woman .w-filters button {
+  min-height: 44px;
+  padding: 11px 14px;
+  border-color: #aaa99f;
+  border-radius: 0;
+  background: transparent;
+  color: #3a3d34;
+  font-size: 11px;
+}
+.everne-woman .w-filters button span { color: #61655b; }
+.everne-woman .w-filters button:hover,
+.everne-woman .w-filters button.is-active { background: #282a25; color: #eeeae3; border-color: #282a25; }
+.everne-woman .w-filters button.is-active span { color: #c8cac0; }
+.everne-woman .w-results-summary { color: #55594d; margin-bottom: 16px; }
+.everne-woman .w-concept-grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: 0 26px; }
+.everne-woman .w-concept-card { border-top: 1px solid #a8aaa0; }
+.everne-woman .w-concept-link { display: grid; grid-template-columns: 64px minmax(0,1fr) auto; align-items: center; gap: 14px; padding: 23px 5px; min-height: 112px; }
+.everne-woman .w-concept-visual,
+.everne-woman .w-concept-visual.tone-oat,
+.everne-woman .w-concept-visual.tone-ink,
+.everne-woman .w-concept-visual.tone-stone,
+.everne-woman .w-concept-visual.tone-wine,
+.everne-woman .w-concept-visual.tone-cocoa,
+.everne-woman .w-concept-visual.tone-chalk {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  aspect-ratio: auto;
+  padding: 0;
+  background: #b6b8ac;
+  color: #34352e;
+  border: 0;
+}
+.everne-woman .w-concept-visual::before,
+.everne-woman .w-concept-visual::after,
+.everne-woman .w-concept-watermark,
+.everne-woman .w-concept-label { display: none; }
+.everne-woman .w-concept-index { align-self: auto; font: 700 21px var(--sans); letter-spacing: -.03em; }
+.everne-woman .w-concept-meta { display: contents; }
+.everne-woman .w-concept-meta>div>span { color: #60645a; font-size: 10px; }
+.everne-woman .w-concept-meta h3 { margin: 6px 0 0; color: #292b25; font: 650 clamp(15px,1.35vw,20px)/1.25 var(--sans); letter-spacing: -.025em; }
+.everne-woman .w-target-price { justify-self: end; text-align: right; }
+.everne-woman .w-target-price span { color: #626559; font-size: 9px; }
+.everne-woman .w-target-price strong { color: #292b25; font: 650 17px/1.4 var(--sans); }
+.everne-woman .w-concept-link:hover h3 { color: #666d5e; }
+.everne-woman .w-show-all { margin-top: 32px; color: #252720; border-color: #64675d; font-weight: 700; letter-spacing: .03em; }
+.everne-woman .w-show-all:hover { background: #252720; color: #f1f0e9; }
+.everne-woman .w-disclaimer { color: #585c51; font-size: 10px; line-height: 1.55; }
+.everne-woman .w-story { min-height: 590px; background: #3a3c36; }
+.everne-woman .w-story-photo { min-height: 590px; }
+.everne-woman .w-story-copy { padding: 75px 7vw; }
+.everne-woman .w-story h2 { margin: 20px 0 27px; }
+.everne-woman .w-story-copy>p { color: #d0d1c8; font-size: 14px; line-height: 1.6; }
+.everne-woman .w-text-link { font: 700 11px var(--sans); letter-spacing: .02em; }
+.everne-woman .w-care { padding: 90px 4.5%; gap: 6vw; background: #7f8277; color: #f5f5ee; }
+.everne-woman .w-care-intro { min-height: 430px; justify-content: center; }
+.everne-woman .w-care .w-kicker { color: #dce0d6; }
+.everne-woman .w-care h2 { margin: 22px 0 30px; }
+.everne-woman .w-care-intro p { color: #f0f0e7; font-size: 13px; line-height: 1.6; }
+.everne-woman .w-care-tag { border-color: #bec1b6; color: #eff0e8; }
+.everne-woman .w-care-explore { color: #fff; border-color: #e9eae2; font-size: 11px; }
+.everne-woman .w-care-product img { filter: saturate(.7); aspect-ratio: .9; }
+.everne-woman .w-care-product span,
+.everne-woman .w-care-note { color: #f0f0e6; }
+.everne-woman .w-care-product h3 { color: #fff; font: 650 18px var(--sans); }
+.everne-woman .w-faq { padding: 110px 4.5% 125px; gap: 8vw; background: #33352f; }
+.everne-woman .w-faq h2 { font-size: clamp(42px,5.5vw,72px); }
+.everne-woman .w-faq-list,.everne-woman .w-faq-item { border-color: #62645c; }
+.everne-woman .w-faq-item button { color: #f1f0e8; font: 550 clamp(15px,1.4vw,19px)/1.4 var(--sans); }
+.everne-woman .w-faq-item button span:last-child { color: #dedfd6; }
+.everne-woman .w-faq-item p { color: #c9cbc0; }
+.everne-woman .w-footer { padding: 80px 4.5% 25px; background: #23241f; }
+.everne-woman .w-footer-top p { color: #bfc0b7; font: 400 13px/1.7 var(--sans); }
+.everne-woman .w-footer-logo { font-size: 38px; font-weight: 700; letter-spacing: .13em; }
+.everne-woman .w-footer-bottom { margin-top: 80px; }
+
+/* Carry the plain fashion typography into the secondary editorial routes. */
+.w-detail-page h1,.w-detail-page h2,.w-detail-page h3,
+.w-care-page h1,.w-care-page h2,.w-care-page h3,
+.w-standards-page h1,.w-standards-page h2,.w-standards-page h3 { font-family: var(--sans); font-style: normal; letter-spacing: -.055em; }
+.w-detail-page em,.w-care-page em,.w-standards-page em { font-style: normal; }
+
+@media (max-width: 1000px) {
+  .everne-woman .w-header { padding: 0 4%; }
+  .everne-woman .w-hero { min-height: 650px; }
+  .everne-woman .w-category-card { min-height: 440px; }
+  .everne-woman .w-category-shortcuts { grid-template-columns: repeat(3,minmax(0,1fr)); }
+  .everne-woman .w-category-shortcuts button:nth-child(3) { border-right: 0; }
+  .everne-woman .w-category-shortcuts button:nth-child(n+4) { border-top: 1px solid var(--fashion-rule); }
+}
+@media (max-width: 850px) {
+  .everne-woman .w-announcement span:first-child,
+  .everne-woman .w-announcement span:last-child { display: none; }
+  .everne-woman .w-announcement { justify-content: center; }
+  .everne-woman .w-header { height: 68px; }
+  .everne-woman .w-menu-toggle { display: flex; gap: 10px; align-items: center; color: #22231f; font: 700 11px var(--sans); text-transform: uppercase; }
+  .everne-woman .w-nav {
+    display: none;
+    position: absolute;
+    top: 68px;
+    left: 0;
+    right: 0;
+    padding: 20px 5% 30px;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: #e1dfd7;
+    border-top: 1px solid #b9b9b1;
+    box-shadow: 0 14px 22px rgba(0,0,0,.2);
+  }
+  .everne-woman .w-nav.is-open { display: flex; }
+  .everne-woman .w-nav a { display: flex; align-items: center; min-height: 49px; font-size: 13px; border-bottom: 1px solid #c1c2ba; }
+  .everne-woman .w-header-cta { font-size: 10px; }
+  .everne-woman .w-trust-rail { grid-template-columns: 1fr 1fr; }
+  .everne-woman .w-trust-rail>div { min-height: 86px; padding: 15px; border-right: 1px solid #adb0a5; border-bottom: 1px solid #adb0a5; }
+  .everne-woman .w-trust-rail>div:nth-child(2) { border-right: 0; }
+  .everne-woman .w-trust-rail>div:last-child { grid-column: 1 / -1; min-height: 61px; border: 0; padding-left: 0; }
+  .everne-woman .w-category-card { min-height: 390px; }
+  .everne-woman .w-concept-grid { gap: 0 18px; }
+  .everne-woman .w-concept-link { grid-template-columns: 48px minmax(0,1fr); gap: 10px; }
+  .everne-woman .w-concept-visual { width: 48px; height: 48px; }
+  .everne-woman .w-target-price { grid-column: 2; justify-self: start; text-align: left; }
+  .everne-woman .w-target-price span { display: inline; margin-right: 7px; }
+  .everne-woman .w-story { grid-template-columns: 1fr 1fr; }
+  .everne-woman .w-story-photo { min-height: 540px; }
+  .everne-woman .w-care { grid-template-columns: 1fr; }
+  .everne-woman .w-care-intro { min-height: 0; }
+}
+@media (max-width: 600px) {
+  .everne-woman .w-header-cta { font-size: 0; }
+  .everne-woman .w-header-cta span { font-size: 20px; }
+  .everne-woman .w-logo { font-size: 24px; }
+  .everne-woman .w-hero { height: 76svh; min-height: 570px; }
+  .everne-woman .w-hero-media>img { object-position: 64% 48%; }
+  .everne-woman .w-hero-media::after { background: linear-gradient(0deg,rgba(4,5,5,.81),rgba(4,5,5,.06) 80%),linear-gradient(90deg,rgba(0,0,0,.16),transparent); }
+  .everne-woman .w-hero-copy { padding: 19px 5% 20px; }
+  .everne-woman .w-section-meta span:last-child { display: none; }
+  .everne-woman .w-hero-main { padding: 40px 0 31px; }
+  .everne-woman .w-hero h1 { font-size: clamp(61px,16vw,94px); margin: 16px 0 19px; }
+  .everne-woman .w-hero-description { max-width: 290px; font-size: 12px; }
+  .everne-woman .w-solid-link { min-width: 218px; }
+  .everne-woman .w-hero-foot { font-size: 8px; }
+  .everne-woman .w-trust-rail { padding: 0 5%; }
+  .everne-woman .w-trust-rail>div { padding: 15px 11px; }
+  .everne-woman .w-trust-rail strong { font-size: 10px; }
+  .everne-woman .w-trust-rail span,
+  .everne-woman .w-trust-rail a { font-size: 10px; }
+  .everne-woman .w-category-section { padding: 65px 5% 70px; }
+  .everne-woman .w-category-heading { display: block; }
+  .everne-woman .w-category-heading h2 { font-size: 30px; }
+  .everne-woman .w-category-heading p { margin-top: 10px; }
+  .everne-woman .w-category-grid { grid-template-columns: 1fr; gap: 9px; }
+  .everne-woman .w-category-card { min-height: 430px; }
+  .everne-woman .w-category-title { font-size: 34px; }
+  .everne-woman .w-category-shortcuts { grid-template-columns: repeat(2,minmax(0,1fr)); }
+  .everne-woman .w-category-shortcuts button { min-height: 92px; padding: 15px 12px; }
+  .everne-woman .w-category-shortcuts button:nth-child(3) { border-right: 1px solid var(--fashion-rule); }
+  .everne-woman .w-category-shortcuts button:nth-child(even) { border-right: 0; }
+  .everne-woman .w-category-shortcuts button:nth-child(n+3) { border-top: 1px solid var(--fashion-rule); }
+  .everne-woman .w-edit { padding: 70px 5% 75px; }
+  .everne-woman .w-edit h2 { font-size: 62px; }
+  .everne-woman .w-edit-header { display: block; }
+  .everne-woman .w-edit-description { margin-top: 22px; }
+  .everne-woman .w-edit-description p { margin-bottom: 8px; }
+  .everne-woman .w-edit-confidence { display: block; }
+  .everne-woman .w-edit-confidence>a { margin-top: 15px; }
+  .everne-woman .w-filters { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 14px; }
+  .everne-woman .w-filters button { white-space: nowrap; flex-shrink: 0; }
+  .everne-woman .w-concept-grid { grid-template-columns: 1fr; }
+  .everne-woman .w-concept-link { grid-template-columns: 60px minmax(0,1fr) auto; min-height: 89px; padding: 16px 0; }
+  .everne-woman .w-concept-visual { width: 56px; height: 56px; }
+  .everne-woman .w-target-price { grid-column: auto; justify-self: end; text-align: right; }
+  .everne-woman .w-target-price span { display: none; }
+  .everne-woman .w-target-price strong { font-size: 14px; }
+  .everne-woman .w-story { grid-template-columns: 1fr; }
+  .everne-woman .w-story-photo { min-height: 500px; }
+  .everne-woman .w-story-copy { padding: 68px 6% 75px; }
+  .everne-woman .w-story h2 { font-size: 68px; }
+  .everne-woman .w-care { padding: 70px 5% 80px; }
+  .everne-woman .w-care h2 { font-size: 65px; }
+  .everne-woman .w-faq { padding: 75px 5% 85px; display: block; }
+  .everne-woman .w-faq h2 { margin: 15px 0 45px; font-size: 42px; }
+  .everne-woman .w-footer { padding: 65px 5% 25px; }
+  .everne-woman .w-footer-top { grid-template-columns: 1fr 1fr; gap: 40px 20px; }
+  .everne-woman .w-footer-top>div:first-child { grid-column: 1 / -1; }
+  .everne-woman .w-footer-bottom { margin-top: 55px; flex-wrap: wrap; }
+}
