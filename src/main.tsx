@@ -8,6 +8,7 @@ import CarePage from './CarePage';
 import StandardsPage from './StandardsPage';
 import RouteFocus from './RouteFocus';
 import './womenswear.css';
+import './fashion-storefront.css';
 
 // A separate, explicit build mode produces a file://-friendly Safari review.
 // The deployed storefront retains its existing BrowserRouter and URL routes.
