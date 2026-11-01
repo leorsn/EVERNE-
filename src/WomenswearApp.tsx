@@ -40,20 +40,20 @@ const questions = [
 const styleNotes = [
   {
     label: '01 / OFF DUTY',
-    title: 'Easy, always.',
-    description: 'A softer kind of uniform. Familiar foundations, relaxed proportions, and one extra layer for wherever the day leads.',
+    title: 'The art of ease.',
+    description: 'A considered daily ritual. Fluid lines, quiet textures and immaculate foundations made for wherever the day leads.',
     pieces: ['Essential Rib Top', 'Wide Leg Trouser', 'Relaxed Crew Knit'],
   },
   {
     label: '02 / AFTER HOURS',
-    title: 'Understated drama.',
-    description: 'The simplest pieces can make the strongest impression. A close fit, a sharp silhouette, a little unexpected texture.',
+    title: 'After dark.',
+    description: 'An expressive silhouette needs very little else. A close fit, a precise line and texture that speaks for itself.',
     pieces: ['Second Skin Body', 'The Black Mini', 'Off-Shoulder Knit'],
   },
   {
     label: '03 / NEW PERSPECTIVE',
-    title: 'Rules? Your own.',
-    description: 'An expressive knit, lived-in denim and a layer that ties everything together. Effortlessly individual.',
+    title: 'Beyond convention.',
+    description: 'Subtle contrasts, lived-in denim and beautifully chosen layers. A more individual interpretation of modern elegance.',
     pieces: ['Fine Knit Top', 'Straight Leg Denim', 'Wrap Knit Cardigan'],
   },
 ] as const;
