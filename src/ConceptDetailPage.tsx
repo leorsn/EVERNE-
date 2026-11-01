@@ -15,27 +15,27 @@ const direction: Record<FashionCategory, { line: string; brief: string; photo: s
   tops: {
     line: 'The foundation, reimagined.',
     brief: 'An effortless starting point for looks with clean lines. Final fit and fabric quality will be confirmed only after reviewing physical samples.',
-    photo: 'trench',
+    photo: 'dark-coat',
   },
   knitwear: {
     line: 'Softness with presence.',
     brief: 'Knitwear that makes an everyday statement. We are looking for balanced proportions, comfortable fabrics and thoughtful finishing.',
-    photo: 'knit',
+    photo: 'dark-knit',
   },
   trousers: {
     line: 'A new kind of uniform.',
     brief: 'Relaxed silhouettes meet precise tailoring. Cut, sizing and fabric must all stand up to a hands-on sample review.',
-    photo: 'tailored',
+    photo: 'dark-hero',
   },
   dresses: {
     line: 'Easy, never ordinary.',
     brief: 'One piece, endless possibilities. We are focusing on natural movement, flattering fits and details worth taking a closer look at.',
-    photo: 'tailored',
+    photo: 'dark-coat',
   },
   skirts: {
     line: 'Movement in focus.',
     brief: 'Fresh proportions for a versatile wardrobe. Length, feel and finish are still being considered as part of the selection process.',
-    photo: 'trench',
+    photo: 'dark-knit',
   },
 };
 
