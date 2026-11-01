@@ -416,7 +416,7 @@ button:focus-visible,a:focus-visible { outline-color: #ebcfa9; }
 .w-solid-link { min-width: 254px; background: #e6e0d7; color: #171718; text-transform: uppercase; letter-spacing: .15em; }
 .w-solid-link:hover { background: #c7ae90; color: #101010; }
 .w-hero-foot { border-top-color: rgba(240,236,229,.25); }
-.w-image-stamp { left: auto; top: 38px; right: 4.5%; text-align: right; }
+.w-image-stamp { display: none; }
 .w-image-stamp span { font-size: 11px; letter-spacing: .35em; }
 .w-image-stamp small { color: #b9b4ae; }
 .w-vertical-caption { right: 4.5%; bottom: 95px; font-size: 9px; }
@@ -498,9 +498,9 @@ button:focus-visible,a:focus-visible { outline-color: #ebcfa9; }
 .w-care-products { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); align-content: center; gap: 14px; }
 .w-care-product { min-width: 0; }
 .w-care-product img { aspect-ratio: .78; object-fit: cover; filter: grayscale(.55) saturate(.65) contrast(1.04); }
-.w-care-product>div { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 10px; padding: 17px 2px 0; }
+.w-care-product>div { display: block; padding: 17px 2px 0; }
 .w-care-product span { color: #66615a; font: 600 9px var(--sans); letter-spacing: .11em; }
-.w-care-product h3 { margin: 0; font: 400 clamp(20px,1.8vw,30px) var(--serif); }
+.w-care-product h3 { margin: 9px 0 0; font: 400 clamp(20px,1.8vw,30px) var(--serif); }
 .w-care-note { grid-column: 1 / -1; margin: 14px 0 0; color: #56534f; font: 400 11px/1.7 var(--sans); }
 .w-faq { background: #141617; }
 .w-faq-item button { color: #edeae6; }
