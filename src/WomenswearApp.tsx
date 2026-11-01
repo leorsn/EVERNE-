@@ -31,6 +31,10 @@ const questions = [
     question: 'How will shipping and returns work?',
     answer: 'Before launch, we will publish confirmed delivery times, shipping fees, a return address and withdrawal information. We are not accepting orders at present.',
   },
+  {
+    question: 'What is EVERNE CARE?',
+    answer: 'EVERNE CARE is our smaller garment-care direction, built around the original care collection. The products shown are a catalog preview; ordering will only be enabled once the Shopify storefront and fulfillment details have been verified.',
+  },
 ];
 
 const styleNotes = [
@@ -71,8 +75,8 @@ export default function WomenswearApp() {
 
   useEffect(() => {
     applySeo({
-      title: 'EVERNE WOMAN — Modern essentials & new expressions',
-      description: 'Discover the EVERNE WOMAN preview: modern wardrobe essentials and expressive pieces, with planned prices between €34 and €59.',
+      title: 'EVERNE — The Dark Atelier | Collection Preview',
+      description: 'EVERNE explores a darker kind of elegance: considered silhouettes, black-on-black essentials and a curated fashion collection preview.',
       path: '/',
       type: 'website',
       indexable: false,
@@ -168,6 +172,7 @@ export default function WomenswearApp() {
           <a href="#story" onClick={closeMenu}>Our World</a>
           <a href="#style-notes" onClick={closeMenu}>Style Notes</a>
           <a href="#edit" onClick={closeMenu}>The Edit</a>
+          <a href="#care" onClick={closeMenu}>Everne Care</a>
         </nav>
         <a className="w-logo" href="#top" onClick={closeMenu} aria-label="EVERNE homepage">EVERNE<span>WOMAN</span></a>
         <a className="w-header-cta" href="#edit" onClick={closeMenu}>The Edit <Arrow diagonal /></a>
@@ -176,37 +181,37 @@ export default function WomenswearApp() {
       <main id="main" tabIndex={-1}>
         <section className="w-hero" aria-labelledby="hero-title">
           <div className="w-hero-copy">
-            <div className="w-section-meta"><span>01 / THE NEW EVERYDAY</span><span>Collection study / 2026</span></div>
+            <div className="w-section-meta"><span>01 / THE DARK ATELIER</span><span>Collection study / 2026</span></div>
             <div className="w-hero-main">
-              <p className="w-overline">Modern femininity. Your way.</p>
-              <h1 id="hero-title" tabIndex={-1}>For every day.<br /><em>Never ordinary.</em></h1>
-              <p className="w-hero-description">The pieces you reach for again and again. Effortless essentials, fresh silhouettes and a little room to be different.</p>
-              <a className="w-solid-link" href="#collection">Explore the collection <Arrow /></a>
+              <p className="w-overline">THE ART OF BEING UNFORGETTABLE</p>
+              <h1 id="hero-title" tabIndex={-1}>A darker<br /><em>kind of elegance.</em></h1>
+              <p className="w-hero-description">An uncompromising point of view. Sculpted silhouettes, tactile layers and essentials with a quiet edge. This is EVERNE, in its most considered form.</p>
+              <a className="w-solid-link" href="#collection">Discover Collection 01 <Arrow /></a>
             </div>
             <div className="w-hero-foot">
-              <span>ESSENTIALS × EXPRESSION</span>
+              <span>SUBSTANCE OVER SPECTACLE</span>
               <span>€34–€59 · Planned price range</span>
             </div>
           </div>
           <div className="w-hero-media">
-            <img src={editorialImage('tailored')} alt="Two women in tailored neutral outfits by a light stone archway — editorial style reference" fetchPriority="high" />
-            <div className="w-image-stamp"><span>EVERNE</span><small>THE WOMAN EDITION</small></div>
-            <span className="w-vertical-caption">A MORE PERSONAL UNIFORM — 2026</span>
+            <img src={editorialImage('dark-hero')} alt="Woman in a black tailored leather-look coat against a charcoal studio backdrop — conceptual fashion editorial" fetchPriority="high" />
+            <div className="w-image-stamp"><span>E / 01</span><small>THE DARK ATELIER</small></div>
+            <span className="w-vertical-caption">EVERNE — A STUDY IN CONTRAST</span>
           </div>
         </section>
 
         <div className="w-marquee" aria-label="Brand philosophy">
-          <span>EVERYDAY, ELEVATED</span><span className="w-star">✳</span>
-          <span>YOUR STYLE. YOUR RULES.</span><span className="w-star">✳</span>
-          <span>ESSENTIALS WITH ATTITUDE</span><span className="w-star">✳</span>
-          <span>EVERYDAY, ELEVATED</span>
+          <span>FORM. FEELING. FREEDOM.</span><span className="w-star">✦</span>
+          <span>THE DARK ATELIER / 001</span><span className="w-star">✦</span>
+          <span>LESS NOISE. MORE PRESENCE.</span><span className="w-star">✦</span>
+          <span>FORM. FEELING. FREEDOM.</span>
         </div>
 
         <section className="w-intro" id="collection">
           <div className="w-kicker">01 — THE WARDROBE</div>
           <div className="w-intro-content">
-            <h2>One wardrobe.<br /><em>Every version of you.</em></h2>
-            <p>Some days understated. Others unapologetic. EVERNE brings together effortless favourites and considered trends. Not for one particular look — for yours.</p>
+            <h2>A study in<br /><em>modern allure.</em></h2>
+            <p>Created around contrast: soft against structured, timeless against unexpected. A wardrobe with intention — never a uniform.</p>
           </div>
         </section>
 
@@ -221,9 +226,9 @@ export default function WomenswearApp() {
                 aria-pressed={category === item.id}
                 aria-label={item.title + ': view design concepts'}
               >
-                {index === 0 && <img src={editorialImage('trench')} alt="" loading="lazy" />}
-                {index === 1 && <img src={editorialImage('knit')} alt="" loading="lazy" />}
-                {index === 2 && <img src={editorialImage('tailored')} alt="" loading="lazy" />}
+                {index === 0 && <img src={editorialImage('dark-coat')} alt="" loading="lazy" />}
+                {index === 1 && <img src={editorialImage('dark-knit')} alt="" loading="lazy" />}
+                {index === 2 && <img src={editorialImage('dark-hero')} alt="" loading="lazy" />}
                 <span className="w-category-no">0{index + 1} / {String(item.count).padStart(2, '0')} PIECES</span>
                 <span className="w-category-info">
                   <span className="w-category-title">{item.title} <Arrow diagonal /></span>
@@ -237,14 +242,14 @@ export default function WomenswearApp() {
 
         <section className="w-story" id="story">
           <div className="w-story-photo">
-            <img src={editorialImage('trench')} alt="Woman wearing a beige coat and sunglasses — urban fashion style reference" loading="lazy" />
+            <img src={editorialImage('dark-coat')} alt="Woman in black sculptural tailoring — editorial style reference" loading="lazy" />
             <span>THE LOOK / 001</span>
           </div>
           <div className="w-story-copy">
             <div className="w-kicker">02 — THE POINT OF VIEW</div>
-            <h2>Quiet pieces.<br /><em>Bold energy.</em></h2>
-            <p>70% enduring essentials. 30% fresh perspective. Our formula for a wardrobe that works effortlessly together while still feeling entirely your own.</p>
-            <div className="w-story-rule"><span>01 / Wear it your way</span><span>02 / Repeat your favourites</span><span>03 / Make it yours</span></div>
+            <h2>Presence<br /><em>without noise.</em></h2>
+            <p>We believe refinement lives in the details: the line of a shoulder, the weight of a fabric, the confidence of an almost monochrome palette. Never loud. Always felt.</p>
+            <div className="w-story-rule"><span>01 / Intentional silhouettes</span><span>02 / Texture in every layer</span><span>03 / Elegance on your terms</span></div>
             <a className="w-text-link" href="#edit">Explore the edit <Arrow diagonal /></a>
           </div>
         </section>
@@ -361,17 +366,38 @@ export default function WomenswearApp() {
         <section className="w-bottom-editorial">
           <div className="w-bottom-copy">
             <span className="w-overline">EVERNE WOMAN / COL. 01</span>
-            <h2>Dress like<br /><em>yourself.</em></h2>
+            <h2>Leave an<br /><em>impression.</em></h2>
             <p>Our first drop is taking shape. Actual garments, detailed sizing and clear delivery information are coming soon.</p>
             <a className="w-outline-link" href="#faq">Find out more <Arrow /></a>
           </div>
           <div className="w-bottom-photo">
-            <img src={editorialImage('knit')} alt="Woman wearing a statement knit sweater — editorial trend reference" loading="lazy" />
+            <img src={editorialImage('dark-knit')} alt="Close editorial detail of refined black ribbed knitwear — styling reference" loading="lazy" />
+          </div>
+        </section>
+
+        <section className="w-care" id="care" aria-labelledby="care-title">
+          <div className="w-care-intro">
+            <div className="w-kicker">05 — THE CARE STUDIO</div>
+            <span className="w-care-monogram" aria-hidden="true">E.</span>
+            <h2 id="care-title">Wear well.<br /><em>Keep forever.</em></h2>
+            <p>A quieter chapter of EVERNE. Thoughtful garment-care essentials made to accompany the things you choose to keep.</p>
+            <span className="w-care-tag">EVERNE CARE / ORIGINAL COLLECTION</span>
+          </div>
+          <div className="w-care-products" aria-label="Everne Care original collection preview">
+            <article className="w-care-product">
+              <img src={base + 'products/garment-brush/catalog.webp'} alt="Wooden garment brush with natural bristles" loading="lazy" />
+              <div><span>CARE / 001</span><h3>Garment Brush</h3></div>
+            </article>
+            <article className="w-care-product">
+              <img src={base + 'products/cashmere-comb/catalog.webp'} alt="Wooden cashmere comb with a metal comb edge" loading="lazy" />
+              <div><span>CARE / 002</span><h3>Cashmere Comb</h3></div>
+            </article>
+            <p className="w-care-note">Original care catalog preview. Online ordering is currently unavailable; availability will be confirmed with our Shopify store.</p>
           </div>
         </section>
 
         <section className="w-faq" id="faq">
-          <div><div className="w-kicker">05 — GOOD TO KNOW</div><h2>The little<br /><em>details.</em></h2></div>
+          <div><div className="w-kicker">06 — GOOD TO KNOW</div><h2>The little<br /><em>details.</em></h2></div>
           <div className="w-faq-list">
             {questions.map((item, index) => (
               <div className="w-faq-item" key={item.question}>
@@ -387,8 +413,8 @@ export default function WomenswearApp() {
 
       <footer className="w-footer">
         <div className="w-footer-top">
-          <div><a href="#top" className="w-footer-logo">EVERNE</a><p>Modern essentials.<br />New expressions.</p></div>
-          <div><span>Explore</span><a href="#collection">Collection</a><a href="#edit">The Edit</a><a href="#style-notes">Style Notes</a><a href="#story">Our World</a></div>
+          <div><a href="#top" className="w-footer-logo">EVERNE</a><p>In the details.<br />In the feeling.</p></div>
+          <div><span>Explore</span><a href="#collection">Collection</a><a href="#edit">The Edit</a><a href="#style-notes">Style Notes</a><a href="#story">Our World</a><a href="#care">Everne Care</a></div>
           <div><span>Information</span><a href={base + 'legal.html#imprint'}>Legal notice</a><a href={base + 'legal.html#privacy'}>Privacy</a><a href={base + 'legal.html#returns'}>Returns</a><a href={base + 'legal.html#shipping'}>Shipping & returns</a></div>
         </div>
         <div className="w-footer-bottom"><span>© 2026 EVERNE · Hamburg</span><span>Collection preview · No active sales</span><span>Commerce foundation by Shopify</span></div>

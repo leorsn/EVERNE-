@@ -1,6 +1,6 @@
 # EVERNE Headless Storefront
 
-Production repository for the EVERNE Edition 01 storefront.
+EVERNE's headless storefront repository, currently featuring the **Dark Atelier** womenswear concept preview and the original garment-care catalog.
 
 ## Architecture
 
@@ -8,12 +8,12 @@ Production repository for the EVERNE Edition 01 storefront.
 - Shopify Headless / Storefront API
 - Shopify remains the commerce source of truth for product data, variants, availability, cart and checkout
 - The custom EVERNE frontend remains the visible storefront
-- Static deployment via GitHub Pages
+- Vercel deployment with Git-linked previews; Shopify remains the planned commerce layer
 
 ## Branches
 
-- `main` — release baseline and GitHub Pages deployment source
-- `dev/headless-foundation` — active storefront development
+- `main` — production baseline; do not publish unapproved product concepts
+- `feat/everne-woman-editorial-preview` — current Vercel preview, with deliberately disabled sales
 
 ## Shopify
 
@@ -51,7 +51,15 @@ VITE_SHOPIFY_API_VERSION=2026-07
 
 No Shopify Admin token, private Storefront token, or payment credential belongs in the browser bundle.
 
-## Preview vs Live mode
+## Current public-facing preview
+
+`src/main.tsx` serves the womenswear editorial preview (`src/WomenswearApp.tsx`). It presents 20 proposed concepts across five clothing categories, with target prices of €34–€59, and the EVERNE CARE original garment-care direction. There is no live product checkout, bag, stock promise or supplier claim on these screens.
+
+The editorial photographs are style references, not photographs of offered products. The preview is intentionally noindexed until supplier, sizing, fulfillment, legal and launch gates are cleared.
+
+The existing Shopify-enabled care storefront in `src/App.tsx` is preserved but is not the active preview route.
+
+## Shopify-enabled legacy storefront
 
 Edition 01 currently has a static preview catalogue in `src/previewCatalog.ts` so the storefront can accurately display the approved product names, SKUs and prices while Shopify products are still draft/unpublished.
 
@@ -69,15 +77,15 @@ The Shopify cart ID is stored in browser localStorage under:
 
 This restores the bag across reloads when the cart remains valid.
 
-## Deployment
+## Vercel deployment
 
-GitHub Pages is the current static host.
+Vercel project: `everne-storefront` (Hobby plan), connected to this GitHub repository. `vercel.json` builds with Vite, serves `dist/`, and rewrites concept detail URLs for client-side routing.
 
-Workflow:
+Pushes to `feat/everne-woman-editorial-preview` create isolated Vercel preview deployments; production continues to follow the configured production branch. Do not promote a preview or push to `main` without a deliberate launch decision.
 
-`.github/workflows/deploy-pages.yml`
+The repository retains a historical GitHub Pages workflow in `.github/workflows/deploy-pages.yml`; Vercel is now the intended preview host.
 
-The workflow runs TypeScript checks, builds the Vite application and deploys `dist/` to GitHub Pages from `main`.
+Before publishing a change run `npm run build`, which includes source, render, preview isolation and sourcing readiness checks.
 
 ## Current limitations
 
