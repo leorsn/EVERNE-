@@ -41,27 +41,6 @@ const questions = [
   },
 ];
 
-const styleNotes = [
-  {
-    label: '01 / OFF DUTY',
-    title: 'The art of ease.',
-    description: 'A considered daily ritual. Fluid lines, quiet textures and immaculate foundations made for wherever the day leads.',
-    pieces: ['Essential Rib Top', 'Wide Leg Trouser', 'Relaxed Crew Knit'],
-  },
-  {
-    label: '02 / AFTER HOURS',
-    title: 'After dark.',
-    description: 'An expressive silhouette needs very little else. A close fit, a precise line and texture that speaks for itself.',
-    pieces: ['Second Skin Body', 'The Black Mini', 'Off-Shoulder Knit'],
-  },
-  {
-    label: '03 / NEW PERSPECTIVE',
-    title: 'Beyond convention.',
-    description: 'Subtle contrasts, lived-in denim and beautifully chosen layers. A more individual interpretation of modern elegance.',
-    pieces: ['Fine Knit Top', 'Straight Leg Denim', 'Wrap Knit Cardigan'],
-  },
-] as const;
-
 function Arrow({ diagonal = false }: { diagonal?: boolean }) {
   return <span aria-hidden="true">{diagonal ? '↗' : '→'}</span>;
 }
@@ -75,12 +54,11 @@ export default function WomenswearApp() {
   const menuToggleRef = useRef<HTMLButtonElement>(null);
   const headerRef = useRef<HTMLElement>(null);
   const [openQuestion, setOpenQuestion] = useState<number | null>(null);
-  const [activeStyle, setActiveStyle] = useState(0);
 
   useEffect(() => {
     applySeo({
-      title: 'EVERNE — The Dark Atelier | Collection Preview',
-      description: 'EVERNE explores a darker kind of elegance: considered silhouettes, black-on-black essentials and a curated fashion collection preview.',
+      title: 'EVERNE — Collection 01 | Womenswear Preview',
+      description: 'Explore Collection 01 from EVERNE. Twenty planned womenswear pieces in an early, non-transactional collection preview.',
       path: '/',
       type: 'website',
       indexable: false,
@@ -127,7 +105,6 @@ export default function WomenswearApp() {
   const visiblePieces = showAll || category !== 'all'
     ? selectedPieces
     : selectedPieces.slice(0, 8);
-  const selectedStyle = styleNotes[activeStyle];
 
   function selectCategory(nextCategory: FashionCategory | 'all') {
     navigate({ search: editViewSearch({ category: nextCategory, showAll: false }) }, { replace: true });
@@ -155,9 +132,9 @@ export default function WomenswearApp() {
       <a className="w-skip-link" href="#main">Skip to content</a>
 
       <div className="w-announcement">
-        <span>EVERNE WOMAN / COLLECTION 01</span>
-        <span>Collection preview · Shopping not yet available</span>
-        <span>Hamburg · Germany</span>
+        <span>Collection 01 is taking shape</span>
+        <span>Shopping not yet available — collection preview</span>
+        <span>Worldwide / English</span>
       </div>
 
       <header className="w-header" ref={headerRef}>
@@ -172,169 +149,81 @@ export default function WomenswearApp() {
           {menuOpen ? 'Close' : 'Menu'} <span aria-hidden="true">{menuOpen ? '×' : '☰'}</span>
         </button>
         <nav id="woman-nav" className={menuOpen ? 'w-nav is-open' : 'w-nav'} aria-label="Main navigation">
-          <a href="#edit" onClick={closeMenu}>The Edit</a>
-          <a href="#story" onClick={closeMenu}>Our World</a>
-          <a href="#style-notes" onClick={closeMenu}>Style Notes</a>
-          <Link to="/standards" onClick={() => setMenuOpen(false)}>Our Standard</Link>
-          <Link to="/care" onClick={() => setMenuOpen(false)}>Everne Care</Link>
+          <a href="#edit" onClick={closeMenu}>New In</a>
+          <a href="#collection" onClick={closeMenu}>Clothing</a>
+          <a href="#story" onClick={closeMenu}>The Brand</a>
+          <Link to="/care" onClick={() => setMenuOpen(false)}>Care</Link>
         </nav>
-        <a className="w-logo" href="#top" onClick={closeMenu} aria-label="EVERNE homepage">EVERNE<span>WOMAN</span></a>
-        <a className="w-header-cta" href="#edit" onClick={closeMenu}>The Edit <Arrow diagonal /></a>
+        <a className="w-logo" href="#top" onClick={closeMenu} aria-label="EVERNE homepage">EVERNE</a>
+        <Link className="w-header-cta" to="/standards" onClick={() => setMenuOpen(false)}>Our Standard <Arrow diagonal /></Link>
       </header>
 
       <main id="main" tabIndex={-1}>
         <section className="w-hero" aria-labelledby="hero-title">
           <div className="w-hero-copy">
-            <div className="w-section-meta"><span>01 / THE DARK ATELIER</span><span>Collection study / 2026</span></div>
+            <div className="w-section-meta"><span>EVERNE / WOMENSWEAR</span><span>01 — 2026</span></div>
             <div className="w-hero-main">
-              <p className="w-overline">THE ART OF BEING UNFORGETTABLE</p>
-              <h1 id="hero-title" tabIndex={-1}>A darker<br /><em>kind of elegance.</em></h1>
-              <p className="w-hero-description">A considered edit of womenswear: sculpted silhouettes, tactile layers and essentials with a quiet edge. Explore 20 styles in development before our first collection is ready to shop.</p>
-              <a className="w-solid-link" href="#edit">Explore the 20-piece edit <Arrow /></a>
+              <p className="w-overline">INTRODUCING / THE FIRST EDIT</p>
+              <h1 id="hero-title" tabIndex={-1}>COLLECTION<br />01.</h1>
+              <p className="w-hero-description">A new direction in everyday womenswear. Explore the 20-piece edit ahead of launch.</p>
+              <a className="w-solid-link" href="#edit">Discover the collection <Arrow /></a>
             </div>
             <div className="w-hero-foot">
-              <span>SUBSTANCE OVER SPECTACLE</span>
-              <span>€34–€59 · Planned price range</span>
+              <span>THE EVERNE EDIT</span>
+              <span>€34–€59 / PLANNED PRICES</span>
             </div>
           </div>
           <div className="w-hero-media">
-            <img src={editorialImage('dark-hero')} alt="Woman in a black tailored leather-look coat against a charcoal studio backdrop — conceptual fashion editorial" fetchPriority="high" />
-            <div className="w-image-stamp"><span>E / 01</span><small>THE DARK ATELIER</small></div>
-            <span className="w-vertical-caption">EVERNE — A STUDY IN CONTRAST</span>
+            <img src={editorialImage('dark-hero')} alt="Editorial fashion reference showing a model in dark tailoring, not a product for sale" fetchPriority="high" />
           </div>
         </section>
-
-        <div className="w-marquee" aria-label="Brand philosophy">
-          <span>FORM. FEELING. FREEDOM.</span><span className="w-star">✦</span>
-          <span>THE DARK ATELIER / 001</span><span className="w-star">✦</span>
-          <span>LESS NOISE. MORE PRESENCE.</span><span className="w-star">✦</span>
-          <span>FORM. FEELING. FREEDOM.</span>
-        </div>
 
         <section className="w-trust-rail" aria-label="What visitors can expect from this preview">
-          <div><strong>20 planned pieces</strong><span>Explore the first womenswear direction</span></div>
+          <div><strong>Collection 01</strong><span>20 planned pieces</span></div>
           <div><strong>Selection before sales</strong><span>No checkout until actual garments are verified</span></div>
-          <div><strong>Clarity before checkout</strong><span>Real sizing, delivery and returns information required</span></div>
+          <div><strong>Our process</strong><Link to="/standards">Read the selection standard <Arrow diagonal /></Link></div>
         </section>
 
-        <section className="w-intro" id="collection">
-          <div className="w-kicker">01 — THE WARDROBE</div>
-          <div className="w-intro-content">
-            <h2>A study in<br /><em>modern allure.</em></h2>
-            <p>Created around contrast: soft against structured, timeless against unexpected. A wardrobe with intention — never a uniform.</p>
-          </div>
-        </section>
-
-        <section className="w-category-section" aria-label="Planned fashion categories">
+        <section className="w-category-section" id="collection" aria-label="Planned fashion categories">
+          <div className="w-category-heading"><h2>EXPLORE THE EDIT</h2><p>Twenty styles. Five categories. One first collection.</p></div>
           <div className="w-category-grid">
-            {fashionCategories.map((item, index) => (
-              <button
-                key={item.id}
-                type="button"
-                className={'w-category-card w-category-' + item.id}
-                onClick={() => selectCategory(item.id)}
-                aria-pressed={category === item.id}
-                aria-label={item.title + ': view design concepts'}
-              >
-                {index === 0 && <img src={editorialImage('dark-coat')} alt="" loading="lazy" />}
-                {index === 1 && <img src={editorialImage('dark-knit')} alt="" loading="lazy" />}
-                {index === 2 && <img src={editorialImage('dark-hero')} alt="" loading="lazy" />}
-                {index === 3 && <img src={editorialImage('dark-dress')} alt="" loading="lazy" />}
-                {index === 4 && <img src={editorialImage('dark-skirt')} alt="" loading="lazy" />}
-                <span className="w-category-no">0{index + 1} / {String(item.count).padStart(2, '0')} PIECES</span>
-                <span className="w-category-info">
-                  <span className="w-category-title">{item.title} <Arrow diagonal /></span>
-                  <span className="w-category-price">Target prices {item.priceRange}</span>
-                </span>
+            <button type="button" className="w-category-card w-category-knitwear" onClick={() => selectCategory('knitwear')} aria-pressed={category === 'knitwear'}>
+              <img src={editorialImage('dark-coat')} alt="" loading="lazy" />
+              <span className="w-category-info"><span className="w-category-title">EVERYDAY UNIFORM <Arrow diagonal /></span><span className="w-category-price">EXPLORE KNITWEAR</span></span>
+            </button>
+            <button type="button" className="w-category-card w-category-dresses" onClick={() => selectCategory('dresses')} aria-pressed={category === 'dresses'}>
+              <img src={editorialImage('dark-dress')} alt="" loading="lazy" />
+              <span className="w-category-info"><span className="w-category-title">AFTER HOURS <Arrow diagonal /></span><span className="w-category-price">EXPLORE DRESSES</span></span>
+            </button>
+          </div>
+          <div className="w-category-shortcuts" aria-label="All categories">
+            {fashionCategories.map((item) => (
+              <button key={item.id} type="button" onClick={() => selectCategory(item.id)} aria-pressed={category === item.id}>
+                {item.title}<span>{String(item.count).padStart(2,'0')} <Arrow diagonal /></span>
               </button>
             ))}
           </div>
-          <p className="w-media-note">Editorial photography illustrates our style direction, not garments available for purchase.</p>
-        </section>
-
-        <section className="w-story" id="story">
-          <div className="w-story-photo">
-            <img src={editorialImage('dark-coat')} alt="Woman in black sculptural tailoring — editorial style reference" loading="lazy" />
-            <span>THE LOOK / 001</span>
-          </div>
-          <div className="w-story-copy">
-            <div className="w-kicker">02 — THE POINT OF VIEW</div>
-            <h2>Presence<br /><em>without noise.</em></h2>
-            <p>EVERNE is being developed in Hamburg as an independent curated fashion label. We select from external suppliers, and we believe a beautiful silhouette deserves equally clear information about its fabric, fit and delivery.</p>
-            <div className="w-story-rule"><span>01 / Sample before claims</span><span>02 / Measurements before size advice</span><span>03 / Clear terms before checkout</span></div>
-            <Link className="w-text-link" to="/standards">How we select <Arrow diagonal /></Link>
-          </div>
-        </section>
-
-        <section className="w-style-notes" id="style-notes" aria-labelledby="style-notes-title">
-          <div className="w-style-intro">
-            <span className="w-kicker">03 — STYLE NOTES</span>
-            <h2 id="style-notes-title">Wear it<br /><em>your way.</em></h2>
-            <p>The best wardrobe isn't a set of rules. It's a collection of pieces you can make your own — from slow mornings to spontaneous nights.</p>
-            <span className="w-style-intro-foot">THREE MOODS / ONE WARDROBE</span>
-          </div>
-          <div className="w-style-explorer">
-            <div className="w-style-options" role="group" aria-label="Choose a styling direction">
-              {styleNotes.map((style, index) => (
-                <button
-                  key={style.label}
-                  type="button"
-                  className={activeStyle === index ? 'is-active' : ''}
-                  aria-pressed={activeStyle === index}
-                  onClick={() => setActiveStyle(index)}
-                >
-                  <span>{style.label}</span>
-                  <span aria-hidden="true">{activeStyle === index ? '●' : '○'}</span>
-                </button>
-              ))}
-            </div>
-            <div className="w-style-selection">
-              <div className="w-style-selection-heading">
-                <div>
-                  <span className="w-kicker">THE SELECTED EDIT</span>
-                  <h3 aria-live="polite">{selectedStyle.title}</h3>
-                </div>
-                <p>{selectedStyle.description}</p>
-              </div>
-              <div className="w-style-piece-grid">
-                {selectedStyle.pieces.map((name, index) => {
-                  const piece = conceptPieces.find((item) => item.name === name)!;
-                  return (
-                    <Link key={piece.name} className="w-style-piece" to={conceptLink(piece.name, editView)} aria-label={'View design concept: ' + piece.name}>
-                      <div className={'w-style-piece-art tone-' + piece.tone} aria-hidden="true">
-                        <span className="w-style-piece-number">0{index + 1}</span>
-                        <span className="w-style-piece-mark">E.</span>
-                        <span className="w-style-piece-arrow">↗</span>
-                      </div>
-                      <span className="w-style-piece-name">{piece.name}</span>
-                      <span className="w-style-piece-price">TARGET {formatTargetPrice(piece.targetPrice)}</span>
-                    </Link>
-                  );
-                })}
-              </div>
-              <p className="w-style-notice">Styling inspiration only. These are design concepts, not photographs or available products.</p>
-            </div>
-          </div>
+          <p className="w-media-note">Campaign images are mood references, not photographs of the planned garments.</p>
         </section>
 
         <section className="w-edit" id="edit" aria-labelledby="edit-title">
           <div className="w-edit-header">
             <div>
-              <div className="w-kicker">04 — COMING INTO FOCUS</div>
-              <h2 id="edit-title" tabIndex={-1}>The <em>Edit.</em></h2>
+              <div className="w-kicker">COLLECTION 01 / WOMENSWEAR</div>
+              <h2 id="edit-title" tabIndex={-1}>THE EDIT</h2>
             </div>
             <div className="w-edit-description">
-              <p>20 planned pieces. An early edit — not yet available to buy.</p>
-              <span>PREVIEW / NO CHECKOUT</span>
+              <p>20 planned pieces. Target prices from €34–€59.</p>
+              <span>COLLECTION PREVIEW / NO CHECKOUT</span>
             </div>
           </div>
 
           <div className="w-edit-confidence">
             <div>
-              <span className="w-kicker">CURATION, WITH CONTEXT</span>
-              <p>Each card is a design direction, not a stocked garment. Final photographs, garment composition, measurements and purchase information follow only after review.</p>
+              <span className="w-kicker">BEFORE THE FIRST DROP</span>
+              <p>Each card is a design direction, not a stocked garment. We will replace this preview with actual product photography and verified sizing, fabrics, delivery and return terms before orders open.</p>
             </div>
-            <Link to="/standards">Read our selection standard <Arrow diagonal /></Link>
+            <Link to="/standards">How we select <Arrow diagonal /></Link>
           </div>
 
           <div className="w-filters" role="group" aria-label="Choose a category">
@@ -355,9 +244,9 @@ export default function WomenswearApp() {
                 <article className="w-concept-card" key={piece.name}>
                   <Link className="w-concept-link" to={conceptLink(piece.name, editView)} aria-label={'View the ' + piece.name + ' design concept'}>
                     <div className={'w-concept-visual tone-' + piece.tone} aria-hidden="true">
-                      <span className="w-concept-watermark">E.</span>
+                      <span className="w-concept-watermark">{String(index + 1).padStart(2, '0')}</span>
                       <span className="w-concept-index">{String(index + 1).padStart(2, '0')}</span>
-                      <span className="w-concept-label">CONCEPT ONLY ↗</span>
+                      <span className="w-concept-label">COLLECTION STUDY ↗</span>
                     </div>
                     <div className="w-concept-meta">
                       <div><span>{fashionCategories.find((item) => item.id === piece.category)?.title}</span><h3>{piece.name}</h3></div>
@@ -380,29 +269,28 @@ export default function WomenswearApp() {
               {showAll ? 'Show fewer concepts' : 'View all 20 concepts'} <Arrow />
             </button>
           }
-          <p className="w-disclaimer">This edit is a creative and sourcing plan. Product names, final prices, fabrics, sizing and availability will only be confirmed after sourcing is complete.</p>
+          <p className="w-disclaimer">Concept index only. No inventory is confirmed; final product photographs and details are pending supplier and sample review.</p>
         </section>
 
-        <section className="w-bottom-editorial">
-          <div className="w-bottom-copy">
-            <span className="w-overline">EVERNE WOMAN / COL. 01</span>
-            <h2>Leave an<br /><em>impression.</em></h2>
-            <p>Our first drop is taking shape. Actual garments, detailed sizing and clear delivery information are coming soon.</p>
-            <a className="w-outline-link" href="#faq">Find out more <Arrow /></a>
+        <section className="w-story" id="story">
+          <div className="w-story-photo">
+            <img src={editorialImage('dark-skirt')} alt="Womenswear editorial mood reference, not a product photograph" loading="lazy" />
           </div>
-          <div className="w-bottom-photo">
-            <img src={editorialImage('dark-knit')} alt="Close editorial detail of refined black ribbed knitwear — styling reference" loading="lazy" />
+          <div className="w-story-copy">
+            <div className="w-kicker">THE BRAND</div>
+            <h2>EVERNE<br />WOMAN.</h2>
+            <p>EVERNE is an independent womenswear curation project developed in Hamburg. We work with external suppliers and only intend to offer pieces once the garments, fit, materials and order experience have been checked.</p>
+            <Link className="w-text-link" to="/standards">Our approach <Arrow diagonal /></Link>
           </div>
         </section>
 
         <section className="w-care" id="care" aria-labelledby="care-title">
           <div className="w-care-intro">
-            <div className="w-kicker">05 — THE CARE STUDIO</div>
-            <span className="w-care-monogram" aria-hidden="true">E.</span>
-            <h2 id="care-title">Wear well.<br /><em>Keep forever.</em></h2>
-            <p>A quieter chapter of EVERNE. Thoughtful garment-care essentials made to accompany the things you choose to keep.</p>
-            <span className="w-care-tag">EVERNE CARE / ORIGINAL COLLECTION</span>
-            <Link className="w-care-explore" to="/care">Discover the Care Studio <Arrow diagonal /></Link>
+            <div className="w-kicker">A SEPARATE COLLECTION</div>
+            <h2 id="care-title">EVERNE<br />CARE.</h2>
+            <p>The original care collection — brushes, combs and essentials for looking after the pieces you own.</p>
+            <span className="w-care-tag">GARMENT CARE / PREVIEW</span>
+            <Link className="w-care-explore" to="/care">Explore Care <Arrow diagonal /></Link>
           </div>
           <div className="w-care-products" aria-label="Everne Care original collection preview">
             <article className="w-care-product">
@@ -418,7 +306,7 @@ export default function WomenswearApp() {
         </section>
 
         <section className="w-faq" id="faq">
-          <div><div className="w-kicker">06 — GOOD TO KNOW</div><h2>The little<br /><em>details.</em></h2></div>
+          <div><div className="w-kicker">INFORMATION</div><h2>GOOD TO KNOW.</h2></div>
           <div className="w-faq-list">
             {questions.map((item, index) => (
               <div className="w-faq-item" key={item.question}>
@@ -434,11 +322,11 @@ export default function WomenswearApp() {
 
       <footer className="w-footer">
         <div className="w-footer-top">
-          <div><a href="#top" className="w-footer-logo">EVERNE</a><p>In the details.<br />In the feeling.</p></div>
-          <div><span>Explore</span><a href="#collection">Categories</a><a href="#edit">The Edit</a><a href="#style-notes">Style Notes</a><a href="#story">Our World</a><Link to="/standards">Our Standard</Link><Link to="/care">Everne Care</Link></div>
+          <div><a href="#top" className="w-footer-logo">EVERNE</a><p>Womenswear & garment care.<br />Hamburg, Germany.</p></div>
+          <div><span>Explore</span><a href="#collection">Categories</a><a href="#edit">Collection 01</a><a href="#story">The Brand</a><Link to="/standards">Our Standard</Link><Link to="/care">Everne Care</Link></div>
           <div><span>Information</span><a href={base + 'legal.html#imprint'}>Legal notice</a><a href={base + 'legal.html#privacy'}>Privacy</a><a href={base + 'legal.html#returns'}>Returns</a><a href={base + 'legal.html#shipping'}>Shipping & returns</a></div>
         </div>
-        <div className="w-footer-bottom"><span>© 2026 EVERNE · Hamburg</span><span>Collection preview · No active sales</span><span>Commerce foundation by Shopify</span></div>
+        <div className="w-footer-bottom"><span>© 2026 EVERNE · Hamburg</span><span>Collection preview · No active sales</span><span>EVERNE WOMAN / 01</span></div>
       </footer>
     </div>
   );
