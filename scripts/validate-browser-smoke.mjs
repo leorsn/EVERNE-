@@ -156,9 +156,10 @@ try {
   await js("document.querySelector('.w-nav a[href=\"#edit\"]').click()");
   await eq("document.querySelector('.w-nav').classList.contains('is-open')",
     false, 'Selecting a navigation section closes mobile menu');
-  await js("document.querySelectorAll('.w-style-options button')[1].click()");
-  await eq("document.querySelectorAll('.w-style-options button')[1].getAttribute('aria-pressed')",
-    'true', 'Style Notes switch');
+  await js("document.querySelectorAll('.w-category-shortcuts button')[1].click()");
+  await eq("document.querySelectorAll('.w-category-shortcuts button')[1].getAttribute('aria-pressed')",
+    'true', 'Direct category shortcut');
+  await js("document.querySelectorAll('.w-filters button')[0].click()");
   await js("document.querySelector('.w-faq-item button').click()");
   await eq("document.querySelector('.w-faq-item button').getAttribute('aria-expanded')",
     'true', 'FAQ accordion');
