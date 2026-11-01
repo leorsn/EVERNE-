@@ -53,7 +53,7 @@ No Shopify Admin token, private Storefront token, or payment credential belongs 
 
 ## Current public-facing preview
 
-`src/main.tsx` serves the womenswear editorial preview (`src/WomenswearApp.tsx`). It presents 20 proposed concepts across five clothing categories, with target prices of €34–€59, and the EVERNE CARE original garment-care direction. There is no live product checkout, bag, stock promise or supplier claim on these screens.
+`src/main.tsx` serves the womenswear editorial preview (`src/WomenswearApp.tsx`). It presents 20 proposed concepts across five clothing categories, with target prices of €34–€59. The original garment-care collection has a separate preview route, `/care` (`src/CarePage.tsx`), with four locally hosted catalog cards. There is no live product checkout, bag, stock promise or supplier claim on these screens.
 
 The editorial photographs are style references, not photographs of offered products. The preview is intentionally noindexed until supplier, sizing, fulfillment, legal and launch gates are cleared.
 
@@ -79,7 +79,7 @@ This restores the bag across reloads when the cart remains valid.
 
 ## Vercel deployment
 
-Vercel project: `everne-storefront` (Hobby plan), connected to this GitHub repository. `vercel.json` builds with Vite, serves `dist/`, and rewrites concept detail URLs for client-side routing.
+Vercel project: `everne-storefront` (Hobby plan), connected to this GitHub repository. `vercel.json` builds with Vite, serves `dist/`, and rewrites concept and `/care` detail URLs for client-side routing.
 
 Pushes to `feat/everne-woman-editorial-preview` create isolated Vercel preview deployments; production continues to follow the configured production branch. Do not promote a preview or push to `main` without a deliberate launch decision.
 

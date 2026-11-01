@@ -6,6 +6,7 @@
   "cleanUrls": true,
   "rewrites": [
     { "source": "/products/:path*", "destination": "/" },
+    { "source": "/care", "destination": "/" },
     { "source": "/edit/:path*", "destination": "/" }
   ],
   "headers": [

@@ -502,6 +502,10 @@ button:focus-visible,a:focus-visible { outline-color: #ebcfa9; }
 .w-care-product span { color: #66615a; font: 600 9px var(--sans); letter-spacing: .11em; }
 .w-care-product h3 { margin: 9px 0 0; font: 400 clamp(20px,1.8vw,30px) var(--serif); }
 .w-care-note { grid-column: 1 / -1; margin: 14px 0 0; color: #56534f; font: 400 11px/1.7 var(--sans); }
+.w-care-explore { display: inline-flex; align-items: center; gap: 30px; margin-top: 26px; padding-bottom: 10px; border-bottom: 1px solid #696358; font: 600 10px var(--sans); letter-spacing: .12em; text-transform: uppercase; }
+.w-care-explore:hover { color: #746452; border-color: #746452; }
+.w-care-explore span { font-size: 18px; font-weight: 400; }
+.w-category-dresses::after,.w-category-skirts::after { display: none; }
 .w-faq { background: #141617; }
 .w-faq-item button { color: #edeae6; }
 .w-faq-item button span:last-child { color: #bca990; }
@@ -523,6 +527,49 @@ button:focus-visible,a:focus-visible { outline-color: #ebcfa9; }
 .w-detail-editorial h2 em,.w-detail-related h2 em { color: #cdb99d; }
 .w-detail-footer { background: #080909; }
 
+/* EVERNE CARE — deliberately quieter, warm-stone counterpoint to the dark atelier */
+.w-care-page { color: #eeeae3; background: #111213; }
+.w-care-page-header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; gap: 22px; min-height: 88px; padding: 0 5%; background: #111213; border-bottom: 1px solid #323333; }
+.w-care-back,.w-care-header-index { display: inline-flex; align-items: center; gap: 15px; width: fit-content; min-height: 44px; font: 600 10px var(--sans); letter-spacing: .14em; text-transform: uppercase; }
+.w-care-header-index { justify-self: end; color: #c9b69f; }
+.w-care-back:hover,.w-care-header-index:hover { color: #e1c9ac; }
+.w-care-page-hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 720px; }
+.w-care-page-hero-copy { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 80px 8vw 48px 7vw; background: radial-gradient(circle at 0% 10%,#252525,#111213 62%); }
+.w-care-page-hero h1 { margin: 40px 0 33px; font: 400 clamp(65px,6vw,112px)/.94 var(--serif); letter-spacing: -.063em; }
+.w-care-page-hero h1 em,.w-care-catalog h2 em,.w-care-ritual h2 em,.w-care-return h2 em { color: #d0bda2; font-weight: 400; font-style: italic; }
+.w-care-page-hero-copy>p { max-width: 420px; margin: 0 0 38px; color: #bdb6ac; font-size: 14px; line-height: 1.9; }
+.w-care-page-hero-foot { margin-top: auto; padding-top: 60px; color: #948e86; font: 600 9px var(--sans); letter-spacing: .18em; }
+.w-care-page-hero-photo { position: relative; min-height: 720px; overflow: hidden; background: #bbb5ac; }
+.w-care-page-hero-photo img { position: absolute; inset: 0; height: 100%; object-fit: cover; object-position: center; filter: grayscale(.4) saturate(.7) contrast(1.06); }
+.w-care-page-hero-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg,rgba(0,0,0,.24),transparent 37%,rgba(0,0,0,.16)); pointer-events: none; }
+.w-care-page-hero-photo span { position: absolute; z-index: 1; left: 35px; bottom: 30px; color: #fff; text-shadow: 0 1px 10px rgba(0,0,0,.35); font: 600 10px var(--sans); letter-spacing: .16em; }
+.w-care-catalog { padding: 135px 5% 150px; background: #d4d0c8; color: #232423; }
+.w-care-catalog .w-kicker { color: #6a5f53; }
+.w-care-catalog-heading { display: flex; justify-content: space-between; align-items: end; gap: 60px; margin-bottom: 65px; }
+.w-care-catalog h2,.w-care-ritual h2,.w-care-return h2 { margin: 29px 0 0; font: 400 clamp(61px,6vw,110px)/.95 var(--serif); letter-spacing: -.065em; }
+.w-care-catalog h2 em { color: #766b5d; }
+.w-care-catalog-heading>p { max-width: 345px; margin: 0 0 3px; color: #55514b; font-size: 13px; line-height: 1.9; }
+.w-care-catalog-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 74px 24px; }
+.w-care-catalog-product { min-width: 0; }
+.w-care-catalog-photo { position: relative; overflow: hidden; background: #ece8e1; }
+.w-care-catalog-photo img { aspect-ratio: 1.14; object-fit: cover; filter: grayscale(.6) saturate(.7); transition: transform .65s cubic-bezier(.2,.75,.3,1); }
+.w-care-catalog-product:hover img { transform: scale(1.025); }
+.w-care-catalog-photo>span { position: absolute; top: 22px; left: 23px; padding: 9px 11px; color: #47433c; background: rgba(244,241,234,.83); font: 600 9px var(--sans); letter-spacing: .13em; }
+.w-care-catalog-copy { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,.7fr); gap: 20px 28px; padding: 22px 2px 0; }
+.w-care-catalog-copy h3 { margin: 0; font: 400 clamp(33px,3vw,51px)/1 var(--serif); letter-spacing: -.045em; }
+.w-care-catalog-copy p { margin: 0; color: #55524c; font-size: 12px; line-height: 1.8; }
+.w-care-catalog-copy>span { grid-column: 1 / -1; padding-top: 15px; border-top: 1px solid #aaa59b; color: #625b52; font: 600 9px var(--sans); letter-spacing: .12em; }
+.w-care-ritual { display: grid; grid-template-columns: 1fr .85fr; align-items: start; gap: 9vw; padding: 135px 6% 145px; background: #17191a; }
+.w-care-ritual h2 { margin-top: 45px; }
+.w-care-ritual-steps { border-top: 1px solid #555552; }
+.w-care-ritual-steps>div { display: grid; grid-template-columns: 45px minmax(0,1fr); gap: 8px 30px; padding: 27px 0; border-bottom: 1px solid #454645; }
+.w-care-ritual-steps span { color: #c6af92; font: 600 10px var(--sans); letter-spacing: .1em; }
+.w-care-ritual-steps strong { font: 400 clamp(26px,2.4vw,40px) var(--serif); }
+.w-care-ritual-steps p { grid-column: 2; max-width: 340px; margin: 0; color: #a6a39d; font-size: 13px; line-height: 1.8; }
+.w-care-return { display: flex; flex-direction: column; align-items: center; padding: 130px 5%; text-align: center; background: #0b0c0d; }
+.w-care-return h2 { margin-bottom: 40px; }
+.w-care-return .w-solid-link { margin: 0 auto; }
+
 @media (max-width: 850px) {
   .w-header { height: 74px; }
   .w-nav { top: 73px; background: #111213; border-color: #303232; }
@@ -539,6 +586,14 @@ button:focus-visible,a:focus-visible { outline-color: #ebcfa9; }
   .w-care-intro { min-height: 0; }
   .w-care-monogram { margin-top: 65px; }
   .w-care-products { max-width: 740px; }
+  .w-care-page-hero { grid-template-columns: 1fr; }
+  .w-care-page-hero-copy { min-height: 560px; padding: 85px 7% 45px; }
+  .w-care-page-hero-photo { min-height: 510px; }
+  .w-care-catalog { padding: 95px 6%; }
+  .w-care-catalog-heading { align-items: flex-start; flex-direction: column; gap: 26px; }
+  .w-care-catalog-heading>p { max-width: 560px; }
+  .w-care-catalog-copy { grid-template-columns: 1fr; gap: 12px; }
+  .w-care-ritual { grid-template-columns: 1fr; gap: 50px; padding: 100px 7%; }
 }
 @media (max-width: 560px) {
   .w-announcement { justify-content: center; font-size: 9px; }
@@ -566,4 +621,19 @@ button:focus-visible,a:focus-visible { outline-color: #ebcfa9; }
   .w-care-product h3 { margin-top: 8px; }
   .w-care-monogram { margin-top: 30px; }
   .w-care-note { font-size: 11px; }
+  .w-care-page-header { gap: 10px; min-height: 75px; padding: 0 5%; }
+  .w-care-back { font-size: 19px; }
+  .w-care-back span,.w-care-header-index { display: none; }
+  .w-care-page-hero-copy { min-height: 570px; padding: 70px 7% 38px; }
+  .w-care-page-hero h1 { font-size: clamp(59px,12.5vw,79px); }
+  .w-care-page-hero-photo { min-height: 440px; }
+  .w-care-catalog { padding: 85px 6% 100px; }
+  .w-care-catalog h2,.w-care-ritual h2,.w-care-return h2 { font-size: clamp(55px,12vw,78px); }
+  .w-care-catalog-heading { margin-bottom: 40px; }
+  .w-care-catalog-grid { grid-template-columns: 1fr; gap: 60px; }
+  .w-care-catalog-photo>span { top: 14px; left: 14px; }
+  .w-care-catalog-copy { gap: 9px; }
+  .w-care-ritual { padding: 90px 7%; }
+  .w-care-ritual-steps>div { grid-template-columns: 32px minmax(0,1fr); gap: 8px 18px; }
+  .w-care-return { padding: 95px 5%; }
 }

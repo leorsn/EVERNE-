@@ -33,7 +33,7 @@ const questions = [
   },
   {
     question: 'What is EVERNE CARE?',
-    answer: 'EVERNE CARE is our smaller garment-care direction, built around the original care collection. The products shown are a catalog preview; ordering will only be enabled once the Shopify storefront and fulfillment details have been verified.',
+    answer: 'EVERNE CARE is our dedicated garment-care studio, built around the original care collection. Explore the separate CARE page; ordering will only be enabled once Shopify and fulfillment details have been verified.',
   },
 ];
 
@@ -172,7 +172,7 @@ export default function WomenswearApp() {
           <a href="#story" onClick={closeMenu}>Our World</a>
           <a href="#style-notes" onClick={closeMenu}>Style Notes</a>
           <a href="#edit" onClick={closeMenu}>The Edit</a>
-          <a href="#care" onClick={closeMenu}>Everne Care</a>
+          <Link to="/care" onClick={() => setMenuOpen(false)}>Everne Care</Link>
         </nav>
         <a className="w-logo" href="#top" onClick={closeMenu} aria-label="EVERNE homepage">EVERNE<span>WOMAN</span></a>
         <a className="w-header-cta" href="#edit" onClick={closeMenu}>The Edit <Arrow diagonal /></a>
@@ -229,6 +229,8 @@ export default function WomenswearApp() {
                 {index === 0 && <img src={editorialImage('dark-coat')} alt="" loading="lazy" />}
                 {index === 1 && <img src={editorialImage('dark-knit')} alt="" loading="lazy" />}
                 {index === 2 && <img src={editorialImage('dark-hero')} alt="" loading="lazy" />}
+                {index === 3 && <img src={editorialImage('dark-dress')} alt="" loading="lazy" />}
+                {index === 4 && <img src={editorialImage('dark-skirt')} alt="" loading="lazy" />}
                 <span className="w-category-no">0{index + 1} / {String(item.count).padStart(2, '0')} PIECES</span>
                 <span className="w-category-info">
                   <span className="w-category-title">{item.title} <Arrow diagonal /></span>
@@ -382,6 +384,7 @@ export default function WomenswearApp() {
             <h2 id="care-title">Wear well.<br /><em>Keep forever.</em></h2>
             <p>A quieter chapter of EVERNE. Thoughtful garment-care essentials made to accompany the things you choose to keep.</p>
             <span className="w-care-tag">EVERNE CARE / ORIGINAL COLLECTION</span>
+            <Link className="w-care-explore" to="/care">Discover the Care Studio <Arrow diagonal /></Link>
           </div>
           <div className="w-care-products" aria-label="Everne Care original collection preview">
             <article className="w-care-product">
@@ -414,7 +417,7 @@ export default function WomenswearApp() {
       <footer className="w-footer">
         <div className="w-footer-top">
           <div><a href="#top" className="w-footer-logo">EVERNE</a><p>In the details.<br />In the feeling.</p></div>
-          <div><span>Explore</span><a href="#collection">Collection</a><a href="#edit">The Edit</a><a href="#style-notes">Style Notes</a><a href="#story">Our World</a><a href="#care">Everne Care</a></div>
+          <div><span>Explore</span><a href="#collection">Collection</a><a href="#edit">The Edit</a><a href="#style-notes">Style Notes</a><a href="#story">Our World</a><Link to="/care">Everne Care</Link></div>
           <div><span>Information</span><a href={base + 'legal.html#imprint'}>Legal notice</a><a href={base + 'legal.html#privacy'}>Privacy</a><a href={base + 'legal.html#returns'}>Returns</a><a href={base + 'legal.html#shipping'}>Shipping & returns</a></div>
         </div>
         <div className="w-footer-bottom"><span>© 2026 EVERNE · Hamburg</span><span>Collection preview · No active sales</span><span>Commerce foundation by Shopify</span></div>

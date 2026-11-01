@@ -30,12 +30,12 @@ const direction: Record<FashionCategory, { line: string; brief: string; photo: s
   dresses: {
     line: 'Easy, never ordinary.',
     brief: 'One piece, endless possibilities. We are focusing on natural movement, flattering fits and details worth taking a closer look at.',
-    photo: 'dark-coat',
+    photo: 'dark-dress',
   },
   skirts: {
     line: 'Movement in focus.',
     brief: 'Fresh proportions for a versatile wardrobe. Length, feel and finish are still being considered as part of the selection process.',
-    photo: 'dark-knit',
+    photo: 'dark-skirt',
   },
 };
 

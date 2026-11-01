@@ -15,16 +15,18 @@ const vite = await createServer({
 });
 
 try {
-  const [{ default: WomenswearApp }, { default: ConceptDetailPage }, catalog] = await Promise.all([
+  const [{ default: WomenswearApp }, { default: ConceptDetailPage }, { default: CarePage }, catalog] = await Promise.all([
     vite.ssrLoadModule('/src/WomenswearApp.tsx'),
     vite.ssrLoadModule('/src/ConceptDetailPage.tsx'),
+    vite.ssrLoadModule('/src/CarePage.tsx'),
     vite.ssrLoadModule('/src/womenswearCatalog.ts'),
   ]);
 
   function renderPage(url) {
     const home = React.createElement(Route, { path: '/', element: React.createElement(WomenswearApp) });
     const detail = React.createElement(Route, { path: '/edit/:slug', element: React.createElement(ConceptDetailPage) });
-    const routes = React.createElement(Routes, null, home, detail);
+    const care = React.createElement(Route, { path: '/care', element: React.createElement(CarePage) });
+    const routes = React.createElement(Routes, null, home, detail, care);
     return renderToStaticMarkup(React.createElement(MemoryRouter, { initialEntries: [url] }, routes));
   }
 
@@ -46,6 +48,17 @@ try {
   assert.match(landing, /View all 20 concepts/, 'The edit must offer a way to expand to all 20 concepts');
   assert.match(landing, /aria-expanded="false" aria-controls="w-concepts"/, 'The collapsed edit toggle must expose its state');
   assertNoCommerce(landing, '/');
+  assert.match(landing, /href="\/care"/, 'Home must offer a working CARE route');
+
+  const care = renderPage('/care');
+  assert.match(care, /The things/, 'The CARE studio must render its distinct editorial page');
+  assert.match(care, /Garment Brush/, 'The original garment-care collection must remain discoverable');
+  assert.match(care, /Cashmere Comb/, 'The original garment-care collection must include the cashmere comb');
+  assert.match(care, /Cedar Wardrobe Set/, 'The original cedar-care item must remain discoverable');
+  assert.match(care, /The Renewal Set/, 'The original care set must remain discoverable');
+  assert.equal((care.match(/class="w-care-catalog-product"/g) ?? []).length, 4,
+    'The CARE studio must display four original care catalog cards');
+  assertNoCommerce(care, '/care');
 
   const expanded = renderPage('/?view=all');
   assert.equal(conceptCount(expanded), catalog.conceptPieces.length, 'The expanded edit must display all 20 concepts');

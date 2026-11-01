@@ -4,6 +4,7 @@ import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 import WomenswearApp from './WomenswearApp';
 import ConceptDetailPage from './ConceptDetailPage';
 import CollectionPendingPage from './CollectionPendingPage';
+import CarePage from './CarePage';
 import RouteFocus from './RouteFocus';
 import './womenswear.css';
 
@@ -22,6 +23,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route path="/" element={<WomenswearApp />} />
         <Route path="/edit/:slug" element={<ConceptDetailPage />} />
+        <Route path="/care" element={<CarePage />} />
         <Route path="/products/:handle" element={<CollectionPendingPage />} />
         <Route path="*" element={<CollectionPendingPage />} />
       </Routes>
