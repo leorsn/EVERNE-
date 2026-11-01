@@ -75,7 +75,8 @@ assert.ok(homepage.includes('Shopping not yet available'), 'The preview status m
 assert.ok(homepage.includes('Our size range is not confirmed yet.'), 'Size FAQ must clearly state sizes are not confirmed');
 assert.ok(homepage.includes('exact garment measurements and fit guidance'), 'Size FAQ must promise product-specific measurements before launch');
 assert.ok(!homepage.includes('mostly XS–XL'), 'Do not imply unverified XS–XL availability');
-assert.ok(homepage.includes('aria-pressed={activeStyle === index}'), 'Style Notes must expose the selected mood to assistive technology');
+assert.ok(homepage.includes('w-category-shortcuts'), 'The simplified fashion storefront needs direct category shortcuts');
+assert.ok(!homepage.includes('styleNotes.map'), 'Fashion navigation should not hide the products behind a decorative mood selector');
 assert.ok(homepage.includes('aria-pressed={category === item.id}'), 'Category filter buttons must announce their selected state');
 assert.ok(homepage.includes('aria-live="polite"'), 'Filtered result counts must be announced without forcing focus');
 assert.ok(homepage.includes('prefersReducedMotion ? \'auto\' : \'smooth\''), 'Reduced-motion users must not be forced into smooth scrolling');
@@ -85,12 +86,14 @@ assert.ok(homepage.includes('menuToggleRef.current?.focus()'), 'Closing the mobi
 assert.ok(homepage.includes("document.addEventListener('pointerdown', closeWhenOutside)"),
   'The mobile menu must close after a tap outside the header');
 assert.ok(homepage.includes('className="w-logo" href="#top" onClick={closeMenu}') &&
-  homepage.includes('className="w-header-cta" href="#edit" onClick={closeMenu}'),
+  homepage.includes('className="w-header-cta" to="/standards" onClick={() => setMenuOpen(false)}'),
   'Header shortcut links must dismiss the open mobile menu');
 assert.ok(homepage.includes("aria-controls={'woman-faq-answer-' + index}"), 'FAQ controls need a persistent panel relationship');
 assert.ok(homepage.includes("hidden={openQuestion !== index}"), 'Closed FAQ content must remain associated but hidden');
 assert.ok(!homepage.includes('Autumn / Winter 26'), 'Unconfirmed supplier garments must not be marketed as an approved seasonal collection');
-assert.ok(homepage.includes('Styling inspiration only.'), 'The styling section must not imply confirmed products');
+assert.ok(homepage.includes('Campaign images are mood references, not photographs of the planned garments.'),
+  'The editorial section must not imply confirmed products');
+assert.ok(homepage.includes('COLLECTION<br />01.'), 'Fashion homepage must lead with the collection, not a generic luxury slogan');
 assert.ok(homepage.includes("name + '.webp'"), 'The active editorial preview must use optimized WebP photography');
 assert.ok(homepage.includes('parseEditView(location.search)'), 'The selected edit must be restored from the URL');
 assert.ok(homepage.includes('id="hero-title" tabIndex={-1}'), 'The home heading must be focusable after returning from a concept without #edit');
@@ -143,15 +146,18 @@ assert.ok(!womenswearCss.includes('fonts.googleapis.com') && !womenswearCss.incl
   'Editorial preview should not request third-party web fonts');
 assert.ok(womenswearCss.includes('--sans: -apple-system, BlinkMacSystemFont'),
   'Preview must have a complete system font stack for a resilient, fast render');
-assert.ok(womenswearCss.includes('.w-style-piece-grid { grid-template-columns: repeat(2,minmax(0,1fr));'),
-  'Narrow mobile screens need two readable style columns instead of three cramped columns');
+const fashionCss = fs.readFileSync('src/fashion-storefront.css', 'utf8');
+assert.ok(fashionCss.includes('.everne-woman .w-concept-grid { grid-template-columns: 1fr; }'),
+  'Narrow mobile screens need a legible single-column concept index');
+assert.ok(fashionCss.includes('grid-template-columns: repeat(2,minmax(0,1fr))'),
+  'The campaign layout must use a responsive two-column grid');
 assert.ok(womenswearCss.includes('.w-category-title { font-size: clamp(24px,6vw,34px); flex-wrap: wrap;'),
   'Category titles must wrap without clipping when paired with an arrow on mobile');
 assert.ok(womenswearCss.includes('.w-detail-related-card:last-child { display: block; grid-column: 1 / -1; }'),
   'The third related concept must remain accessible on narrow phones');
 assert.ok(womenswearCss.includes('.w-detail-related-card:last-child>.w-concept-visual { aspect-ratio: 2.05; }'),
   'The full-width related concept needs a compact mobile artwork ratio');
-for (const selector of ['.w-filters button', '.w-style-options button', '.w-menu-toggle', '.w-header-cta']) {
+for (const selector of ['.w-filters button', '.w-menu-toggle', '.w-header-cta']) {
   const rule = womenswearCss.split('\n').find((line) => line.startsWith(selector + ' {'));
   assert.ok(rule?.includes('min-height: 44px'), `${selector} must offer a 44px touch target`);
 }
