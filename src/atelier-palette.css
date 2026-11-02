@@ -207,7 +207,7 @@
   letter-spacing: -.057em;
 }
 .everne-woman .w-kicker { color: #bdb0a0; font-weight: 500; }
-.everne-woman .w-edit .w-kicker { color: #71665b; }
+.everne-woman .w-edit .w-kicker { color: #5d5349; }
 .everne-woman .w-edit-description p,
 .everne-woman .w-edit-description>span,
 .everne-woman .w-edit-confidence p,
@@ -247,7 +247,7 @@
   letter-spacing: -.04em;
 }
 .everne-woman .w-concept-meta>div>span,
-.everne-woman .w-target-price span { color: #70665b; }
+.everne-woman .w-target-price span { color: #5d5349; }
 .everne-woman .w-concept-meta h3 {
   color: #29241f;
   font: 400 clamp(19px,1.75vw,28px)/1.18 var(--atelier-display);
@@ -273,13 +273,13 @@
 .everne-woman .w-text-link { font-weight: 450; color: var(--atelier-paper); }
 .everne-woman .w-care {
   background: var(--atelier-stone);
-  color: var(--atelier-paper);
+  color: #fff;
 }
-.everne-woman .w-care .w-kicker { color: #e4d9ca; }
+.everne-woman .w-care .w-kicker { color: #fff; }
 .everne-woman .w-care-intro p,
 .everne-woman .w-care-note,
-.everne-woman .w-care-product span { color: #f1e9de; }
-.everne-woman .w-care-tag { color: #f1e9de; border-color: #bdb5aa; }
+.everne-woman .w-care-product span { color: #fff; }
+.everne-woman .w-care-tag { color: #fff; border-color: #d8d1c7; }
 .everne-woman .w-care-product h3 { font: 400 25px var(--atelier-display); }
 .everne-woman .w-care-explore { font-weight: 500; }
 .everne-woman .w-faq {

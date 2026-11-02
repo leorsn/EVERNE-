@@ -147,6 +147,10 @@ assert.ok(!womenswearCss.includes('fonts.googleapis.com') && !womenswearCss.incl
 assert.ok(womenswearCss.includes('--sans: -apple-system, BlinkMacSystemFont'),
   'Preview must have a complete system font stack for a resilient, fast render');
 const fashionCss = fs.readFileSync('src/fashion-storefront.css', 'utf8');
+const atelierCss = fs.readFileSync('src/atelier-palette.css', 'utf8');
+for (const color of ['#191919', '#38332f', '#777268', '#d8d1c7', '#f1efeb']) {
+  assert.ok(atelierCss.includes(color), `Atelier brand color missing: ${color}`);
+}
 assert.ok(fashionCss.includes('.everne-woman .w-concept-grid { grid-template-columns: 1fr; }'),
   'Narrow mobile screens need a legible single-column concept index');
 assert.ok(fashionCss.includes('grid-template-columns: repeat(2,minmax(0,1fr))'),
@@ -210,6 +214,16 @@ for (const [selector, background] of contrastCases) {
   const foreground = textColorInRule(selector);
   const ratio = contrastRatio(foreground, background);
   assert.ok(ratio >= 4.5, `${selector} has insufficient contrast: ${ratio.toFixed(2)}:1`);
+}
+// New atelier surfaces use a darker-on-ivory index and white-on-stone CARE
+// text. Check those deliberately chosen pairs as well as the inherited rules.
+for (const [foreground, background] of [
+  ['#5d5349', '#d8d1c7'],
+  ['#62584e', '#d8d1c7'],
+  ['#ffffff', '#777268'],
+]) {
+  const ratio = contrastRatio(foreground, background);
+  assert.ok(ratio >= 4.5, `Atelier text contrast below 4.5:1: ${foreground} on ${background}`);
 }
 assert.ok(womenswearCss.includes('.w-announcement { min-height: 32px;') &&
   womenswearCss.includes('font-size: 10px; }'), 'Announcement must remain legible as microcopy');
