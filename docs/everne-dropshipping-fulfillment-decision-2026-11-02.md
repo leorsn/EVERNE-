@@ -2,6 +2,16 @@
 
 **Status:** interne, unveröffentlichte Lieferanten-/Integrationsrecherche. **Kein Lieferant, kein SKU und kein Verkauf freigegeben.** Die bestehenden 20 Einträge in `src/womenswearCatalog.ts` bleiben rein redaktionelle Konzepte; dieser Vermerk ersetzt weder Produktfreigaben noch Rechts-/Steuerberatung.
 
+## Neue EU-Alternativen: WaveGo, Orderchamp, AppScenic (02.11.2026)
+
+Nach Syncee/Spocket wurden drei weitere Plattformen anhand ihrer Originalbedingungen gegengeprüft:
+
+- **WaveGo:** neuer, echter Shopify-App-Eintrag (seit 17.07.2026, bisher **0 Rezensionen**), EU-Lieferanten einschließlich eines veröffentlichten schwedischen Bekleidungsanbieters. **Free 0 USD/Monat** mit **10 Produktvarianten und einem Supplier**. Automatisches Routing/Tracking wird beworben, aber die **automatische Händlerzahlung** ist nicht eindeutig belegt: laut FAQ wird *nach Zahlung* an Supplier weitergeleitet, Supplier-Checkout läuft über Stripe. Produktqualifikation/Retouren/echte Kosten fehlen. **HOLD als eng begrenzter möglicher Free-Pilot, kein Import/Install.**
+- **Orderchamp:** automatische Order-/Zahlungsabwicklung dokumentiert, aber kostenpflichtig (**59 EUR/Monat + 2,75 %** auf Herstellerseite; Shopify-App separat **79 USD/Monat + 2,75 %** sichtbar). Zudem passt die sichtbare Produktkategorie nicht zu EVERNE, Retouren zunächst an den Händler. **NO-GO** für unser gebührenfreies Modell.
+- **AppScenic:** echte Plattform-Automatik einschließlich Wallet-Auto-Nachladung und EU-Suppliern wird beworben; **Free hat keine Orders**, **Standard 39 USD/Monat** für Automatic Ordering. **Keine Budgetfreigabe**, kein konkret passender / profitable Artikel. **NO-GO unter aktuellen Kostenregeln**, allenfalls spätere Option.
+
+[Primärquellen, Einschränkungen und Wiederaufnahmebedingungen](everne-new-eu-supplier-wavego-orderchamp-appscenic-2026-11-02.md). Keine Anmeldung, App-Installation, Supplier-Zahlung, Geldbindung oder Shop-Freischaltung erfolgt.
+
 ## Zusätzlicher Supplier-Screen: Syncee und Spocket (02.11.2026)
 
 Beide Apps sind im Shopify-Shop bereits installiert, aber **für EVERNEs strikt vollautomatisches, kostenneutrales Modell vorerst NO-GO**. **Syncee Marketplace:** automatischer Orderimport, danach muss der Händler die Order per Checkout/Karte/PayPal **selbst bezahlen**; erst dann wird an den Supplier automatisch weitergeleitet. **Spocket:** automatischer Orderimport, aber Händler muss **Checkout → Place Order** auslösen; erst dann erfolgt die Supplier-Belastung. Reguläre bezahlte Plattform-Einstiegstarife liegen öffentlich bei **39,99 USD/Monat** (Syncee Basic und Spocket Starter); kostenlose Stufen decken die geforderte komplette Supplier-Abwicklung nicht belegbar ab. Bei Spocket entstehen laut Hilfe zusätzlich **2,9 % + 0,30 USD** pro Supplier-Zahlung und gegebenenfalls Zuschläge, getrennt von Shopify-Kundenzahlungsgebühren.
