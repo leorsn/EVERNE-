@@ -1,0 +1,181 @@
+{
+  "schemaVersion": 1,
+  "preparedAt": "2026-11-02",
+  "sourceEvidenceDates": [
+    "2026-10-30",
+    "2026-11-02 public recheck for top/body"
+  ],
+  "sourceRepository": "leorsn/EVERNE-",
+  "sourceBranch": "feat/everne-woman-editorial-preview",
+  "status": "RESEARCH_ONLY",
+  "shopifyStoreDomain": "khps10-rs.myshopify.com",
+  "commerceActionsExecuted": false,
+  "publicationAuthorized": false,
+  "samplePurchaseAuthorized": false,
+  "globalBlockers": [
+    "Shopify authenticated connection required to check existing SKUs/products",
+    "No merchant-specific FactoryPrice price/VAT/courier quote or integration fee confirmation",
+    "No physical sample quality or textile-label verification",
+    "No signed photo/content licence; do not copy supplier images",
+    "No approved consumer return and B2B reverse-logistics workflow",
+    "No compliance and founder GO for sale",
+    "German Kleinunternehmer and cross-border procurement tax configuration requires review"
+  ],
+  "expectedShopifyStateIfLaterApprovedForDraft": {
+    "productStatus": "DRAFT",
+    "publishedToOnlineStore": false,
+    "stockQuantityByVariant": 0,
+    "continueSellingWhenOutOfStock": false,
+    "productImages": [],
+    "taxConfiguration": "DO_NOT_CHANGE_UNTIL_REVIEW",
+    "fulfillmentService": "UNASSIGNED_UNTIL_VERIFIED",
+    "checkoutEnabled": false
+  },
+  "products": [
+    {
+      "proposedTitle": "Essential Rib Top",
+      "proposedHandle": "essential-rib-top",
+      "retailPriceEur": 34,
+      "category": "TOPS",
+      "color": "Black (only researched color; do not publish swatches)",
+      "supplier": "FactoryPrice",
+      "supplierProductCode": "RV-TP-A1363.01P",
+      "supplierListingUrl": "https://factoryprice.eu/de/products/schwarzes-damen-tanktop-basic-im-streifen-rue-paris-419503.html",
+      "publicNetUnitPriceEur": 5.89,
+      "priceStatus": "PUBLIC_INDICATIVE_NOT_AUTHENTICATED",
+      "fibreClaim": "90% cotton, 10% elastane (supplier claim, unverified)",
+      "variants": [
+        {
+          "size": "S/M",
+          "supplierListedEAN": "5906694124754",
+          "proposedInternalSku": null,
+          "stockQuantity": 0,
+          "availabilityVerified": false
+        },
+        {
+          "size": "L/XL",
+          "supplierListedEAN": "5906694124761",
+          "proposedInternalSku": null,
+          "stockQuantity": 0,
+          "availabilityVerified": false
+        }
+      ],
+      "sampleInspected": false,
+      "licensedProductPhotos": false,
+      "customerSizeChartVerified": false,
+      "returnWorkflowVerified": false,
+      "approvedForSale": false,
+      "blockedUntil": [
+        "opacity / fabric rib / wash sample",
+        "measurement method and two-size fit",
+        "supplier quote and actual German own-label dropship rate"
+      ]
+    },
+    {
+      "proposedTitle": "Second Skin Body",
+      "proposedHandle": "second-skin-body",
+      "retailPriceEur": 39,
+      "category": "BODYSUITS",
+      "color": "Black (only researched color; do not publish swatches)",
+      "supplier": "FactoryPrice",
+      "supplierProductCode": "RV-BO-A1441.81",
+      "supplierListingUrl": "https://factoryprice.eu/de/products/schwarzes-damen-basic-body-ohne-armel-rue-paris-419790.html",
+      "publicNetUnitPriceEur": 7.2,
+      "priceStatus": "PUBLIC_INDICATIVE_NOT_AUTHENTICATED",
+      "fibreClaim": "90% cotton, 10% elastane (supplier claim, unverified)",
+      "variants": [
+        {
+          "size": "S/M",
+          "supplierListedEAN": "5906694128806",
+          "proposedInternalSku": null,
+          "stockQuantity": 0,
+          "availabilityVerified": false
+        },
+        {
+          "size": "L/XL",
+          "supplierListedEAN": "5906694128813",
+          "proposedInternalSku": null,
+          "stockQuantity": 0,
+          "availabilityVerified": false
+        }
+      ],
+      "sampleInspected": false,
+      "licensedProductPhotos": false,
+      "customerSizeChartVerified": false,
+      "returnWorkflowVerified": false,
+      "approvedForSale": false,
+      "blockedUntil": [
+        "closure / gusset / stretch / wash sample",
+        "consumer return and hygiene treatment",
+        "supplier quote and actual German own-label dropship rate"
+      ]
+    },
+    {
+      "proposedTitle": "Tailored Everyday Pant",
+      "proposedHandle": "tailored-everyday-pant",
+      "retailPriceEur": 59,
+      "category": "TROUSERS",
+      "color": "Black (only researched color; do not publish swatches)",
+      "supplier": "FactoryPrice",
+      "supplierProductCode": "IT-SP-FL7371.61",
+      "supplierListingUrl": "https://factoryprice.eu/de/products/schwarze-anzughosen-mit-hohem-bund-415870.html",
+      "publicNetUnitPriceEur": 16.11,
+      "priceStatus": "PUBLIC_INDICATIVE_NOT_AUTHENTICATED",
+      "fibreClaim": "65% viscose, 30% nylon, 5% elastane (supplier claim, unverified)",
+      "variants": [
+        {
+          "size": "S",
+          "supplierListedEAN": "5906694077371",
+          "proposedInternalSku": null,
+          "stockQuantity": 0,
+          "availabilityVerified": false
+        },
+        {
+          "size": "M",
+          "supplierListedEAN": "5906694077388",
+          "proposedInternalSku": null,
+          "stockQuantity": 0,
+          "availabilityVerified": false
+        },
+        {
+          "size": "L",
+          "supplierListedEAN": "5906694077395",
+          "proposedInternalSku": null,
+          "stockQuantity": 0,
+          "availabilityVerified": false
+        },
+        {
+          "size": "XL",
+          "supplierListedEAN": "5906694077401",
+          "proposedInternalSku": null,
+          "stockQuantity": 0,
+          "availabilityVerified": false
+        }
+      ],
+      "sampleInspected": false,
+      "licensedProductPhotos": false,
+      "customerSizeChartVerified": false,
+      "returnWorkflowVerified": false,
+      "approvedForSale": false,
+      "blockedUntil": [
+        "fit/waist/hip measurements for S-XL",
+        "belt, stitching, drape and wash sample",
+        "fresh source availability (public page not independently accessible on 2026-11-02)",
+        "supplier quote and actual German own-label dropship rate"
+      ]
+    }
+  ],
+  "checksBeforeDraftImport": [
+    "Reconnect Shopify and search by supplier codes/EAN and proposed handles to avoid duplicates",
+    "Validate product/variant ownership, pricing and supplier mapping; do not overwrite legacy care products",
+    "Confirm actual merchant tax treatment and shipping/fulfillment route",
+    "If drafts are imported, keep all 3 products unpublished with zero sellable inventory"
+  ],
+  "checksBeforeLive": [
+    "Physical samples pass and real photos are licensed/produced",
+    "All supplier quotes, labels, actual stock and terms verified for every variant",
+    "German/EU textile and product-safety/legal checkout reviewed",
+    "Successful Safari test order, cancellation/refund and tracking",
+    "Explicit founder GO decision"
+  ]
+}
