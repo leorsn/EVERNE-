@@ -52,6 +52,10 @@ function Footer() {
 function Home() {
   return <>
     <section className="e-hero" aria-labelledby="hero-title">
+      <div className="e-hero-visual">
+        <img src={editorial('01-architecture-fashion.jpg')} alt="Black-and-white editorial reference: a woman seated against monumental modernist architecture. Her dress is not an EVERNE product." fetchPriority="high" />
+        <span className="e-visual-credit">VISUAL STUDY — NOT PRODUCT PHOTOGRAPHY</span>
+      </div>
       <div className="e-hero-copy">
         <span className="e-kicker">EVERNE / WOMAN</span>
         <div className="e-hero-content">
@@ -60,10 +64,6 @@ function Home() {
           <a className="e-text-link" href="#collection">EXPLORE THE DIRECTION <span aria-hidden="true">↗</span></a>
         </div>
         <span className="e-hero-index">01 / AN EDIT IN PROGRESS</span>
-      </div>
-      <div className="e-hero-visual">
-        <img src={editorial('01-architecture-fashion.jpg')} alt="Black-and-white editorial reference: a woman seated against monumental modernist architecture. Her dress is not an EVERNE product." fetchPriority="high" />
-        <span className="e-visual-credit">VISUAL STUDY — NOT PRODUCT PHOTOGRAPHY</span>
       </div>
     </section>
 
@@ -75,7 +75,7 @@ function Home() {
 
     <section className="e-edit" id="collection" aria-labelledby="collection-title">
       <div className="e-edit-photo">
-        <img src={editorial('02-monochrome-portrait.jpg')} loading="lazy" alt="Independent black-and-white fashion reference portrait. Garments pictured are not EVERNE products." />
+        <img src={editorial('02-monochrome-portrait.jpg')} loading="eager" alt="Independent black-and-white fashion reference portrait. Garments pictured are not EVERNE products." />
         <span>02 / THE SILHOUETTE</span>
       </div>
       <div className="e-edit-copy">

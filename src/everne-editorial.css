@@ -19,7 +19,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .e-wordmark { display: block; margin-left: .19em; padding: 12px 0; font-size: clamp(28px, 2.75vw, 43px); font-weight: 500; letter-spacing: .19em; line-height: 1; }
 .e-kicker { display: block; font-size: 10px; font-weight: 500; line-height: 1.5; letter-spacing: .18em; }
 .e-hero { display: grid; grid-template-columns: 43% 57%; min-height: min(790px, calc(100svh - 86px)); }
-.e-hero-copy { display: flex; flex-direction: column; justify-content: space-between; padding: clamp(30px, 3.2vw, 55px) clamp(32px, 5.1vw, 88px) 42px clamp(25px, 5vw, 88px); background: #38332f; color: #f1efeb; }
+.e-hero-copy { grid-column: 1; grid-row: 1; display: flex; flex-direction: column; justify-content: space-between; padding: clamp(30px, 3.2vw, 55px) clamp(32px, 5.1vw, 88px) 42px clamp(25px, 5vw, 88px); background: #38332f; color: #f1efeb; }
 .e-hero-content { margin: auto 0; padding: 50px 0 70px; }
 .e-hero h1, .e-inner-hero h1 { margin: 0; font: 400 clamp(68px, 6.4vw, 119px)/.96 Georgia, 'Times New Roman', serif; letter-spacing: -.067em; }
 .e-hero h1 em, .e-edit h2 em, .e-material h2 em, .e-care-teaser h2 em, .e-inner-hero h1 em, .e-inner-body h2 em { font-weight: 400; }
@@ -27,8 +27,8 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .e-text-link { display: inline-flex; align-items: center; justify-content: space-between; gap: 35px; min-height: 44px; border-bottom: 1px solid currentColor; padding: 10px 0 12px; font-size: 10px; font-weight: 600; letter-spacing: .13em; }
 .e-text-link span { font-size: 17px; font-weight: 400; }
 .e-hero-index { font-size: 10px; letter-spacing: .15em; color: #d8d1c7; }
-.e-hero-visual { position: relative; min-height: 560px; overflow: hidden; background: #9d9c9a; }
-.e-hero-visual img { object-position: center 73%; filter: contrast(1.07) brightness(.93); }
+.e-hero-visual { position: relative; grid-column: 2; grid-row: 1; min-height: 560px; overflow: hidden; background: #9d9c9a; }
+.e-hero-visual img { object-position: center 73%; transform: scale(1.055); filter: contrast(1.07) brightness(.93); }
 .e-visual-credit { position: absolute; right: 30px; bottom: 26px; padding: 8px 10px; background: rgba(241,239,235,.89); color: #38332f; font-size: 9px; letter-spacing: .1em; }
 .e-statement { position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 28px; min-height: 350px; padding: 80px 28px; background: #f1efeb; text-align: center; }
 .e-statement > span { font-size: 10px; letter-spacing: .14em; color: #777268; }
@@ -93,10 +93,10 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .e-header nav { gap: 16px; }
   .e-header nav a { font-size: 9px; }
   .e-hero { grid-template-columns: 45% 55%; }
-  .e-hero h1 { font-size: clamp(60px, 7vw, 100px); }
+  .e-hero h1 { font-size: clamp(50px, 7vw, 100px); }
   .e-edit { grid-template-columns: 45% 55%; }
   .e-edit-copy { padding: 70px 5vw; }
-  .e-edit h2, .e-care-teaser h2 { font-size: clamp(52px, 6vw, 80px); }
+  .e-edit h2, .e-care-teaser h2 { font-size: clamp(48px, 5.6vw, 80px); }
   .e-care-copy { padding: 70px 6vw; }
   .e-footer-wordmark { font-size: 12vw; }
 }
@@ -108,12 +108,12 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .e-header nav a { font-size: 9px; letter-spacing: .06em; padding: 11px 0; }
   .e-header nav { gap: 12px; }
   .e-hero { display: flex; flex-direction: column; }
-  .e-hero-copy { min-height: 460px; padding: 26px 6% 29px; }
-  .e-hero-content { padding: 65px 0 50px; }
+  .e-hero-copy { min-height: 375px; padding: 26px 6% 29px; }
+  .e-hero-content { padding: 38px 0 28px; }
   .e-hero h1 { font-size: clamp(66px, 16vw, 98px); }
   .e-hero-content p { margin: 23px 0; }
-  .e-hero-visual { min-height: 510px; height: 68svh; max-height: 760px; }
-  .e-hero-visual img { object-position: center 72%; }
+  .e-hero-visual { flex: none; min-height: 0; height: 56svh; max-height: 620px; }
+  .e-hero-visual img { object-position: 57% 76%; transform: scale(1.03); }
   .e-visual-credit { right: 12px; bottom: 15px; font-size: 8px; }
   .e-statement { min-height: 310px; padding: 74px 6%; }
   .e-statement p { font-size: clamp(36px, 9vw, 54px); }
