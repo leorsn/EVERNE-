@@ -2,6 +2,16 @@
 
 **Status:** interne, unveröffentlichte Lieferanten-/Integrationsrecherche. **Kein Lieferant, kein SKU und kein Verkauf freigegeben.** Die bestehenden 20 Einträge in `src/womenswearCatalog.ts` bleiben rein redaktionelle Konzepte; dieser Vermerk ersetzt weder Produktfreigaben noch Rechts-/Steuerberatung.
 
+## Weitere bereits installierte Shopify-Dropshipping-Apps: CJ vs. HyperSKU (02.11.2026)
+
+Ein lesender App-Check bestätigt **CJdropshipping** und **HyperSKU** als bereits installiert — **nicht** deren Händlerkonten, Produktverknüpfungen oder aktive Zahlungsberechtigungen. Die Abfrage aktiver appbezogener Abos wurde wegen **Access denied** nicht weiterverfolgt: „free to install“ ist keine verifizierte Nullkostenrechnung.
+
+**CJ ist technisch interessanter als bisher angenommen:** Die aktuelle CJ-Hilfe dokumentiert eine neue **Auto Order & Pay**-Funktion für Bestellungen aus dem CJ Wallet. Der Anbieter weist aber ausdrücklich auf den **schrittweisen Rollout nur für ausgewählte Konten**, vorbezahlte Liquidität und zurückgehaltene Problem-Orders hin. Der ältere Automat bezahlt nur Orders mit reserviertem *privatem* Inventar und ist kein allgemeiner lagerfreier Ersatz. **HyperSKU** belegt automatische Shopify-Ordersynchronisierung, verlangt für die Wallet-Zahlung jedoch weiterhin manuelles Auswählen und „Pay Together“.
+
+**Beide verfehlen derzeit die Freigabe**, auch wegen Normalretouren: CJ verweist auf Rückgaben an China-Lager und akzeptiert Nichtgefallen nicht als B2B-Refund-Grund; HyperSKU behandelt laut eigenen Terms Retouren aus China-Lagern nicht. Das deutsche 14-tägige Verbraucherwiderrufsrecht bleibt trotzdem bei EVERNE. Die angenommenen 5 € Retourenreserve pro Artikel sind damit **nicht verifiziert**. Kein SKU-/Versand-/Steuer-/30-%-Realgewinnnachweis, keine Bestellungen, keine Zahlungen.
+
+[Primärquellen, detaillierter Gate-Vergleich und Einzelartikel-Kostendeckel](everne-cj-hypersku-automation-and-returns-gates-2026-11-02.md).
+
 ## Nachtrag — echter Shopify-Storestatus lesend geprüft (02.11.2026)
 
 Der verbundene **EVERNE-Shop** meldet **Shopify Basic, Deutschland, EUR**. Die **Collective-App ist bereits installiert**; es wurde **keine zusätzliche App eingerichtet**. Ein Versuch, ausschließlich den Aktivierungsstatus von Shopify Payments auszulesen, wurde aufgrund fehlender Leseberechtigung gestoppt. Daher sind **Shopify-Payments-Aktivierung, EU-Steuerkonfiguration, Network Intelligence und die vollständige Collective-Berechtigung weiterhin nicht bestätigt**. Ein einmaliger, nicht-importierender Collective-Produktscreen lieferte **keine wirtschaftlich und stilistisch fertig freigabefähige EVERNE-Auswahl**. Keine Preise, Lieferantenbeziehungen oder Produkte wurden verändert. Details: [Collective-Deutschland-Gate, Abschnitt „Live-Abgleich“](everne-shopify-collective-germany-gate-2026-11-02.md).
