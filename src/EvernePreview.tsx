@@ -4,11 +4,11 @@ import { applySeo } from './seo';
 
 type Page = 'home' | 'care' | 'standards';
 const categories = [
-  { name: 'Tops & Bodysuits', image: '06-bodysuit.jpg', alt: 'Woman wearing a black sleeveless bodysuit against a neutral backdrop.' },
-  { name: 'Knitwear', image: '07-knitwear.jpg', alt: 'Woman wearing an ivory roll-neck sweater and dark trousers in a studio.' },
-  { name: 'Trousers & Denim', image: '08-denim.jpg', alt: 'Woman wearing blue jeans and a white sleeveless top.' },
-  { name: 'Dresses', image: '09-dress.jpg', alt: 'Woman wearing a black long-sleeved dress and boots.' },
-  { name: 'Skirts', image: '10-skirt.jpg', alt: 'Woman wearing a camel ribbed midi skirt with a pale long-sleeved top.' },
+  { name: 'Tops & Bodysuits', image: '06-bodysuit.jpg', alt: 'Fashion model in a black top against a warm brown studio background.' },
+  { name: 'Knitwear', image: '07-knitwear.jpg', alt: 'Fashion model in a sculptural white knit sweater against a dark studio backdrop.' },
+  { name: 'Trousers & Denim', image: '08-denim.jpg', alt: 'Fashion model seated in tailored beige trousers and a black top.' },
+  { name: 'Dresses', image: '09-dress.jpg', alt: 'Fashion model wearing a sleeveless black dress in a softly lit studio.' },
+  { name: 'Skirts', image: '10-skirt.jpg', alt: 'Fashion model seated in a long black skirt and matching cropped top.' },
 ];
 const standards = [
   { title: 'The garment', text: 'A physical sample, its construction and fabric information must be reviewed first.' },
@@ -59,7 +59,7 @@ function Home() {
   return <>
     <section className="e-hero" aria-labelledby="hero-title">
       <div className="e-hero-visual">
-        <img src={editorial('05-tailoring.jpg')} alt="Independent styling reference: woman wearing a black tailored blazer and trousers. This outfit is not an EVERNE product." fetchPriority="high" />
+        <img src={editorial('05-tailoring.jpg')} alt="Independent styling reference: fashion model wearing an oversized black blazer and boots against a neutral studio backdrop. This outfit is not an EVERNE product." fetchPriority="high" />
         <span className="e-visual-credit">STYLING REFERENCE / NOT AN EVERNE GARMENT</span>
       </div>
       <div className="e-hero-copy">
