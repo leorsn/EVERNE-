@@ -57,6 +57,14 @@ Produkt- und Kostenbelege:
 
 **Zusätzlich:** POD benötigt ein Design und liefert oft digitale Mockups statt freigegebener, echter Fotos des konkreten verkaufsfertigen Stücks. Diese Bilder dürfen nicht als nachgewiesene tatsächliche EVERNE-Produkt-/Passformfotos ausgegeben werden. Verbraucherwiderruf und die B2B-Verweigerung gewöhnlicher Rücknahmen können den €5-Retourenpuffer übersteigen.
 
+## Nachtrag — Yehwang-Payment-Flow und zweiter Collective-Modelldurchlauf (02.11.2026)
+
+**Yehwang klarer ausgeschlossen, solange keine neuere belastbare Zusage vorliegt:** In der eigenen bebilderten Anbieteranleitung *Dropshipping order process* ist nach dem Shopify-Orderimport ein eigener Händler-Checkout mit **„PAY NOW“**, Wahl einer Zahlungsmethode und Hinweis auf **automatische Bestellstornierung, wenn nicht innerhalb von 2880 Minuten (= 48 Stunden) bezahlt** wird, dokumentiert. Das ist **kein Nachweis eines Saved-Card-Auto-Charge**, sondern belegt den publizierten manuellen Zahlungsschritt. Beispiel aus dem Niederlande-Screenshotszenario: Warenwert 20,85 €, Portokosten 7,15 €, Servicekosten 1,50 €, 21 % niederländische Umsatzsteuer 6,20 € → 35,70 € B2B-Gesamtausgabe; **kein Deutschlandpreis**. Weiteres Beispiel „Game on“ Grafik-Sweater 14,95 € Ware + 1,50 € Service + 5,19 € NL-Versand + 4,23 € NL-VAT = **25,87 €**. Diese Produkte sind auch stilistisch kein EVERNE-Match.
+
+Primärquelle (Original-PDF, Abschnitte „Pay & Ship“ / „Order detail“): https://cfcdn.yehwang.com/image/www/auto_202601/d21c25b8-504e-44ef-9a61-9d663f09a87a.pdf ; die öffentliche Marketing-App-Beschreibung „Automatic fulfillment“ darf nicht mit **automatischer Lieferantenzahlung** gleichgesetzt werden. Die PDF-Abbildungen sind ein dokumentierter Workflow, nicht Live-Zugriff auf ein Händlerkonto im November 2026. **Payment-Gate für EVERNE: NO-GO bis zu belastbarer Neubelegung**.
+
+**Neuer privater deutscher Shopify-Collective-Screen:** Drei neue strikte on-brief-Nennungen (schwarzer ärmelloser Body, Cocoa/braune weite Tailored-Hose, heller V-Neck-Pullover) lieferten **0 on-brief-Produkte**. Die einmal zulässige breitere Korrektur nach Damenhosen lieferte ausschließlich nicht passende Kategorien/Stile oder zu schwache Margen; **keine SKU freigeben und nichts importieren**. Bei den oben verifizierten DE/EUR-Collective-Bedingungen bleibt die Suche technisch interessant, aber ohne freizugebendes Produkt. Die Aussage beschränkt sich auf die abgefragte Discovery, **nicht auf den gesamten deutschen Modehandel**.
+
 ## 4. Unveränderte Sperren / nächste Schritte
 
 1. **0/20 GO**. Bestehende Shopify-Entwürfe bleiben DRAFT/0 Bestand, ohne Supplier-IDs, ohne Veröffentlichung.
