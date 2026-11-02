@@ -10,6 +10,12 @@ Die von Shopify genannten typischen **20–50 % Händler-Produktmargen** sind ke
 
 [Vollständige Collective-Gates und Modellrechnung](everne-shopify-collective-germany-gate-2026-11-02.md). Collective hat Vorrang als **kostenfreie native Plattformoption für einen später autorisierten Eligibility-/Lieferantentest**, nicht als Produkt- oder Profitfreigabe. Hertwill bleibt die vertieft dokumentierte Drittanbieter-Alternative; beide Wege stehen auf HOLD.
 
+## Neue Wirtschaftlichkeits-Hypothese: gemeinsamer Warenkorb statt Einzelversand
+
+Der dokumentierte erste PL→DE-Kurieranker wurde bei einer erneuten öffentlichen Furgonetka-Abfrage auf **65,32 PLN brutto (DPD Kurier→Kurier bis 3 kg)** aktualisiert; mit 3 PLN FactoryPrice-Handling, unverändertem historischen EZB-Kurs sind das **15,51 € pro Paket** als **Szenario**, kein Lieferanten-Vertragspreis. Mit den fünf öffentlich sichtbaren FactoryPrice-Netto-Artikeln und dem konservativen illustrativen **+23-%-Wareneinkaufsszenario**, 5 € Retourenreserve **pro Stück**, 2,5 % + 0,25 € Payment und 3 € Betriebsanteil **pro Auftrag** ergeben sich für die **zehn unterschiedlichen Zweierkombinationen** der unveränderten EVERNE-Preise **36,0–43,4 % simuliert vor Einkommensteuer**, für **Dreierkombinationen 44,7–48,9 %**. Bei angenommenen 10 € Retourenreserve **pro Stück** fallen von zehn Zweierkombinationen bereits sieben unter 30 % **vor** Einkommensteuer.
+
+**Wichtige Bedingung:** Diese Margen setzen voraus, dass alle Artikel tatsächlich zusammen in **einer** frankierten Sendung vom selben Lager bis 3 kg verschickt werden. Beispiel Body + V-Neck: **41,2 %** bei einem Paket, nur **23,6 %** bei zwei angenommenen Paketen. Eine verifizierte FactoryPrice-Order-/Zahlungs-/Labelautomation fehlt weiterhin. **Keine echte 30-%-Gewinnzusage nach Einkommensteuer, kein Bundle-/Preis-/Shop-Eingriff.** Siehe [vollständige 10-Paar-Tabelle und Belastungstests](everne-five-style-shipping-sensitivity-2026-11-02.md).
+
 ## Ausgangspunkt und harte Leitplanken
 
 - Deutschland als Zielmarkt, Damenmode unter EVERNE, organische Vermarktung, kein zusätzlicher laufender Dienstleistungsaufwand ohne Freigabe.
