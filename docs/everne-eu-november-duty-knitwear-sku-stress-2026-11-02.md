@@ -1,5 +1,7 @@
 # EVERNE — EU-Importkosten ab 01.11.2026 und zwei Strickwaren-SKU-Kandidaten
 
+> **KORREKTUR / VORRANGIGE NEUPRÜFUNG am 02.11.2026:** Die Waris-**V-Neck**-Seite zeigt für die konkret ausgewählte Deutschland-SKU **3,99 USD Versand**; die 1,99 USD unten waren ausdrücklich nur eine Annahme und sind überholt. Rechenstress mit korrektem Porto: **28,99 %** (0,90 EUR/USD, ohne saisonalen Zuschlag) bis **25,12 %** (0,95 EUR/USD, mit 1,50 USD angenommenem Zuschlag). Zudem bestätigt Trendsi **keine Supplier-Retouren für Nicht-US-Kundschaft**; der deutsche Verbraucherwiderruf bleibt EVERNEs Pflicht. Damit ist der V-Neck in der sichtbaren Variante **NO-GO im Import-Stressmodell**, Crew weiterhin **HOLD wegen EU-Returns und Kosten-/Stilbelegen**. [Vollständiger, neuer Quellen- und Korrekturbericht](everne-trendsi-return-vneck-hertwill-aw-autopay-2026-11-02.md). Die historischen hypothetischen Waris-Szenarien unten sind nicht mehr Grundlage der Auswahl.
+
 **Stand:** 02.11.2026 · **Status:** intern / ausschließlich Recherche / **0 von 20 GO**  
 **Unveränderliche Bedingungen:** vorhandene 20 Modelle und Verkaufspreise, ≥30 % modellierter Gewinn nach allen Kosten und einer illustrativen Ertragsteuer, vollautomatische Supplier-Zahlung ohne manuelle pro-Order-Aktion oder Wallet-Vorfinanzierung, keine neuen Kosten und keine ungeprüfte Live-Aktivierung.
 
