@@ -13,3 +13,7 @@ Before any page can be used for commerce, the actual supplier product and physic
 ## Category-navigation revision
 
 Owner feedback rejected the long 20-name index on the homepage. The design preview now uses a restrained six-destination WOMAN category bar (all pieces plus five garment categories), separate `/collections/:category` grid pages, and direct links from the five homepage styling-category tiles. Product cards reserve neutral image spaces without implying actual garment photography. All 20 individual copy drafts and the no-commerce restrictions remain unchanged. Responsive desktop, tablet and mobile category checks are included in the browser-smoke acceptance script.
+
+## Monochrome direction
+
+The owner next requested black and white in place of the warm brown and beige palette. All client stylesheet colour tokens are neutral greyscale; the header, category navigation, product grid and detail pages retain a dark base with white typography, while the collection-entry stripe uses white with black text. Existing independent editorial styling photographs are displayed in greyscale (the original licensed files remain untouched). No product approval or sales-state change is implied.

@@ -85,9 +85,16 @@ assert.doesNotMatch(landing, /<form\b|<input\b|Add to cart|Buy now|href=["'][^"'
 assert.doesNotMatch(landing, /formatTargetPrice|conceptPieces|\.targetPrice/,
   'Planning data must not appear on the customer-facing website');
 
-for (const color of ['#191919', '#38332f', '#777268', '#d8d1c7', '#f1efeb']) {
+for (const color of ['#090909', '#171717', '#ffffff', '#d4d4d4', '#f6f6f6']) {
   assert.ok(styles.includes(color), `Palette token missing: ${color}`);
 }
+for (const match of styles.matchAll(/#([0-9a-f]{6})\b/gi)) {
+  const [r, g, b] = match[1].match(/.{2}/g);
+  assert.ok(r === g && g === b, `The black-and-white storefront must not introduce a coloured CSS token: ${match[0]}`);
+}
+assert.match(styles, /grayscale\(1\)/, 'Unapproved style-reference photographs must be monochrome');
+assert.doesNotMatch(styles, /sepia\(|saturate\(/, 'Warm image tinting must be removed from the black-and-white direction');
+assert.match(index, /name="theme-color" content="#090909"/, 'Browser chrome should match the black storefront');
 assert.match(styles, /@media \(max-width: 700px\)/);
 assert.match(styles, /prefers-reduced-motion/);
 assert.doesNotMatch(styles, /@import|url\(\s*['"]?https?:/i);
