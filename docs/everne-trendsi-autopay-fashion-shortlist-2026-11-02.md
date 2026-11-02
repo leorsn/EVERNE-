@@ -2,6 +2,34 @@
 
 **Status: internes Supplier-/SKU-Screening; 0/20 Artikel freigegeben.** Dies ist weder eine Produktfreigabe noch eine verifizierte End-to-End-Testbestellung. Kein Supplier-Account, keine App-Installation, keine Kartenhinterlegung, keine Bestellung, kein Import oder Live-Listing autorisiert/ausgeführt. Die 20 Konzepte in `src/womenswearCatalog.ts` und alle bestehenden Shopify-DRAFT-Artikel bleiben unverändert.
 
+## Nachtrag: EU-Steuer-, Zoll- und Kennzeichnungsscreen (02.11.2026)
+
+**Verschärfter Befund:** Auf den öffentlich zugänglichen Trendsi-Hilfe-/Produktseiten wurde **kein verbindlicher Nachweis einer Deutschland-DDP-Lieferung, einer IOSS-Abwicklung, des konkreten Importeurs oder der Übernahme von Einfuhr-USt/Zoll durch Trendsi** gefunden. „Shipping to Germany“ ist **kein** DDP-Nachweis. Dies ist kein Beweis, dass Trendsi niemals DDP liefern kann, aber unter EVERNEs striktem Gate ist es ein **BLOCKER**.
+
+Amtliche/primäre Unterlagen:
+- Shopify legt bei Dropshipping von außerhalb der EU die **möglichen abweichenden Umsatzsteuerpflichten** dar und weist darauf hin, dass ohne IOSS die Kund:innen bei Übergabe mit VAT/Zoll belastet werden könnten; die neue EU-Zollpauschale beträgt seit 01.07.2026 **3 € pro HS-Tarifklassifikation**, nicht pauschal pro Paket. https://help.shopify.com/de/manual/compliance/legal/dropshipping und https://help.shopify.com/de/manual/taxes/eu/eu-tax-migrate
+- Deutsche Post/DHL: bei Zolleinzug durch den Paketdienst zusätzlich **7,50 € Auslagenpauschale** möglich, **nicht** zwingend bei DDP/IOSS. https://www.dhl.de/en/privatkunden/hilfe-kundenservice/themen/international/zoll/fragen-zu-kosten.html
+- DPD: Einfuhr-USt-Bemessung grundsätzlich Warenpreis **zuzüglich Zoll und Beförderung/Provision/Versicherung** bis zum Bestimmungsort. https://www.dpd.com/de/de/faq/wie-wird-die-einfuhrumsatzsteuer-berechnet/
+- Trendsi: die **Mehrheit der Overseas-White-Label-Artikel** soll laut eigener Hilfe nur generische **Größen- und Pflegeetiketten** haben. Das beweist keine deutschsprachige dauerhafte Faserzusammensetzungskennzeichnung. https://help.trendsi.com/hc/en-us/articles/8678486982939-Product-Brands-Suppliers-and-Sizing
+- EU-TextilVO 1007/2011 verlangt korrekte dauerhafte **Faserkennzeichnung**, für den deutschen Verbrauchermarkt in der vorgegebenen Sprache. https://europa.eu/youreurope/business/product-rules-compliance/textiles-and-footwear/textile-label/index_en.htm und https://eur-lex.europa.eu/eli/reg/2011/1007/oj/eng
+- GPSR Art. 19 verlangt im **Online-Angebot** Herstellername **und Post-/E-Mail-Adresse**; außerhalb der EU zusätzlich eine benannte, erreichbare **verantwortliche Person in der EU**. Ein Marken-Displayname allein genügt nicht. https://eur-lex.europa.eu/legal-content/DE-EN/TXT/?from=EN&uri=CELEX%3A32023R0988
+
+### Strengerer Einzelpaket-Stresstest, wenn auch 19 % Einfuhr-USt tatsächlich zusätzlich anfällt
+
+Die 19 % werden **nur als Sensitivität** auf `(Ware + DE-Porto + 1,50 USD Saisonzuschlag) × 0,8924 + 3 EUR Zoll` angesetzt. Das ist keine verbindliche Steuerbemessung, keine Verifikation des tatsächlichen Warenwerts und bei im Supplier-Preis enthaltenen Steuern **nicht nochmals zu addieren**. Daneben gilt weiterhin die rein illustrative **25 % persönliche Einkommensteuer auf den Rechengewinn**.
+
+| Produkt | EUR vor 19 % EUSt im Stressfall | + illustr. 19 % EUSt | Modell-Deckungsbetrag nach 25 % Ertragsteuer | Modellmarge auf EVERNE-Preis | 30%-Ziel erreicht? | Falls zusätzlich 7,50 € Post-Auslage |
+|---|---:|---:|---:|---:|---|---:|
+| Black Mini / She Wild Halter, VK 49 € | 17,33 | **20,63 €** | 14,17 € | **28,9 %** | **NEIN** | Supplier-All-in ca. 28,13 € |
+| Second Skin Body / Perfee, VK 39 € | 13,88 | **16,52 €** | 9,94 € | **25,5 %** | **NEIN** | ca. 24,02 € |
+| Black Mini / Real Sara Halter, VK 49 € | 18,35 | **21,84 €** | 13,27 € | **27,1 %** | **NEIN** | ca. 29,34 € |
+
+Unter diesem plausiblen Einfuhr-Szenario verfehlen **alle drei** getesteten stilnahen Kandidaten die zuvor nur knapp erfüllte Modellvorgabe. Bei einer Retourenreserve von **10 € statt 5 €** sinkt die nachsteuerliche zulässige All-in-Lieferantenkostengrenze für das 49-€-Kleid auf **14,92 €**, für den 39-€-Body auf **9,17 €**; auch ohne separate EUSt erreicht keiner das konservative Ziel im Zoll-/Saisonstresstest.
+
+**Deshalb vorläufig kein Realgewinn-PASS, keine Produktfreigabe.** Selbst ein künftig bestätigter inklusiver DDP-Preis löst die Textil-/GPSR-Pflichten und das wirtschaftlich ungedeckte DE-Retourenrisiko **nicht** automatisch.
+
+**Neue Drittanbieter-Gegenprobe:** Chance2Brand dokumentiert kostenlose Shopify-Saved-Card-Autopay aus einem deutschen Lager, bietet jedoch **Nahrungsergänzungsmittel und keine Damenmode** (PRODUCT-NO-GO); Shewin führt Shopify-Orders laut eigener Anleitung erst nach **manuellem Zahlungsschritt in der App** aus (AUTOPAY-NO-GO). Quellen: https://www.chancetobrand.de/en/pages/documentation und https://www.shewin.com/New-User-Guide-for-Dropshipping-i42895.html
+
 ## 1. Weshalb Trendsi neu auf die technische Shortlist kommt
 
 - **Zahlung:** Die offizielle Anleitung „Customer Orders – Auto Checkout“ beschreibt bezahlte Shopify-Bestellungen, Synchronisation zu Trendsi und den opt-in-Schalter „Auto Checkout“ unter Account → Settings → Order Management. **Werkseinstellung ist manuelle Zahlung**; der Schalter ist im EVERNE-Konto nicht nachweislich aktiv. Quelle: https://help.trendsi.com/hc/en-us/articles/8784088667291-Customer-Orders-Auto-Checkout
