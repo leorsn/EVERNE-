@@ -1,0 +1,9 @@
+Title,URL handle,Description,Vendor,Type,Tags,Published on online store,Status,Option1 name,Option1 value,Price,Inventory tracker,Inventory quantity,Continue selling when out of stock,Requires shipping,Fulfillment service
+Essential Rib Top,essential-rib-top,"INTERNAL RESEARCH DRAFT — NOT FOR SALE. Final garment quality, supplier stock, measurements, shipping, returns and image rights are pending.",FactoryPrice,TOPS,"everne-woman,research-only,not-approved",false,draft,Size,S/M,34.00,shopify,0,deny,true,manual
+,essential-rib-top,,,,,false,draft,Size,L/XL,34.00,shopify,0,deny,true,manual
+Second Skin Body,second-skin-body,"INTERNAL RESEARCH DRAFT — NOT FOR SALE. Final garment quality, supplier stock, measurements, shipping, returns and image rights are pending.",FactoryPrice,BODYSUITS,"everne-woman,research-only,not-approved",false,draft,Size,S/M,39.00,shopify,0,deny,true,manual
+,second-skin-body,,,,,false,draft,Size,L/XL,39.00,shopify,0,deny,true,manual
+Tailored Everyday Pant,tailored-everyday-pant,"INTERNAL RESEARCH DRAFT — NOT FOR SALE. Final garment quality, supplier stock, measurements, shipping, returns and image rights are pending.",FactoryPrice,TROUSERS,"everne-woman,research-only,not-approved",false,draft,Size,S,59.00,shopify,0,deny,true,manual
+,tailored-everyday-pant,,,,,false,draft,Size,M,59.00,shopify,0,deny,true,manual
+,tailored-everyday-pant,,,,,false,draft,Size,L,59.00,shopify,0,deny,true,manual
+,tailored-everyday-pant,,,,,false,draft,Size,XL,59.00,shopify,0,deny,true,manual
