@@ -8,6 +8,7 @@ const read = (file) => fs.readFileSync(file, 'utf8');
 const ready = JSON.parse(read('sourcing/first-drop-readiness.json'));
 const home = read('src/EvernePreview.tsx');
 const legal = read('public/legal.html');
+const legalDe = read('public/rechtliches.html');
 const routes = read('src/main.tsx');
 const vercel = JSON.parse(read('vercel.json'));
 
@@ -36,6 +37,17 @@ assert.match(legal, /\[Insert verified business street address\]/,
   'Do not silently pass an incomplete merchant address as completed');
 assert.match(legal, /\[Insert contact email address\]/,
   'Do not silently pass an incomplete merchant contact as completed');
+assert.match(legal, /text-only introduction to five planned womenswear categories/,
+  'English legal status must describe the actual image-free preview');
+assert.match(legalDe, /fünf geplante Modekategorien, aber keine einzelnen Produkte, Produktbilder oder Preise/,
+  'German legal status must describe the actual image-free preview');
+assert.doesNotMatch(legal, /The 20 featured fashion pieces|Displayed prices are non-binding targets/,
+  'Do not present private research concepts or target prices as displayed merchandise');
+assert.doesNotMatch(legalDe, /Die Website ist technisch mit Shopify verbunden|ein vorhandener Warenkorb-Schlüssel beim Laden entfernt/,
+  'The active preview does not run the dormant Shopify or basket storage modules');
+for (const anchor of ['imprint', 'privacy', 'shipping']) {
+  assert.match(legal, new RegExp(`id="${anchor}"`), `Footer legal anchor missing: ${anchor}`);
+}
 
 assert.match(routes, /path="\/standards"/,
   'The customer-facing standards route must remain accessible');
