@@ -2,6 +2,10 @@
 
 **Status:** interne, unveröffentlichte Lieferanten-/Integrationsrecherche. **Kein Lieferant, kein SKU und kein Verkauf freigegeben.** Die bestehenden 20 Einträge in `src/womenswearCatalog.ts` bleiben rein redaktionelle Konzepte; dieser Vermerk ersetzt weder Produktfreigaben noch Rechts-/Steuerberatung.
 
+## Nachtrag — echter Shopify-Storestatus lesend geprüft (02.11.2026)
+
+Der verbundene **EVERNE-Shop** meldet **Shopify Basic, Deutschland, EUR**. Die **Collective-App ist bereits installiert**; es wurde **keine zusätzliche App eingerichtet**. Ein Versuch, ausschließlich den Aktivierungsstatus von Shopify Payments auszulesen, wurde aufgrund fehlender Leseberechtigung gestoppt. Daher sind **Shopify-Payments-Aktivierung, EU-Steuerkonfiguration, Network Intelligence und die vollständige Collective-Berechtigung weiterhin nicht bestätigt**. Ein einmaliger, nicht-importierender Collective-Produktscreen lieferte **keine wirtschaftlich und stilistisch fertig freigabefähige EVERNE-Auswahl**. Keine Preise, Lieferantenbeziehungen oder Produkte wurden verändert. Details: [Collective-Deutschland-Gate, Abschnitt „Live-Abgleich“](everne-shopify-collective-germany-gate-2026-11-02.md).
+
 ## Ergänzung: Shopify Collective für Deutschland (02.11.2026)
 
 **Neue native Option, derzeit HOLD:** Shopify Collective ist für einen deutschen Shopify-Shop in EUR grundsätzlich erhältlich und für berechtigte Shops ohne separate App-Grundgebühr nutzbar. Bestellübertragung, Shopify-Payments-Lieferantenzahlung, Tracking und bestimmte Retourenabläufe sind auf Plattformebene dokumentiert. **Die Shops von EVERNE und Lieferant müssen aber im selben Land und derselben Shopwährung sein:** Ein polnischer Shopify-Collective-Lieferant wäre mit dem deutschen Shop nicht direkt kompatibel. Eligibility setzt u. a. Shopify Payments, eine kompatible Steuerkonfiguration und aktivierte Shopify Network Intelligence voraus. Keine dieser Konfigurationen wurde geändert.
