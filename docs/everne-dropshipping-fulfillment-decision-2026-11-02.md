@@ -2,6 +2,14 @@
 
 **Status:** interne, unveröffentlichte Lieferanten-/Integrationsrecherche. **Kein Lieferant, kein SKU und kein Verkauf freigegeben.** Die bestehenden 20 Einträge in `src/womenswearCatalog.ts` bleiben rein redaktionelle Konzepte; dieser Vermerk ersetzt weder Produktfreigaben noch Rechts-/Steuerberatung.
 
+## Vicky/HyperSKU — 20-Style-Sourcing-Briefing vorbereitet, aber nicht versendet (02.11.2026)
+
+Leonid hat in einem von „HyperSKU Vicky“ initiierten WhatsApp-Kontakt **Option 2 („keine Orders, Produktsuche“) selbst gewählt**; wir warten auf Antwort. Der Name „Vicky“ ist in mehreren öffentlich sichtbaren Bewertungen als HyperSKU-Agent erwähnt, **die konkrete +852-Nummer bleibt unbestätigt**. Keine Antwortnachricht oder Kontaktbestätigung durch uns. Aus dem unveränderten `src/womenswearCatalog.ts` wurde ein **vollständiger 20-SKU-Request** für stilgetreue Quiet-Luxury-Ready-to-Wear-Damenmode vorbereitet (ohne Footwear): exakte Modellnamen, Farbtöne, Preise, Priorität und **wirklich zahlbare Einzelstück-Landed-Cost-Ceilings**. Jede Grenze berücksichtigt angenommene Paymentgebühr 2,5 %+0,25 €, Retourenreserve 5 €, Betrieb 3 € und 30 % Profit-Ziel vor ESt; zusätzlich eine nur illustrative **25-%-Einkommensteuer-Sensitivität**, keine persönliche Steuerprognose. Die fünf P1-SKUs sind Rib Top, Body, Tailored Pant, Soft V-Neck, Fluid Midi Skirt.
+
+**Neue harte HyperSKU-Gates:** Öffentliche Anleitung erfordert weiter manuelles `Pending Payment → Pay Together`; Kreditkarten-/Reevol-Zahlungen verursachen laut aktueller Preisliste **1 % ab 20 USD bzw. 3 % darunter**, Wallet ohne Transaktionsgebühr verlangt USD-Guthaben. EU-/Overseas-Warehouses stehen **nur in ausgewählten, meist volumenabhängigen Fällen** bereit, nicht automatisch ohne Vorabinventar. Für China-Warehouse-Orders keine normale B2B-Retoure; Help Center teils 7 Tage, ToS teils 5 Tage Reklamationsfrist. EU-Einfuhrzoll/Handling-Gebühr (3 €/2 € unter jeweiligen Bedingungen) müssen bei **DDP-Landed-Cost** ausdrücklich ausgewiesen oder als inklusive bestätigt werden. **0/20 verkaufsfreigegeben; warten auf echtes SKU-Angebot und auf gesicherte Vollautomatik, keine Konten/Bestellungen/Zahlungen/Shopänderungen.**
+
+[Unversendete 20-SKU-Lieferantenanfrage, alle Kostenlimits, acht obligatorische Angebotsfelder und Quellen](everne-hypersku-vicky-sourcing-brief-20-styles-2026-11-02.md).
+
 ## Fünf echte SKU-Gegenproben bei Printful/Printify (02.11.2026)
 
 **Neuer belastbarer Technikpfad, aber kein Produkt-Go:** Printful Free und Printify Free erlauben grundsätzlich automatische Shopify-Orderübernahme **und** automatische Belastung eines hinterlegten Händler-Zahlungsmittels ohne zusätzliches Monatsabo. Das ist technisch näher an EVERNEs Hands-free-Vorgabe als Syncee/Spocket/FactoryPrice; es setzt jedoch eigene Karte/Liquidität und gültige Auto-Approval-Konfiguration voraus. **Wir haben keinen Account, keine Zahlungsmethode und keine App eingerichtet.**
