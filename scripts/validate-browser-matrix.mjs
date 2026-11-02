@@ -56,6 +56,7 @@ try {
       assert.equal(await page.locator('.e-category').count(), 5);
       assert.equal(await page.locator('img,picture,video').count(), 0);
       assert.equal(await page.locator('form,input,[href*="checkout"]').count(), 0);
+      assert.equal(await page.locator('.e-navigation [aria-current="page"]').count(), 1);
       assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'), 'noindex,nofollow');
       const issues = await page.evaluate(() => {
         const problems = [];
@@ -65,6 +66,10 @@ try {
           const rect = node.getBoundingClientRect();
           if (rect.left < -2 || rect.right > innerWidth + 2)
             problems.push(`Clipped heading: ${node.textContent}`);
+        }
+        for (const node of document.querySelectorAll('.e-wordmark,.e-navigation a,.e-hero-bottom a,.e-editorial-link,.e-footer-bottom nav a')) {
+          if (node.getBoundingClientRect().height < 43.5)
+            problems.push(`Undersized tap target: ${node.textContent?.trim()}`);
         }
         return problems;
       });

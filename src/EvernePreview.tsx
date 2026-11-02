@@ -46,9 +46,9 @@ function Header({ page }: { page: Page }) {
       <header className="e-header">
         <Link to="/" className="e-wordmark" aria-label="EVERNE — home">EVERNE</Link>
         <nav className="e-navigation" aria-label="Main navigation">
-          <Link className={page === 'home' ? 'e-active' : ''} to="/#collection">WOMENSWEAR</Link>
-          <Link className={page === 'care' ? 'e-active' : ''} to="/care">CARE</Link>
-          <Link className={page === 'standards' ? 'e-active' : ''} to="/standards">THE STANDARD</Link>
+          <Link className={page === 'home' ? 'e-active' : ''} aria-current={page === 'home' ? 'page' : undefined} to="/#collection">WOMENSWEAR</Link>
+          <Link className={page === 'care' ? 'e-active' : ''} aria-current={page === 'care' ? 'page' : undefined} to="/care">CARE</Link>
+          <Link className={page === 'standards' ? 'e-active' : ''} aria-current={page === 'standards' ? 'page' : undefined} to="/standards">THE STANDARD</Link>
         </nav>
         <span className="e-header-note">HAMBURG&nbsp; / &nbsp;2026</span>
       </header>
@@ -61,7 +61,7 @@ function Footer() {
     <footer className="e-footer">
       <div className="e-footer-top">
         <span className="e-footer-brand">EVERNE</span>
-        <p>Made visible when it is ready.</p>
+        <p>An independent womenswear project.</p>
       </div>
       <div className="e-footer-bottom">
         <span>© EVERNE 2026 · Preview only · No active sales</span>
@@ -87,7 +87,7 @@ function Home() {
           <h1 id="hero-title" tabIndex={-1}>A wardrobe,<br /><em>in the making.</em></h1>
         </div>
         <div className="e-hero-bottom">
-          <p>An independent edit of modern womenswear.<br />Currently being refined, piece by piece.</p>
+          <p>An independent womenswear project.<br />The first selection is under review.</p>
           <a href="#collection">THE FIRST EDIT <span aria-hidden="true">↓</span></a>
         </div>
       </section>
@@ -96,7 +96,7 @@ function Home() {
         <div className="e-section-number"><span>01 / THE COLLECTION</span><span>WOMAN</span></div>
         <div className="e-section-intro">
           <h2 id="collection-title" tabIndex={-1}>What comes<br /><em>next.</em></h2>
-          <p>Five directions are being developed for the first EVERNE edit. The selection is not final. Until pieces and their images have been approved, we are keeping the collection intentionally unseen.</p>
+          <p>Our first edit is planned across five categories. No garment is confirmed for sale. Photography and specifications will follow only after supplier and sample approval.</p>
         </div>
         <div className="e-category-list" role="list" aria-label="Planned womenswear categories">
           {categories.map((name, index) => (
@@ -113,10 +113,10 @@ function Home() {
       <section className="e-approach e-section-pad" id="studio" aria-labelledby="approach-title">
         <div className="e-section-number"><span>02 / OUR APPROACH</span><span>THE PROCESS</span></div>
         <div className="e-approach-body">
-          <h2 id="approach-title">Less to show.<br /><em>More to get right.</em></h2>
+          <h2 id="approach-title">First the piece.<br /><em>Then the picture.</em></h2>
           <div>
             <p>EVERNE is taking shape in Hamburg. We work with external suppliers and review the details before presenting any piece as part of the collection.</p>
-            <p>That means no placeholder products, no assumed sizing and no checkout while the essentials are still being confirmed.</p>
+            <p>Before launch, we need verified garments, exact sizing, approved photography and workable delivery and return arrangements. There is no checkout at this stage.</p>
             <Link className="e-editorial-link" to="/standards">READ OUR STANDARD <Arrow /></Link>
           </div>
         </div>
@@ -124,7 +124,7 @@ function Home() {
 
       <section className="e-afterword e-section-pad" aria-labelledby="afterword-title">
         <div><span className="e-eyebrow">03 / A SECOND DIRECTION</span><h2 id="afterword-title">The care<br /><em>of things.</em></h2></div>
-        <div><p>Alongside womenswear, the EVERNE CARE studio explores the everyday rituals of looking after a wardrobe. Also in preparation.</p><Link className="e-editorial-link e-link-dark" to="/care">DISCOVER CARE <Arrow /></Link></div>
+        <div><p>Alongside womenswear, EVERNE CARE explores how garments are maintained. Its accessories will be presented after their specifications and photography are verified.</p><Link className="e-editorial-link e-link-dark" to="/care">DISCOVER CARE <Arrow /></Link></div>
       </section>
     </>
   );

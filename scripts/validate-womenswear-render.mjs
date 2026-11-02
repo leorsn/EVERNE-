@@ -38,16 +38,20 @@ try {
   assert.equal((home.match(/class="e-category"/g) ?? []).length, 5);
   assert.match(home, /NO APPROVED PRODUCT PHOTOGRAPHY YET/);
   assert.match(home, /href="\/care"/);
+  assert.match(home, /aria-current="page" href="\/#collection"/,
+    'Womenswear must expose the active navigation destination to assistive technology');
 
   const care = renderPage('/care');
   assertSafe(care, '/care');
   assert.match(care, /The care/);
   assert.match(care, /we are not displaying a product catalogue/);
+  assert.match(care, /aria-current="page" href="\/care"/);
 
   const standard = renderPage('/standards');
   assertSafe(standard, '/standards');
   assert.match(standard, /external suppliers/);
   assert.match(standard, /Product photography will appear only/);
+  assert.match(standard, /aria-current="page" href="\/standards"/);
   assert.equal((standard.match(/class="e-standard-row"/g) ?? []).length, 4);
 
   const withdrawnConcept = renderPage('/edit/essential-rib-top');

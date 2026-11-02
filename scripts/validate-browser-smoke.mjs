@@ -99,6 +99,8 @@ try {
     await eq('document.querySelectorAll(".e-category").length', 5, `${width}px: five category labels`);
     await eq('document.images.length', 0, `${width}px: no product or editorial images`);
     await eq('document.querySelectorAll("form,input,[href*=checkout]").length', 0, `${width}px: no commerce controls`);
+    await eq('document.querySelectorAll(".e-navigation [aria-current=page]").length', 1,
+      `${width}px: active navigation announced accessibly`);
     await eq('document.querySelector("meta[name=robots]")?.content', 'noindex,nofollow', 'noindex retained');
     const layout = await js(`(() => ({ width: innerWidth, scroll: document.documentElement.scrollWidth,
       viewport: document.documentElement.clientWidth,
@@ -108,6 +110,10 @@ try {
     ok(layout.scroll <= layout.width + 2,
       `${width}px horizontal overflow: ${JSON.stringify(layout)}`);
     ok(!layout.tooWide, `${width}px headline clipping: ${JSON.stringify(layout)}`);
+    const smallTargets = await js(`Array.from(document.querySelectorAll('.e-wordmark,.e-navigation a,.e-hero-bottom a,.e-editorial-link,.e-footer-bottom nav a'))
+      .filter(el => el.getBoundingClientRect().height < 43.5)
+      .map(el => ({ label: el.textContent.trim(), height: Math.round(el.getBoundingClientRect().height) }))`);
+    ok(smallTargets.length === 0, `${width}px undersized tap targets: ${JSON.stringify(smallTargets)}`);
   }
 
   await navigate(preview + '#/care');
