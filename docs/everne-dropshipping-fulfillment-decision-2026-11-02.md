@@ -1,5 +1,11 @@
 # EVERNE — Entscheidungsvorlage Dropshipping-Automatisierung (Recherche 02.11.2026)
 
+## Nachtrag — Trendsi: Fashion-Kandidaten mit dokumentiertem Saved-Card-AutoPay (02.11.2026)
+
+**Neue technische Option:** Trendsi unterstützt laut offizieller Doku Auto Checkout für bezahlte Shopify-Orders per hinterlegter Kreditkarte (Wallet-Prefund nicht zwingend), bietet **Free bis 500 Listings mit unbegrenzten Orders** und **konkrete Germany-SKU-Portopreise**. Die ersten zwei plausiblen Stilprüfkandidaten aus der unveränderten 20er-Liste sind **The Black Mini** (Halter Neck Mini Dress, **12,57 USD Ware + 1,99 USD DE-Porto**, 20 Stück angezeigt) und **Second Skin Body** (Scoop Neck Spaghetti Strap Bodysuit, **8,70 USD + 1,99 USD Porto**, 25 Stück angezeigt). Unter zusätzlicher Szenario-Rechnung mit möglichem **3-EUR-EU-Niedrigwertzoll je tariflicher Position** seit 01.07.2026 und **1,50-USD-Saisonzuschlag** sind die vorläufigen Supplier-All-in-Werte **17,33 EUR** bzw. **13,88 EUR**, ausdrücklich **noch ohne Import-VAT/Carriergebühren**. Für EU-Lieferungen gibt Trendsi **keine reguläre B2B-Rücknahme**; Widerrufs-, GPSR- und echte Nachsteuer-Margengates bleiben offen. **0/20 Verkaufsfreigaben; keine Shop-/App-/Karten-/Bestell-/Kostenänderungen.**
+
+[Vollständige Trendsi-Quellen, neun verifizierte SKU-Referenzen, EUR-Stresstabelle, positive/negative Stilabgleiche und harte EU-Gates](everne-trendsi-autopay-fashion-shortlist-2026-11-02.md).
+
 **Status:** interne, unveröffentlichte Lieferanten-/Integrationsrecherche. **Kein Lieferant, kein SKU und kein Verkauf freigegeben.** Die bestehenden 20 Einträge in `src/womenswearCatalog.ts` bleiben rein redaktionelle Konzepte; dieser Vermerk ersetzt weder Produktfreigaben noch Rechts-/Steuerberatung.
 
 ## Nachtrag — zweiter AutoPay-Kostentest gegen die 20er-Liste (02.11.2026)
