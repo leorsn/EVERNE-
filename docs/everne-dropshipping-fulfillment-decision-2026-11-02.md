@@ -2,6 +2,14 @@
 
 **Status:** interne, unveröffentlichte Lieferanten-/Integrationsrecherche. **Kein Lieferant, kein SKU und kein Verkauf freigegeben.** Die bestehenden 20 Einträge in `src/womenswearCatalog.ts` bleiben rein redaktionelle Konzepte; dieser Vermerk ersetzt weder Produktfreigaben noch Rechts-/Steuerberatung.
 
+## Vertiefter Fashion-Supplier-Screen: acht weitere Anbieter (02.11.2026)
+
+**Matterhorn** bringt ein großes europäisches Damenmode-Sortiment und eine kostenlose Shopify-App mit, scheidet jedoch für das jetzige Modell aus: Der Händler muss die Order separat auslösen und bezahlen. Die REST-API **erlaubt ausdrücklich keine Orderzahlung**. **AW Dropship Europe** ist dagegen ein echter **0-€-Grundgebühr-/AutoPay-Fall** mit Saved-Card-Autobelastung, EU-Lager und veröffentlichtem DE-Portotarif ab **5,85 € (bis 1 kg)**; das Bekleidungssortiment ist aber erklärtermaßen **Boho/Festival/Yoga und nicht EVERNE-Quiet-Luxury**, außerdem sind Retouren nur in einem manuellen 14-Tage-B2B-Kulanzweg möglich. **KakaClo** (China/US-Ware, Shopify aktuell 1,9/5), **LaBalancia** (keine Normalretouren), **VAITTO** (manuelle Orderbestätigung), **Sync2Fashion/Griffati** (250 €/Jahr + 120 €/Monat), **Droppery** (mindestens 39 €/Monat + 1,5 % bzw. 59 €/Monat), **Catwalk** (Free ohne Produkte) bestehen die gemeinsamen Anforderungen ebenfalls nicht.
+
+**Collective-Präzisierung durch offizielle Shopify-Hilfe:** Es gibt **keinen Mindestumsatz** als allgemeine Zugangsvoraussetzung. Die kostenlose automatische Lieferantenzahlung verlangt allerdings Shop-/Supplier-Eligibility, gleiches Land und Währung und aktives Shopify Payments **einschließlich Auszahlungen**. Bei neuen Shops können Auszahlungen laut Shopify bis zu **21 Tage nach erster Belastung** pausieren. Die vorhandene EVERNE-Installation ist damit noch **keine Eligibility- oder Payment-Verifikation**.
+
+[Quellen, detaillierter Acht-Anbieter-Vergleich und aktuelle Collective-Gates](everne-eight-suppliers-matterhorn-aw-collective-screen-2026-11-02.md). Keine App-, Account-, Zahlungs- oder Shopänderung.
+
 ## Nachprüfung: Automationsbeweis und tatsächliches Sortiment (02.11.2026)
 
 **WaveGo ist nun eindeutig NO-GO für Vollautomatik**, weil die eigene Anleitung vor jedem Supplier-Forwarding den manuellen Händler-Checkout verlangt. **Hertwill ist technisch belastbarer belegt**: Nach bezahlter Shopify-Order werden laut offizieller Dokumentation Order und Tracking automatisch übertragen; die hinterlegte Karte wird per Stripe selbsttätig für Ware + Versand + anwendbare Steuer belastet. **Free begrenzt auf 5 einzigartige Produkte und 10 Bestellungen/Monat**; bei Überschreitung darf Hertwill neue Orders pausieren.
