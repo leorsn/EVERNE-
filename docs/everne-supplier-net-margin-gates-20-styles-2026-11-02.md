@@ -84,3 +84,13 @@ Beispiel `P = 49 €`, 35 % Rabatt auf exakt 49 € ohne Porto und Lieferanten-U
 ## 6. Entscheidung 02.11.2026
 
 **0/20 VERKAUFS-GO.** Bisher kein einziger zu den 20 EVERNE-Konzepten passender Lieferantenartikel mit nachgewiesener *gleichzeitiger* Erfüllung von automatischer Zahlung, verbindlichem deutschem Vollkostenpreis, mindestens 30 % modellierter Nachsteuergewinnmarge, passender Ausführung und EU-Retouren/Compliance. Die neue Preisstufenmatrix verhindert nun, dass scheinbar attraktive nominelle „30–35 % Supplier-Margins“ als wirtschaftlich freigegeben missverstanden werden. Nächste Arbeit: nur echte SKU-Angebote unter diesen Obergrenzen durch dieselben Gates führen. **Keine Supplier-Kontaktaufnahme, Bestellung, App-Installation, Karteneingabe, Shop-Publikation oder zusätzliche Ausgabe ausgelöst.**
+
+## 7. Ergänzung — erneuter technischer AutoPay-Ausschluss drei weiterer Anbieter (02.11.2026)
+
+| Anbieter | Recherchierte offizielle Ausführungs-/Zahlungsweise | EVERNE-Entscheid |
+|---|---|---|
+| **Syncee** | Shopify-Aufträge werden zum Retailer-Syncee synchronisiert, dann **aktiv per Syncee-Checkout/PayPal/Karte bezahlt**; erst danach an Supplier weitergeleitet. „Auto Order“ in der Supplier-Dokumentation bedeutet **automatische Weiterleitung nach Händlerzahlung**. Free-Browsing ändert das nicht. | **NO-GO AUTO-PAY** (manueller Zahlvorgang). |
+| **WaveGo** | Im ausdrücklich dokumentierten Ablauf steht Bestellung zuerst auf **„Awaiting supplier payment“**; Händler öffnet Order und klickt **„Pay now“** bei Lieferanten-Stripe. Auch Free-Tarif (10 Varianten/1 Supplier) beseitigt diesen Schritt nicht. | **NO-GO AUTO-PAY** (manueller Zahlvorgang). |
+| **Doba** | Eigenes Tutorial nennt **„Auto-Pay“ bei Karte oder Guthaben** als mögliche Funktion; auf der aktuellen offiziellen Tarifseite startet der eingeschränkte Shop-/Listing-Tarif jedoch bei **28,67 USD/Monat bei Quartalszahlung** (andere Tarife höher), und die Lieferanten-/DE-Gesamtkosten sind unbekannt. | **NO-GO BUDGET** (weitere laufende Kosten; keine Produkte geprüft). |
+
+Originalquellen: [Syncee Retailer Order Management](https://help.syncee.com/en/articles/8929528-order-management), [Syncee Auto Order für Supplier](https://help.syncee.com/en/articles/4430204-what-is-auto-order), [WaveGo tatsächlicher Zahlungsablauf](https://www.wavego.eu/how-to-start), [WaveGo Free-Plan](https://www.wavego.eu/), [Doba Auto-Pay-Tutorial](https://www.doba.com/blog/doba-guides-and-tools/doba-tutorials/master-advanced-doba-usage-automate--scale-in-3-steps-39123), [Doba aktuelle Tarife](https://www.doba.com/pricing). Es wurden **keine Accounts, Apps oder Käufe** ausgelöst; auch diese Prüfung lässt alle 20 Modelle unverändert auf HOLD.
