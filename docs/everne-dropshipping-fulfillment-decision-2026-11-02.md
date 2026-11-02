@@ -1,5 +1,11 @@
 # EVERNE — Entscheidungsvorlage Dropshipping-Automatisierung (Recherche 02.11.2026)
 
+## Nachtrag — harte 30-%-Nachsteuer-Kostenobergrenzen für alle 20 Modelle (02.11.2026)
+
+**Mathematischer Abgleich jetzt vollständig:** Unter den **nur illustrativen** Annahmen 2,5 % + 0,25 € Paymentgebühr, 5 € Retourenreserve, 3 € Betriebskosten und 25 % effektive Ertragsteuer darf der komplette Supplier-Landed-Cost-Betrag höchstens **11,30 € bei 34 € Verkaufspreis** bis **25,67 € bei 59 € Verkaufspreis** betragen. Das entspricht selbst **ohne** Porto/B2B-USt bereits ungefähr **56,5–66,8 %** notwendigem Einkaufspreisabschlag gegenüber dem EVERNE-Ladenpreis. Ein nomineller 35-%-Lieferantenrabatt auf 49 € ergibt unter der Modellrechnung nur **ca. 11,7 % Nachsteuergewinn** vor jeglichem Lieferantenversand, also klar **kein GO**. Als Kleinunternehmer können wir möglicherweise anfallende Lieferanten-USt nicht als abziehbare Vorsteuer wegkalkulieren; EU-/Shopify-Steuerregeln sind ein eigener Prüfpunkt. Die vollständige **20-Stück-Landed-Cost- und USt-/Porto-Szenariotabelle** wurde auf dem bestehenden Dokumentationszweig ergänzt. **0/20 GO; keine Ausgaben, Produktänderungen oder Live-Aktivierung.**
+
+[Vollständige 20er-Kosten- und Nachsteuergates samt Quellen](everne-supplier-net-margin-gates-20-styles-2026-11-02.md).
+
 ## Nachtrag — Deutschland-Collective-AutoPay und aktueller EU-/POD-Screen (02.11.2026)
 
 **Bestätigter 0-€-Zahlungsweg:** Shopify Collective kann bei berechtigten deutschen EUR-Shops Lieferanten aus dem Shopify-Payments-Guthaben **ohne zusätzliche Gebühr** vollautomatisch bezahlen, aber **nur für Supplier im gleichen Land und derselben Währung**. EVERNE ist read-only als **DE/EUR/Shopify Basic** bestätigt; aktive Auszahlungen, Collective-Eligibility und DE-Supplier müssen noch geprüft werden. Zwei private DE-Collective-Durchläufe mit zusammen sechs präzisen Damenmode-Suchgruppen und jeweils einer breiteren Korrektursuche ergaben **0 passende/marken- und finanzseitig freigegebene Artikel**. Automatischer Einzug stoppt bei unzureichendem Guthaben zwar nicht endgültig (Retry), kann den Versand aber verzögern. **Kein Import, keine Installation.**
