@@ -1,0 +1,471 @@
+{
+  "assessedAt": "2026-11-02",
+  "status": "RESEARCH_ONLY_NOT_APPROVED",
+  "sourceOfConceptNames": "src/womenswearCatalog.ts on feat/everne-woman-editorial-preview",
+  "scope": "Ten newly/directly screened supplier product listings for unaddressed 17 EVERNE womenswear concepts. Additional prior lead files cover other concepts. Not a full live-stock audit or import.",
+  "disclaimer": "Public listings change; counts are direct-page snapshots, not reservable stock. Names/colours and fabric descriptions must not be marketed as actual EVERNE merchandise. No stock/photos/checkout are authorized.",
+  "model": {
+    "name": "Hypothetical KUR cash-contribution screen, not profit",
+    "retailAssumption": "Retail is customer cash received; no output VAT subtracted in this hypothetical Kleinunternehmer screen",
+    "supplierListPrices": "Public net listing figures, unauthenticated",
+    "baseline": {
+      "nonrecoverableCostUplift": 0.19,
+      "courierLabelNetEur": 7.5,
+      "handlingNetEur": 0.68,
+      "packagingNetEur": 0.7,
+      "paymentPercent": 0.025,
+      "paymentFixedEur": 0.25,
+      "returnReserveEur": 2.5
+    },
+    "stress": {
+      "nonrecoverableCostUplift": 0.23,
+      "courierLabelNetEur": 10,
+      "handlingNetEur": 0.68,
+      "packagingNetEur": 0.7,
+      "paymentPercent": 0.025,
+      "paymentFixedEur": 0.25,
+      "returnReserveEur": 2.5
+    },
+    "excluded": [
+      "Advertising/organic marketing time",
+      "Overheads and labor",
+      "Returns beyond flat reserve",
+      "Integration subscription fees",
+      "Defect refunds and unsellable returns",
+      "Any actual cross-border VAT or other invoice charges differing from assumed uplift",
+      "Actual quote for merchant-paid parcel label"
+    ]
+  },
+  "leads": [
+    {
+      "concept": "Soft V-Neck",
+      "id": "factoryprice-black-soft-wrap-neckline",
+      "product": "Black soft pullover with envelope/V neckline",
+      "code": "IR-SW-RR1325.60",
+      "url": "https://factoryprice.eu/de/products/schwarzer-weicher-pullover-mit-wickelausschnitt-421411.html",
+      "cost": 9.67,
+      "retail": 49,
+      "fibre": "55% recycled polyester, 18% acrylic, 17% elastane, 10% wool",
+      "variants": {
+        "S/M": {
+          "ean": "5906694154683",
+          "publicStock": 8
+        },
+        "L/XL": {
+          "ean": "5906694154690",
+          "publicStock": 10
+        }
+      },
+      "status": "SAMPLE_RESEARCH_ONLY",
+      "reason": "Two sizes with nonzero public stock and a plain black V/envelope neckline; verify unusual 17% elastane, hand feel, wool label and actual short 50–51 cm length.",
+      "currency": "EUR",
+      "supplier": "FactoryPrice",
+      "publicListingObservedAt": "2026-11-02",
+      "stockIsReserved": false,
+      "authenticatedQuote": false,
+      "photosLicensed": false,
+      "physicalSampleVerified": false,
+      "approvedForSale": false,
+      "economics": {
+        "baseline": {
+          "eur": 22.95,
+          "pctOfRetail": 46.8
+        },
+        "stress": {
+          "eur": 19.13,
+          "pctOfRetail": 39
+        }
+      }
+    },
+    {
+      "concept": "Soft V-Neck",
+      "id": "factoryprice-black-ribbed-fitted-v-neck-backup",
+      "product": "Black fitted ribbed V-neck knit with button detail",
+      "code": "IR-SW-57905.92",
+      "url": "https://factoryprice.eu/de/products/schwarzer-enganliegender-ripppullover-420847.html",
+      "cost": 12.89,
+      "retail": 49,
+      "fibre": "50% viscose, 28% polyester, 22% polyamide",
+      "variants": {
+        "S/M": {
+          "ean": "5906694146985",
+          "publicStock": 25
+        },
+        "L/XL": {
+          "ean": "5906694147029",
+          "publicStock": 26
+        }
+      },
+      "status": "BACKUP_FIT_PATTERN_GATE",
+      "reason": "Both sizes fairly stocked but supplier describes striped/ribbed pattern and buttons; verify whether appearance matches restrained concept and wash quality.",
+      "currency": "EUR",
+      "supplier": "FactoryPrice",
+      "publicListingObservedAt": "2026-11-02",
+      "stockIsReserved": false,
+      "authenticatedQuote": false,
+      "photosLicensed": false,
+      "physicalSampleVerified": false,
+      "approvedForSale": false,
+      "economics": {
+        "baseline": {
+          "eur": 19.12,
+          "pctOfRetail": 39
+        },
+        "stress": {
+          "eur": 15.17,
+          "pctOfRetail": 31
+        }
+      }
+    },
+    {
+      "concept": "Fluid Midi Skirt",
+      "id": "factoryprice-black-viscose-midi-pockets",
+      "product": "RUE PARIS black basic midi skirt with pockets",
+      "code": "WN-SD-5005.13",
+      "url": "https://factoryprice.eu/de/products/hurt-schwarze-midi-rock-basic-mit-taschen-rue-paris-398790.html",
+      "cost": 7.86,
+      "retail": 44,
+      "fibre": "95% viscose, 5% elastane",
+      "variants": {
+        "S/M": {
+          "ean": "2016103397877",
+          "publicStock": 65
+        },
+        "L/XL": {
+          "ean": "2016103397884",
+          "publicStock": 19
+        }
+      },
+      "status": "SAMPLE_RESEARCH_ONLY",
+      "reason": "Good public sizes and cost with viscose-heavy blend; casual pockets and jersey drape might not match an editorial fluid skirt. Fit, weight, length and wash shrinkage untested.",
+      "currency": "EUR",
+      "supplier": "FactoryPrice",
+      "publicListingObservedAt": "2026-11-02",
+      "stockIsReserved": false,
+      "authenticatedQuote": false,
+      "photosLicensed": false,
+      "physicalSampleVerified": false,
+      "approvedForSale": false,
+      "economics": {
+        "baseline": {
+          "eur": 20.23,
+          "pctOfRetail": 46
+        },
+        "stress": {
+          "eur": 16.48,
+          "pctOfRetail": 37.5
+        }
+      }
+    },
+    {
+      "concept": "Fluid Midi Skirt",
+      "id": "factoryprice-black-satin-effect-midi",
+      "product": "Black faux-satin midi skirt",
+      "code": "IR-SD-M113393.63",
+      "url": "https://factoryprice.eu/de/products/schwarzer-midi-rock-aus-satinimitat-420741.html",
+      "cost": 11.28,
+      "retail": 44,
+      "fibre": "80% polyester, 20% viscose",
+      "variants": {
+        "S/M": {
+          "ean": "5906694145070",
+          "publicStock": 15
+        },
+        "L/XL": {
+          "ean": "5906694145087",
+          "publicStock": 16
+        }
+      },
+      "status": "HOLD_STRESS_BELOW_30_AND_FINISH",
+      "reason": "Dressier visual lead but 80% polyester, sheen and hand feel unverified; stress contribution is below 30% of retail before overhead.",
+      "currency": "EUR",
+      "supplier": "FactoryPrice",
+      "publicListingObservedAt": "2026-11-02",
+      "stockIsReserved": false,
+      "authenticatedQuote": false,
+      "photosLicensed": false,
+      "physicalSampleVerified": false,
+      "approvedForSale": false,
+      "economics": {
+        "baseline": {
+          "eur": 16.16,
+          "pctOfRetail": 36.7
+        },
+        "stress": {
+          "eur": 12.28,
+          "pctOfRetail": 27.9
+        }
+      }
+    },
+    {
+      "concept": "Ribbed Turtleneck",
+      "id": "factoryprice-black-cotton-ribbed-turtleneck",
+      "product": "RUE PARIS black ribbed cotton turtleneck long-sleeve",
+      "code": "RV-BZ-A1046.75",
+      "url": "https://factoryprice.eu/de/products/schwarzes-basic-oberteil-mit-rollkragen-rue-paris-415435.html",
+      "cost": 8.06,
+      "retail": 44,
+      "fibre": "90% cotton, 10% elastane",
+      "variants": {
+        "S/M": {
+          "ean": "5906694070921",
+          "publicStock": 1
+        },
+        "L/XL": {
+          "ean": "5906694070938",
+          "publicStock": 8
+        }
+      },
+      "status": "HOLD_S_M_ONLY_ONE",
+      "reason": "Exact ribbed turtleneck role, but S/M has just one public unit at direct page recheck; cannot claim practical two-size replenishment.",
+      "currency": "EUR",
+      "supplier": "FactoryPrice",
+      "publicListingObservedAt": "2026-11-02",
+      "stockIsReserved": false,
+      "authenticatedQuote": false,
+      "photosLicensed": false,
+      "physicalSampleVerified": false,
+      "approvedForSale": false,
+      "economics": {
+        "baseline": {
+          "eur": 19.99,
+          "pctOfRetail": 45.4
+        },
+        "stress": {
+          "eur": 16.24,
+          "pctOfRetail": 36.9
+        }
+      }
+    },
+    {
+      "concept": "Soft Line Longsleeve",
+      "id": "factoryprice-black-sublevel-basic-longsleeve",
+      "product": "SUBLEVEL fitted black crew-neck long-sleeve",
+      "code": "D12099M02788A",
+      "url": "https://factoryprice.eu/de/products/schwarzes-basic-oberteil-mit-langen-armeln-von-sublevel-416040.html",
+      "cost": 11.28,
+      "retail": 39,
+      "fibre": "91% polyamide, 9% elastane",
+      "variants": {
+        "XS": {
+          "ean": "4063813921432",
+          "publicStock": 9
+        },
+        "S": {
+          "ean": "4063813921418",
+          "publicStock": 3
+        },
+        "M": {
+          "ean": "4063813921401",
+          "publicStock": 12
+        },
+        "L": {
+          "ean": "4063813921395",
+          "publicStock": 0
+        },
+        "XL": {
+          "ean": "4063813921425",
+          "publicStock": 1
+        }
+      },
+      "status": "HOLD_MISSING_L_AND_LOW_MARGIN",
+      "reason": "Five named sizes but L is unavailable and XL almost unavailable; synthetic composition and stress contribution fail the screen.",
+      "currency": "EUR",
+      "supplier": "FactoryPrice",
+      "publicListingObservedAt": "2026-11-02",
+      "stockIsReserved": false,
+      "authenticatedQuote": false,
+      "photosLicensed": false,
+      "physicalSampleVerified": false,
+      "approvedForSale": false,
+      "economics": {
+        "baseline": {
+          "eur": 11.28,
+          "pctOfRetail": 28.9
+        },
+        "stress": {
+          "eur": 7.4,
+          "pctOfRetail": 19
+        }
+      }
+    },
+    {
+      "concept": "Tailored Mini Skirt",
+      "id": "factoryprice-black-asymmetric-mini-skirt",
+      "product": "RUE PARIS black asymmetric high-waist mini skirt",
+      "code": "WN-SD-2904.02",
+      "url": "https://factoryprice.eu/de/products/schwarzer-asymmetrischer-minirock-rue-paris-387041.html",
+      "cost": 3.92,
+      "retail": 39,
+      "fibre": "95% polyester, 5% elastane",
+      "variants": {
+        "S": {
+          "ean": "2016103217328",
+          "publicStock": 14
+        },
+        "M": {
+          "ean": "2016103217335",
+          "publicStock": 4
+        },
+        "L": {
+          "ean": "2016103217342",
+          "publicStock": 8
+        }
+      },
+      "status": "HOLD_SILHOUETTE_QUALITY_AND_NO_XL",
+      "reason": "Very low public price makes contribution attractive on paper, but asymmetric skirt is not confirmed tailored, medium size limited, no XL; assess construction and value credibility.",
+      "currency": "EUR",
+      "supplier": "FactoryPrice",
+      "publicListingObservedAt": "2026-11-02",
+      "stockIsReserved": false,
+      "authenticatedQuote": false,
+      "photosLicensed": false,
+      "physicalSampleVerified": false,
+      "approvedForSale": false,
+      "economics": {
+        "baseline": {
+          "eur": 20.04,
+          "pctOfRetail": 51.4
+        },
+        "stress": {
+          "eur": 16.46,
+          "pctOfRetail": 42.2
+        }
+      }
+    },
+    {
+      "concept": "Denim Midi Skirt",
+      "id": "factoryprice-sublevel-belted-darkblue-denim-midi",
+      "product": "SUBLEVEL dark-blue cotton midi denim skirt with belt",
+      "code": "D80030BI50248D300",
+      "url": "https://factoryprice.eu/de/products/dunkelblaue-jeansrock-mit-gurtel-sublevel-416391.html",
+      "cost": 24.16,
+      "retail": 54,
+      "fibre": "100% cotton",
+      "variants": {
+        "XS": {
+          "ean": "4063813961568",
+          "publicStock": 2
+        },
+        "S": {
+          "ean": "4063813961544",
+          "publicStock": 6
+        },
+        "M": {
+          "ean": "4063813961537",
+          "publicStock": 3
+        },
+        "L": {
+          "ean": "4063813961520",
+          "publicStock": 2
+        },
+        "XL": {
+          "ean": "4063813961551",
+          "publicStock": 1
+        }
+      },
+      "status": "HOLD_PRICE_AND_SMALL_STOCK",
+      "reason": "Genuine five-size cotton denim midi lead, but low per-size stock and only 11.5% stress contribution at €54 before ads/overheads.",
+      "currency": "EUR",
+      "supplier": "FactoryPrice",
+      "publicListingObservedAt": "2026-11-02",
+      "stockIsReserved": false,
+      "authenticatedQuote": false,
+      "photosLicensed": false,
+      "physicalSampleVerified": false,
+      "approvedForSale": false,
+      "economics": {
+        "baseline": {
+          "eur": 10.58,
+          "pctOfRetail": 19.6
+        },
+        "stress": {
+          "eur": 6.19,
+          "pctOfRetail": 11.5
+        }
+      }
+    },
+    {
+      "concept": "Fine Knit Top",
+      "id": "factoryprice-black-short-sleeve-alpaca-knit",
+      "product": "Black short-sleeve alpaca-blend knit top",
+      "code": "MI-SW-1901.66",
+      "url": "https://factoryprice.eu/de/products/schwarzer-damenpullover-mit-kurzen-armeln-417265.html",
+      "cost": 16.11,
+      "retail": 39,
+      "fibre": "38% acrylic, 32% polyamide, 30% baby alpaca",
+      "variants": {
+        "ONE_SIZE": {
+          "ean": "5906694096037",
+          "publicStock": 3
+        }
+      },
+      "status": "HOLD_ONE_SIZE_LOW_STOCK_AND_PRICE",
+      "reason": "The listing has only one size and three units; expensive relative to €39 planned price.",
+      "currency": "EUR",
+      "supplier": "FactoryPrice",
+      "publicListingObservedAt": "2026-11-02",
+      "stockIsReserved": false,
+      "authenticatedQuote": false,
+      "photosLicensed": false,
+      "physicalSampleVerified": false,
+      "approvedForSale": false,
+      "economics": {
+        "baseline": {
+          "eur": 5.54,
+          "pctOfRetail": 14.2
+        },
+        "stress": {
+          "eur": 1.46,
+          "pctOfRetail": 3.7
+        }
+      }
+    },
+    {
+      "concept": "Relaxed Crew Knit",
+      "id": "factoryprice-black-oversize-crew-knit",
+      "product": "Black oversized round-neck long-sleeve sweater",
+      "code": "IR-SW-57889.76",
+      "url": "https://factoryprice.eu/de/products/schwarzer-oversize-pullover-mit-rundem-ausschnitt-420615.html",
+      "cost": 14.5,
+      "retail": 49,
+      "fibre": "50% viscose, 28% polyester, 22% polyamide",
+      "variants": {
+        "ONE_SIZE": {
+          "ean": "5906694142659",
+          "publicStock": 0
+        }
+      },
+      "status": "HOLD_ONE_SIZE_OUT_OF_STOCK",
+      "reason": "Only one-size variant is published and the direct supplier page says unavailable.",
+      "currency": "EUR",
+      "supplier": "FactoryPrice",
+      "publicListingObservedAt": "2026-11-02",
+      "stockIsReserved": false,
+      "authenticatedQuote": false,
+      "photosLicensed": false,
+      "physicalSampleVerified": false,
+      "approvedForSale": false,
+      "economics": {
+        "baseline": {
+          "eur": 17.2,
+          "pctOfRetail": 35.1
+        },
+        "stress": {
+          "eur": 13.19,
+          "pctOfRetail": 26.9
+        }
+      }
+    }
+  ],
+  "shopify": "NO_ACTION_NO_IMPORT_NO_PUBLISH",
+  "requiredNext": [
+    "Authenticated variant quote",
+    "Actual one-customer German courier label cost and integration terms",
+    "Fit and wash samples",
+    "Supply and buyer returns/defects agreements",
+    "Photo licence or own photography",
+    "Correct composition/label/manufacturer and product safety",
+    "Founder written GO after end-to-end Shopify test"
+  ]
+}
