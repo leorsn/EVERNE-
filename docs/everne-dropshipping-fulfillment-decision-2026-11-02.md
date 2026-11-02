@@ -2,6 +2,14 @@
 
 **Status:** interne, unveröffentlichte Lieferanten-/Integrationsrecherche. **Kein Lieferant, kein SKU und kein Verkauf freigegeben.** Die bestehenden 20 Einträge in `src/womenswearCatalog.ts` bleiben rein redaktionelle Konzepte; dieser Vermerk ersetzt weder Produktfreigaben noch Rechts-/Steuerberatung.
 
+## Ergänzung: Shopify Collective für Deutschland (02.11.2026)
+
+**Neue native Option, derzeit HOLD:** Shopify Collective ist für einen deutschen Shopify-Shop in EUR grundsätzlich erhältlich und für berechtigte Shops ohne separate App-Grundgebühr nutzbar. Bestellübertragung, Shopify-Payments-Lieferantenzahlung, Tracking und bestimmte Retourenabläufe sind auf Plattformebene dokumentiert. **Die Shops von EVERNE und Lieferant müssen aber im selben Land und derselben Shopwährung sein:** Ein polnischer Shopify-Collective-Lieferant wäre mit dem deutschen Shop nicht direkt kompatibel. Eligibility setzt u. a. Shopify Payments, eine kompatible Steuerkonfiguration und aktivierte Shopify Network Intelligence voraus. Keine dieser Konfigurationen wurde geändert.
+
+Die von Shopify genannten typischen **20–50 % Händler-Produktmargen** sind keine 30 % Gewinn nach allen Kosten/Steuern. Unter dem strengeren 5-€/Retoure- und 3-€/Betriebskosten-Screening und bei 0 € zusätzlichem Lieferporto brauchen die fünf EVERNE-Prioritäten modellhaft **46,5–56,8 % Brutto-Produktmarge**, noch vor Einkommensteuer. Bei 6,90 € vollständig an Kunden durchgereichtem Versand **50,3–63,4 %**. **Kein deutscher Damenmode-Lieferant, kein tatsächlicher Preis und keine der fünf SKUs sind verifiziert.**
+
+[Vollständige Collective-Gates und Modellrechnung](everne-shopify-collective-germany-gate-2026-11-02.md). Collective hat Vorrang als **kostenfreie native Plattformoption für einen später autorisierten Eligibility-/Lieferantentest**, nicht als Produkt- oder Profitfreigabe. Hertwill bleibt die vertieft dokumentierte Drittanbieter-Alternative; beide Wege stehen auf HOLD.
+
 ## Ausgangspunkt und harte Leitplanken
 
 - Deutschland als Zielmarkt, Damenmode unter EVERNE, organische Vermarktung, kein zusätzlicher laufender Dienstleistungsaufwand ohne Freigabe.
@@ -84,7 +92,7 @@ Zusätzlich prüfen: Mehrmarken-Bestellungen, Retourenquote für Damenmode (nich
 
 ## Empfehlung / nächste Schritte, bewusst ohne operative Änderung
 
-1. **Hertwill als Integrations-Pilot #1** erst in einem freigegebenen, nicht öffentlichen Testshop prüfen: höchstens fünf **wirklich passende** Damenmodeprodukte, je mit deutschen Versandkosten, eindeutiger Größen- und Bestandstabelle und dokumentierter Steuerbehandlung. Noch keine echten Bestellungen. Die fünf vorhandenen EVERNE-Prioritäten müssen nicht gewaltsam auf Hertwill-Fremdprodukte gemappt werden.
+1. **Hertwill als vertieft dokumentierte Drittanbieter-Option** erst in einem freigegebenen, nicht öffentlichen Testshop prüfen: höchstens fünf **wirklich passende** Damenmodeprodukte, je mit deutschen Versandkosten, eindeutiger Größen- und Bestandstabelle und dokumentierter Steuerbehandlung. Noch keine echten Bestellungen. Die fünf vorhandenen EVERNE-Prioritäten müssen nicht gewaltsam auf Hertwill-Fremdprodukte gemappt werden.
 2. **FactoryPrice als Preis-/Stil-Benchmark** behalten; drei priorisierte Quellen aus Draft-PR #7 und siebzehn Konzepte aus Draft-PR #9 unverändert. Automatik-Status: „offen“, bis Order-API und Labelrouter nachgewiesen sind.
 3. **Keine Produktfreigabe**, solange keine SKU die überprüfte reale Gewinnhürde (inklusive Fixkosten und belastbarer Retourenreserve) erfüllt. Insbesondere keine aus vorläufigen Beitragsmargen abgeleitete 30-%-Nettogewinnbehauptung.
 4. Nach expliziter Zustimmung zum Konto-/Systemtest: Hertwill/Shopify-Testkonfiguration prüfen; vollständig belegte Produkt- und Lieferkalkulation je Größenvariante erstellen; Rückgabe- und rechtliche Pflichtinformationen prüfen; erst danach gesonderte Entscheidung über Aktivschaltung.
