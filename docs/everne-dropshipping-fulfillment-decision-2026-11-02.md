@@ -2,6 +2,12 @@
 
 **Status:** interne, unveröffentlichte Lieferanten-/Integrationsrecherche. **Kein Lieferant, kein SKU und kein Verkauf freigegeben.** Die bestehenden 20 Einträge in `src/womenswearCatalog.ts` bleiben rein redaktionelle Konzepte; dieser Vermerk ersetzt weder Produktfreigaben noch Rechts-/Steuerberatung.
 
+## Nachtrag — striktes AutoPay-Gate / Tapstitch-SKUs (02.11.2026)
+
+**Neue belastbare technische Option:** Tapstitch unterstützt laut eigener Doku kostenlose Shopify-Anbindung und **vollautomatische Lieferantenzahlung per hinterlegter Kredit-/Debitkarte** bei Auto Order Submission; fehlendes Wallet-Guthaben wird mit Karte abgedeckt. Öffentliche echte Apparel-Codes für Everne: RB0017 / WT0115 (Essential Top), WT0120 (Second Skin Body, andere Ausführung), WT0203 (Soft V-Neck, mit Kragen), WB0082 (Tailored Pant) und WS0009 (Fluid Midi Skirt, **nur Maxi/Drawstring-Alternative**). Alle **ohne verbindlichen DE-Landed-Cost**, inklusive EU-Importzuschlag ab 01.07.2026, ohne bestätigte Farben/Größen/GPSR/EU-Retouren und ohne echte Nachsteuer-Marge. Anbieterfunktion ist kein Nachweis der Aktivierung im EVERNE-Account. **0 verkaufsfreigegebene SKUs, alle DRAFT bleiben geschützt; keine Zahlung oder Live-Schaltung.**
+
+[Belege, öffentliche Lieferantenlinks/Preise, harte technische Ausschlüsse und offene Gates](everne-autopay-hard-gate-tapstitch-product-shortlist-2026-11-02.md).
+
 ## Umsetzungsstand — fünf P1-Modelle als echte Shopify-Entwürfe, neue CJ-SKUs und Organic Prelaunch (02.11.2026)
 
 **Echte Shopify-Mutation erfolgt, kein Verkauf:** Die fünf P1-Modelle **Essential Rib Top (34 €), Second Skin Body (39 €), Soft V-Neck (49 €), Tailored Everyday Pant (59 €), Fluid Midi Skirt (44 €)** wurden im verbundenen EVERNE-Shop als **DRAFT** mit **0 getracktem Bestand**, rein vorläufiger Default-Variante, **ohne Bilder und ohne Lieferanten-Verknüpfung** angelegt. Es gibt weder Order noch Live-Publikation oder Kosten. Die zwei älteren, unfreigegebenen CJ-Produktentwürfe bleiben unverändert ebenfalls DRAFT. Shopify Collective-Neusuche für drei klar benannte Womenswear-Schnitte plus eine Korrektur ergab **0 Kandidaten**.
