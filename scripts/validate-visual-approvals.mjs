@@ -29,14 +29,13 @@ function inside(root, relative) {
 
 /**
  * Reviewable build gate: an approved entry is tied to exact file bytes and an
- * on-repository approval record. An approval entry alone never enables photos
- * in the current image-free preview; that transition requires a separate,
- * explicit change to the preview boundary checks.
+ * on-repository approval record. In EDITORIAL_STUDY, third-party references
+ * have a separate evidence register and cannot count as approved products.
  */
 export function validateVisualApprovals(root, outputDirectory) {
   const manifest = JSON.parse(fs.readFileSync(path.join(root, 'approvals/visual-assets.json'), 'utf8'));
   assert.equal(manifest.version, 1, 'Unknown visual approval manifest format');
-  assert.ok(['IMAGE_FREE', 'REVIEWED_ASSETS_ONLY'].includes(manifest.previewMode),
+  assert.ok(['IMAGE_FREE', 'EDITORIAL_STUDY', 'REVIEWED_ASSETS_ONLY'].includes(manifest.previewMode),
     'Visual preview mode must be explicit');
   assert.ok(Array.isArray(manifest.approvedAssets), 'approvedAssets must be an array');
 
@@ -61,9 +60,34 @@ export function validateVisualApprovals(root, outputDirectory) {
     approved.set(publicPath, record);
   }
 
+  const studies = new Map();
+  assert.ok(Array.isArray(manifest.studyAssets ?? []), 'studyAssets must be an array');
+  for (const record of manifest.studyAssets ?? []) {
+    const { publicPath, sha256, sourcePage, rightsReference, evidenceRecord, usage, reviewedAt } = record;
+    assert.match(publicPath ?? '', /^public\/editorial-study\/[a-zA-Z0-9_-]+\.jpe?g$/,
+      'A design-study image must be confined to public/editorial-study/');
+    assert.ok(!studies.has(publicPath) && !approved.has(publicPath), 'Duplicate visual asset');
+    assert.match(sha256 ?? '', /^[a-f0-9]{64}$/, 'Every study photo needs a byte-specific hash');
+    assert.match(sourcePage ?? '', /^https:\/\/www\.pexels\.com\/photo\/[a-z0-9-]+\/$/,
+      'A study photo needs its original Pexels image page');
+    assert.equal(rightsReference, 'https://www.pexels.com/license/', 'Study license must be recorded');
+    assert.equal(usage, 'NON_PRODUCT_REFERENCE', 'Study photos must never authorize product use');
+    assert.match(reviewedAt ?? '', /^\d{4}-\d{2}-\d{2}$/, 'Study rights review date required');
+    assert.match(evidenceRecord ?? '', /^approvals\/records\/[a-zA-Z0-9_.-]+\.md$/,
+      'Study rights evidence path required');
+    assert.ok(fs.existsSync(inside(root, evidenceRecord)), 'Missing editorial evidence: ' + evidenceRecord);
+    studies.set(publicPath, record);
+  }
   if (manifest.previewMode === 'IMAGE_FREE') {
     assert.equal(approved.size, 0, 'IMAGE_FREE preview cannot claim any approved photographs');
+    assert.equal(studies.size, 0, 'IMAGE_FREE preview cannot contain editorial studies');
+  } else if (manifest.previewMode === 'EDITORIAL_STUDY') {
+    assert.equal(approved.size, 0, 'Editorial study photos are not approved EVERNE product photography');
+    assert.ok(studies.size > 0, 'EDITORIAL_STUDY requires documented reference images');
+  } else {
+    assert.equal(studies.size, 0, 'Reviewed product imagery must be separately authorized');
   }
+  const registered = new Map([...approved, ...studies]);
 
   const publicFiles = walkFiles(path.join(root, 'public')).filter((file) => rasterExtension.test(file));
   const outputRoot = outputDirectory ? inside(root, outputDirectory) : undefined;
@@ -75,18 +99,18 @@ export function validateVisualApprovals(root, outputDirectory) {
     for (const file of files) {
       const relative = path.relative(base, file).split(path.sep).join('/');
       const key = `public/${relative}`;
-      const evidence = approved.get(key);
+      const evidence = registered.get(key);
       assert.ok(evidence,
         `Unapproved photograph in ${location}: ${relative}. Keep it in research-assets/ until approved.`);
       assert.equal(fileHash(file), evidence.sha256, `Approved visual bytes changed: ${relative}`);
     }
   }
-  for (const approvedPath of approved.keys()) {
+  for (const approvedPath of registered.keys()) {
     assert.ok(publicFiles.some((file) => path.relative(root, file).split(path.sep).join('/') === approvedPath),
       `Approved visual is missing from public/: ${approvedPath}`);
   }
 
-  return { mode: manifest.previewMode, approved: approved.size, deployedImages: outputFiles.length };
+  return { mode: manifest.previewMode, approved: approved.size, studies: studies.size, deployedImages: outputFiles.length };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

@@ -42,4 +42,20 @@ for (const legalPage of ['legal.html', 'rechtliches.html']) {
 
 fs.writeFileSync(path.join(output, 'START-HERE.txt'), `EVERNE — Private Image-Free Safari Review\n\n1. Unzip the archive.\n2. Open index.html in Safari on your Mac.\n3. Review the mobile typography, five planned categories, CARE, THE STANDARD and legal information. No product images should appear.\n4. Use SAFARI-ACCEPTANCE.md for the twenty current real-device checks.\n5. iPhone Safari: do NOT rely on opening HTML via AirDrop/Files. On trusted private Wi-Fi, run python3 -m http.server 4173 --bind 0.0.0.0 inside the extracted folder; open http://MAC-PRIVATE-IP:4173/ on iPhone Safari. Stop the unauthenticated local server with Ctrl+C afterward. Never expose it on public Wi-Fi or the internet.\n\nIf Safari restricts local file access, open Terminal in this extracted folder and run:\n  python3 -m http.server 4173\nThen visit http://127.0.0.1:4173 in Safari.\n\nAll merchandise is unapproved. No checkout, payments, supplier orders, connected backend, images or active sales. No network connection is needed for this image-free editorial preview. Do not use this package as a public deployment.\n`);
 
+// Include only registered local editorial reference photos in the offline ZIP.
+const manifest = JSON.parse(fs.readFileSync('approvals/visual-assets.json', 'utf8'));
+assert.equal(manifest.previewMode, 'EDITORIAL_STUDY');
+for (const asset of manifest.studyAssets) {
+  const relative = asset.publicPath.replace(/^public\//, '');
+  const destination = path.join(output, relative);
+  fs.mkdirSync(path.dirname(destination), { recursive: true });
+  fs.copyFileSync(path.join(source, relative), destination);
+}
+const instructions = path.join(output, 'START-HERE.txt');
+fs.writeFileSync(instructions, fs.readFileSync(instructions, 'utf8')
+  .replace('Image-Free Safari Review', 'Editorial Safari Review')
+  .replace('No product images should appear.', 'Four licensed editorial references appear; no EVERNE product images appear.')
+  .replace('connected backend, images or active sales', 'connected backend or active sales')
+  .replace('image-free editorial preview', 'editorial reference study'));
+
 console.log(`Offline Safari review staged: ${output}`);

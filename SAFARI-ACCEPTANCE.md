@@ -1,8 +1,8 @@
-# EVERNE — Safari-Abnahme der bildfreien Vorschau
+# EVERNE — Safari-Abnahme der redaktionellen Designvorschau
 
-**Stand:** Bildfreie, nicht-öffentliche Designvorschau · `feat/everne-imagefree-editorial`  
+**Stand:** Geschützte, nicht-öffentliche Designvorschau mit lizenzierten Referenzfotos · `feat/everne-imagefree-editorial`
 **Gesamtstatus:** **OFFEN / UNGETESTET** — echte macOS- und iPhone-Safari-Abnahme ist noch erforderlich.  
-**Shopfreigabe:** **NO-GO** — keine freigegebenen Produkte, keine freigegebenen Fotos, kein Checkout.
+**Shopfreigabe:** **NO-GO** — keine freigegebenen Produkte oder Produktfotos, kein Checkout. Vier redaktionelle Fremdfotos dienen nur der Designprüfung.
 
 Dieses Protokoll ist eine Anleitung zur späteren Prüfung, kein erfundener Testbericht. Automatische React-/Build-Tests ersetzen keine Prüfung auf einem tatsächlichen Mac und iPhone.
 
@@ -10,7 +10,7 @@ Dieses Protokoll ist eine Anleitung zur späteren Prüfung, kein erfundener Test
 
 1. Im GitHub-Repository den Branch `feat/everne-imagefree-editorial` auswählen, über **Code → Download ZIP** herunterladen und entpacken.
 2. Im entpackten Projektordner `bash scripts/review-safari-mac.sh` ausführen. Voraussetzungen: Node.js 22+, npm, zip, unzip. `npm ci` benötigt einmalig Netzwerkzugriff.
-3. Der Befehl baut die bildfreie Version, prüft das Archiv und öffnet `offline-review/everne-woman-safari-preview/index.html` in Safari. Die ZIP unter `offline-review/everne-woman-safari-preview.zip` bleibt privat; die SHA-256-Prüfsumme wird ausgegeben.
+3. Der Befehl baut die redaktionelle Vorschau mit vier Referenzfotos, prüft das Archiv und öffnet `offline-review/everne-woman-safari-preview/index.html` in Safari. Die ZIP unter `offline-review/everne-woman-safari-preview.zip` bleibt privat; die SHA-256-Prüfsumme wird ausgegeben.
 4. Falls `file://` eingeschränkt ist, im generierten Vorschauordner `python3 -m http.server 4173 --bind 127.0.0.1` starten und `http://127.0.0.1:4173/` öffnen. Mit `Ctrl+C` beenden.
 
 ## 2. Auf dem iPhone testen
@@ -45,12 +45,12 @@ Jeder Test wird mit PASS, FAIL oder N/A und, falls nötig, einem Screenshot doku
 | S12 | Startseite und CARE durchsuchen | Keine künstlichen Models, Produktbilder, Kacheln oder Preisangebote | UNGETESTET |
 | S13 | CARE-Seite aufrufen | Eigenständiger textlicher Care-Auftritt ohne Produkte zum Verkauf | UNGETESTET |
 | S14 | THE STANDARD aufrufen | Externe Lieferanten und offene Freigaben sind transparent beschrieben | UNGETESTET |
-| S15 | Alten `/edit/…`-Link direkt testen | Nur die bildfreie Startseite, keine alte Konzeptseite | UNGETESTET |
+| S15 | Alten `/edit/…`-Link direkt testen | Nur die neue Startseite, keine alte Konzeptseite | UNGETESTET |
 | S16 | Imprint, Privacy, Shipping/Returns und die deutsche Rechtsseite öffnen | Entwürfe erreichbar; auch bei 320 px keine abgeschnittenen Überschriften oder zu kleinen Navigationsflächen | UNGETESTET |
 | S17 | Tastatur: Tab, Shift+Tab, Enter, Skip-Link | Logische Fokusreihenfolge auf Start- und Rechtsseiten; Überschriften nach Navigation fokussiert | UNGETESTET |
 | S18 | „Bewegung reduzieren“ aktivieren | Kein erzwungenes weiches Scrollen; alle Links nutzbar | UNGETESTET |
 | S19 | Safari-Zoom 200 %, VoiceOver, Hell-/Dunkelmodus | Kein abgeschnittener Kerninhalt, ausreichende Kontraste | UNGETESTET |
-| S20 | Webinspektor: Netzwerk, HTML, Bilder, Kaufpfade | `noindex,nofollow`; null Bilddateien/Shopify-/Payment-Requests; kein Checkout | UNGETESTET |
+| S20 | Webinspektor: Netzwerk, HTML, Bilder, Kaufpfade | `noindex,nofollow`; genau vier lokale Editorial-Referenzen, keine Remote-/Shopify-/Payment-Requests, kein Checkout | UNGETESTET |
 
 ## 4. Entscheidung
 

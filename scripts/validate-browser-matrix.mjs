@@ -51,23 +51,24 @@ try {
       await page.locator('main h1').waitFor();
     };
 
-    await check(width, 'Image-free homepage and heading layout', async () => {
+    await check(width, 'Editorial homepage and heading layout', async () => {
       await reset();
       assert.equal(await page.locator('.e-category').count(), 5);
-      assert.equal(await page.locator('img,picture,video').count(), 0);
+      assert.equal(await page.locator('img').count(), 4);
+      assert.equal(await page.locator('picture,video').count(), 0);
       assert.equal(await page.locator('form,input,[href*="checkout"]').count(), 0);
-      assert.equal(await page.locator('.e-navigation [aria-current="page"]').count(), 1);
+      assert.equal(await page.locator('.e-header nav [aria-current="page"]').count(), 1);
       assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'), 'noindex,nofollow');
       const issues = await page.evaluate(() => {
         const problems = [];
         if (document.documentElement.scrollWidth > innerWidth + 2)
           problems.push('Horizontal overflow');
-        for (const node of document.querySelectorAll('main h1,main h2,.e-category-title')) {
+        for (const node of document.querySelectorAll('main h1,main h2,.e-category')) {
           const rect = node.getBoundingClientRect();
           if (rect.left < -2 || rect.right > innerWidth + 2)
             problems.push(`Clipped heading: ${node.textContent}`);
         }
-        for (const node of document.querySelectorAll('.e-wordmark,.e-navigation a,.e-hero-bottom a,.e-editorial-link,.e-footer-bottom nav a')) {
+        for (const node of document.querySelectorAll('.e-wordmark,.e-header nav a,.e-text-link,.e-footer-bottom nav a')) {
           if (node.getBoundingClientRect().height < 43.5)
             problems.push(`Undersized tap target: ${node.textContent?.trim()}`);
         }
@@ -83,22 +84,22 @@ try {
       await page.keyboard.press('Enter');
       await page.waitForFunction(() => document.activeElement?.id === 'main');
       assert.equal(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior), 'auto');
-      await page.locator('.e-navigation a[href="#/care"]').click();
+      await page.locator('.e-nav-right a[href="#/care"]').click();
       await page.locator('#care-title').waitFor();
-      assert.equal(await page.locator('img').count(), 0);
-      await page.locator('.e-navigation a[href="#/standards"]').click();
+      assert.equal(await page.locator('img').count(), 1);
+      await page.locator('.e-nav-right a[href="#/standards"]').click();
       await page.locator('#standard-title').waitFor();
       assert.match(await page.locator('main').innerText(), /external suppliers/);
-      await page.locator('.e-navigation a[href="#/#collection"]').click();
+      await page.locator('.e-nav-left a[href="#/#collection"]').click();
       await page.locator('#collection-title').waitFor();
     });
 
     await check(width, 'No discontinued product routes', async () => {
       await reset('#/edit/essential-rib-top');
-      assert.match(await page.locator('main h1').innerText(), /A wardrobe,/);
+      assert.match(await page.locator('main h1').innerText(), /The first/);
       assert.equal((await page.locator('main').innerText()).includes('Essential Rib Top'), false);
       await reset('#/products/legacy-item');
-      assert.match(await page.locator('main h1').innerText(), /A wardrobe,/);
+      assert.match(await page.locator('main h1').innerText(), /The first/);
     });
 
     await check(width, 'Legal drafts: layout, anchors and tap targets', async () => {
@@ -128,7 +129,7 @@ try {
   assert.deepEqual(report.remoteRequests, [], 'Offline preview must not contact remote services');
   assert.equal(report.cases.filter((item) => item.result === 'FAIL').length, 0, 'Browser matrix must pass every case');
   console.log(JSON.stringify(report, null, 2));
-  console.log('EVERNE image-free independent browser matrix PASSED; this is not a native Mac/iPhone Safari sign-off.');
+  console.log('EVERNE editorial-study browser matrix PASSED; native Mac/iPhone Safari sign-off remains pending.');
 } finally {
   await browser.close();
 }

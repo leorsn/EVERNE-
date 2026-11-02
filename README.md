@@ -53,9 +53,9 @@ No Shopify Admin token, private Storefront token, or payment credential belongs 
 
 ## Current public-facing preview
 
-`src/main.tsx` serves the womenswear editorial preview (`src/WomenswearApp.tsx`). It presents 20 proposed concepts across five clothing categories, with target prices of €34–€59. The original garment-care collection has a separate preview route, `/care` (`src/CarePage.tsx`), with four locally hosted catalog cards. There is no live product checkout, bag, stock promise or supplier claim on these screens.
+`src/main.tsx` currently serves the protected, noindexed design study in `src/EvernePreview.tsx`. Five planned womenswear categories appear without SKU detail, pricing, product cards or order flow. `/care` and `/standards` are editorial information pages, not catalogues. Old commerce modules are preserved in the repository but are not reachable from the active entry graph.
 
-The editorial photographs are style references, not photographs of offered products. The preview is intentionally noindexed until supplier, sizing, fulfillment, legal and launch gates are cleared.
+Four Pexels images under `public/editorial-study/` are licensed third-party visual references. The photographed clothes and fabrics are **not EVERNE merchandise** and do not constitute approved product photography. Exact hashes, original source links and license evidence are registered in `approvals/visual-assets.json` and `approvals/records/editorial-study-2026-11-02.md`. The production shop and publication gates remain closed.
 
 The existing Shopify-enabled care storefront in `src/App.tsx` is preserved but is not the active preview route.
 
@@ -81,7 +81,7 @@ This restores the bag across reloads when the cart remains valid.
 
 Vercel project: `everne-storefront` (Hobby plan), connected to this GitHub repository. `vercel.json` builds with Vite, serves `dist/`, and rewrites concept and `/care` detail URLs for client-side routing.
 
-Pushes to `feat/everne-woman-editorial-preview` create isolated Vercel preview deployments; production continues to follow the configured production branch. Do not promote a preview or push to `main` without a deliberate launch decision.
+The active draft branch `feat/everne-imagefree-editorial` creates isolated, protected Vercel preview deployments. Production continues to follow its configured production branch. Do not promote this study or push to `main` without deliberate launch approval and review of image/model rights.
 
 The repository retains a historical GitHub Pages workflow in `.github/workflows/deploy-pages.yml`; Vercel is now the intended preview host.
 

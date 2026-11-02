@@ -1,5 +1,43 @@
 {
   "version": 1,
-  "previewMode": "IMAGE_FREE",
-  "approvedAssets": []
+  "previewMode": "EDITORIAL_STUDY",
+  "approvedAssets": [],
+  "studyAssets": [
+    {
+      "publicPath": "public/editorial-study/01-architecture-fashion.jpg",
+      "sha256": "ec17994ecde006af417c3a85ca0e64bea923ef2013c5e8bf50eac9d1595c6016",
+      "sourcePage": "https://www.pexels.com/photo/model-in-black-dress-posing-against-modern-architecture-18105079/",
+      "rightsReference": "https://www.pexels.com/license/",
+      "evidenceRecord": "approvals/records/editorial-study-2026-11-02.md",
+      "usage": "NON_PRODUCT_REFERENCE",
+      "reviewedAt": "2026-11-02"
+    },
+    {
+      "publicPath": "public/editorial-study/02-monochrome-portrait.jpg",
+      "sha256": "5e2bea89baf48694f1969542816f2295289612ad61abf452410b5a641e0c5140",
+      "sourcePage": "https://www.pexels.com/photo/fashion-portrait-in-black-and-white-studio-37423149/",
+      "rightsReference": "https://www.pexels.com/license/",
+      "evidenceRecord": "approvals/records/editorial-study-2026-11-02.md",
+      "usage": "NON_PRODUCT_REFERENCE",
+      "reviewedAt": "2026-11-02"
+    },
+    {
+      "publicPath": "public/editorial-study/03-fabric-study.jpg",
+      "sha256": "ae5f224597de2dedec8e244130f249f8ce82684caa0c09c193e7ea674ec962cd",
+      "sourcePage": "https://www.pexels.com/photo/a-beige-colored-silk-fabric-with-creases-7232398/",
+      "rightsReference": "https://www.pexels.com/license/",
+      "evidenceRecord": "approvals/records/editorial-study-2026-11-02.md",
+      "usage": "NON_PRODUCT_REFERENCE",
+      "reviewedAt": "2026-11-02"
+    },
+    {
+      "publicPath": "public/editorial-study/04-satin-detail.jpg",
+      "sha256": "7d46e6a86453a7c7f75e51f25dc450eee26d00a2ef7e9d102d710281c5ed23b5",
+      "sourcePage": "https://www.pexels.com/photo/folds-in-silk-8426345/",
+      "rightsReference": "https://www.pexels.com/license/",
+      "evidenceRecord": "approvals/records/editorial-study-2026-11-02.md",
+      "usage": "NON_PRODUCT_REFERENCE",
+      "reviewedAt": "2026-11-02"
+    }
+  ]
 }

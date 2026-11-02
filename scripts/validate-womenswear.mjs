@@ -49,18 +49,20 @@ assert.ok(fs.existsSync('research-assets/products/garment-brush/catalog.webp'), 
 assert.ok(!fs.existsSync('public/editorial') && !fs.existsSync('public/products'),
   'Unapproved photography cannot remain in public/');
 
-for (const section of ['WOMENSWEAR', 'THE STANDARD', 'CARE', 'THE COLLECTION', 'OUR APPROACH']) {
+for (const section of ['EVERNE / WOMAN', 'OUR STANDARD', 'CARE', 'THE FIRST SELECTION', 'OUR DIRECTION']) {
   assert.ok(landing.includes(section), `Missing editorial navigation or chapter: ${section}`);
 }
-assert.match(landing, /NO APPROVED PRODUCT PHOTOGRAPHY YET/);
+assert.match(landing, /NOT PRODUCT PHOTOGRAPHY/);
 assert.match(landing, /No garments are available to order/);
 assert.match(landing, /external suppliers/);
 assert.match(landing, /No active sales/);
 assert.match(landing, /legal.html#imprint/);
 assert.match(landing, /legal.html#privacy/);
 assert.match(landing, /legal.html#shipping/);
-assert.doesNotMatch(landing, /<img\b|<picture\b|backgroundImage|editorialImage\(/i,
-  'Public sections must not display unapproved campaign or product photography');
+assert.match(landing, /editorial-study\//,
+  'Editorial photographs must remain in their labeled reference-only directory');
+assert.doesNotMatch(landing, /<picture\b|backgroundImage|editorialImage\(/i,
+  'Do not load campaign or product photography from the unapproved source graph');
 assert.doesNotMatch(landing, /<form\b|<input\b|Add to cart|Buy now|href=["'][^"']*checkout/i,
   'No interactive commerce, price or subscription placeholders while products are unapproved');
 assert.doesNotMatch(landing, /formatTargetPrice|conceptPieces|\.targetPrice/,
@@ -69,7 +71,7 @@ assert.doesNotMatch(landing, /formatTargetPrice|conceptPieces|\.targetPrice/,
 for (const color of ['#191919', '#38332f', '#777268', '#d8d1c7', '#f1efeb']) {
   assert.ok(styles.includes(color), `Palette token missing: ${color}`);
 }
-assert.match(styles, /@media \(max-width: 650px\)/);
+assert.match(styles, /@media \(max-width: 700px\)/);
 assert.match(styles, /prefers-reduced-motion/);
 assert.doesNotMatch(styles, /@import|url\(\s*['"]?https?:/i);
 
@@ -79,4 +81,4 @@ for (const anchor of ['imprint', 'privacy', 'returns', 'shipping']) {
   assert.ok(legal.includes(`id="${anchor}"`));
 }
 
-console.log('EVERNE image-free editorial validation passed: private concept plan retained, public imagery and prices absent, responsive palette and non-commerce routes checked.');
+console.log('EVERNE editorial-study validation passed: planning concepts remain private, registered references only, palette and commerce gates intact.');

@@ -2,14 +2,18 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 
-// Verify the exact image-free Safari ZIP. This validates packaging, not a
+// Verify the editorial-study Safari ZIP. This validates packaging, not a
 // physical iPhone or Mac Safari session and never authorizes publication.
 const root = path.resolve('offline-review');
 const name = 'everne-woman-safari-preview';
 const folder = path.join(root, name);
 const archive = path.join(root, name + '.zip');
-const files = ['index.html', 'START-HERE.txt', 'SAFARI-ACCEPTANCE.md', 'legal.html', 'rechtliches.html'];
+const manifest = JSON.parse(fs.readFileSync('approvals/visual-assets.json', 'utf8'));
+assert.equal(manifest.previewMode, 'EDITORIAL_STUDY');
+const imageFiles = manifest.studyAssets.map((asset) => asset.publicPath.replace(/^public\//, ''));
+const files = ['index.html', 'START-HERE.txt', 'SAFARI-ACCEPTANCE.md', 'legal.html', 'rechtliches.html', ...imageFiles];
 
 function listFiles(directory, prefix = '') {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
@@ -33,7 +37,7 @@ assert.match(html, /<style>/);
 assert.doesNotMatch(html, /<script[^>]*\bsrc\s*=|<link[^>]*rel="stylesheet"/i);
 assert.doesNotMatch(html, /<script[^>]*\bsrc=["']https?:|<link[^>]*\bhref=["']https?:/i);
 assert.doesNotMatch(html, /X-Shopify-Storefront-Access-Token|\/api\/\d{4}-\d{2}\/graphql\.json/);
-assert.doesNotMatch(html, /(?:editorial|products)\/[^"'\s]+\.(?:webp|jpg|png)/i);
+assert.doesNotMatch(html, /\/products\/[^"'\s]+\.(?:webp|jpg|png)/i);
 
 const scriptEntry = builtHtml.match(/<script type="module" crossorigin src="\.\/assets\/([^"/]+\.js)"><\/script>/);
 const styleEntry = builtHtml.match(/<link rel="stylesheet" crossorigin href="\.\/assets\/([^"/]+\.css)">/);
@@ -64,7 +68,7 @@ assert.match(checklist, /NO-GO/);
 const entries = execFileSync('unzip', ['-Z', '-1', archive], { encoding: 'utf8' })
   .trim().split(/\r?\n/).filter((entry) => entry && !entry.endsWith('/'));
 assert.deepEqual(entries.sort(), files.map((file) => name + '/' + file).sort(),
-  'ZIP contents must match the five approved image-free files exactly');
+  'ZIP contents must match the documented editorial-study assets exactly');
 execFileSync('unzip', ['-tqq', archive], { stdio: 'pipe' });
 for (const file of files) {
   const archived = execFileSync('unzip', ['-p', archive, name + '/' + file]);
@@ -72,4 +76,10 @@ for (const file of files) {
   assert.ok(archived.equals(staged), 'ZIP differs from staged file: ' + file);
 }
 
-console.log(`EVERNE image-free Safari ZIP passed: ${files.length} verified files, no unapproved photos, inlined JS/CSS, legal pages and NO-GO safeguards. Real Safari review remains pending.`);
+for (const asset of manifest.studyAssets) {
+  const relative = asset.publicPath.replace(/^public\//, '');
+  const sha256 = createHash('sha256').update(fs.readFileSync(path.join(folder, relative))).digest('hex');
+  assert.equal(sha256, asset.sha256, 'Offline photograph does not match the licensed source register');
+}
+
+console.log(`EVERNE editorial-study Safari ZIP passed: ${files.length} verified files, four licensed reference photographs, inlined JS/CSS, legal pages and NO-GO safeguards. Real Safari review remains pending.`);

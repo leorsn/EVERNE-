@@ -97,9 +97,8 @@ assert.doesNotMatch(index, /<(?:script|link)\b[^>]*(?:src|href)=["']https?:\/\//
 assert.match(index, /name="robots" content="noindex,nofollow"/,
   'The preview entry must remain non-indexable');
 
-// Vite copies everything in public/ into the deployed output even when no
-// React component references it. Keep unapproved product/editorial photographs
-// out of public/, not merely invisible in the rendered pages.
+// Vite copies public/ into the deployed output. Allow only hash-locked,
+// rights-documented editorial references in this protected design study.
 function listPublicFiles(directory) {
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const absolute = path.join(directory, entry.name);
@@ -108,11 +107,14 @@ function listPublicFiles(directory) {
 }
 const exposedPictures = listPublicFiles(path.join(projectRoot, 'public'))
   .filter((file) => /\.(?:avif|gif|jpe?g|png|webp)$/i.test(file));
-assert.deepEqual(exposedPictures, [],
-  'Unapproved raster imagery must be quarantined outside Vite public/');
+const visualManifest = JSON.parse(fs.readFileSync(path.join(projectRoot, 'approvals/visual-assets.json'), 'utf8'));
+assert.equal(visualManifest.previewMode, 'EDITORIAL_STUDY', 'Unexpected protected preview mode');
+assert.deepEqual(exposedPictures.map(projectPath).sort(),
+  visualManifest.studyAssets.map((asset) => asset.publicPath).sort(),
+  'Only documented design-study photos may enter public/');
 assert.ok(!fs.existsSync(path.join(projectRoot, 'public/editorial')) &&
   !fs.existsSync(path.join(projectRoot, 'public/products')),
-  'Deprecated public photo directories must not be deployed');
+  'No vendor, garment or product photo directories may be deployed');
 
 for (const file of visited) {
   assert.ok(!fs.readFileSync(file, 'utf8').match(/VITE_(?:SHOPIFY|STRIPE|SUPABASE|PAYMENT|CHECKOUT)_/),

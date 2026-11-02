@@ -51,3 +51,32 @@ test('documented reviewed image passes by exact SHA, changes fail', () => fixtur
   fs.writeFileSync(photo, 'changed without approval');
   assert.throws(() => validateVisualApprovals(root, 'dist'), /bytes changed/);
 }));
+
+test('documented editorial study is allowed but is not product approval', () => fixture(({ root, setManifest }) => {
+  const directory = path.join(root, 'public', 'editorial-study');
+  fs.mkdirSync(directory);
+  const photo = path.join(directory, 'reference.jpg');
+  fs.writeFileSync(photo, 'third-party editorial reference fixture');
+  fs.mkdirSync(path.join(root, 'dist', 'editorial-study'));
+  fs.copyFileSync(photo, path.join(root, 'dist', 'editorial-study', 'reference.jpg'));
+  fs.writeFileSync(path.join(root, 'approvals', 'records', 'source.md'), '# License source');
+  const sha256 = createHash('sha256').update(fs.readFileSync(photo)).digest('hex');
+  const studyAssets = [{
+    publicPath: 'public/editorial-study/reference.jpg', sha256,
+    sourcePage: 'https://www.pexels.com/photo/reference-123456/',
+    rightsReference: 'https://www.pexels.com/license/',
+    evidenceRecord: 'approvals/records/source.md', usage: 'NON_PRODUCT_REFERENCE', reviewedAt: '2026-11-02',
+  }];
+  setManifest({ version: 1, previewMode: 'EDITORIAL_STUDY', approvedAssets: [], studyAssets });
+  const result = validateVisualApprovals(root, 'dist');
+  assert.equal(result.approved, 0);
+  assert.equal(result.studies, 1);
+  assert.equal(result.deployedImages, 1);
+  fs.writeFileSync(photo, 'changed after license registration');
+  assert.throws(() => validateVisualApprovals(root, 'dist'), /bytes changed/);
+}));
+
+test('editorial assets cannot be passed off as product approvals', () => fixture(({ root, setManifest }) => {
+  setManifest({ version: 1, previewMode: 'EDITORIAL_STUDY', approvedAssets: [{}], studyAssets: [] });
+  assert.throws(() => validateVisualApprovals(root), /approved visual|raster path/);
+}));

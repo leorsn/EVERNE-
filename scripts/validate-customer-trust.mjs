@@ -18,12 +18,14 @@ assert.equal(ready.storefrontPublicationAuthorized, false, 'An unapproved commer
 assert.ok(ready.items.every((item) => item.approvedForSale === false),
   'An item-level sale approval requires its own reviewed source evidence');
 
-assert.match(home, /NO APPROVED PRODUCT PHOTOGRAPHY YET/,
-  'Public images must wait for approval');
+assert.match(home, /NOT PRODUCT PHOTOGRAPHY/,
+  'Editorial reference images must be distinguished from product photos');
 assert.match(home, /not (?:yet )?available to order/i,
   'Visitors must understand why products are unavailable');
-assert.doesNotMatch(home, /<img\b|<picture\b|<form\b|<input\b/i,
-  'Do not expose product imagery or commerce controls before approval');
+assert.doesNotMatch(home, /<picture\b|<form\b|<input\b/i,
+  'Do not expose commerce controls before approval');
+assert.match(home, /Clothing pictured is not an EVERNE product/,
+  'A non-product-photo disclosure must remain visible');
 assert.match(home, /external suppliers/,
   'The standards page must identify the curation rather than manufacture model');
 assert.match(home, /WHAT IS NOT YET VERIFIED/,
@@ -37,10 +39,10 @@ assert.match(legal, /\[Insert verified business street address\]/,
   'Do not silently pass an incomplete merchant address as completed');
 assert.match(legal, /\[Insert contact email address\]/,
   'Do not silently pass an incomplete merchant contact as completed');
-assert.match(legal, /text-only introduction to five planned womenswear categories/,
-  'English legal status must describe the actual image-free preview');
-assert.match(legalDe, /fünf geplante Modekategorien, aber keine einzelnen Produkte, Produktbilder oder Preise/,
-  'German legal status must describe the actual image-free preview');
+assert.match(legal, /licensed third-party editorial reference photography/,
+  'English legal status must describe the editorial photo study');
+assert.match(legalDe, /lizenzierte redaktionelle Referenzfotos/,
+  'German legal status must describe the editorial photo study');
 assert.doesNotMatch(legal, /The 20 featured fashion pieces|Displayed prices are non-binding targets/,
   'Do not present private research concepts or target prices as displayed merchandise');
 assert.doesNotMatch(legalDe, /Die Website ist technisch mit Shopify verbunden|ein vorhandener Warenkorb-Schlüssel beim Laden entfernt/,
