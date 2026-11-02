@@ -8,11 +8,22 @@
   <style>
     :root{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;color:#191914;background:#f1efe8;--serif:"Iowan Old Style","Baskerville","Times New Roman",serif;--line:rgba(25,25,20,.18);--muted:#706e66}
     *{box-sizing:border-box}body{margin:0;background:#f1efe8;color:#191914}a{color:inherit}.top{position:sticky;top:0;z-index:3;display:flex;justify-content:space-between;align-items:center;padding:24px 5vw;border-bottom:1px solid var(--line);background:rgba(241,239,232,.96);backdrop-filter:blur(16px)}.brand{font:400 24px var(--serif);letter-spacing:.15em;text-decoration:none}.back{font-size:10px;letter-spacing:.14em;text-transform:uppercase}.hero{padding:9vw 5vw 6vw;border-bottom:1px solid var(--line)}h1{margin:0;font:400 clamp(4rem,9vw,9rem)/.86 var(--serif);letter-spacing:-.05em}.intro{max-width:760px;margin:35px 0 0;color:var(--muted);line-height:1.7}.notice{margin-top:35px;padding:18px 20px;border:1px solid #8b5d4c;color:#693d31;font-size:13px;line-height:1.6}.status{margin-top:18px;padding:18px 20px;border:1px solid var(--line);font-size:13px;line-height:1.65}.toc{padding:30px 5vw;display:flex;gap:22px;flex-wrap:wrap;border-bottom:1px solid var(--line)}.toc a{font-size:10px;letter-spacing:.12em;text-transform:uppercase}.legal{max-width:1000px;margin:auto;padding:0 5vw 10vw}.legal section{padding:70px 0;border-bottom:1px solid var(--line);scroll-margin-top:90px}.kicker{display:block;margin-bottom:20px;color:var(--muted);font-size:9px;letter-spacing:.16em;text-transform:uppercase}h2{margin:0 0 35px;font:400 clamp(2.7rem,5vw,5rem)/.95 var(--serif);letter-spacing:-.035em}h3{margin:35px 0 12px;font:400 1.35rem var(--serif)}p,li{font-size:14px;line-height:1.75}.muted{color:var(--muted)}.placeholder{display:inline-block;padding:2px 6px;border:1px dashed #8b5d4c;color:#693d31;background:#eee8df}.withdraw{display:inline-block;margin-top:12px;padding:13px 18px;border:1px solid #191914;text-decoration:none;font-size:10px;letter-spacing:.12em;text-transform:uppercase;opacity:.55;pointer-events:none}.checklist{padding-left:20px}.checklist li{margin:8px 0}.pill{display:inline-block;margin:4px 6px 4px 0;padding:6px 9px;border:1px solid var(--line);font-size:9px;letter-spacing:.08em;text-transform:uppercase}footer{padding:35px 5vw;background:#1b1b17;color:#aaa69d;font-size:10px;display:flex;justify-content:space-between;gap:30px;flex-wrap:wrap}@media(max-width:700px){.hero{padding-top:70px}.legal section{padding:50px 0}.top{padding:20px 5vw}}
+    /* Match the editorial palette while keeping legal content readable. */
+    :root{color:#191919;background:#f1efeb;--line:rgba(25,25,25,.18);--muted:#777268}
+    body{background:#f1efeb;color:#191919}
+    .top{background:rgba(241,239,235,.96)}
+    .brand,.back,.toc a{display:inline-flex;align-items:center;min-height:44px}
+    .toc a{font-size:11px;letter-spacing:.1em}
+    a:focus-visible{outline:2px solid currentColor;outline-offset:4px}
+    .skip{position:absolute;left:12px;top:-100px;z-index:5;padding:12px 18px;background:#f1efeb;font-size:13px}
+    .skip:focus{top:8px}
+    @media(max-width:700px){h1{font-size:clamp(2.75rem,9vw,5.5rem)}h2{font-size:clamp(1.85rem,7vw,3.25rem);overflow-wrap:break-word}.top{gap:18px}.back{text-align:right;line-height:1.4}.toc{gap:6px 20px;padding-top:16px;padding-bottom:16px}}
   </style>
 </head>
 <body>
+  <a class="skip" href="#legal-main">Direkt zu den Rechtstexten</a>
   <header class="top"><a class="brand" href="/">EVERNE</a><a class="back" href="/">Zurück zum Store</a></header>
-  <main>
+  <main id="legal-main" tabindex="-1">
     <section class="hero">
       <span class="kicker">EVERNE WOMAN / Legal</span>
       <h1>Rechtliches.</h1>

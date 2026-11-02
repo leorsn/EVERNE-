@@ -46,8 +46,8 @@ Jeder Test wird mit PASS, FAIL oder N/A und, falls nötig, einem Screenshot doku
 | S13 | CARE-Seite aufrufen | Eigenständiger textlicher Care-Auftritt ohne Produkte zum Verkauf | UNGETESTET |
 | S14 | THE STANDARD aufrufen | Externe Lieferanten und offene Freigaben sind transparent beschrieben | UNGETESTET |
 | S15 | Alten `/edit/…`-Link direkt testen | Nur die bildfreie Startseite, keine alte Konzeptseite | UNGETESTET |
-| S16 | Imprint, Privacy, Shipping/Returns öffnen | Englische, eindeutig als Entwurf erkennbare Rechtsseiten erreichbar | UNGETESTET |
-| S17 | Tastatur: Tab, Shift+Tab, Enter, Skip-Link | Logische Fokusreihenfolge; Überschriften nach Navigation fokussiert | UNGETESTET |
+| S16 | Imprint, Privacy, Shipping/Returns und die deutsche Rechtsseite öffnen | Entwürfe erreichbar; auch bei 320 px keine abgeschnittenen Überschriften oder zu kleinen Navigationsflächen | UNGETESTET |
+| S17 | Tastatur: Tab, Shift+Tab, Enter, Skip-Link | Logische Fokusreihenfolge auf Start- und Rechtsseiten; Überschriften nach Navigation fokussiert | UNGETESTET |
 | S18 | „Bewegung reduzieren“ aktivieren | Kein erzwungenes weiches Scrollen; alle Links nutzbar | UNGETESTET |
 | S19 | Safari-Zoom 200 %, VoiceOver, Hell-/Dunkelmodus | Kein abgeschnittener Kerninhalt, ausreichende Kontraste | UNGETESTET |
 | S20 | Webinspektor: Netzwerk, HTML, Bilder, Kaufpfade | `noindex,nofollow`; null Bilddateien/Shopify-/Payment-Requests; kein Checkout | UNGETESTET |

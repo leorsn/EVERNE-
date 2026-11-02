@@ -126,13 +126,31 @@ try {
   await eq('document.querySelector("main h1")?.textContent?.includes("A wardrobe")', true, 'Old concept route withdrawn');
   await eq('document.body.innerText.includes("Essential Rib Top")', false, 'Unapproved product remains hidden');
 
-  await navigate(pathToFileURL(path.join(folder, 'legal.html')).href);
-  await eq('document.querySelector("meta[name=robots]")?.content', 'noindex,nofollow', 'Legal remains noindex');
-  await eq('document.querySelector("a.brand")?.getAttribute("href")', './index.html', 'Legal return works offline');
+  // The two static legal pages have their own styles and routing. A storefront
+  // layout pass alone would miss long German headings and tiny tap targets.
+  for (const width of [320, 375, 390, 430, 768, 1024, 1440]) {
+    await cdp('Emulation.setDeviceMetricsOverride', { width, height: 844, deviceScaleFactor: 2, mobile: true });
+    for (const page of ['legal.html', 'rechtliches.html']) {
+      await navigate(pathToFileURL(path.join(folder, page)).href);
+      await eq('document.querySelector("meta[name=robots]")?.content', 'noindex,nofollow', `${page}: noindex`);
+      await eq('document.querySelector("a.brand")?.getAttribute("href")', './index.html', `${page}: local return link`);
+      await eq('document.querySelectorAll(".toc a").length', 7, `${page}: all legal anchors`);
+      await eq('document.querySelector(".skip")?.getAttribute("href")', '#legal-main', `${page}: skip link`);
+      const legalLayout = await js(`(() => ({ width: innerWidth, scroll: document.documentElement.scrollWidth,
+        clipped: Array.from(document.querySelectorAll('h1,h2,h3')).filter(node => {
+          const box = node.getBoundingClientRect(); return box.right > innerWidth + 2 || box.left < -2;
+        }).map(node => node.textContent.trim()),
+        smallTargets: Array.from(document.querySelectorAll('.top a,.toc a')).filter(node =>
+          node.getBoundingClientRect().height < 43.5).map(node => node.textContent.trim()) }))()`);
+      ok(legalLayout.scroll <= legalLayout.width + 2, `${width}px ${page} horizontal overflow: ${JSON.stringify(legalLayout)}`);
+      ok(legalLayout.clipped.length === 0, `${width}px ${page} clipped heading: ${JSON.stringify(legalLayout)}`);
+      ok(legalLayout.smallTargets.length === 0, `${width}px ${page} small link: ${JSON.stringify(legalLayout)}`);
+    }
+  }
   ok(exceptions.length === 0, 'Runtime errors: ' + exceptions.join(' | '));
   ok(requests.length === 0, 'Remote requests: ' + requests.join(' | '));
 
-  console.log(`EVERNE image-free offline Chromium PASSED: ${checks} checks across seven viewport widths; no images, commerce, runtime errors or network requests.`);
+  console.log(`EVERNE image-free offline Chromium PASSED: ${checks} checks across seven viewport widths, both legal drafts and storefront; no images, commerce, runtime errors or network requests.`);
   console.log('Real macOS/iPhone Safari testing remains UNGETESTET.');
 } finally {
   for (const call of pending.values()) clearTimeout(call.timer);

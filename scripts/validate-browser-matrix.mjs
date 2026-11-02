@@ -100,6 +100,28 @@ try {
       await reset('#/products/legacy-item');
       assert.match(await page.locator('main h1').innerText(), /A wardrobe,/);
     });
+
+    await check(width, 'Legal drafts: layout, anchors and tap targets', async () => {
+      for (const name of ['legal.html', 'rechtliches.html']) {
+        await page.goto(pathToFileURL(path.join(folder, name)).href);
+        assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'), 'noindex,nofollow');
+        assert.equal(await page.locator('.skip').getAttribute('href'), '#legal-main');
+        assert.equal(await page.locator('.toc a').count(), 7);
+        const problems = await page.evaluate(() => {
+          const errors = [];
+          if (document.documentElement.scrollWidth > innerWidth + 2) errors.push('Horizontal overflow');
+          for (const el of document.querySelectorAll('h1,h2,h3')) {
+            const rect = el.getBoundingClientRect();
+            if (rect.left < -2 || rect.right > innerWidth + 2) errors.push(`Clipped heading: ${el.textContent}`);
+          }
+          for (const el of document.querySelectorAll('.top a,.toc a')) {
+            if (el.getBoundingClientRect().height < 43.5) errors.push(`Undersized link: ${el.textContent}`);
+          }
+          return errors;
+        });
+        assert.deepEqual(problems, [], `${name} at ${width}px`);
+      }
+    });
     await context.close();
   }
   assert.deepEqual(report.exceptions, [], 'Uncaught errors in the tested browser');
