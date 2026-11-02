@@ -9,17 +9,12 @@ const projectRoot = process.cwd();
 const sourceRoot = path.join(projectRoot, 'src');
 const expectedModules = new Set([
   'src/main.tsx',
-  'src/WomenswearApp.tsx',
-  'src/ConceptDetailPage.tsx',
-  'src/CarePage.tsx',
-  'src/StandardsPage.tsx',
-  'src/CollectionPendingPage.tsx',
+  'src/EvernePreview.tsx',
   'src/RouteFocus.tsx',
-  'src/womenswearNavigation.ts',
-  'src/womenswearCatalog.ts',
   'src/seo.ts',
 ]);
-const expectedStyles = new Set(['src/womenswear.css', 'src/fashion-storefront.css']);
+// The preparation site exposes neither concept pages nor commerce modules.
+const expectedStyles = new Set(['src/everne-editorial.css']);
 const allowedPackages = new Set(['react', 'react-dom/client', 'react-router-dom']);
 const visited = new Set();
 const styles = new Set();

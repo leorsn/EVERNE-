@@ -6,12 +6,11 @@ import { useLocation } from 'react-router-dom';
 // position and the existing #edit return behaviour.
 export default function RouteFocus() {
   const location = useLocation();
-  const previousPath = useRef(location.pathname);
+  const previousLocation = useRef({ pathname: location.pathname, hash: location.hash });
 
   useEffect(() => {
     if (import.meta.env.VITE_OFFLINE_PREVIEW !== '1') return;
-    // The portable HashRouter would otherwise treat #main, #detail-main,
-    // #pending-main and other in-page anchors as entirely different routes.
+    // The portable HashRouter would otherwise treat in-page anchors as routes.
     // Install this once for all pages, not only the home collection.
     function jumpToSection(event: MouseEvent) {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -22,7 +21,7 @@ export default function RouteFocus() {
       const target = document.getElementById(targetId);
       if (!target) return;
       event.preventDefault();
-      const isSkipLink = link?.classList.contains('w-skip-link') ?? false;
+      const isSkipLink = link?.classList.contains('e-skip') || link?.classList.contains('w-skip-link') || false;
       target.scrollIntoView({
         behavior: isSkipLink || window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
       });
@@ -35,16 +34,20 @@ export default function RouteFocus() {
   }, []);
 
   useEffect(() => {
-    const changedPage = previousPath.current !== location.pathname;
-    previousPath.current = location.pathname;
-    if (!changedPage) return;
+    const changedPage = previousLocation.current.pathname !== location.pathname;
+    const changedHash = previousLocation.current.hash !== location.hash;
+    previousLocation.current = { pathname: location.pathname, hash: location.hash };
+    if (!changedPage && !changedHash) return;
 
     const frame = window.requestAnimationFrame(() => {
-      const returnToEdit = location.pathname === '/' && location.hash === '#edit';
-      const heading = returnToEdit
-        ? document.getElementById('edit-title')
-        : document.querySelector<HTMLElement>('main h1');
-      heading?.focus({ preventScroll: true });
+      const destination = location.hash ? document.getElementById(location.hash.slice(1)) : null;
+      if (destination) {
+        destination.scrollIntoView({ behavior: 'auto' });
+        (destination.querySelector<HTMLElement>('h1, h2') ?? destination).focus({ preventScroll: true });
+      } else if (changedPage) {
+        window.scrollTo({ top: 0, behavior: 'auto' });
+        document.querySelector<HTMLElement>('main h1')?.focus({ preventScroll: true });
+      }
     });
 
     return () => window.cancelAnimationFrame(frame);
