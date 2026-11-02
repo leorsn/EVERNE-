@@ -9,7 +9,7 @@ This design branch replaces the publicly rendered concept catalogue with a restr
 - `/standards`: selection process, outstanding approvals, and the external supplier model.
 - Historic `/edit/...` and `/products/...` URLs now show the image-free introduction rather than concept/product details.
 
-The original twenty concepts and internal sourcing models remain in the repository for research; they are not imported into the active frontend bundle. The image assets also remain in repository history for now but are not loaded or referenced in public route components.
+The original twenty concepts and internal sourcing models remain in the repository for research; they are not imported into the active frontend bundle. The old visual references have been moved from Vite's publicly deployed `public/` folder to the source-only `research-assets/` folder. They are neither bundled nor exposed at their former public image URLs in new deployments.
 
 ## Release boundary
 
@@ -23,3 +23,5 @@ The original twenty concepts and internal sourcing models remain in the reposito
 Colors: Charcoal `#191919`; Espresso `#38332F`; Stone `#777268`; Warm Ivory `#D8D1C7`; Off-White `#F1EFEB`. Typeface uses a resilient system sans for navigation and Georgia for editorial display type. The composition uses generous margins, editorial rule lines and a text-only index with no ornamental cards, badge grids, fake metrics or artificial visuals.
 
 `npm run build` checks the active module graph as well as the no-image/no-commerce constraints and all existing supplier/launch gates.
+
+`npm run build:offline` prepares a five-file, image-free, self-contained Safari review ZIP. The twenty real-device checks are documented in `SAFARI-ACCEPTANCE.md`; none are deemed passed by a build alone.

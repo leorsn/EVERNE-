@@ -5,260 +5,142 @@ import path from 'node:path';
 import { spawn, spawnSync } from 'node:child_process';
 import { pathToFileURL } from 'node:url';
 
-// Runs on an installed Chromium browser with Node 22 built-ins. Not Safari QA.
-// No npm package, external browser service, Shopify call or artifact upload.
-const browser = [process.env.EVERNE_TEST_BROWSER, 'google-chrome', 'google-chrome-stable',
+// Chromium smoke of the actual portable, image-free build. macOS/iPhone Safari
+// remains a separate owner review. No external request or package install.
+const executable = [process.env.EVERNE_TEST_BROWSER, 'google-chrome', 'google-chrome-stable',
   'chromium', 'chromium-browser'].filter(Boolean).find((name) =>
   spawnSync('which', [name], { stdio: 'ignore' }).status === 0);
-assert.ok(browser, 'An installed Chrome/Chromium executable is required');
-assert.equal(typeof WebSocket, 'function', 'Node 22 global WebSocket is required');
+assert.ok(executable, 'An installed Chrome/Chromium executable is required');
 const folder = path.resolve('offline-review/everne-woman-safari-preview');
-assert.ok(fs.existsSync(path.join(folder, 'index.html')), 'Build the offline ZIP first');
 const preview = pathToFileURL(path.join(folder, 'index.html')).href;
-const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'everne-chrome-'));
-const child = spawn(browser, [
+const profile = fs.mkdtempSync(path.join(os.tmpdir(), 'everne-imagefree-'));
+const child = spawn(executable, [
   '--headless=new', '--no-sandbox', '--disable-gpu', '--disable-dev-shm-usage',
   '--disable-extensions', '--disable-background-networking', '--no-first-run',
   '--no-default-browser-check', '--remote-debugging-port=0',
   '--user-data-dir=' + profile, 'about:blank',
 ], { stdio: 'ignore' });
+
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-let socket;
-let sessionId;
-let sequence = 0;
-let assertions = 0;
 const pending = new Map();
 const exceptions = [];
 const requests = [];
-async function waitFor(check, description, ms = 15000) {
+let socket;
+let sessionId;
+let sequence = 0;
+let checks = 0;
+
+async function waitFor(condition, label, timeout = 15000) {
   const started = Date.now();
-  while (Date.now() - started < ms) {
-    try { if (await check()) return; } catch {}
+  while (Date.now() - started < timeout) {
+    try { if (await condition()) return; } catch {}
     await sleep(90);
   }
-  throw new Error('Timed out: ' + description +
-    '; recent JS errors: ' + exceptions.slice(-2).join(' | '));
+  throw new Error('Timed out: ' + label + ' / ' + exceptions.slice(-2).join(' | '));
 }
-function cdp(method, params = {}, session) {
+function cdp(method, params = {}, session = sessionId) {
   return new Promise((resolve, reject) => {
     const id = ++sequence;
-    const timer = setTimeout(() => {
-      pending.delete(id); reject(new Error('Chrome DevTools timeout: ' + method));
-    }, 15000);
+    const timer = setTimeout(() => { pending.delete(id); reject(new Error('CDP timeout: ' + method)); }, 15000);
     pending.set(id, { resolve, reject, timer });
-    socket.send(JSON.stringify({ id, method, params,
-      ...(session ? { sessionId: session } : {}) }));
+    socket.send(JSON.stringify({ id, method, params, ...(session ? { sessionId: session } : {}) }));
   });
 }
 async function js(expression) {
-  const r = await cdp('Runtime.evaluate',
-    { expression, returnByValue: true, awaitPromise: true }, sessionId);
-  if (r.exceptionDetails) {
-    throw new Error('Chrome JS exception: ' +
-      (r.exceptionDetails.exception?.description ?? r.exceptionDetails.text));
-  }
-  return r.result?.value;
+  const output = await cdp('Runtime.evaluate', { expression, returnByValue: true, awaitPromise: true });
+  if (output.exceptionDetails) throw new Error(output.exceptionDetails.exception?.description ?? output.exceptionDetails.text);
+  return output.result?.value;
 }
-async function eq(expression, expected, name) {
-  await waitFor(async () => await js(expression) === expected, name);
-  assertions++;
+async function eq(expression, expected, label) {
+  await waitFor(async () => await js(expression) === expected, label);
+  checks++;
 }
-function yes(value, name) { assert.ok(value, name); assertions++; }
+function ok(condition, label) { assert.ok(condition, label); checks++; }
 async function navigate(url) {
-  const r = await cdp('Page.navigate', { url }, sessionId);
-  yes(!r.errorText, 'Navigation: ' + url + ' ' + String(r.errorText));
-  await waitFor(async () => await js('document.readyState') === 'complete',
-    'page fully loaded');
+  const response = await cdp('Page.navigate', { url });
+  ok(!response.errorText, 'Navigation failed: ' + url);
+  await waitFor(async () => await js('document.readyState') === 'complete', 'page load');
 }
-async function key(name, code) {
-  for (const type of ['keyDown', 'keyUp']) {
-    await cdp('Input.dispatchKeyEvent',
-      { type, key: name, code: name, windowsVirtualKeyCode: code,
-        ...(type === 'keyDown' && name === 'Enter'
-          ? { text: '\r', unmodifiedText: '\r' } : {}) }, sessionId);
-  }
-}
+
 try {
   const portFile = path.join(profile, 'DevToolsActivePort');
-  await waitFor(() => fs.existsSync(portFile), 'Chrome DevTools endpoint', 20000);
+  await waitFor(() => fs.existsSync(portFile), 'Chrome CDP port', 20000);
   const [port, browserPath] = fs.readFileSync(portFile, 'utf8').trim().split(/\r?\n/);
-  socket = new WebSocket('ws://127.0.0.1:' + port + browserPath);
+  socket = new WebSocket(`ws://127.0.0.1:${port}${browserPath}`);
   await new Promise((resolve, reject) => {
     socket.addEventListener('open', resolve, { once: true });
     socket.addEventListener('error', reject, { once: true });
   });
-  socket.addEventListener('message', (msg) => {
-    const event = JSON.parse(msg.data);
-    if (event.id) {
-      const call = pending.get(event.id);
+  socket.addEventListener('message', (event) => {
+    const packet = JSON.parse(event.data);
+    if (packet.id) {
+      const call = pending.get(packet.id);
       if (!call) return;
-      clearTimeout(call.timer); pending.delete(event.id);
-      if (event.error) call.reject(new Error(event.error.message));
-      else call.resolve(event.result ?? {});
-    } else if (event.sessionId === sessionId) {
-      if (event.method === 'Runtime.exceptionThrown')
-        exceptions.push(event.params?.exceptionDetails?.exception?.description ??
-          event.params?.exceptionDetails?.text ?? 'Uncaught exception');
-      if (event.method === 'Network.requestWillBeSent') {
-        const url = event.params?.request?.url ?? '';
+      clearTimeout(call.timer); pending.delete(packet.id);
+      if (packet.error) call.reject(new Error(packet.error.message));
+      else call.resolve(packet.result ?? {});
+    } else if (packet.sessionId === sessionId) {
+      if (packet.method === 'Runtime.exceptionThrown') exceptions.push(packet.params?.exceptionDetails?.text ?? 'Runtime error');
+      if (packet.method === 'Network.requestWillBeSent') {
+        const url = packet.params?.request?.url ?? '';
         if (/^https?:\/\//i.test(url)) requests.push(url);
       }
     }
   });
-  const { targetId } = await cdp('Target.createTarget', { url: 'about:blank' });
-  const attached = await cdp('Target.attachToTarget', { targetId, flatten: true });
-  sessionId = attached.sessionId;
-  await cdp('Page.enable', {}, sessionId);
-  await cdp('Runtime.enable', {}, sessionId);
-  await cdp('Network.enable', {}, sessionId);
-  await cdp('Page.bringToFront', {}, sessionId);
-  await cdp('Emulation.setFocusEmulationEnabled', { enabled: true }, sessionId);
-  await cdp('Emulation.setDeviceMetricsOverride',
-    { width: 390, height: 844, deviceScaleFactor: 2, mobile: true }, sessionId);
 
-  await navigate(preview + '#/');
-  await eq("document.querySelectorAll('.w-concept-card').length", 8,
-    'Eight homepage concept cards');
-  yes(await js("document.body.innerText.toLowerCase().includes('shopping not yet available')"),
-    'Homepage must be clearly noncommercial');
-  yes(!(await js("Boolean(document.querySelector('form,input,[href*=\"/checkout\"]'))")),
-    'No forms or checkout links in preview');
+  const target = await cdp('Target.createTarget', { url: 'about:blank' }, null);
+  sessionId = (await cdp('Target.attachToTarget', { targetId: target.targetId, flatten: true }, null)).sessionId;
+  for (const name of ['Page', 'Runtime', 'Network']) await cdp(name + '.enable');
+  await cdp('Page.bringToFront');
 
   for (const width of [320, 375, 390, 430, 768, 1024, 1440]) {
-    await cdp('Emulation.setDeviceMetricsOverride',
-      { width, height: 844, deviceScaleFactor: 2, mobile: true }, sessionId);
-    await sleep(100);
-    const actual = await js('document.documentElement.scrollWidth');
-    yes(actual <= width + 3,
-      'No horizontal overflow at ' + width + 'px; measured ' + actual);
-  }
-  await cdp('Emulation.setDeviceMetricsOverride',
-    { width: 390, height: 844, deviceScaleFactor: 2, mobile: true }, sessionId);
-
-  await js("document.querySelector('.w-menu-toggle').focus()");
-  await key('Enter', 13);
-  await eq("document.querySelector('.w-menu-toggle').getAttribute('aria-expanded')",
-    'true', 'Keyboard opens mobile menu');
-  await key('Escape', 27);
-  await eq("document.querySelector('.w-menu-toggle').getAttribute('aria-expanded')",
-    'false', 'Escape closes mobile menu');
-  await eq("document.activeElement?.className", 'w-menu-toggle',
-    'Escape restores menu-toggle focus');
-  await key('Enter', 13);
-  await js("document.querySelector('.w-nav a[href=\"#edit\"]').focus()");
-  await key('Enter', 13);
-  await eq("document.activeElement?.id", 'edit-title',
-    'Mobile section navigation focuses its destination, not a hidden link');
-
-  await js("document.querySelector('.w-menu-toggle').click()");
-  await eq("document.querySelector('.w-nav').classList.contains('is-open')",
-    true, 'Mobile navigation opens');
-  await js("document.querySelector('.w-nav a[href=\"#edit\"]').click()");
-  await eq("document.querySelector('.w-nav').classList.contains('is-open')",
-    false, 'Selecting a navigation section closes mobile menu');
-  await js("document.querySelectorAll('.w-category-shortcuts button')[1].click()");
-  await eq("document.querySelectorAll('.w-category-shortcuts button')[1].getAttribute('aria-pressed')",
-    'true', 'Direct category shortcut');
-  await js("document.querySelectorAll('.w-filters button')[0].click()");
-  await js("document.querySelector('.w-faq-item button').click()");
-  await eq("document.querySelector('.w-faq-item button').getAttribute('aria-expanded')",
-    'true', 'FAQ accordion');
-
-  await js("document.querySelector('.w-show-all').click()");
-  await eq("document.querySelectorAll('.w-concept-card').length", 20,
-    'Expand 20 design concepts');
-  const concepts = await js("Array.from(document.querySelectorAll('.w-concept-card'), e => ({href: e.querySelector('a').getAttribute('href'), name: e.querySelector('.w-concept-meta h3').textContent}))");
-  yes(concepts.length === 20 && new Set(concepts.map((c) => c.href)).size === 20,
-    'Every concept has a distinct deep link');
-  for (const item of concepts) {
-    yes(item.href.startsWith('#/edit/'), 'Concept link is local hash route');
-    await js('window.location.hash = ' + JSON.stringify(item.href.slice(1)));
-    await eq("document.querySelector('#piece-title')?.textContent",
-      item.name, 'Concept detail: ' + item.name);
-    yes(await js("document.body.innerText.includes('In curation — not available to order')"),
-      'No purchasable item at ' + item.name);
+    await cdp('Emulation.setDeviceMetricsOverride', { width, height: 844, deviceScaleFactor: 2, mobile: true });
+    await navigate(preview + '#/');
+    await eq('document.querySelectorAll(".e-category").length', 5, `${width}px: five category labels`);
+    await eq('document.images.length', 0, `${width}px: no product or editorial images`);
+    await eq('document.querySelectorAll("form,input,[href*=checkout]").length', 0, `${width}px: no commerce controls`);
+    await eq('document.querySelector("meta[name=robots]")?.content', 'noindex,nofollow', 'noindex retained');
+    const layout = await js(`(() => ({ width: innerWidth, scroll: document.documentElement.scrollWidth,
+      viewport: document.documentElement.clientWidth,
+      tooWide: Array.from(document.querySelectorAll('main h1,main h2,.e-category-title')).some(el => {
+        const rect = el.getBoundingClientRect(); return rect.right > innerWidth + 2 || rect.left < -2;
+      }) }))()`);
+    ok(layout.scroll <= layout.width + 2,
+      `${width}px horizontal overflow: ${JSON.stringify(layout)}`);
+    ok(!layout.tooWide, `${width}px headline clipping: ${JSON.stringify(layout)}`);
   }
 
-  await js("window.location.hash = '#/'");
-  await eq("document.querySelectorAll('.w-concept-card').length", 8,
-    'Home restored to initial eight concepts');
-  for (let i = 1; i <= 5; i++) {
-    await js("document.querySelectorAll('.w-filters button')[" + i + "].click()");
-    await eq("document.querySelectorAll('.w-filters button')[" + i +
-      "].getAttribute('aria-pressed')", 'true', 'Category ' + i);
-    const expectedCount = await js(
-      "Number(document.querySelectorAll('.w-filters button')[" + i +
-      "].querySelector('span')?.textContent)");
-    yes(Number.isInteger(expectedCount) && expectedCount > 0,
-      'Selected category must display its declared concept count');
-    await eq("document.querySelectorAll('.w-concept-card').length", expectedCount,
-      'Correct number of concepts for category ' + i);
-  }
-  await js("document.querySelectorAll('.w-filters button')[3].click()");
-  await eq("document.querySelectorAll('.w-filters button')[3].getAttribute('aria-pressed')",
-    'true', 'Trouser category selected');
-  await js("document.querySelector('.w-concept-link').click()");
-  await waitFor(async () => (await js("document.querySelector('#piece-title')?.textContent"))?.length > 0,
-    'Filtered concept detail');
-  await eq("document.activeElement?.id", 'piece-title', 'Detail route heading receives focus');
-  await eq("document.querySelector('.w-detail-back').getAttribute('aria-label')",
-    'Back to collection', 'Icon-only mobile return link has an accessible name');
-  await js('history.back()');
-  await eq("document.querySelectorAll('.w-concept-card').length", 4,
-    'Browser back restores four filtered concepts');
-  await js('history.forward()');
-  await waitFor(async () => (await js("document.querySelector('#piece-title')?.textContent"))?.length > 0,
-    'Browser forward restores detail');
-  await js("document.querySelector('.w-detail-back').click()");
-  await eq("document.querySelectorAll('.w-filters button')[3].getAttribute('aria-pressed')",
-    'true', 'Back-to-collection retains selected filter');
-  await eq("document.querySelectorAll('.w-concept-card').length", 4,
-    'Back-to-collection retains the four trouser concepts');
-  await eq("document.activeElement?.id", 'edit-title', 'Collection return heading receives focus');
+  await navigate(preview + '#/care');
+  await eq('document.querySelector("main h1")?.textContent?.includes("The care")', true, 'CARE renders');
+  await eq('document.images.length', 0, 'CARE has no unapproved images');
+  await navigate(preview + '#/standards');
+  await eq('document.body.innerText.includes("external suppliers")', true, 'Supplier disclosure renders');
+  await eq('document.querySelectorAll(".e-standard-row").length', 4, 'Selection standards render');
+  await navigate(preview + '#/edit/essential-rib-top');
+  await eq('document.querySelector("main h1")?.textContent?.includes("A wardrobe")', true, 'Old concept route withdrawn');
+  await eq('document.body.innerText.includes("Essential Rib Top")', false, 'Unapproved product remains hidden');
 
-  await js("window.location.hash = '#/standards'");
-  await eq("Boolean(document.querySelector('.w-standards-intro h1')?.textContent?.includes('proof.'))",
-    true, 'Standards route loads from the portable review');
-  yes(await js("document.body.innerText.includes('What is not yet verified')"),
-    'Standards page clearly discloses unknown product facts');
-  await js("window.location.hash = '#/care'");
-  await eq("document.querySelectorAll('.w-care-catalog-product').length", 4,
-    'All four CARE catalog previews load offline');
-  await js("document.querySelectorAll('.w-care-catalog-product img').forEach(i => i.loading = 'eager')");
-  await waitFor(async () => await js(
-    "Array.from(document.querySelectorAll('.w-care-catalog-product img')).every(i => i.complete && i.naturalWidth > 0)"),
-    'CARE images loaded locally');
-  yes(await js("document.querySelector('.w-care-page-hero-photo img')?.naturalWidth > 0"),
-    'CARE hero image loaded locally');
-
-  await js("window.location.hash = '#/products/legacy-item'");
-  await waitFor(async () => (await js("document.querySelector('main h1')?.innerText"))?.includes('Something new'),
-    'Legacy route uses truthful pending page');
-  assertions++;
   await navigate(pathToFileURL(path.join(folder, 'legal.html')).href);
-  await waitFor(async () => await js("Boolean(document.querySelector('#privacy,#imprint'))"),
-    'Offline legal page loads');
-  await eq("document.querySelector('a.brand')?.getAttribute('href')",
-    './index.html', 'Legal return link is relative');
-  await eq("document.querySelector('meta[name=robots]')?.content",
-    'noindex,nofollow', 'Legal page remains noindex');
-  yes(exceptions.length === 0, 'Uncaught browser errors: ' + exceptions.slice(0, 2).join(' | '));
-  yes(requests.length === 0, 'Unexpected remote requests: ' + requests.slice(0, 2).join(' | '));
-  console.log('EVERNE Chromium offline browser smoke PASSED: ' + assertions +
-    ' assertions; 20 routes, five filters, mobile navigation, legal, no purchase or network requests.');
-  console.log('NOT a macOS/iPhone Safari or WebKit visual acceptance.');
+  await eq('document.querySelector("meta[name=robots]")?.content', 'noindex,nofollow', 'Legal remains noindex');
+  await eq('document.querySelector("a.brand")?.getAttribute("href")', './index.html', 'Legal return works offline');
+  ok(exceptions.length === 0, 'Runtime errors: ' + exceptions.join(' | '));
+  ok(requests.length === 0, 'Remote requests: ' + requests.join(' | '));
+
+  console.log(`EVERNE image-free offline Chromium PASSED: ${checks} checks across seven viewport widths; no images, commerce, runtime errors or network requests.`);
+  console.log('Real macOS/iPhone Safari testing remains UNGETESTET.');
 } finally {
-  for (const p of pending.values()) clearTimeout(p.timer);
+  for (const call of pending.values()) clearTimeout(call.timer);
   pending.clear();
   if (socket?.readyState === WebSocket.OPEN) socket.close();
   child.kill('SIGTERM');
   await Promise.race([new Promise((resolve) => child.once('exit', resolve)), sleep(1800)]);
   if (child.exitCode === null && child.signalCode === null) child.kill('SIGKILL');
-  for (let attempt = 0; attempt < 10; attempt++) {
+  // The isolated, exact test profile is disposable.
+  for (let attempt = 0; attempt < 8; attempt++) {
     try { fs.rmSync(profile, { recursive: true, force: true }); break; }
     catch (error) {
-      if (attempt === 9) console.error('Chrome cleanup warning:', String(error));
-      else await sleep(150);
+      if (attempt === 7) console.error('Temporary Chrome profile cleanup warning:', String(error));
+      else await sleep(130);
     }
   }
 }

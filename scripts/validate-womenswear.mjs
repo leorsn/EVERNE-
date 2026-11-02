@@ -44,6 +44,10 @@ assert.match(index, /noindex,nofollow/);
 assert.match(index, /<html lang="en">/);
 assert.doesNotMatch(index, /€34|€59|20 planned/);
 assert.match(index, /Womenswear in Preparation/);
+assert.ok(fs.existsSync('research-assets/editorial/CREDITS.md'), 'Internal editorial photo attribution must be retained');
+assert.ok(fs.existsSync('research-assets/products/garment-brush/catalog.webp'), 'Internal care photo reference must be retained');
+assert.ok(!fs.existsSync('public/editorial') && !fs.existsSync('public/products'),
+  'Unapproved photography cannot remain in public/');
 
 for (const section of ['WOMENSWEAR', 'THE STANDARD', 'CARE', 'THE COLLECTION', 'OUR APPROACH']) {
   assert.ok(landing.includes(section), `Missing editorial navigation or chapter: ${section}`);
