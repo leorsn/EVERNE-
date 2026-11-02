@@ -54,6 +54,8 @@ try {
     await check(width, 'Editorial homepage and heading layout', async () => {
       await reset();
       assert.equal(await page.locator('.e-category').count(), 5);
+      assert.equal(await page.locator('.e-shop-nav-links a').count(), 6);
+      assert.equal(await page.locator('.e-product-index-group').count(), 0);
       assert.equal(await page.locator('img').count(), 6);
       assert.equal(await page.locator('picture,video').count(), 0);
       assert.equal(await page.locator('form,input,[href*="checkout"]').count(), 0);
@@ -90,8 +92,23 @@ try {
       await page.locator('.e-nav-right a[href="#/standards"]').click();
       await page.locator('#standard-title').waitFor();
       assert.match(await page.locator('main').innerText(), /external suppliers/);
-      await page.locator('.e-nav-left a[href="#/#collection"]').click();
+      await page.locator('.e-nav-left a[href="#/"]').click();
       await page.locator('#collection-title').waitFor();
+    });
+
+    await check(width, 'Category bar and product card grid', async () => {
+      await reset('#/collections/all');
+      assert.equal(await page.locator('.e-collection-card').count(), 20);
+      assert.equal(await page.locator('.e-shop-nav-links [aria-current="page"]').count(), 1);
+      assert.equal(await page.locator('img,form,input,[href*="checkout"]').count(), 0);
+      for (const [category, count] of [['tops', 5], ['knitwear', 5], ['trousers', 4], ['dresses', 3], ['skirts', 3]]) {
+        await reset(`#/collections/${category}`);
+        assert.equal(await page.locator('.e-collection-card').count(), count);
+        assert.equal(await page.locator(`.e-shop-nav-links [aria-current="page"][href="#/collections/${category}"]`).count(), 1);
+        assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 2), `${category}: no horizontal overflow`);
+      }
+      await page.locator('.e-collection-card a').first().click();
+      await page.locator('#product-title').waitFor();
     });
 
     await check(width, 'Product concept pages remain gated and discontinued routes stay hidden', async () => {

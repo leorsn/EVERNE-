@@ -21,6 +21,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<EvernePreview page="home" />} />
         <Route path="/care" element={<EvernePreview page="care" />} />
         <Route path="/standards" element={<EvernePreview page="standards" />} />
+        <Route path="/collections/:category" element={<EvernePreview page="collection" />} />
         <Route path="/products/:handle" element={<EvernePreview page="product" />} />
         <Route path="*" element={<EvernePreview page="home" />} />
       </Routes>

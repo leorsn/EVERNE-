@@ -17,6 +17,7 @@ try {
       React.createElement(Route, { key: 'home', path: '/', element: React.createElement(EvernePreview, { page: 'home' }) }),
       React.createElement(Route, { key: 'care', path: '/care', element: React.createElement(EvernePreview, { page: 'care' }) }),
       React.createElement(Route, { key: 'standards', path: '/standards', element: React.createElement(EvernePreview, { page: 'standards' }) }),
+      React.createElement(Route, { key: 'collection', path: '/collections/:category', element: React.createElement(EvernePreview, { page: 'collection' }) }),
       React.createElement(Route, { key: 'fallback', path: '*', element: React.createElement(EvernePreview, { page: 'home' }) }),
       React.createElement(Route, { key: 'product', path: '/products/:handle', element: React.createElement(EvernePreview, { page: 'product' }) }),
     ];
@@ -46,8 +47,29 @@ try {
   assert.match(home, /NOT AN EVERNE GARMENT/);
   assert.match(home, /PHOTOGRAPHIC STYLE REFERENCES ONLY/);
   assert.match(home, /href="\/care"/);
-  assert.equal((home.match(/class="e-product-index-group"/g) ?? []).length, 5);
-  assert.equal((home.match(/href="\/products\/[a-z0-9-]+"/g) ?? []).length, 20);
+  assert.equal((home.match(/class="e-product-index-group"/g) ?? []).length, 0, 'Remove the long five-column product name list');
+  assert.equal((home.match(/href="\/products\/[a-z0-9-]+"/g) ?? []).length, 0, 'Product cards live inside categories');
+  assert.equal((home.match(/href="\/collections\/[a-z]+"/g) ?? []).length, 13, 'Six category bar links, five image tiles and two collection CTAs');
+  assert.match(home, /aria-label="Shop by category"/);
+
+  const all = renderPage('/collections/all');
+  assertSafe(all, '/collections/all');
+  assert.equal((all.match(/class="e-collection-card"/g) ?? []).length, 20, 'All pieces must show twenty product cards');
+  assert.equal((all.match(/<img\b/g) ?? []).length, 0, 'No unapproved product photography in the grid');
+  assert.match(all, /aria-current="page" href="\/collections\/all"/);
+  for (const category of ['tops', 'knitwear', 'trousers', 'dresses', 'skirts']) {
+    const html = renderPage(`/collections/${category}`);
+    assertSafe(html, `/collections/${category}`);
+    const count = productDrafts.filter((product) => product.category === category).length;
+    assert.equal((html.match(/class="e-collection-card"/g) ?? []).length, count,
+      `${category} must display exactly its own products`);
+    assert.equal((html.match(/href="\/products\/[a-z0-9-]+"/g) ?? []).length, count);
+    assert.match(html, new RegExp(`aria-current="page" href="/collections/${category}"`));
+    assert.equal((html.match(/<img\b/g) ?? []).length, 0);
+  }
+  const unknownCollection = renderPage('/collections/unknown');
+  assertSafe(unknownCollection, '/collections/unknown');
+  assert.match(unknownCollection, /Collection not found/);
 
   for (const product of productDrafts) {
     const url = `/products/${product.slug}`;
@@ -65,7 +87,7 @@ try {
   assertSafe(unknown, '/products/legacy-item');
   assert.match(unknown, /Page not found/);
   assert.doesNotMatch(unknown, /Essential Rib Top/);
-  assert.match(home, /aria-current="page" href="\/#collection"/,
+  assert.match(home, /aria-current="page" href="\/"/,
     'Womenswear must expose the active navigation destination to assistive technology');
 
   const care = renderPage('/care');

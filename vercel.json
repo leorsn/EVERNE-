@@ -5,6 +5,7 @@
   "outputDirectory": "dist",
   "cleanUrls": true,
   "rewrites": [
+    { "source": "/collections/:path*", "destination": "/" },
     { "source": "/products/:path*", "destination": "/" },
     { "source": "/care", "destination": "/" },
     { "source": "/standards", "destination": "/" },

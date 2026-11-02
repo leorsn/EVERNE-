@@ -97,6 +97,8 @@ try {
     await cdp('Emulation.setDeviceMetricsOverride', { width, height: 844, deviceScaleFactor: 2, mobile: true });
     await navigate(preview + '#/');
     await eq('document.querySelectorAll(".e-category").length', 5, `${width}px: five category labels`);
+    await eq('document.querySelectorAll(".e-shop-nav-links a").length', 6, `${width}px: six category bar links`);
+    await eq('document.querySelectorAll(".e-product-index-group").length', 0, `${width}px: no long product list`);
     await eq('document.images.length', 6, `${width}px: six garment styling references`);
     await eq('document.querySelectorAll("form,input,[href*=checkout]").length', 0, `${width}px: no commerce controls`);
     await eq('document.querySelectorAll(".e-header nav [aria-current=page]").length', 1,
@@ -122,6 +124,19 @@ try {
   await navigate(preview + '#/standards');
   await eq('document.body.innerText.includes("external suppliers")', true, 'Supplier disclosure renders');
   await eq('document.querySelectorAll(".e-standard-row").length', 4, 'Selection standards render');
+  for (const width of [320, 768, 1440]) {
+    await cdp('Emulation.setDeviceMetricsOverride', { width, height: 844, deviceScaleFactor: 2, mobile: true });
+    for (const [category, count] of [['all', 20], ['tops', 5], ['knitwear', 5], ['trousers', 4], ['dresses', 3], ['skirts', 3]]) {
+      await navigate(preview + '#/collections/' + category);
+      await eq('document.querySelectorAll(".e-collection-card").length', count, `${width}px ${category}: matching product cards`);
+      await eq('document.images.length', 0, `${width}px ${category}: no unapproved product photographs`);
+      await eq('document.querySelectorAll("form,input,[href*=checkout]").length', 0, `${width}px ${category}: no buying controls`);
+      await eq('document.querySelectorAll(".e-shop-nav-links [aria-current=page]").length', 1,
+        `${width}px ${category}: active category announced`);
+      const widthCheck = await js('document.documentElement.scrollWidth <= innerWidth + 2');
+      ok(widthCheck, `${width}px ${category}: horizontal overflow`);
+    }
+  }
   await navigate(preview + '#/edit/essential-rib-top');
   await eq('document.querySelector("main h1")?.textContent?.includes("The first")', true, 'Old concept route withdrawn');
   await eq('document.querySelectorAll(".e-product-page").length', 0, 'Withdrawn edit route does not render a product page');
