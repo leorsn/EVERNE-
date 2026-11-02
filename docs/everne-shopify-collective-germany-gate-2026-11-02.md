@@ -79,6 +79,44 @@ Bei einer verlangten **30-%-Gewinnquote bezogen auf die gesamte Kundenzahlung `P
 - Sitara Fashion (Mindestwert und Vorkasse): https://sitarafashion.de/wholesale/
 - ORSAY AGB (Verkäufer-Entity mit tschechischem Sitz): https://www.orsay.de/allgemeine-geschaftsbedingungen
 
+## 5. Kleinunternehmer-Rechnung: harte **Bruttorechnungs-Obergrenzen** je Verkauf
+
+**Relevante Primärinformation:** Nach § 19 UStG bzw. der aktuellen IHK-Auslegung sind Kleinunternehmerumsätze unter den Voraussetzungen steuerfrei, aber **Vorsteuer aus Lieferanten-Eingangsrechnungen ist nicht abziehbar**. Kleidung unterliegt bei einem inländischen steuerpflichtigen Warenlieferanten regelmäßig dem **19-%-Regelsatz** (§ 12 UStG; IHK Stuttgart, 01.06.2026). Shopify Collective erklärt ausdrücklich, dass ein Supplier auf seinen *Kostenpreis* eine B2B-Umsatzsteuer erheben kann und diese **im Zahlbetrag enthalten oder zusätzlich** sein kann. Die Anzeige einer „30 % Händlermarge“ in Collective bedeutet daher gerade **nicht** automatisch 30 % nutzbaren Deckungsbeitrag für einen deutschen Kleinunternehmer.
+
+### Preisdeckel für die fünf bestehenden EVERNE-Artikelpreise
+
+Das Berechnungsmodell bleibt ein **Screening**, keine Gewinnzusage: `P` = fester Endkundenpreis ohne gesondertes Versandentgelt; Payment `2,5 % von P + 0,25 €`; durchschnittliche Retouren-/Reklamationsreserve `5 €`; zugewiesene Plattform-/Betriebskosten `3 €`; Ziel **mindestens 30 % von P verbleibender Gewinn vor Einkommensteuer**. Zusätzliche Kosten sind noch nicht abgedeckt. Folglich darf die **gesamte tatsächlich zahlbare Lieferantenrechnung inklusive Ware, Versand, nicht erstattbarer B2B-USt. und sonstiger Gebühren** maximal `0,675 × P − 8,25 €` betragen.
+
+Die rechts stehenden drei Beträge sind *Deckel*, nicht beobachtete Marktpreise. Alle Obergrenzen wurden vorsichtshalber auf volle Cent **abgerundet**.
+
+| Redaktioneller EVERNE-Stil | P | Max. **brutto** Lieferantenrechnung Ware + Porto bei 30 % **vor Einkommensteuer** | Max. **netto** Warenpreis, falls Lieferporto **6,90 € netto + 19 % USt.** und Ware **+ 19 % USt.** | Max. netto Warenpreis beim selben Porto und zusätzlich illustrativ **20 % Ertragssteuer auf Modellgewinn** |
+|---|---:|---:|---:|---:|
+| Essential Rib Top | 34 € | **14,70 €** | **5,45 €** | **3,31 €** |
+| Second Skin Body | 39 € | **18,07 €** | **8,28 €** | **5,83 €** |
+| Tailored Everyday Pant | 59 € | **31,57 €** | **19,63 €** | **15,91 €** |
+| Soft V-Neck | 49 € | **24,82 €** | **13,96 €** | **10,87 €** |
+| Fluid Midi Skirt | 44 € | **21,45 €** | **11,12 €** | **8,35 €** |
+
+**Wichtige Lesart:** Das Porto `6,90 € netto` ist eine **rein illustrative Rechnung**, keine Quote oder Zusage eines DE-Collective-Lieferanten. Nach angenommener 19-%-USt. wären `8,211 €` tatsächliche Bruttoversandkosten zu tragen. Beispiel Rib Top: `34 € − 30 % Gewinnziel (10,20 €) − Payment (1,10 €) − Retourenreserve (5 €) − Betrieb (3 €) = 14,70 €` maximaler Bruttoeinkauf inklusive Fracht. Abzüglich illustrativ `8,211 €` Bruttoporto dürfen die Bruttoproduktkosten `6,489 €`, also netto höchstens `5,45 €`, betragen. Die bereits zuvor modellierten FactoryPrice-Preise sind **nicht** als Collective-Preisangebote zu verstehen.
+
+**Steuer-Sensitivität:** Die letzte Spalte ist nur eine Rechenprobe, in der `20 %` des *Modellgewinns vor Einkommensteuer* abfließen. Tatsächliche Einkommensteuer ist **keine feste 20-%-Abgabe je Verkauf**: sie hängt von der gesamten persönlichen Besteuerung und Veranlagung ab. Daher nicht als Steuerprognose oder Freigabe benutzen. Bei Null-Ertragssteuer ist die dritte Kostenspalte relevant, bei höherer Belastung verschärft sich der Deckel; weitere Kosten verschärfen ihn ebenfalls.
+
+**Nie pauschal doppelt USt. aufschlagen:** Wenn die Lieferanten-Preise oder Versandraten in Collective bereits **inklusive** Steuer angezeigt werden, ist der bezahlte Bruttorechnungsbetrag maßgeblich; nur bei **netto** ausgewiesenen steuerpflichtigen Beträgen darf im Szenario `× 1,19` ergänzt werden. Supplier-Steuerstatus, Rechnung, Lieferort und die tatsächliche KUR-Konfiguration müssen belegt sein. Ohne diese Belege keinen individuellen SKU-Nettoertrag angeben.
+
+### Unternehmerweite Steuer-Schwelle: KUR ist kein dauerhaft zugesicherter EVERNE-Parameter
+
+Die Handelskammer Hamburg nennt für die aktuelle Regelung im **Gründungsjahr grundsätzlich 25.000 € Gesamtumsatz** als relevante Grenze; für spätere Jahre gelten die Schwellen **25.000 € Vorjahresumsatz / 100.000 € laufender Jahresumsatz** mit besonderen Folgen bei Überschreiten. Ein Unternehmer kann umsatzsteuerlich nur **ein einheitliches Unternehmen** haben. **Falls** EVERNE, KENTON und andere Projekte auf dasselbe Einzelunternehmen laufen, sind die relevanten Umsätze nicht isoliert je Marke zu betrachten, sondern innerhalb desselben Unternehmers zusammenzurechnen. Die tatsächliche Rechts-/Steuerzuordnung und Umsätze wurden nicht geprüft; daher ist dies **kein Befund, dass eine Grenze überschritten wurde**. Bevor EVERNE live verkauft, gehört eine bestätigte Steuer-/Unternehmerzuordnung und ein Szenario **nach Ende der KUR** zu den Freigabekriterien. Keine Umstellung der Besteuerungsart ohne persönliche Entscheidung.
+
+### Steuer- und Plattform-Primärquellen (02.11.2026)
+
+- Gesetz: § 19 UStG https://www.gesetze-im-internet.de/ustg_1980/__19.html
+- Gesetz: § 12 UStG https://www.gesetze-im-internet.de/ustg_1980/__12.html
+- IHK Karlsruhe (Stand 09.2026; kein Vorsteuerabzug, einheitliches Unternehmen, EU-Besonderheiten): https://www.ihk.de/karlsruhe/fachthemen/steuerrecht/wissenswertes/kleinunternehmerregelung-in-der-umsatzsteuer-2458720
+- IHK Stuttgart (01.06.2026: Bekleidung 19 %): https://www.ihk.de/stuttgart/fuer-unternehmen/recht-und-steuern/steuerrecht/umsatzsteuer-national/mehrwertsteuersatz-684840
+- Handelskammer Hamburg (Gründungs-/Folgejahrgrenzen): https://www.handelskammer-hamburg.de/recht-steuern/steuerrecht/umsatzsteuer-mehrwertsteuer/kleinunternehmerregelung-6680502
+- Shopify: Supplier-B2B-Steuer, netto-/brutto-Anzeige: https://help.shopify.com/de/manual/online-sales-channels/shopify-collective/suppliers/taxes
+- Shopify: Retailer-B2B-Steuer https://help.shopify.com/de/manual/online-sales-channels/shopify-collective/retailers/taxes
+
 ## Primärquellen (02.11.2026)
 
 - Shopify: Collective-App/Berechtigung https://help.shopify.com/de/manual/online-sales-channels/shopify-collective/retailers/requirements-and-considerations
