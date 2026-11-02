@@ -66,8 +66,8 @@ function Home() {
         <span className="e-kicker">EVERNE / WOMAN</span>
         <div className="e-hero-content">
           <h1 id="hero-title" tabIndex={-1}>The first<br /><em>edit.</em></h1>
-          <p>A new perspective on the everyday wardrobe.</p>
-          <a className="e-text-link" href="#collection">DISCOVER THE WARDROBE <span aria-hidden="true">↗</span></a>
+          <p>A considered edit of modern womenswear.</p>
+          <a className="e-text-link" href="#collection">EXPLORE THE EDIT <span aria-hidden="true">↗</span></a>
         </div>
         <span className="e-hero-index">WOMENSWEAR / COLLECTION IN PREPARATION</span>
       </div>
@@ -76,10 +76,10 @@ function Home() {
     <section className="e-wardrobe" id="collection" aria-labelledby="collection-title">
       <div className="e-wardrobe-heading">
         <div>
-          <span className="e-kicker">THE FIRST SELECTION / WOMAN</span>
+          <span className="e-kicker">WOMAN / THE FIRST EDIT</span>
           <h2 id="collection-title" tabIndex={-1}>The wardrobe.</h2>
         </div>
-        <p>Five directions for the first edit.<br />The collection is in preparation.</p>
+        <p>Five wardrobe categories.<br />Collection in preparation.</p>
       </div>
       <div className="e-wardrobe-grid" role="list" aria-label="Planned womenswear categories with reference photographs">
         {categories.map(({ name, image, alt }, index) => <article className="e-category" role="listitem" key={name}>
@@ -93,9 +93,9 @@ function Home() {
           </div>
         </article>)}
         <div className="e-wardrobe-endnote">
-          <span className="e-kicker">COMING INTO FOCUS</span>
-          <p>The pieces<br /><em>come first.</em></p>
-          <span>We are reviewing the garments, fit and details before the collection is made available.</span>
+          <span className="e-kicker">ABOUT THE FIRST EDIT</span>
+          <p>Nothing rushed.</p>
+          <span>Fit, fabric information and final product imagery are being reviewed before launch.</span>
           <Link className="e-text-link" to="/standards">OUR STANDARD <span aria-hidden="true">↗</span></Link>
         </div>
       </div>
