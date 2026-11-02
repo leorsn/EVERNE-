@@ -1,0 +1,370 @@
+/* EVERNE / ATELIER 01
+   Warm charcoal, espresso and stone. A restrained editorial layer over the
+   existing non-transactional womenswear preview. No product/checkout gates change. */
+
+.everne-woman {
+  --atelier-charcoal: #191919;
+  --atelier-espresso: #38332f;
+  --atelier-stone: #777268;
+  --atelier-ivory: #d8d1c7;
+  --atelier-paper: #f1efeb;
+  --atelier-rule: rgba(216,209,199,.25);
+  --atelier-display: 'Iowan Old Style', 'Baskerville', 'Times New Roman', serif;
+  --fashion-ground: var(--atelier-charcoal);
+  --fashion-panel: var(--atelier-espresso);
+  --fashion-mist: var(--atelier-ivory);
+  --fashion-rule: #5d5751;
+  --fashion-text: var(--atelier-paper);
+  --fashion-muted: #c2b9b0;
+  background: var(--atelier-charcoal);
+  color: var(--atelier-paper);
+}
+
+/* The preview notice stays visible; the fashion navigation floats over the
+   actual hero photograph instead of occupying its own opaque toolbar. */
+.everne-woman .w-announcement {
+  min-height: 30px;
+  padding: 8px 4.5%;
+  justify-content: center;
+  background: #27231f;
+  border-bottom: 1px solid #4e4740;
+  color: var(--atelier-ivory);
+  font-size: 9px;
+  font-weight: 400;
+  letter-spacing: .14em;
+}
+.everne-woman .w-announcement span:first-child,
+.everne-woman .w-announcement span:last-child { display: none; }
+.everne-woman .w-announcement span:nth-child(2) { color: var(--atelier-ivory); }
+.everne-woman .w-header {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: 92px;
+  padding: 0 4.5%;
+  background: linear-gradient(180deg, rgba(12,11,10,.54), rgba(12,11,10,0));
+  border: 0;
+  color: var(--atelier-paper);
+}
+.everne-woman .w-nav { gap: clamp(19px,2.15vw,36px); }
+.everne-woman .w-nav a,
+.everne-woman .w-header-cta {
+  color: var(--atelier-paper);
+  font-size: 10px;
+  font-weight: 450;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  text-shadow: 0 1px 7px rgba(0,0,0,.4);
+}
+.everne-woman .w-nav a:hover,
+.everne-woman .w-header-cta:hover { color: #fff; text-decoration: underline; text-underline-offset: 5px; }
+.everne-woman .w-logo {
+  color: #f6f2ed;
+  font: 450 clamp(27px,2.6vw,35px)/1 var(--sans);
+  letter-spacing: .23em;
+  padding-left: .23em;
+  text-shadow: 0 2px 13px rgba(0,0,0,.28);
+}
+.everne-woman .w-header-cta { gap: 8px; }
+.everne-woman .w-header-cta span { font-size: 16px; }
+
+.everne-woman .w-hero {
+  height: auto;
+  min-height: min(930px, calc(100svh - 30px));
+  background: #201c1a;
+  color: var(--atelier-paper);
+}
+.everne-woman .w-hero-media { background: #28231f; }
+.everne-woman .w-hero-media>img {
+  object-position: 61% 49%;
+  filter: saturate(.78) contrast(1.035);
+}
+.everne-woman .w-hero-media::after {
+  background: linear-gradient(90deg,rgba(17,15,14,.57) 0%,rgba(17,15,14,.14) 49%,transparent 76%),
+    linear-gradient(0deg,rgba(12,11,10,.62),transparent 37%),
+    linear-gradient(180deg,rgba(12,11,10,.1),transparent 28%);
+}
+.everne-woman .w-hero-copy {
+  min-height: min(930px, calc(100svh - 30px));
+  padding: 158px 5.3% 36px;
+  background: transparent;
+}
+.everne-woman .w-section-meta,
+.everne-woman .w-hero-foot {
+  color: #e6ded4;
+  font-weight: 450;
+  letter-spacing: .16em;
+}
+.everne-woman .w-hero-main {
+  margin: auto 0 0;
+  padding: 35px 0 75px;
+  max-width: 680px;
+}
+.everne-woman .w-overline {
+  color: #e7ded1;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: .22em;
+}
+.everne-woman .w-hero h1 {
+  margin: 22px 0 21px;
+  font: 400 clamp(63px,7.3vw,115px)/.91 var(--atelier-display);
+  letter-spacing: -.048em;
+  text-shadow: 0 2px 15px rgba(0,0,0,.15);
+}
+.everne-woman .w-hero-description {
+  max-width: 385px;
+  margin-bottom: 27px;
+  color: #e3dbd1;
+  font-size: 13px;
+  line-height: 1.75;
+}
+.everne-woman .w-solid-link {
+  min-width: 238px;
+  min-height: 46px;
+  background: var(--atelier-paper);
+  border: 1px solid var(--atelier-paper);
+  color: #28241f;
+  padding: 13px 18px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: .085em;
+}
+.everne-woman .w-solid-link:hover { background: transparent; color: #fff; transform: none; }
+.everne-woman .w-hero-foot { border-color: rgba(241,239,235,.3); }
+
+.everne-woman .w-trust-rail {
+  padding: 0 5.3%;
+  background: #282420;
+  color: var(--atelier-paper);
+  border-bottom: 1px solid #5d554e;
+}
+.everne-woman .w-trust-rail>div {
+  min-height: 100px;
+  padding: 23px 30px;
+  border-color: #514a43;
+}
+.everne-woman .w-trust-rail strong {
+  color: var(--atelier-paper);
+  font: 400 16px/1.2 var(--atelier-display);
+  letter-spacing: 0;
+  text-transform: none;
+}
+.everne-woman .w-trust-rail span,
+.everne-woman .w-trust-rail a { color: #c9bfb5; font-size: 11px; }
+
+.everne-woman .w-category-section {
+  background: var(--atelier-charcoal);
+  padding: 111px 4.5% 124px;
+}
+.everne-woman .w-category-heading { margin-bottom: 33px; }
+.everne-woman .w-category-heading h2 {
+  color: var(--atelier-paper);
+  font: 400 clamp(34px,4.4vw,65px)/1 var(--atelier-display);
+  letter-spacing: -.045em;
+}
+.everne-woman .w-category-heading p { color: #bcb3a9; }
+.everne-woman .w-category-grid { gap: 15px; }
+.everne-woman .w-category-card,
+.everne-woman .w-category-card:nth-child(n+4) {
+  min-height: clamp(460px,52vw,720px);
+  padding: 26px;
+  border: 0;
+  background: var(--atelier-espresso);
+}
+.everne-woman .w-category-card img { filter: saturate(.8); }
+.everne-woman .w-category-card::before {
+  background: linear-gradient(0deg,rgba(15,13,12,.69),transparent 52%);
+}
+.everne-woman .w-category-title {
+  font: 400 clamp(31px,3.7vw,57px)/1.02 var(--atelier-display);
+  letter-spacing: -.045em;
+  text-transform: none;
+}
+.everne-woman .w-category-price { color: #f0e8df; font-weight: 450; }
+.everne-woman .w-category-shortcuts { border-color: #504942; }
+.everne-woman .w-category-shortcuts button {
+  color: #d5cbc1;
+  border-color: #504942;
+  font-weight: 450;
+}
+.everne-woman .w-category-shortcuts button>span { color: #a89f96; }
+.everne-woman .w-category-shortcuts button:hover,
+.everne-woman .w-category-shortcuts button[aria-pressed="true"] { background: #342f2b; }
+.everne-woman .w-media-note { color: #b1a79e; }
+
+/* A warm, tactile paper counterpoint gives the collection room to breathe. */
+.everne-woman .w-edit {
+  background: var(--atelier-ivory);
+  color: #25211e;
+  padding: 112px 5.3% 131px;
+}
+.everne-woman .w-edit h2 {
+  color: #292420;
+  font: 400 clamp(65px,8vw,126px)/.94 var(--atelier-display);
+  letter-spacing: -.057em;
+}
+.everne-woman .w-kicker { color: #bdb0a0; font-weight: 500; }
+.everne-woman .w-edit .w-kicker { color: #5d5349; }
+.everne-woman .w-edit-description p,
+.everne-woman .w-edit-description>span,
+.everne-woman .w-edit-confidence p,
+.everne-woman .w-edit-confidence>a,
+.everne-woman .w-results-summary,
+.everne-woman .w-disclaimer { color: #62584e; }
+.everne-woman .w-edit-confidence { border-color: #a99e91; }
+.everne-woman .w-filters { border-color: #aa9f92; }
+.everne-woman .w-filters button {
+  color: #514840;
+  border-color: #b1a69a;
+  font-weight: 500;
+}
+.everne-woman .w-filters button span { color: #70665c; }
+.everne-woman .w-filters button:hover,
+.everne-woman .w-filters button.is-active {
+  background: var(--atelier-espresso);
+  border-color: var(--atelier-espresso);
+  color: #fff;
+}
+.everne-woman .w-filters button.is-active span { color: #e2d8ca; }
+.everne-woman .w-concept-card { border-color: #a99e91; }
+.everne-woman .w-concept-link { min-height: 126px; }
+.everne-woman .w-concept-visual,
+.everne-woman .w-concept-visual.tone-oat,
+.everne-woman .w-concept-visual.tone-ink,
+.everne-woman .w-concept-visual.tone-stone,
+.everne-woman .w-concept-visual.tone-wine,
+.everne-woman .w-concept-visual.tone-cocoa,
+.everne-woman .w-concept-visual.tone-chalk {
+  background: transparent;
+  color: #786d61;
+  border: 0;
+}
+.everne-woman .w-concept-index {
+  font: italic 400 33px/1 var(--atelier-display);
+  letter-spacing: -.04em;
+}
+.everne-woman .w-concept-meta>div>span,
+.everne-woman .w-target-price span { color: #5d5349; }
+.everne-woman .w-concept-meta h3 {
+  color: #29241f;
+  font: 400 clamp(19px,1.75vw,28px)/1.18 var(--atelier-display);
+  letter-spacing: -.025em;
+}
+.everne-woman .w-target-price strong {
+  color: #38312a;
+  font: 500 16px/1.3 var(--sans);
+}
+.everne-woman .w-concept-link:hover h3 { color: #6b5645; }
+.everne-woman .w-show-all { border-color: #64584d; color: #342b25; }
+.everne-woman .w-show-all:hover { background: #38332f; color: #fff; }
+
+.everne-woman .w-story { background: var(--atelier-espresso); }
+.everne-woman .w-story-photo img { filter: saturate(.78); }
+.everne-woman .w-story h2,
+.everne-woman .w-care h2,
+.everne-woman .w-faq h2 {
+  font: 400 clamp(56px,6.5vw,104px)/.96 var(--atelier-display);
+  letter-spacing: -.06em;
+}
+.everne-woman .w-story-copy>p { color: #d6cabd; }
+.everne-woman .w-text-link { font-weight: 450; color: var(--atelier-paper); }
+.everne-woman .w-care {
+  background: var(--atelier-stone);
+  color: #fff;
+}
+.everne-woman .w-care .w-kicker { color: #fff; }
+.everne-woman .w-care-intro p,
+.everne-woman .w-care-note,
+.everne-woman .w-care-product span { color: #fff; }
+.everne-woman .w-care-tag { color: #fff; border-color: #d8d1c7; }
+.everne-woman .w-care-product h3 { font: 400 25px var(--atelier-display); }
+.everne-woman .w-care-explore { font-weight: 500; }
+.everne-woman .w-faq {
+  background: var(--atelier-espresso);
+  color: var(--atelier-paper);
+}
+.everne-woman .w-faq-list,
+.everne-woman .w-faq-item { border-color: #696158; }
+.everne-woman .w-faq-item button {
+  color: var(--atelier-paper);
+  font: 400 clamp(19px,1.85vw,27px)/1.3 var(--atelier-display);
+}
+.everne-woman .w-faq-item p { color: #d2c7bb; }
+.everne-woman .w-footer { background: #191919; color: var(--atelier-paper); }
+.everne-woman .w-footer-logo { font-weight: 450; letter-spacing: .23em; }
+.everne-woman .w-footer-top p { color: #c7bdb1; }
+.everne-woman .w-footer-top div>span { color: #b6aa9e; }
+.everne-woman .w-footer-top a:not(.w-footer-logo) { color: #d0c7bc; }
+.everne-woman .w-footer-bottom { color: #a79d92; }
+
+/* Existing secondary routes keep their semantics and purchase protection. */
+.w-detail-page,
+.w-care-page,
+.w-standards-page { --paper: #191919; --cream: #38332f; --ink: #f1efeb; --muted: #c7bdb1; }
+.w-detail-page h1,.w-detail-page h2,.w-detail-page h3,
+.w-care-page h1,.w-care-page h2,.w-care-page h3,
+.w-standards-page h1,.w-standards-page h2,.w-standards-page h3 {
+  font-family: var(--atelier-display, 'Iowan Old Style', Georgia, serif);
+  font-weight: 400;
+}
+
+@media (max-width: 850px) {
+  .everne-woman .w-header { height: 76px; padding: 0 5%; }
+  .everne-woman .w-menu-toggle { color: #f1efeb; font-size: 11px; font-weight: 450; text-shadow: 0 1px 7px rgba(0,0,0,.4); }
+  .everne-woman .w-nav {
+    top: 76px;
+    padding: 20px 5% 28px;
+    background: #282420;
+    border-top: 1px solid #5d554e;
+    box-shadow: 0 20px 32px rgba(0,0,0,.35);
+  }
+  .everne-woman .w-nav a { color: #f1efeb; border-color: #5b534b; }
+  .everne-woman .w-hero,
+  .everne-woman .w-hero-copy { min-height: 830px; }
+  .everne-woman .w-hero-copy { padding: 138px 6% 30px; }
+  .everne-woman .w-hero-media>img { object-position: 66% center; }
+  .everne-woman .w-hero-media::after {
+    background: linear-gradient(0deg,rgba(13,12,11,.82),rgba(13,12,11,.1) 72%),
+      linear-gradient(90deg,rgba(17,15,14,.35),transparent 68%);
+  }
+  .everne-woman .w-category-card,
+  .everne-woman .w-category-card:nth-child(n+4) { min-height: 460px; }
+  .everne-woman .w-trust-rail>div { min-height: 94px; }
+}
+
+@media (max-width: 600px) {
+  .everne-woman .w-announcement { padding: 8px 4%; font-size: 8px; }
+  .everne-woman .w-header { height: 68px; }
+  .everne-woman .w-nav { top: 68px; }
+  .everne-woman .w-logo { font-size: 24px; letter-spacing: .15em; padding-left: .15em; }
+  .everne-woman .w-hero,
+  .everne-woman .w-hero-copy { height: auto; min-height: min(800px, calc(100svh - 30px)); }
+  .everne-woman .w-hero-copy { padding: 118px 6% 25px; }
+  .everne-woman .w-hero-media>img { object-position: 68% center; }
+  .everne-woman .w-hero-main { padding: 26px 0 40px; }
+  .everne-woman .w-hero h1 { font-size: clamp(57px,13.4vw,83px); margin: 19px 0 22px; }
+  .everne-woman .w-hero-description { font-size: 12px; max-width: 305px; }
+  .everne-woman .w-hero-foot { font-size: 8px; }
+  .everne-woman .w-category-section { padding: 75px 5% 85px; }
+  .everne-woman .w-category-heading h2 { font-size: 40px; }
+  .everne-woman .w-category-grid { gap: 10px; }
+  .everne-woman .w-category-card,
+  .everne-woman .w-category-card:nth-child(n+4) { min-height: 480px; padding: 21px; }
+  .everne-woman .w-category-title { font-size: 37px; }
+  .everne-woman .w-edit { padding: 83px 5% 90px; }
+  .everne-woman .w-edit h2 { font-size: 70px; }
+  .everne-woman .w-concept-link { min-height: 92px; }
+  .everne-woman .w-concept-index { font-size: 27px; }
+  .everne-woman .w-concept-meta h3 { font-size: 18px; }
+  .everne-woman .w-story h2,
+  .everne-woman .w-care h2 { font-size: 70px; }
+  .everne-woman .w-faq h2 { font-size: 52px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .everne-woman .w-category-card img,
+  .everne-woman .w-solid-link { transition: none; }
+}
