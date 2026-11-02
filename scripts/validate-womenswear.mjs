@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { conceptPieces, conceptSlug, fashionCategories, formatTargetPrice } from '../src/womenswearCatalog.ts';
+import { productDrafts, draftCategories } from '../src/productDrafts.ts';
 import { publicSeoUrl } from '../src/seo.ts';
 
 const read = (path) => fs.readFileSync(path, 'utf8');
@@ -24,6 +25,21 @@ for (const category of fashionCategories) {
   assert.equal(category.count, pieces.length);
   assert.equal(category.priceRange, `€${Math.min(...pieces.map((piece) => piece.targetPrice))}–€${Math.max(...pieces.map((piece) => piece.targetPrice))}`);
 }
+
+assert.equal(productDrafts.length, 20, 'The private preview must carry exactly 20 copy-only design drafts');
+assert.deepEqual(draftCategories.map((item) => item.id), fashionCategories.map((item) => item.id));
+assert.deepEqual(productDrafts.map((draft) => ({ name: draft.name, category: draft.category, slug: draft.slug })),
+  conceptPieces.map((piece) => ({ name: piece.name, category: piece.category, slug: conceptSlug(piece.name) })),
+  'Draft page names and categories must match the approved planning index, without importing prices into the app');
+assert.equal(new Set(productDrafts.map((draft) => draft.slug)).size, 20);
+for (const draft of productDrafts) {
+  for (const field of ['description', 'designDirection', 'stylingNote', 'fitDirection']) {
+    assert.ok(draft[field]?.trim().length >= 50, `${draft.name} needs individual editorial copy: ${field}`);
+  }
+}
+const draftSource = read('src/productDrafts.ts');
+assert.doesNotMatch(draftSource, /targetPrice|retailGrossEur|supplierProductCode|formatTargetPrice|€\s*\d/i,
+  'The client draft module must never include unpublished prices or supplier inventory');
 
 assert.equal(publicSeoUrl('/', { protocol: 'file:', origin: 'null' }), null);
 assert.equal(publicSeoUrl('/', { protocol: 'https:', origin: 'https://everne.example' }), 'https://everne.example/');

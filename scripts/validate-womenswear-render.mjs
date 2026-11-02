@@ -11,12 +11,14 @@ const vite = await createServer({
 
 try {
   const { default: EvernePreview } = await vite.ssrLoadModule('/src/EvernePreview.tsx');
+  const { productDrafts } = await vite.ssrLoadModule('/src/productDrafts.ts');
   function renderPage(url) {
     const paths = [
       React.createElement(Route, { key: 'home', path: '/', element: React.createElement(EvernePreview, { page: 'home' }) }),
       React.createElement(Route, { key: 'care', path: '/care', element: React.createElement(EvernePreview, { page: 'care' }) }),
       React.createElement(Route, { key: 'standards', path: '/standards', element: React.createElement(EvernePreview, { page: 'standards' }) }),
       React.createElement(Route, { key: 'fallback', path: '*', element: React.createElement(EvernePreview, { page: 'home' }) }),
+      React.createElement(Route, { key: 'product', path: '/products/:handle', element: React.createElement(EvernePreview, { page: 'product' }) }),
     ];
     return renderToStaticMarkup(React.createElement(MemoryRouter, { initialEntries: [url] }, React.createElement(Routes, null, ...paths)));
   }
@@ -44,6 +46,25 @@ try {
   assert.match(home, /NOT AN EVERNE GARMENT/);
   assert.match(home, /PHOTOGRAPHIC STYLE REFERENCES ONLY/);
   assert.match(home, /href="\/care"/);
+  assert.equal((home.match(/class="e-product-index-group"/g) ?? []).length, 5);
+  assert.equal((home.match(/href="\/products\/[a-z0-9-]+"/g) ?? []).length, 20);
+
+  for (const product of productDrafts) {
+    const url = `/products/${product.slug}`;
+    const html = renderPage(url);
+    assertSafe(html, url);
+    assert.match(html, /IMAGE<br\/>PENDING/, `${product.name} must reserve image space without stock photos`);
+    assert.match(html, /NOT AVAILABLE TO ORDER/, `${product.name} must be expressly noncommercial`);
+    assert.match(html, /Details under review/, `${product.name} must disclose pending specifications`);
+    assert.match(html, /Composition &amp; care/, `${product.name} must not invent fabric composition`);
+    assert.match(html, new RegExp(product.name), `${product.name} needs its own named detail page`);
+    assert.equal((html.match(/<img\b/g) ?? []).length, 0, 'No editorial photo may masquerade as a product photograph');
+  }
+
+  const unknown = renderPage('/products/legacy-item');
+  assertSafe(unknown, '/products/legacy-item');
+  assert.match(unknown, /Page not found/);
+  assert.doesNotMatch(unknown, /Essential Rib Top/);
   assert.match(home, /aria-current="page" href="\/#collection"/,
     'Womenswear must expose the active navigation destination to assistive technology');
 
@@ -64,7 +85,8 @@ try {
 
   const withdrawnConcept = renderPage('/edit/essential-rib-top');
   assertSafe(withdrawnConcept, '/edit/essential-rib-top');
-  assert.doesNotMatch(withdrawnConcept, /Essential Rib Top|€34/);
+  assert.doesNotMatch(withdrawnConcept, /id="product-title"|€34/,
+    'Retired concept routes may lead to the draft index, never directly to a detail page or price');
   assert.match(withdrawnConcept, /The first/);
 
   console.log('EVERNE React render passed: six wardrobe styling references, no commerce, checkout or unapproved prices.');

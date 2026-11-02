@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { applySeo } from './seo';
+import { draftCategories, findProductDraft, productDrafts } from './productDrafts';
 
-type Page = 'home' | 'care' | 'standards';
+type Page = 'home' | 'care' | 'standards' | 'product';
 const categories = [
   { name: 'Tops & Bodysuits', image: '06-bodysuit.jpg', alt: 'Fashion model in a black top against a warm brown studio background.' },
   { name: 'Knitwear', image: '07-knitwear.jpg', alt: 'Fashion model in a sculptural white knit sweater against a dark studio backdrop.' },
@@ -55,6 +56,26 @@ function Footer() {
   </footer>;
 }
 
+function ProductIndex() {
+  return <section className="e-product-index" id="product-concepts" aria-labelledby="product-index-title">
+    <div className="e-product-index-heading">
+      <div><span className="e-kicker">DEVELOPMENT EDIT / 20 CONCEPTS</span><h2 id="product-index-title" tabIndex={-1}>The pieces.</h2></div>
+      <p>Individual design-page drafts are ready to review.<br />Photography and specifications will follow approval.</p>
+    </div>
+    <div className="e-product-index-grid">
+      {draftCategories.map((category) => <div className="e-product-index-group" key={category.id}>
+        <h3>{category.label}</h3>
+        <ol>
+          {productDrafts.filter((item) => item.category === category.id).map((item) => <li key={item.slug}>
+            <Link to={`/products/${item.slug}`}>{item.name}<span aria-hidden="true">↗</span></Link>
+          </li>)}
+        </ol>
+      </div>)}
+    </div>
+    <p className="e-product-index-footnote">CONCEPT PAGES ONLY. NO PRODUCT, IMAGE, PRICE, SIZE OR FABRIC SPECIFICATION HAS BEEN APPROVED FOR SALE.</p>
+  </section>;
+}
+
 function Home() {
   return <>
     <section className="e-hero" aria-labelledby="hero-title">
@@ -102,6 +123,8 @@ function Home() {
       <p className="e-wardrobe-disclosure">PHOTOGRAPHIC STYLE REFERENCES ONLY. THE CLOTHING SHOWN IS NOT FROM EVERNE. NO GARMENTS ARE YET AVAILABLE TO ORDER.</p>
     </section>
 
+    <ProductIndex />
+
     <section className="e-approach" id="direction" aria-label="EVERNE direction">
       <span className="e-kicker">EVERNE / OUR DIRECTION</span>
       <p>Considered pieces.<br /><em>A quieter wardrobe.</em></p>
@@ -113,6 +136,69 @@ function Home() {
       <h2 id="care-teaser-title">Made to be kept in mind.</h2>
       <Link className="e-text-link" to="/care">DISCOVER CARE <span aria-hidden="true">↗</span></Link>
     </section>
+  </>;
+}
+
+function ProductPage({ handle }: { handle?: string }) {
+  const item = findProductDraft(handle);
+  if (!item) return <section className="e-product-missing">
+    <span className="e-kicker">EVERNE / WOMAN</span>
+    <h1 tabIndex={-1}>Page not found.</h1>
+    <p>This item is not part of the current design review. No garments are available to order.</p>
+    <Link className="e-text-link" to="/#product-concepts">RETURN TO THE EDIT <span aria-hidden="true">↗</span></Link>
+  </section>;
+
+  const index = productDrafts.indexOf(item);
+  const category = draftCategories.find((entry) => entry.id === item.category);
+  const next = productDrafts[(index + 1) % productDrafts.length];
+  const previous = productDrafts[(index - 1 + productDrafts.length) % productDrafts.length];
+
+  return <>
+    <nav className="e-product-breadcrumb" aria-label="Breadcrumb">
+      <Link to="/">EVERNE</Link><span>/</span><Link to="/#product-concepts">WOMAN</Link><span>/</span><span>{category?.label}</span>
+    </nav>
+    <article className="e-product-page" aria-labelledby="product-title">
+      <div className="e-product-gallery" aria-label="Reserved image positions for pending product photography">
+        <div className="e-product-image-slot e-product-image-main" role="note" aria-label="Primary product photograph is not yet available">
+          <span>EVERNE / WOMAN</span>
+          <strong>IMAGE<br />PENDING</strong>
+          <span>01 / MAIN PRODUCT IMAGE</span>
+        </div>
+        <div className="e-product-image-pair">
+          <div className="e-product-image-slot" role="note" aria-label="Secondary product photograph is not yet available"><span>02 / SECONDARY VIEW</span><small>AWAITING APPROVED PHOTO</small></div>
+          <div className="e-product-image-slot" role="note" aria-label="Garment detail photograph is not yet available"><span>03 / DETAIL VIEW</span><small>AWAITING APPROVED PHOTO</small></div>
+        </div>
+      </div>
+      <div className="e-product-information">
+        <span className="e-kicker">EVERNE / WOMAN · DESIGN PREVIEW {String(index + 1).padStart(2, '0')} / 20</span>
+        <h1 id="product-title" tabIndex={-1}>{item.name}</h1>
+        <p className="e-product-intro">{item.description}</p>
+        <div className="e-product-pending"><span>IN DEVELOPMENT</span><span>NOT AVAILABLE TO ORDER</span></div>
+        <section className="e-product-copy" aria-labelledby="design-direction-title">
+          <h2 id="design-direction-title">Design direction</h2>
+          <p>{item.designDirection}</p>
+        </section>
+        <section className="e-product-copy" aria-labelledby="styling-note-title">
+          <h2 id="styling-note-title">Styling note</h2>
+          <p>{item.stylingNote}</p>
+        </section>
+        <div className="e-product-specs" aria-label="Specifications still under review">
+          <h2>Details under review</h2>
+          <dl>
+            <div><dt>Fit direction</dt><dd>{item.fitDirection}</dd></div>
+            <div><dt>Composition & care</dt><dd>Pending fabric, care-label and physical-sample review.</dd></div>
+            <div><dt>Sizes & colours</dt><dd>Not verified or offered at this stage.</dd></div>
+            <div><dt>Price & delivery</dt><dd>Not published. No orders or reservations can be placed.</dd></div>
+          </dl>
+        </div>
+        <p className="e-product-disclaimer">This is a private design-page draft, not an offer. Descriptions are creative direction only and do not confirm that a particular garment, fabric or fit is available.</p>
+        <Link className="e-text-link" to="/#product-concepts">BACK TO THE EDIT <span aria-hidden="true">↗</span></Link>
+      </div>
+    </article>
+    <nav className="e-product-pagination" aria-label="More design concepts">
+      <Link to={`/products/${previous.slug}`}><span>PREVIOUS CONCEPT</span><strong>{previous.name}</strong></Link>
+      <Link to={`/products/${next.slug}`}><span>NEXT CONCEPT</span><strong>{next.name}</strong></Link>
+    </nav>
   </>;
 }
 
@@ -147,9 +233,12 @@ function Standards() {
 }
 
 export default function EvernePreview({ page }: { page: Page }) {
+  const { handle } = useParams<{ handle: string }>();
+  const product = page === 'product' ? findProductDraft(handle) : undefined;
   useEffect(() => {
-    const title = page === 'care' ? 'EVERNE — Care' : page === 'standards' ? 'EVERNE — Our Standard' : 'EVERNE — Womenswear';
-    applySeo({ title, description: 'EVERNE is an independent womenswear project in preparation. The collection is not yet available to order.', path: page === 'home' ? '/' : '/' + page, type: 'website', indexable: false });
-  }, [page]);
-  return <div className="everne-editorial" id="top"><Header page={page} /><main id="main" tabIndex={-1}>{page === 'home' ? <Home /> : page === 'care' ? <Care /> : <Standards />}</main><Footer /></div>;
+    const title = page === 'product' && product ? `EVERNE — ${product.name} | Design Preview` : page === 'care' ? 'EVERNE — Care' : page === 'standards' ? 'EVERNE — Our Standard' : 'EVERNE — Womenswear';
+    const description = product ? `${product.name}: an EVERNE design concept in development. Product photography, specifications and ordering are not available.` : 'EVERNE is an independent womenswear project in preparation. The collection is not yet available to order.';
+    applySeo({ title, description, path: page === 'product' && product ? `/products/${product.slug}` : page === 'home' ? '/' : '/' + page, type: 'website', indexable: false });
+  }, [page, product]);
+  return <div className="everne-editorial" id="top"><Header page={page} /><main id="main" tabIndex={-1}>{page === 'home' ? <Home /> : page === 'care' ? <Care /> : page === 'standards' ? <Standards /> : <ProductPage handle={handle} />}</main><Footer /></div>;
 }

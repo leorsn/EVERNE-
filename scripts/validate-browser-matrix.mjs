@@ -94,12 +94,19 @@ try {
       await page.locator('#collection-title').waitFor();
     });
 
-    await check(width, 'No discontinued product routes', async () => {
+    await check(width, 'Product concept pages remain gated and discontinued routes stay hidden', async () => {
       await reset('#/edit/essential-rib-top');
       assert.match(await page.locator('main h1').innerText(), /The first/);
-      assert.equal((await page.locator('main').innerText()).includes('Essential Rib Top'), false);
+      assert.equal(await page.locator('.e-product-page').count(), 0);
       await reset('#/products/legacy-item');
-      assert.match(await page.locator('main h1').innerText(), /The first/);
+      assert.match(await page.locator('main h1').innerText(), /Page not found/);
+      await reset('#/products/essential-rib-top');
+      assert.match(await page.locator('main h1').innerText(), /Essential Rib Top/);
+      assert.equal(await page.locator('img').count(), 0);
+      assert.equal(await page.locator('form,input,[href*="checkout"]').count(), 0);
+      assert.match(await page.locator('main').innerText(), /NOT AVAILABLE TO ORDER/);
+      assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'), 'noindex,nofollow');
+      assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 2), 'Draft detail must not overflow horizontally');
     });
 
     await check(width, 'Legal drafts: layout, anchors and tap targets', async () => {

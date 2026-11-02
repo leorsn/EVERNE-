@@ -10,10 +10,11 @@ const sourceRoot = path.join(projectRoot, 'src');
 const expectedModules = new Set([
   'src/main.tsx',
   'src/EvernePreview.tsx',
+  'src/productDrafts.ts',
   'src/RouteFocus.tsx',
   'src/seo.ts',
 ]);
-// The preparation site exposes neither concept pages nor commerce modules.
+// The preparation site exposes text-only design drafts, never commerce modules.
 const expectedStyles = new Set(['src/everne-editorial.css']);
 const allowedPackages = new Set(['react', 'react-dom/client', 'react-router-dom']);
 const visited = new Set();
