@@ -40,8 +40,9 @@ try {
   assert.match(home, /The first/);
   assert.match(home, /id="collection"/);
   assert.equal((home.match(/class="e-category"/g) ?? []).length, 5);
-  assert.equal((home.match(/<img\b/g) ?? []).length, 4);
-  assert.match(home, /NOT PRODUCT PHOTOGRAPHY/);
+  assert.equal((home.match(/<img\b/g) ?? []).length, 6);
+  assert.match(home, /NOT AN EVERNE GARMENT/);
+  assert.match(home, /PHOTOGRAPHIC STYLE REFERENCES ONLY/);
   assert.match(home, /href="\/care"/);
   assert.match(home, /aria-current="page" href="\/#collection"/,
     'Womenswear must expose the active navigation destination to assistive technology');
@@ -66,7 +67,7 @@ try {
   assert.doesNotMatch(withdrawnConcept, /Essential Rib Top|€34/);
   assert.match(withdrawnConcept, /The first/);
 
-  console.log('EVERNE React render passed: documented editorial references, no product cards, checkout or unapproved prices.');
+  console.log('EVERNE React render passed: six wardrobe styling references, no commerce, checkout or unapproved prices.');
 } finally {
   await vite.close();
 }

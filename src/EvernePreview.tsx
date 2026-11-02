@@ -3,7 +3,13 @@ import { Link } from 'react-router-dom';
 import { applySeo } from './seo';
 
 type Page = 'home' | 'care' | 'standards';
-const categories = ['Tops & Bodysuits', 'Knitwear', 'Trousers & Denim', 'Dresses', 'Skirts'];
+const categories = [
+  { name: 'Tops & Bodysuits', image: '06-bodysuit.jpg', alt: 'Woman wearing a black sleeveless bodysuit against a neutral backdrop.' },
+  { name: 'Knitwear', image: '07-knitwear.jpg', alt: 'Woman wearing an ivory roll-neck sweater and dark trousers in a studio.' },
+  { name: 'Trousers & Denim', image: '08-denim.jpg', alt: 'Woman wearing blue jeans and a white sleeveless top.' },
+  { name: 'Dresses', image: '09-dress.jpg', alt: 'Woman wearing a black long-sleeved dress and boots.' },
+  { name: 'Skirts', image: '10-skirt.jpg', alt: 'Woman wearing a camel ribbed midi skirt with a pale long-sleeved top.' },
+];
 const standards = [
   { title: 'The garment', text: 'A physical sample, its construction and fabric information must be reviewed first.' },
   { title: 'The fit', text: 'Sizing and fit notes must come from confirmed measurements, not supplier assumptions.' },
@@ -53,60 +59,59 @@ function Home() {
   return <>
     <section className="e-hero" aria-labelledby="hero-title">
       <div className="e-hero-visual">
-        <img src={editorial('01-architecture-fashion.jpg')} alt="Black-and-white editorial reference: a woman seated against monumental modernist architecture. Her dress is not an EVERNE product." fetchPriority="high" />
-        <span className="e-visual-credit">VISUAL STUDY — NOT PRODUCT PHOTOGRAPHY</span>
+        <img src={editorial('05-tailoring.jpg')} alt="Independent styling reference: woman wearing a black tailored blazer and trousers. This outfit is not an EVERNE product." fetchPriority="high" />
+        <span className="e-visual-credit">STYLING REFERENCE / NOT AN EVERNE GARMENT</span>
       </div>
       <div className="e-hero-copy">
         <span className="e-kicker">EVERNE / WOMAN</span>
         <div className="e-hero-content">
           <h1 id="hero-title" tabIndex={-1}>The first<br /><em>edit.</em></h1>
-          <p>A considered wardrobe, taking shape.</p>
-          <a className="e-text-link" href="#collection">EXPLORE THE DIRECTION <span aria-hidden="true">↗</span></a>
+          <p>A new perspective on the everyday wardrobe.</p>
+          <a className="e-text-link" href="#collection">DISCOVER THE WARDROBE <span aria-hidden="true">↗</span></a>
         </div>
-        <span className="e-hero-index">01 / AN EDIT IN PROGRESS</span>
+        <span className="e-hero-index">WOMENSWEAR / COLLECTION IN PREPARATION</span>
       </div>
     </section>
 
-    <section className="e-statement" id="direction" aria-label="EVERNE approach">
-      <span>AN INDEPENDENT PERSPECTIVE ON WOMENSWEAR</span>
-      <p>Fewer distractions.<br />A clearer point of view.</p>
-      <span className="e-statement-end">HAMBURG / 2026</span>
-    </section>
-
-    <section className="e-edit" id="collection" aria-labelledby="collection-title">
-      <div className="e-edit-photo">
-        <img src={editorial('02-monochrome-portrait.jpg')} loading="eager" alt="Independent black-and-white fashion reference portrait. Garments pictured are not EVERNE products." />
-        <span>02 / THE SILHOUETTE</span>
-      </div>
-      <div className="e-edit-copy">
-        <span className="e-kicker">THE FIRST SELECTION</span>
-        <h2 id="collection-title" tabIndex={-1}>A wardrobe<br /><em>in focus.</em></h2>
-        <p>Five planned directions. Each piece will be presented only after sample, fit and supplier checks are complete.</p>
-        <div className="e-category-list" role="list" aria-label="Planned womenswear categories">
-          {categories.map((name, index) => <div className="e-category" role="listitem" key={name}><span>0{index + 1}</span><span>{name}</span></div>)}
+    <section className="e-wardrobe" id="collection" aria-labelledby="collection-title">
+      <div className="e-wardrobe-heading">
+        <div>
+          <span className="e-kicker">THE FIRST SELECTION / WOMAN</span>
+          <h2 id="collection-title" tabIndex={-1}>The wardrobe.</h2>
         </div>
-        <span className="e-small-status">COLLECTION IN PREPARATION / NOT YET AVAILABLE TO ORDER</span>
+        <p>Five directions for the first edit.<br />The collection is in preparation.</p>
       </div>
+      <div className="e-wardrobe-grid" role="list" aria-label="Planned womenswear categories with reference photographs">
+        {categories.map(({ name, image, alt }, index) => <article className="e-category" role="listitem" key={name}>
+          <div className="e-category-image">
+            <img src={editorial(image)} loading={index < 3 ? 'eager' : 'lazy'} alt={alt + ' Independent reference photo, not an EVERNE garment.'} />
+            <span>STYLING STUDY</span>
+          </div>
+          <div className="e-category-caption">
+            <div><span>0{index + 1} / WOMAN</span><h3>{name}</h3></div>
+            <span className="e-category-status">IN PREPARATION</span>
+          </div>
+        </article>)}
+        <div className="e-wardrobe-endnote">
+          <span className="e-kicker">COMING INTO FOCUS</span>
+          <p>The pieces<br /><em>come first.</em></p>
+          <span>We are reviewing the garments, fit and details before the collection is made available.</span>
+          <Link className="e-text-link" to="/standards">OUR STANDARD <span aria-hidden="true">↗</span></Link>
+        </div>
+      </div>
+      <p className="e-wardrobe-disclosure">PHOTOGRAPHIC STYLE REFERENCES ONLY. THE CLOTHING SHOWN IS NOT FROM EVERNE. NO GARMENTS ARE YET AVAILABLE TO ORDER.</p>
     </section>
 
-    <section className="e-material" aria-labelledby="material-title">
-      <img src={editorial('03-fabric-study.jpg')} loading="lazy" alt="Champagne-coloured fabric folds, a textile reference rather than a verified EVERNE material." />
-      <div className="e-material-copy">
-        <span className="e-kicker">MATERIAL / FORM / DETAIL</span>
-        <h2 id="material-title">The details<br /><em>matter.</em></h2>
-        <Link className="e-text-link" to="/standards">OUR STANDARD <span aria-hidden="true">↗</span></Link>
-      </div>
-      <span className="e-material-credit">03 / MATERIAL STUDY — REFERENCE IMAGE</span>
+    <section className="e-approach" id="direction" aria-label="EVERNE direction">
+      <span className="e-kicker">EVERNE / OUR DIRECTION</span>
+      <p>Considered pieces.<br /><em>A quieter wardrobe.</em></p>
+      <Link className="e-text-link" to="/standards">HOW WE SELECT <span aria-hidden="true">↗</span></Link>
     </section>
 
     <section className="e-care-teaser" aria-labelledby="care-teaser-title">
-      <div className="e-care-image"><img src={editorial('04-satin-detail.jpg')} loading="lazy" alt="Close-up of pleated satin fabric, an editorial reference and not an EVERNE product." /></div>
-      <div className="e-care-copy">
-        <span className="e-kicker">EVERNE / CARE</span>
-        <h2 id="care-teaser-title">Keep what<br /><em>matters.</em></h2>
-        <p>A parallel exploration of garment care. Objects and specifications are still under review.</p>
-        <Link className="e-text-link" to="/care">EXPLORE CARE <span aria-hidden="true">↗</span></Link>
-      </div>
+      <span className="e-kicker">EVERNE / CARE</span>
+      <h2 id="care-teaser-title">Made to be kept in mind.</h2>
+      <Link className="e-text-link" to="/care">DISCOVER CARE <span aria-hidden="true">↗</span></Link>
     </section>
   </>;
 }

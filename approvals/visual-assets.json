@@ -38,6 +38,60 @@
       "evidenceRecord": "approvals/records/editorial-study-2026-11-02.md",
       "usage": "NON_PRODUCT_REFERENCE",
       "reviewedAt": "2026-11-02"
+    },
+    {
+      "publicPath": "public/editorial-study/05-tailoring.jpg",
+      "sha256": "42c39273e59cc31953159ef584bea06fee4138764f40e5b427581361ec6017c1",
+      "sourcePage": "https://www.pexels.com/photo/model-in-black-longline-blazer-and-pants-with-a-crease-18173609/",
+      "rightsReference": "https://www.pexels.com/license/",
+      "evidenceRecord": "approvals/records/editorial-study-2026-11-02.md",
+      "usage": "NON_PRODUCT_REFERENCE",
+      "reviewedAt": "2026-11-02"
+    },
+    {
+      "publicPath": "public/editorial-study/06-bodysuit.jpg",
+      "sha256": "26780a8dbd7d23b6259d6de5a5392182c11f6daa068d702f0fcd7766bb077c69",
+      "sourcePage": "https://www.pexels.com/photo/elegant-portrait-of-a-woman-in-black-bodysuit-28986644/",
+      "rightsReference": "https://www.pexels.com/license/",
+      "evidenceRecord": "approvals/records/editorial-study-2026-11-02.md",
+      "usage": "NON_PRODUCT_REFERENCE",
+      "reviewedAt": "2026-11-02"
+    },
+    {
+      "publicPath": "public/editorial-study/07-knitwear.jpg",
+      "sha256": "94cf233e058572f8c93ccd8dcc06e1e988eb2316b255f54a18519f69ebdc1d0a",
+      "sourcePage": "https://www.pexels.com/photo/woman-in-sweater-27028696/",
+      "rightsReference": "https://www.pexels.com/license/",
+      "evidenceRecord": "approvals/records/editorial-study-2026-11-02.md",
+      "usage": "NON_PRODUCT_REFERENCE",
+      "reviewedAt": "2026-11-02"
+    },
+    {
+      "publicPath": "public/editorial-study/08-denim.jpg",
+      "sha256": "271ae261b34ed46acbfd3ccb93e5afbbeb4bbd02ec8cd0d91064fb47f6f33b24",
+      "sourcePage": "https://www.pexels.com/photo/a-woman-in-white-tank-top-and-denim-jeans-leaning-on-the-wall-10422197/",
+      "rightsReference": "https://www.pexels.com/license/",
+      "evidenceRecord": "approvals/records/editorial-study-2026-11-02.md",
+      "usage": "NON_PRODUCT_REFERENCE",
+      "reviewedAt": "2026-11-02"
+    },
+    {
+      "publicPath": "public/editorial-study/09-dress.jpg",
+      "sha256": "8b61c288a909f57d92aa44ef242d278922721406010d5712876189ebe7d62700",
+      "sourcePage": "https://www.pexels.com/photo/woman-in-black-long-sleeves-dress-posing-at-the-camera-14128704/",
+      "rightsReference": "https://www.pexels.com/license/",
+      "evidenceRecord": "approvals/records/editorial-study-2026-11-02.md",
+      "usage": "NON_PRODUCT_REFERENCE",
+      "reviewedAt": "2026-11-02"
+    },
+    {
+      "publicPath": "public/editorial-study/10-skirt.jpg",
+      "sha256": "eb1fcd953051033aabf8b604016fdbe10f2c5a56086bc9909ad38bcf7e8e75f3",
+      "sourcePage": "https://www.pexels.com/photo/a-woman-posing-in-a-turtle-neck-and-a-skirt-6211619/",
+      "rightsReference": "https://www.pexels.com/license/",
+      "evidenceRecord": "approvals/records/editorial-study-2026-11-02.md",
+      "usage": "NON_PRODUCT_REFERENCE",
+      "reviewedAt": "2026-11-02"
     }
   ]
 }

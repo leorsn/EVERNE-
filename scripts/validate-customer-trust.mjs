@@ -18,7 +18,7 @@ assert.equal(ready.storefrontPublicationAuthorized, false, 'An unapproved commer
 assert.ok(ready.items.every((item) => item.approvedForSale === false),
   'An item-level sale approval requires its own reviewed source evidence');
 
-assert.match(home, /NOT PRODUCT PHOTOGRAPHY/,
+assert.match(home, /NOT AN EVERNE GARMENT/,
   'Editorial reference images must be distinguished from product photos');
 assert.match(home, /not (?:yet )?available to order/i,
   'Visitors must understand why products are unavailable');

@@ -97,7 +97,7 @@ try {
     await cdp('Emulation.setDeviceMetricsOverride', { width, height: 844, deviceScaleFactor: 2, mobile: true });
     await navigate(preview + '#/');
     await eq('document.querySelectorAll(".e-category").length', 5, `${width}px: five category labels`);
-    await eq('document.images.length', 4, `${width}px: four editorial references`);
+    await eq('document.images.length', 6, `${width}px: six garment styling references`);
     await eq('document.querySelectorAll("form,input,[href*=checkout]").length', 0, `${width}px: no commerce controls`);
     await eq('document.querySelectorAll(".e-header nav [aria-current=page]").length', 1,
       `${width}px: active navigation announced accessibly`);

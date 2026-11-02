@@ -82,4 +82,4 @@ for (const asset of manifest.studyAssets) {
   assert.equal(sha256, asset.sha256, 'Offline photograph does not match the licensed source register');
 }
 
-console.log(`EVERNE editorial-study Safari ZIP passed: ${files.length} verified files, four licensed reference photographs, inlined JS/CSS, legal pages and NO-GO safeguards. Real Safari review remains pending.`);
+console.log(`EVERNE editorial-study Safari ZIP passed: ${files.length} verified files, ${manifest.studyAssets.length} licensed reference photographs, inlined JS/CSS, legal pages and NO-GO safeguards. Real Safari review remains pending.`);

@@ -54,7 +54,7 @@ try {
     await check(width, 'Editorial homepage and heading layout', async () => {
       await reset();
       assert.equal(await page.locator('.e-category').count(), 5);
-      assert.equal(await page.locator('img').count(), 4);
+      assert.equal(await page.locator('img').count(), 6);
       assert.equal(await page.locator('picture,video').count(), 0);
       assert.equal(await page.locator('form,input,[href*="checkout"]').count(), 0);
       assert.equal(await page.locator('.e-header nav [aria-current="page"]').count(), 1);

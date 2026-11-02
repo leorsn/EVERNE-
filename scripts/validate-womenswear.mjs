@@ -52,7 +52,8 @@ assert.ok(!fs.existsSync('public/editorial') && !fs.existsSync('public/products'
 for (const section of ['EVERNE / WOMAN', 'OUR STANDARD', 'CARE', 'THE FIRST SELECTION', 'OUR DIRECTION']) {
   assert.ok(landing.includes(section), `Missing editorial navigation or chapter: ${section}`);
 }
-assert.match(landing, /NOT PRODUCT PHOTOGRAPHY/);
+assert.match(landing, /NOT AN EVERNE GARMENT/);
+assert.match(landing, /PHOTOGRAPHIC STYLE REFERENCES ONLY/);
 assert.match(landing, /No garments are available to order/);
 assert.match(landing, /external suppliers/);
 assert.match(landing, /No active sales/);
