@@ -2,6 +2,12 @@
 
 **Status:** interne, unveröffentlichte Lieferanten-/Integrationsrecherche. **Kein Lieferant, kein SKU und kein Verkauf freigegeben.** Die bestehenden 20 Einträge in `src/womenswearCatalog.ts` bleiben rein redaktionelle Konzepte; dieser Vermerk ersetzt weder Produktfreigaben noch Rechts-/Steuerberatung.
 
+## Nachtrag — zweiter AutoPay-Kostentest gegen die 20er-Liste (02.11.2026)
+
+**Neue Preiskandidaten:** Der 20er-Designabgleich rückt **Everyday Tank 34 € (Tapstitch WT0196, $5,99)** und **Soft Line Longsleeve 39 € (WT0226, ab $6,99)** vor die teureren P1-Stile. Beim USD/EUR-Referenzkurs von 0,8924 liegt unter den bestehenden, **nur vorsteuerlichen** 30%-Marge-Annahmen der maximal noch zulässige Vollkosten-Versand bei **9,35 €** bzw. **11,83 €**. Unter der rein *illustrativen* 25%-Einkommensteuer-Sensitivität wären es **5,95 €** bzw. **7,93 €**; keine echte persönliche Nachsteuer-Marge verifiziert. **Neues Risiko:** Tapstitch hat weitere EU-Versandzuschläge **ab 03.11.2026** angekündigt; DDP-Angaben über verschiedene Hilfeseiten sind ohne checkout-basierte Deutschlandrechnung nicht eindeutig. **0/20 Freigaben, Shopify bleibt gesperrt, keine zusätzlichen Kosten.**
+
+[Neue P2-Shortlist, konkrete EUR-Versandobergrenzen, Variantenabweichungen und November-Zuschlag](everne-autopay-landed-cost-ceilings-p2-scout-2026-11-02.md).
+
 ## Nachtrag — striktes AutoPay-Gate / Tapstitch-SKUs (02.11.2026)
 
 **Neue belastbare technische Option:** Tapstitch unterstützt laut eigener Doku kostenlose Shopify-Anbindung und **vollautomatische Lieferantenzahlung per hinterlegter Kredit-/Debitkarte** bei Auto Order Submission; fehlendes Wallet-Guthaben wird mit Karte abgedeckt. Öffentliche echte Apparel-Codes für Everne: RB0017 / WT0115 (Essential Top), WT0120 (Second Skin Body, andere Ausführung), WT0203 (Soft V-Neck, mit Kragen), WB0082 (Tailored Pant) und WS0009 (Fluid Midi Skirt, **nur Maxi/Drawstring-Alternative**). Alle **ohne verbindlichen DE-Landed-Cost**, inklusive EU-Importzuschlag ab 01.07.2026, ohne bestätigte Farben/Größen/GPSR/EU-Retouren und ohne echte Nachsteuer-Marge. Anbieterfunktion ist kein Nachweis der Aktivierung im EVERNE-Account. **0 verkaufsfreigegebene SKUs, alle DRAFT bleiben geschützt; keine Zahlung oder Live-Schaltung.**
