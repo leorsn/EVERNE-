@@ -6,6 +6,8 @@
 
 [Vollständige Trendsi-Quellen, neun verifizierte SKU-Referenzen, EUR-Stresstabelle, positive/negative Stilabgleiche und harte EU-Gates](everne-trendsi-autopay-fashion-shortlist-2026-11-02.md).
 
+**Nachprüfung EUSt/Compliance:** Unter einem zusätzlichen illustrativen **19-%-Einfuhr-USt-Szenario** (neben 3-€-Zoll und 1,50-USD-Saisonzuschlag) sinkt die 25-%-Ertragsteuer-Sensitivität für die zwei stilnahen Trendsi-Kandidaten auf **28,9 % (Black Mini)** bzw. **25,5 % (Body)** und **verfehlt** damit die geforderten 30 %; eine etwaige Post-Auslagenpauschale von **7,50 €** würde es weiter verschlechtern. Fehlende verifizierte **DDP/IOSS-Verantwortung**, **EU-GPSR-Hersteller-/Bevollmächtigtenangaben**, **deutsche Textil-Faseretiketten** und **Rücknahmen** sind jetzt ausdrücklich Freigabe-Blocker; siehe dieselbe verlinkte Shortlist. **0/20 GO.**
+
 **Status:** interne, unveröffentlichte Lieferanten-/Integrationsrecherche. **Kein Lieferant, kein SKU und kein Verkauf freigegeben.** Die bestehenden 20 Einträge in `src/womenswearCatalog.ts` bleiben rein redaktionelle Konzepte; dieser Vermerk ersetzt weder Produktfreigaben noch Rechts-/Steuerberatung.
 
 ## Nachtrag — zweiter AutoPay-Kostentest gegen die 20er-Liste (02.11.2026)
