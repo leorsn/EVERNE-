@@ -2,23 +2,21 @@
 
 **Status:** Recherche-Kandidaten; keine App installiert, kein neues Konto angelegt, keine Bezahlstufe aktiviert, kein Supplier kontaktiert, keine Produktimporte oder Shopänderungen. EVERNE benötigt ruhige Damenmode, deutsche Endkunden, unveränderte 4/9-Euro-Verkaufspreise, **vollständig automatisierte Shopify-Auftrags- und Lieferantenzahlung**, kein neues laufendes Abo ohne Freigabe und mindestens **30 % tatsächlichen Gewinn nach allen Kosten und Steuern**.
 
+**Korrektur auf Basis einer neu gefundenen Primäranleitung:** WaveGo ist **NO-GO**, nicht mehr HOLD. Der ursprüngliche Unsicherheitsvermerk ist in der Tabelle und Prüfung unten ersetzt.
+
 ## 1. Wesentlicher Unterschied: Technik möglich ≠ kostenlos ≠ für EVERNE passend
 
 | Anbieter | Automatischer Shopify-Orderflow | Lieferantenzahlung / Liquidität | Öffentlicher Preis / Plan | Damenmode und Retouren | Heutiger Status |
 |---|---|---|---|---|---|
-| **WaveGo** (Schweden) | Shopify App Store und eigene Seite nennen automatisches Order-Routing und Tracking; App veröffentlicht seit **17.07.2026**, bislang **0 Shopify-Bewertungen**. | Eigene FAQ: Nach Zahlung wird an Supplier weitergeleitet; Supplier-B2B-Checkout läuft auf dessen Stripe-Konto. **Nicht belegt**, ob die Zahlung je neuer Order ohne Händlerklick oder neu autorisierte Abbuchung ausgelöst wird. | **Free: 0 USD/Monat, höchstens 10 Produktvarianten, 1 Lieferant**; danach laut Website Basic **24 USD/Monat** (App-Store zeigt lokal umgerechnete INR, deshalb Quelle und Währung kontrollieren). | Ein öffentlich genannter schwedischer „Rogeclothing“-Lieferant für Apparel; keine konkrete EVERNE-Größen-/Material-SKU, DE-Versandrate, Bruttorechnung und Händler-Retourenannahme. | **HOLD / bedingter neuer Free-Pilot-Kandidat nur bei späterer Autorisierung.** Kein Go auf Basis von Marketingclaims. |
+| **WaveGo** (Schweden) | Shopify-Auftragsimport und Tracking teilweise automatisch; **Supplier bekommt die Bestellung erst nach Händlerzahlung**. | **Explizit manuell laut eigener Anleitung:** Orderstatus „Awaiting supplier payment“, Händler klickt pro Order „Pay now“ und bezahlt auf Supplier-Stripe-Checkoutseite. | Free 0 USD/Monat mit max. 10 Varianten / 1 Supplier; für die automatische Zahlung aber **irrelevant**, da sie nicht vorhanden ist. | Schweden-Apparel-Beispiel ohne freigabefähige Damenmode-SKU/DE-Retouren-/Preisbeleg. | **NO-GO für EVERNE-Vollautomatik.** |
 | **Orderchamp Dropshipping** (Niederlande) | Anbieter dokumentiert automatisches Forwarding und automatische Händlerbelastung, Shopify-Integration. | **Ja, systemseitig laut offizieller FAQ automatisiert**, statt Händlercheckout je Order. | Website **Starter 59 EUR/Monat + 2,75 % Bearbeitungsgebühr**; Shopify App Store bewirbt **Flex 79 USD/Monat + 2,75 %**. Unterschiedliche Preisansichten/Abrechnungsbedingungen vor jeder Kaufentscheidung klären; keine Stufe freigegeben. | Auf aktueller Shopify-App-Seite Schwerpunkt Home/Beauty/Food/Toys, **keine Apparel-Kategorie**; Rückgaben im dokumentierten Erstprozess **zum Händler**, gesonderte Retourenabsprachen nicht im System. | **NO-GO für kostenlosen Damenmode-Vollautomat**, obwohl technische Zahlkette stark. |
 | **AppScenic** | Offizielle Website beschreibt automatisches Bestellen, Bezahlen via Wallet mit optionaler **Auto-Nachladung**, Tracking-Rückgabe; EU-Lieferanten. | **Technik auf Plattformebene dokumentiert**, jedoch nur mit passendem, kostenpflichtigem Plan und hinterlegtem/autorisiertem Zahlungsmittel. | **Free** nur Katalogsichtung, **keine Orders**. **Standard 39 USD/Monat** mit Automatic Ordering (100 importierte Produkte); höhere Pläne 79/99 USD monatlich. | „Fashion“ als Kategorie und „guaranteed returns“ werden beworben, aber keine konkret für EVERNE bestätigte deutsche Retourenadresse, B2B-Steuer-/Retourenkosten, Artikelqualität oder Endpreis. | **HOLD nur falls später Budgetfreigabe**; aktuell **NO-GO** wegen Abo- und SKU-Gate. |
 
-### Warum WaveGo interessant, aber nicht freigegeben ist
+### WaveGo: die zunächst offene Zahlungsfrage ist negativ beantwortet
 
-Ein Anbieter mit kostenlosem Tarif, EU-Versandlager, einem benannten Bekleidungslieferanten und Shopify-App ist eine **neue, öffentlich auffindbare Untersuchungsmöglichkeit**. Die Grenzen sind konkret:
+Die **WaveGo-eigene Schritt-für-Schritt-Anleitung** dokumentiert: Shopify-Order wird übernommen, steht dann auf **„Awaiting supplier payment“**, und **nichts wird an den Lieferanten gesendet**, ehe der Händler die Order öffnet und über **„Pay now“** selbst auf der Lieferanten-Stripe-Seite bezahlt. Erst anschließend wird der Supplier informiert; nur das Tracking fließt später automatisch nach Shopify zurück. Damit scheidet WaveGo bei der unveränderten Anforderung an vollständig automatisierte **Auftrags- und Lieferantenzahlung** aus — unabhängig von Freitarif, EU-Lager oder Bekleidungssupplier.
 
-1. **10 Varianten** sind bei Kleidung kein vollständiger Fünf-Styles-Katalog, sobald mehrere Größen/Farben geführt werden. Beispiel: fünf Styles mit nur drei Größen wären bereits 15 Varianten — oberhalb der kostenlosen Stufe; **ein Einzelprodukt mit wenigen Varianten könnte rein kapazitiv hineinpassen**.
-2. „Orders forward themselves“ ist nicht gleichbedeutend mit **automatischer, vorab autorisierter Händlerzahlung an Supplier**. Die FAQ formuliert „once it is paid“, nennt einen Supplier-Stripe-Checkout und spezifiziert keine Auto-Pay-Regel.
-3. Neue App seit Juli 2026 ohne Bewertungen: **Reife, Zuverlässigkeit, Händlerrechte, Support, Retourenqualität und Lieferantenbestand sind unabhängig nicht bestätigt**.
-4. Die Website nennt als Beispiele Cars4Kids, QUBO, Moi Mili und Rogeclothing. Nur letzterer gehört zum Bekleidungsbereich; keine öffentliche bestätigte Produktliste beweist einen EVERNE-kompatiblen Body/Top/Pant/Skirt zu einer Nettogewinngrenze.
-5. Eine Installation, B2B-Registrierung oder Supplier-Payment-Freigabe ist nach den derzeitigen Projektregeln **nicht autorisiert**. Daher nur als **späterer Testkandidat**, nicht als gegenwärtige Umsetzung.
+Quelle: https://www.wavego.eu/how-to-start . Ausführlicher Abgleich: [Hertwill/WaveGo-Zahlungs- und Bekleidungs-Gates](everne-hertwill-wavego-automatic-payment-and-fashion-gates-2026-11-02.md).
 
 ### Harte Gewinnbedingung
 
@@ -27,13 +25,14 @@ Die bisherigen **maximalen voll bezahlbaren Lieferantenrechnungen einschließlic
 ## 2. Handlung und Rangfolge
 
 - **Keine operative Veränderung**, keine neue App, keine Abonnementfreigabe oder Kartenhinterlegung.
-- **WaveGo auf HOLD** als eng begrenzter neuer EU-Free-Kandidat. Wieder aufnehmen erst mit nachweisbarer App-Order-Auto-Pay-Strecke, zuverlässigem deutschen B2C-Retourenweg, wirtschaftlicher Outfit-SKU und ausreichend geringer Variantenzahl.
+- **WaveGo NO-GO**: sein eigener dokumentierter Ablauf erfordert Händler-Stripe-Checkout pro Order; durchgängige Zahlungsautomatisierung damit nicht vorhanden. Nur bei grundlegender, später belegter Auto-Pay-Produktänderung neu bewerten.
 - **Orderchamp und AppScenic** aus dem kostenfreien Erstsetup aussortieren. Dokumentierte Vollautomatik ist erfreulich, aber die bepreisten Pakete und ggf. Ordergebühren sind gegenwärtig nicht genehmigt.
 - **Bestehende Priorität**: Shopify Collective (bereits installiert; DE/EUR; kein passender Lieferant freigegeben) und Hertwill Free (max. 5 Produkte/10 Orders; kein verifizierter 30-%-Aftercost-Style). CJ bleibt nur bedingt offen wegen nicht universell freigeschalteter Auto-Payment-Funktion und problematischer China-Retouren.
 - Eine spätere Freigabeentscheidung braucht Produktbildrechte, echten Einkauf inklusive Steuer, Versandkosten DE, tatsächliche Retourenadresse/Refund, Qualitäts- und Größentest, Verfügbarkeit, Zahlung/Tracking und belastbare Ertragsteuer-/Unternehmerrechnung je Variante.
 
 ## Primärquellen (gesichtet am 02.11.2026)
 
+- WaveGo, **eindeutiger manueller „Pay now“-Zahlungsablauf**: https://www.wavego.eu/how-to-start
 - WaveGo, Produkt-/Lieferantenliste, Free 10 Varianten und Zahlungs-FAQ: https://www.wavego.eu/
 - WaveGo Shopify App Store (0 Rezensionen; Start 17.07.2026; Free 10 Varianten; Preisvarianten): https://apps.shopify.com/wavego
 - Orderchamp FAQ, automatischer Zahlungslauf und Retouren zum Retailer: https://www.orderchamp.com/page/faq-dropshipping
