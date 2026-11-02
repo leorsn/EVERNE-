@@ -76,7 +76,7 @@ function Home() {
     <section className="e-wardrobe" id="collection" aria-labelledby="collection-title">
       <div className="e-wardrobe-heading">
         <div>
-          <span className="e-kicker">WOMAN / THE FIRST EDIT</span>
+          <span className="e-kicker">THE FIRST SELECTION / WOMAN</span>
           <h2 id="collection-title" tabIndex={-1}>The wardrobe.</h2>
         </div>
         <p>Five wardrobe categories.<br />Collection in preparation.</p>
