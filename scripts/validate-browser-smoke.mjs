@@ -124,7 +124,17 @@ try {
   await eq('document.querySelectorAll(".e-standard-row").length', 4, 'Selection standards render');
   await navigate(preview + '#/edit/essential-rib-top');
   await eq('document.querySelector("main h1")?.textContent?.includes("The first")', true, 'Old concept route withdrawn');
-  await eq('document.body.innerText.includes("Essential Rib Top")', false, 'Unapproved product remains hidden');
+  await eq('document.querySelectorAll(".e-product-page").length', 0, 'Withdrawn edit route does not render a product page');
+  await navigate(preview + '#/products/essential-rib-top');
+  await eq('document.querySelector("main h1")?.textContent?.includes("Essential Rib Top")', true, 'First draft product renders');
+  await eq('document.images.length', 0, 'Draft product contains no unapproved photography');
+  await eq('document.querySelectorAll("form,input,[href*=checkout]").length', 0, 'Draft has no buying controls');
+  await eq('document.body.innerText.includes("NOT AVAILABLE TO ORDER")', true, 'Draft availability is explicit');
+  await eq('document.querySelector("meta[name=robots]")?.content', 'noindex,nofollow', 'Draft keeps noindex');
+  await navigate(preview + '#/products/denim-midi-skirt');
+  await eq('document.querySelector("main h1")?.textContent?.includes("Denim Midi Skirt")', true, 'Twentieth draft product renders');
+  await navigate(preview + '#/products/legacy-item');
+  await eq('document.querySelector("main h1")?.textContent?.includes("Page not found")', true, 'Unknown product draft is not listed');
 
   // The two static legal pages have their own styles and routing. A storefront
   // layout pass alone would miss long German headings and tiny tap targets.
