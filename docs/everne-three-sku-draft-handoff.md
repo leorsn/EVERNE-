@@ -38,3 +38,9 @@ Relevant official guidance: [§ 19 UStG](https://www.gesetze-im-internet.de/ustg
 - Customer refunds/returns can be handled independent of the wholesaler's short B2B return window.
 - Own product photography or explicit licence secured.
 - No sale activation from this handoff alone; separate owner decision is mandatory.
+
+## Shopify CSV staging file (not yet imported)
+
+An additional [guarded product-import CSV](../sourcing/everne-shopify-draft-import-2026-11-02.csv) contains three products and eight size rows with current Shopify column names confirmed against the [Shopify Help Center](https://help.shopify.com/en/manual/products/import-export/using-csv). For each variant, it declares `Status=draft`, `Published on online store=false`, `Inventory tracker=shopify`, `Inventory quantity=0`, `Continue selling when out of stock=deny`, and `Fulfillment service=manual`. No product images, supplier EAN barcodes, or unverified landed costs are inserted.
+
+**Do not upload this CSV yet.** First inspect existing Shopify handles/variants to avoid overwrites; export a store backup; check store location count because product-CSV inventory quantity is only applicable to single-location stores; verify merchant tax settings (the CSV intentionally omits `Charge tax`); and review Shopify's import preview. Shopify warns that product CSV imports cannot be canceled once started and that matching handles may overwrite product values. Before actual import, confirm the intended vendor display and whether SKU assignment needs to be done through the supplier integration. A subsequent launch requires separate approval.
