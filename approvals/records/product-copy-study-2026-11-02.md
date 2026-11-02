@@ -25,3 +25,7 @@ Owner review found the intermediate monochrome layout too visually busy. The nex
 ## Product-page sidebar navigation
 
 The owner requested a visible side navigation for category and product detail pages. On larger screens the category bar is replaced by a restrained left navigation rail with all six category destinations. On an individual product page it also lists the other copy-only concepts in the same category and marks the active product. On narrow screens a native collapsed disclosure supplies the same navigation without squeezing the product images or text. All original 20 product-detail URLs, descriptions and photo reservations remain unchanged, and no unapproved product is presented as purchasable.
+
+## Product browsing and fit-readiness refinement
+
+The next iteration focuses on the buying journey without activating commerce: all 20 cards remain compact in a four-column desktop or two-column mobile grid; the full catalog shows subtle category labels; a small accessible sort selector switches between the editorial sequence and name A–Z. Photo reservations remain visibly neutral, with the two supporting positions labelled as pending views. On each individual product page an unobtrusive **size selection / awaiting fit approval** row reserves the future fitting step without advertising size variants or inventory. Product research claims, transaction controls, live prices, and image approval gates remain unchanged.

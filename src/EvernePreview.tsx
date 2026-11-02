@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { applySeo } from './seo';
 import { draftCategories, findProductDraft, productDrafts } from './productDrafts';
@@ -84,6 +84,7 @@ function Footer() {
 }
 
 function CollectionPage({ categoryId }: { categoryId?: string }) {
+  const [sortOrder, setSortOrder] = useState<'edit' | 'name'>('edit');
   const category = draftCategories.find((entry) => entry.id === categoryId);
   const all = categoryId === 'all';
   if (!all && !category) return <section className="e-product-missing">
@@ -92,22 +93,33 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
     <p>Explore the current design edit. No garments are available to order.</p>
     <Link className="e-text-link" to="/collections/all">VIEW ALL PIECES <span aria-hidden="true">↗</span></Link>
   </section>;
-  const items = all ? productDrafts : productDrafts.filter((item) => item.category === categoryId);
+  const categoryItems = all ? productDrafts : productDrafts.filter((item) => item.category === categoryId);
+  const items = sortOrder === 'name' ? [...categoryItems].sort((first, second) => first.name.localeCompare(second.name, 'en')) : categoryItems;
 
   return <div className="e-shop-shell">
     <ShopSidebar categoryId={categoryId} />
     <section className="e-collection-page" aria-labelledby="collection-page-title">
     <div className="e-collection-heading">
       <h1 id="collection-page-title" tabIndex={-1}>{all ? 'All pieces' : category?.label}</h1>
-      <span className="e-collection-count">{items.length} pieces</span>
+      <div className="e-collection-tools">
+        <span className="e-collection-count">{items.length} pieces</span>
+        <label className="e-sort-label" htmlFor="everne-sort">Sort by</label>
+        <select id="everne-sort" className="e-sort-select" value={sortOrder} onChange={(event) => setSortOrder(event.target.value as 'edit' | 'name')}>
+          <option value="edit">The edit</option>
+          <option value="name">Name A–Z</option>
+        </select>
+      </div>
     </div>
     <div className="e-collection-grid" role="list" aria-label={`${all ? 'All' : category?.label} design concepts`}>
       {items.map((item) => <article className="e-collection-card" role="listitem" key={item.slug}>
         <Link to={`/products/${item.slug}`} aria-label={`View ${item.name} design preview`}>
           <div className="e-collection-card-image" aria-hidden="true">
-            <span className="e-collection-image-pending">Photograph pending</span>
+            <span className="e-collection-image-pending">IMAGE PENDING</span>
           </div>
-          <div className="e-collection-card-caption"><h2>{item.name}</h2></div>
+          <div className="e-collection-card-caption">
+            <h2>{item.name}</h2>
+            {all && <span className="e-collection-card-category">{draftCategories.find((entry) => entry.id === item.category)?.label}</span>}
+          </div>
         </Link>
       </article>)}
     </div>
@@ -173,14 +185,18 @@ function ProductPage({ handle }: { handle?: string }) {
           <span className="e-product-image-pending">Photograph pending</span>
         </div>
         <div className="e-product-image-pair">
-          <div className="e-product-image-slot" role="note" aria-label="Secondary product photograph is not yet available" />
-          <div className="e-product-image-slot" role="note" aria-label="Garment detail photograph is not yet available" />
+          <div className="e-product-image-slot" role="note" aria-label="Secondary product photograph is not yet available"><span className="e-product-image-secondary">Second view pending</span></div>
+          <div className="e-product-image-slot" role="note" aria-label="Garment detail photograph is not yet available"><span className="e-product-image-secondary">Detail view pending</span></div>
         </div>
       </div>
       <div className="e-product-information">
+        <p className="e-product-category">{category?.label}</p>
         <h1 id="product-title" tabIndex={-1}>{item.name}</h1>
         <p className="e-product-intro">{item.description}</p>
         <p className="e-product-pending">NOT AVAILABLE TO ORDER</p>
+        <div className="e-product-size-status" aria-label="Size selection unavailable pending fit review">
+          <span>SIZE SELECTION</span><span>AWAITING FIT APPROVAL</span>
+        </div>
         <div className="e-product-accordions">
           <details className="e-product-accordion">
             <summary>Design & fit</summary>

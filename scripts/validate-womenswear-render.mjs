@@ -55,6 +55,9 @@ try {
   const all = renderPage('/collections/all');
   assertSafe(all, '/collections/all');
   assert.equal((all.match(/class="e-collection-card"/g) ?? []).length, 20, 'All pieces must show twenty product cards');
+  assert.match(all, /id="everne-sort"/, 'The full collection must have a restrained sort control');
+  assert.match(all, /Name A–Z/, 'The sort control must offer alphabetic ordering');
+  assert.equal((all.match(/class="e-collection-card-category"/g) ?? []).length, 20, 'The full edit must identify each item category');
   assert.equal((all.match(/class="e-sidebar-desktop"/g) ?? []).length, 1, 'The collection must expose desktop side navigation');
   assert.equal((all.match(/class="e-sidebar-mobile"/g) ?? []).length, 1, 'The collection must have a compact mobile navigation drawer');
   assert.equal((all.match(/<img\b/g) ?? []).length, 0, 'No unapproved product photography in the grid');
@@ -81,6 +84,9 @@ try {
     assert.match(html, /aria-label="Products in this category"/, `${product.name} must be reachable from the sidebar product navigation`);
     assert.match(html, new RegExp(`aria-current="page" href="/products/${product.slug}"`), `${product.name} must be selected in the sidebar`);
     assert.match(html, /NOT AVAILABLE TO ORDER/, `${product.name} must be expressly noncommercial`);
+    assert.match(html, /SIZE SELECTION/, `${product.name} must reserve size selection without inventing available sizes`);
+    assert.match(html, /AWAITING FIT APPROVAL/, `${product.name} must explain why sizing is unavailable`);
+    assert.doesNotMatch(html, /<button[^>]*>\s*(?:XS|S|M|L|XL)\s*<\/button>/, `${product.name} must not imply real size inventory`);
     assert.match(html, /Details under review/, `${product.name} must disclose pending specifications`);
     assert.match(html, /Composition &amp; care/, `${product.name} must not invent fabric composition`);
     assert.match(html, new RegExp(product.name), `${product.name} needs its own named detail page`);

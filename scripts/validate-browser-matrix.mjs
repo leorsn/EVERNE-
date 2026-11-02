@@ -99,6 +99,10 @@ try {
     await check(width, 'Category bar and product card grid', async () => {
       await reset('#/collections/all');
       assert.equal(await page.locator('.e-collection-card').count(), 20);
+      await page.locator('#everne-sort').selectOption('name');
+      assert.equal(await page.locator('.e-collection-card h2').first().innerText(), 'Denim Midi Skirt', 'Alphabetical ordering must reorder cards without changing the available catalog');
+      await page.locator('#everne-sort').selectOption('edit');
+      assert.equal(await page.locator('.e-collection-card h2').first().innerText(), 'Essential Rib Top', 'Editorial sequence must be restorable');
       assert.equal(await page.locator('.e-sidebar-desktop .e-sidebar-categories [aria-current="page"]').count(), 1);
       assert.equal(await page.locator('.e-shop-nav-links').count(), 0);
       assert.equal(await page.locator('img,form,input,[href*="checkout"]').count(), 0);
@@ -124,6 +128,7 @@ try {
       assert.equal(await page.locator('img').count(), 0);
       assert.equal(await page.locator('form,input,[href*="checkout"]').count(), 0);
       assert.match(await page.locator('main').innerText(), /NOT AVAILABLE TO ORDER/);
+      assert.match(await page.locator('main').innerText(), /AWAITING FIT APPROVAL/);
       assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'), 'noindex,nofollow');
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 2), 'Draft detail must not overflow horizontally');
     });
