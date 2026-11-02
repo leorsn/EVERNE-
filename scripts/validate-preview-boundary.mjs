@@ -19,7 +19,9 @@ const expectedModules = new Set([
   'src/womenswearCatalog.ts',
   'src/seo.ts',
 ]);
-const expectedStyles = new Set(['src/womenswear.css', 'src/fashion-storefront.css']);
+// The reviewed atelier layer changes presentation only, while retaining the
+// existing preview/commerce dependency boundary.
+const expectedStyles = new Set(['src/womenswear.css', 'src/fashion-storefront.css', 'src/atelier-palette.css']);
 const allowedPackages = new Set(['react', 'react-dom/client', 'react-router-dom']);
 const visited = new Set();
 const styles = new Set();

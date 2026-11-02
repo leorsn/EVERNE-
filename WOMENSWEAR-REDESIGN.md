@@ -10,6 +10,13 @@ Status: DESIGN PREVIEW ONLY / NO COMMERCE.
 - First curation: 20 concepts in five categories: tops, knitwear,
   trousers and denim, dresses, skirts.
 - English-first copy, quiet editorial typography, ivory, ink, stone and wine.
+- The November atelier refinement uses a five-tone palette: Charcoal `#191919`,
+  Espresso `#38332F`, Stone `#777268`, Warm Ivory `#D8D1C7` and Off-White
+  `#F1EFEB`. The header overlays the full-bleed campaign hero; the concept
+  index remains plainly labeled as a non-transactional preview. The layer is
+  isolated in `src/atelier-palette.css` and explicitly allowlisted by the
+  preview dependency boundary test. This is an original EVERNE design direction,
+  not copied Saint Laurent branding or campaign photography.
 - A three-mood interactive Style Notes section showcases combinations of
   existing planning concepts, without suggesting inventory or real product photography.
 
