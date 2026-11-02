@@ -17,6 +17,7 @@ The original twenty concepts and internal sourcing models remain in the reposito
 - No add-to-cart, checkout, order forms, signups, Shopify calls or network-loaded brand assets.
 - Existing product and supplier readiness remains `NO_GO`; this branch authorizes only a protected preview, not a launch.
 - `approvals/visual-assets.json` starts in `IMAGE_FREE` mode with an empty approved-asset list. Both the public source directory and final compiled output are scanned for raster assets; a stray photo fails the build even if no page references it. The gate also checks exact image checksums and separate documented approval evidence when a later, explicitly reviewed phase begins. The active preview boundary still independently prohibits photographs.
+- `approvals/product-publication.json` separately starts in `NO_PRODUCTS` mode. Its release validator requires authenticated supplier/sample, size, pricing, image-rights, logistics and founder evidence from the existing first-drop register before a product can be described as publication-ready. No product data is imported into the active website by this register.
 - Publishing commerce will require sample approval, legally verified business information, product-specific images, measurements, pricing, delivery and returns, plus a deliberate release review.
 
 ## Design direction
