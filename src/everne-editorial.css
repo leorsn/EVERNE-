@@ -28,7 +28,7 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 .e-text-link span { font-size: 15px; font-weight: 400; }
 .e-hero-index { font-size: 9px; letter-spacing: .14em; color: #d8d1c7; }
 .e-hero-visual { position: relative; grid-column: 2; grid-row: 1; min-height: 0; overflow: hidden; background: #38332f; }
-.e-hero-visual img { position: absolute; inset: 0; object-position: center 48%; filter: brightness(.79) saturate(.67) sepia(.095) contrast(1.08); }
+.e-hero-visual img { position: absolute; inset: 0; object-position: center 15%; filter: brightness(.79) saturate(.67) sepia(.095) contrast(1.08); }
 .e-hero-visual::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(90deg, rgba(27,24,22,.19), transparent 43%); }
 .e-visual-credit { position: absolute; z-index: 1; right: 30px; bottom: 26px; padding: 8px 10px; background: rgba(29,27,25,.86); color: #e9e2d9; font-size: 9px; letter-spacing: .1em; }
 .e-wardrobe { padding: 74px clamp(25px, 3.3vw, 56px) 54px; background: #191919; color: #f1efeb; }
