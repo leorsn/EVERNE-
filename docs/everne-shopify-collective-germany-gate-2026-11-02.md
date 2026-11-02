@@ -57,6 +57,28 @@ Bei einer verlangten **30-%-Gewinnquote bezogen auf die gesamte Kundenzahlung `P
 
 **Entscheidung:** `SHOPIFY COLLECTIVE = HOLD / TECHNISCHE PRIORITÄT FÜR EINE SPÄTER FREIGEGEBENE SHOP-PRÜFUNG`. Keine Aufnahme der fünf Editorial-Konzepte als echte SKUs, keine Preisanpassung, keine App-Installation, keine Geschäftspartner-Kontaktaufnahme. Der frühere Hertwill-Pilot bleibt ebenfalls unfreigegeben; Collective ist nun die erste **native und app-kostenfreie Alternative für Prüfung**, nicht der gewählte Produktlieferant.
 
+## 4. Öffentlicher Deutschland-Pre-Screen von vier Modeanbietern (keine Collective-Freigabe)
+
+**Methodik:** Ein Shopify-Blog vom 13.10.2026 nennt allgemeine Damenmode-Großhändler und empfiehlt Shopify Collective **in einem getrennten allgemeinen Fazit**. Daraus folgt **nicht**, dass einer der genannten Großhändler tatsächlich über Collective Produkte anbietet. Ob ein Unternehmen einen für Collective berechtigten **Shop in Deutschland/EUR** betreibt, lässt sich nur anhand einer echten Lieferantenverbindung bzw. der Discovery-Daten belegen. Die folgenden eigenen Anbieterquellen sind nur ein **Negativ-/Kandidaten-Screening**, kein Lieferantenverzeichnis von Collective.
+
+| Anbieter | Öffentlich belegtes Sortiment und Lieferweg | Konkreter Blocker für EVERNE | Status |
+|---|---|---|---|
+| **Christmann-Jacoby Textilien (Hamburg)** | Rund 6.000 Damenmode-Markenrestposten, Einzelstücke ohne Mindestwert; eigene Website wirbt mit neutraler **Streckenlieferung „bald verfügbar“**. FAQ: Standard-DE-Versand **7,50 € netto** je Lieferung, Händlerzahlung **Nachnahme oder Vorkasse**, Einkaufspreise **netto zzgl. USt.** | **Kein Shopify-Collective- oder automatischer Bestell-/Zahlungsprozess belegt**; Restposten kaum dauerhafte Hero-SKU-Basis. Fremdmarken-Bildrechte teils beschränkt (Heine/APART-Bilder dürfen nach FAQ nicht verändert werden; teils zusätzliche Motivvorgaben/Vertragsstrafen). Lieferweg **aktuell nicht als aktiv markiert**. | **HOLD; als späterer Sortimentsvergleich, nicht Automation** |
+| **MW-Großhandel / Passion (Ilmenau)** | Deutscher Direktversand überwiegend Dessous, Nachtwäsche, Reizwäsche; **6,99 € netto** Versand bei 0–40 € Warenwert bzw. **8,49 € netto** bis 300 €; neutrale Verpackung | Laut Anbieter: separate Zahlung (Vorkasse, PayPal, Karte oder gesondert genehmigte Lastschrift), Rechnung optional als PDF an Lieferant, **nimmt Endkundenretouren nicht an, keine Gutschrift/Rückerstattung**; nicht das ruhige EVERNE-Daywear-Sortiment. Kein Collective-Nachweis. | **AUSSORTIEREN für die ersten fünf** |
+| **Sitara Fashion (Versand aus Neuss)** | Damenmode, DHL/UPS in DE 2–3 Werktage, Großhandelspreise nach Händlerfreigabe | **200 € Mindestbestellwert**, komplette Größenserien, **Vorkasse per Banküberweisung** statt Verkauf einzelner Stücke mit automatischer Supplier-Belastung; keine Collective-Integration dokumentiert. | **AUSSORTIEREN für Einzelstück-Dropshipping** |
+| **ORSAY / orsay.de** | Damenmode und B2B-Kooperation in generischem Shopify-Blog erwähnt | Die **aktuellen eigenen B2C-AGB nennen eine verkaufende Gesellschaft mit Sitz in Prag/Tschechien**. Ursprünglich deutsche Markenherkunft und eine **.de-Domain beweisen keinen DE/EUR-Collective-Lieferanten-Shop**. Keine Collective-Teilnahme oder eine DE-B2B-Lieferanten-Entity belegt. | **KEIN verifizierter deutscher Collective-Kandidat** |
+
+**Neue Schlussfolgerung:** Aus dieser öffentlichen Liste ist **0 von 4** als passender, aktiver, automatischer DE/EUR-Collective-Lieferant mit belegtem 30-%-Restgewinn qualifiziert. Das bedeutet ausdrücklich **nicht**, dass die gesamte deutsche Collective-Discovery keine passenden Lieferanten hat — nur, dass die geprüften veröffentlichten Informationen keinen belegen. Keine Anbieter wurden kontaktiert oder registriert.
+
+### Direktquellen für den Pre-Screen (02.11.2026)
+
+- Shopify-Blog: https://www.shopify.com/de/blog/grosshandel-fuer-kleidung-deutschland
+- Christmann-Jacoby (Streckenlieferung „bald verfügbar“): https://christmann-jacoby.de/
+- Christmann-Jacoby FAQ (Zahlung, Versand, Bestandsart, Bilderrechte): https://christmann-jacoby.de/faq
+- MW-Großhandel/PASSION (Dropshipping-Regeln und Versand): https://www.passion-deutschland.de/de/dropshipping-dessous
+- Sitara Fashion (Mindestwert und Vorkasse): https://sitarafashion.de/wholesale/
+- ORSAY AGB (Verkäufer-Entity mit tschechischem Sitz): https://www.orsay.de/allgemeine-geschaftsbedingungen
+
 ## Primärquellen (02.11.2026)
 
 - Shopify: Collective-App/Berechtigung https://help.shopify.com/de/manual/online-sales-channels/shopify-collective/retailers/requirements-and-considerations
