@@ -2,11 +2,19 @@
 
 **Status:** interne, unveröffentlichte Lieferanten-/Integrationsrecherche. **Kein Lieferant, kein SKU und kein Verkauf freigegeben.** Die bestehenden 20 Einträge in `src/womenswearCatalog.ts` bleiben rein redaktionelle Konzepte; dieser Vermerk ersetzt weder Produktfreigaben noch Rechts-/Steuerberatung.
 
+## Nachprüfung: Automationsbeweis und tatsächliches Sortiment (02.11.2026)
+
+**WaveGo ist nun eindeutig NO-GO für Vollautomatik**, weil die eigene Anleitung vor jedem Supplier-Forwarding den manuellen Händler-Checkout verlangt. **Hertwill ist technisch belastbarer belegt**: Nach bezahlter Shopify-Order werden laut offizieller Dokumentation Order und Tracking automatisch übertragen; die hinterlegte Karte wird per Stripe selbsttätig für Ware + Versand + anwendbare Steuer belastet. **Free begrenzt auf 5 einzigartige Produkte und 10 Bestellungen/Monat**; bei Überschreitung darf Hertwill neue Orders pausieren.
+
+Ein separater **Katalogscreen gegen die fünf fixen EVERNE-Prioritäten** fand keinen zugleich passenden und profitabel belegten Artikel: Shirts überwiegend Sport-BHs/Tan-through, Pants vor allem Leggings, V-Neck als Loungewear-Set statt separatem Shirt, ein bedruckter Midi-Skirt, kein überzeugend belegter Rib Top oder Damen-Bodysuit. Hertwill-B2B-Einkaufspreise sind ohne Login verborgen. Der offizielle Deutschlandversand beträgt **6,99–15,99 € vor USt.**, Rückporto bei Rückgabe normalerweise nochmals in Höhe der Hinfracht. Unter den bereits dokumentierten **30-%-VOR-Einkommensteuer**-Kostendeckeln lassen schon 15,99 € Hinfracht für den 34-€-Top **−1,29 € vor jeglichem Wareneinsatz**; daher keine Freigabe oder Nettogewinnzusage. AGB-Preisänderungen vor Orderannahme, Karten-Liquidität, Retourenlabels und nötige Markenfreigaben bleiben gesonderte Risiken.
+
+[Quellenbelege, 5-Style-Mapping und Kostenreste](everne-hertwill-wavego-automatic-payment-and-fashion-gates-2026-11-02.md). **Keine Kontoeröffnung, App-Installation, Zahlungsmittelhinterlegung, Bestellung, neue Abos oder Shopänderung.**
+
 ## Neue EU-Alternativen: WaveGo, Orderchamp, AppScenic (02.11.2026)
 
 Nach Syncee/Spocket wurden drei weitere Plattformen anhand ihrer Originalbedingungen gegengeprüft:
 
-- **WaveGo:** neuer, echter Shopify-App-Eintrag (seit 17.07.2026, bisher **0 Rezensionen**), EU-Lieferanten einschließlich eines veröffentlichten schwedischen Bekleidungsanbieters. **Free 0 USD/Monat** mit **10 Produktvarianten und einem Supplier**. Automatisches Routing/Tracking wird beworben, aber die **automatische Händlerzahlung** ist nicht eindeutig belegt: laut FAQ wird *nach Zahlung* an Supplier weitergeleitet, Supplier-Checkout läuft über Stripe. Produktqualifikation/Retouren/echte Kosten fehlen. **HOLD als eng begrenzter möglicher Free-Pilot, kein Import/Install.**
+- **WaveGo:** Nach erneuter Prüfung **NO-GO**. Die eigene Schritt-für-Schritt-Anleitung unter https://www.wavego.eu/how-to-start belegt ausdrücklich: Shopify-Order kommt im Status „Awaiting supplier payment“ an; der Händler muss **„Pay now“** klicken und die Lieferantenzahlung manuell in dessen Stripe-Checkout abschließen. Erst dann geht die Bestellung an den Supplier. Der Free-Tarif (10 Varianten, 1 Supplier) löst diesen Automationsbruch nicht. Kein Import/Install.
 - **Orderchamp:** automatische Order-/Zahlungsabwicklung dokumentiert, aber kostenpflichtig (**59 EUR/Monat + 2,75 %** auf Herstellerseite; Shopify-App separat **79 USD/Monat + 2,75 %** sichtbar). Zudem passt die sichtbare Produktkategorie nicht zu EVERNE, Retouren zunächst an den Händler. **NO-GO** für unser gebührenfreies Modell.
 - **AppScenic:** echte Plattform-Automatik einschließlich Wallet-Auto-Nachladung und EU-Suppliern wird beworben; **Free hat keine Orders**, **Standard 39 USD/Monat** für Automatic Ordering. **Keine Budgetfreigabe**, kein konkret passender / profitable Artikel. **NO-GO unter aktuellen Kostenregeln**, allenfalls spätere Option.
 
