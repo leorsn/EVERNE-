@@ -133,8 +133,10 @@ try {
       await eq('document.querySelectorAll(".e-collection-card").length', count, `${width}px ${category}: matching product cards`);
       await eq('document.images.length', 0, `${width}px ${category}: no unapproved product photographs`);
       await eq('document.querySelectorAll("form,input,[href*=checkout]").length', 0, `${width}px ${category}: no buying controls`);
-      await eq('document.querySelectorAll(".e-shop-nav-links [aria-current=page]").length', 1,
-        `${width}px ${category}: active category announced`);
+      await eq('document.querySelectorAll(".e-sidebar-desktop .e-sidebar-categories [aria-current=page]").length', 1,
+        `${width}px ${category}: active sidebar category announced`);
+      await eq('document.querySelectorAll(".e-shop-nav-links").length', 0,
+        `${width}px ${category}: no duplicated category bar next to the sidebar`);
       const widthCheck = await js('document.documentElement.scrollWidth <= innerWidth + 2');
       ok(widthCheck, `${width}px ${category}: horizontal overflow`);
     }
@@ -145,6 +147,8 @@ try {
   await navigate(preview + '#/products/essential-rib-top');
   await eq('document.querySelector("main h1")?.textContent?.includes("Essential Rib Top")', true, 'First draft product renders');
   await eq('document.querySelectorAll(".e-product-accordion").length', 3, 'Product notes sit in three restrained disclosure rows');
+  await eq('document.querySelectorAll(".e-sidebar-desktop .e-sidebar-products [aria-current=page]").length', 1,
+    'Current product is marked in the side navigation');
   await eq('document.images.length', 0, 'Draft product contains no unapproved photography');
   await eq('document.querySelectorAll("form,input,[href*=checkout]").length', 0, 'Draft has no buying controls');
   await eq('document.body.innerText.includes("NOT AVAILABLE TO ORDER")', true, 'Draft availability is explicit');

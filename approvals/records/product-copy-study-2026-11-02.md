@@ -21,3 +21,7 @@ The owner next requested black and white in place of the warm brown and beige pa
 ## Minimal storefront revision
 
 Owner review found the intermediate monochrome layout too visually busy. The next iteration removes the white collection-entry band and redundant direction/care marketing panels, compresses the primary navigation, reduces the footer wordmark, strips repeated labels from category and product cards, and folds the draft detail-page notes into accessible native disclosure rows. The five existing category reference photographs and all 20 distinct product concept detail routes remain. Product images and verified commercial terms are still absent; `NO_PRODUCTS` and `noindex` remain enforced.
+
+## Product-page sidebar navigation
+
+The owner requested a visible side navigation for category and product detail pages. On larger screens the category bar is replaced by a restrained left navigation rail with all six category destinations. On an individual product page it also lists the other copy-only concepts in the same category and marks the active product. On narrow screens a native collapsed disclosure supplies the same navigation without squeezing the product images or text. All original 20 product-detail URLs, descriptions and photo reservations remain unchanged, and no unapproved product is presented as purchasable.

@@ -21,7 +21,7 @@ const standards = [
 // Licensed third-party visual references, not EVERNE garments or product claims.
 const editorial = (file: string) => import.meta.env.BASE_URL + 'editorial-study/' + file;
 
-function Header({ page, categoryId }: { page: Page; categoryId?: string }) {
+function Header({ page }: { page: Page }) {
   return <>
     <a className="e-skip" href="#main">Skip to content</a>
     <header className="e-header">
@@ -33,13 +33,36 @@ function Header({ page, categoryId }: { page: Page; categoryId?: string }) {
         <Link className={page === 'standards' ? 'e-active' : ''} aria-current={page === 'standards' ? 'page' : undefined} to="/standards">OUR STANDARD</Link>
       </nav>
     </header>
-    <nav className="e-shop-nav" aria-label="Shop by category">
+    {page !== 'collection' && page !== 'product' && <nav className="e-shop-nav" aria-label="Shop by category">
       <div className="e-shop-nav-links">
-        <Link to="/collections/all" className={page === 'collection' && categoryId === 'all' ? 'e-selected' : ''} aria-current={page === 'collection' && categoryId === 'all' ? 'page' : undefined}>ALL PIECES</Link>
-        {draftCategories.map((category) => <Link key={category.id} to={`/collections/${category.id}`} className={(page === 'collection' || page === 'product') && categoryId === category.id ? 'e-selected' : ''} aria-current={page === 'collection' && categoryId === category.id ? 'page' : undefined}>{category.label.toUpperCase()}</Link>)}
+        <Link to="/collections/all">ALL PIECES</Link>
+        {draftCategories.map((category) => <Link key={category.id} to={`/collections/${category.id}`}>{category.label.toUpperCase()}</Link>)}
       </div>
-    </nav>
+    </nav>}
   </>;
+}
+
+function SidebarLinks({ categoryId, productHandle }: { categoryId?: string; productHandle?: string }) {
+  return <>
+    <nav className="e-sidebar-categories" aria-label="Womenswear categories">
+      <Link to="/collections/all" className={categoryId === 'all' ? 'e-sidebar-selected' : ''} aria-current={categoryId === 'all' ? 'page' : undefined}>All pieces</Link>
+      {draftCategories.map((category) => <Link key={category.id} to={`/collections/${category.id}`} className={categoryId === category.id ? 'e-sidebar-selected' : ''} aria-current={categoryId === category.id ? (productHandle ? 'location' : 'page') : undefined}>{category.label}</Link>)}
+    </nav>
+    {productHandle && <nav className="e-sidebar-products" aria-label="Products in this category">
+      {productDrafts.filter((item) => item.category === categoryId).map((item) => <Link key={item.slug} to={`/products/${item.slug}`} className={item.slug === productHandle ? 'e-sidebar-selected' : ''} aria-current={item.slug === productHandle ? 'page' : undefined}>{item.name}</Link>)}
+    </nav>}
+  </>;
+}
+
+function ShopSidebar({ categoryId, productHandle }: { categoryId?: string; productHandle?: string }) {
+  const label = draftCategories.find((item) => item.id === categoryId)?.label ?? 'All pieces';
+  return <aside className="e-shop-sidebar" aria-label="Collection navigation">
+    <div className="e-sidebar-desktop"><span className="e-sidebar-title">WOMAN</span><SidebarLinks categoryId={categoryId} productHandle={productHandle} /></div>
+    <details className="e-sidebar-mobile">
+      <summary>Browse collection <span>{label}</span></summary>
+      <div className="e-sidebar-mobile-content"><SidebarLinks categoryId={categoryId} productHandle={productHandle} /></div>
+    </details>
+  </aside>;
 }
 
 function Footer() {
@@ -71,7 +94,9 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
   </section>;
   const items = all ? productDrafts : productDrafts.filter((item) => item.category === categoryId);
 
-  return <section className="e-collection-page" aria-labelledby="collection-page-title">
+  return <div className="e-shop-shell">
+    <ShopSidebar categoryId={categoryId} />
+    <section className="e-collection-page" aria-labelledby="collection-page-title">
     <div className="e-collection-heading">
       <h1 id="collection-page-title" tabIndex={-1}>{all ? 'All pieces' : category?.label}</h1>
       <span className="e-collection-count">{items.length} pieces</span>
@@ -87,7 +112,8 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
       </article>)}
     </div>
     <p className="e-collection-disclosure">Design preview only. Photography and specifications are pending. No garments are available to order.</p>
-  </section>;
+    </section>
+  </div>;
 }
 
 function Home() {
@@ -137,16 +163,11 @@ function ProductPage({ handle }: { handle?: string }) {
     <Link className="e-text-link" to="/collections/all">RETURN TO THE EDIT <span aria-hidden="true">↗</span></Link>
   </section>;
 
-  const index = productDrafts.indexOf(item);
   const category = draftCategories.find((entry) => entry.id === item.category);
-  const next = productDrafts[(index + 1) % productDrafts.length];
-  const previous = productDrafts[(index - 1 + productDrafts.length) % productDrafts.length];
 
-  return <>
-    <nav className="e-product-breadcrumb" aria-label="Breadcrumb">
-      <Link to="/">EVERNE</Link><span>/</span><Link to="/collections/all">WOMAN</Link><span>/</span><Link to={`/collections/${item.category}`}>{category?.label}</Link>
-    </nav>
-    <article className="e-product-page" aria-labelledby="product-title">
+  return <div className="e-shop-shell e-shop-shell-product">
+    <ShopSidebar categoryId={item.category} productHandle={item.slug} />
+    <div className="e-shop-content"><article className="e-product-page" aria-labelledby="product-title">
       <div className="e-product-gallery" aria-label="Reserved image positions for pending product photography">
         <div className="e-product-image-slot e-product-image-main" role="note" aria-label="Primary product photograph is not yet available">
           <span className="e-product-image-pending">Photograph pending</span>
@@ -181,12 +202,8 @@ function ProductPage({ handle }: { handle?: string }) {
         <p className="e-product-disclaimer">Private design preview only. Final garment details and photography have not been approved.</p>
         <Link className="e-text-link" to={`/collections/${item.category}`}>BACK TO {category?.label.toUpperCase()} <span aria-hidden="true">↗</span></Link>
       </div>
-    </article>
-    <nav className="e-product-pagination" aria-label="More design concepts">
-      <Link to={`/products/${previous.slug}`}><span>PREVIOUS CONCEPT</span><strong>{previous.name}</strong></Link>
-      <Link to={`/products/${next.slug}`}><span>NEXT CONCEPT</span><strong>{next.name}</strong></Link>
-    </nav>
-  </>;
+    </article></div>
+  </div>;
 }
 
 function Care() {
@@ -228,5 +245,5 @@ export default function EvernePreview({ page }: { page: Page }) {
     const description = product ? `${product.name}: an EVERNE design concept in development. Product photography, specifications and ordering are not available.` : 'EVERNE is an independent womenswear project in preparation. The collection is not yet available to order.';
     applySeo({ title, description, path: product ? `/products/${product.slug}` : page === 'collection' ? `/collections/${categoryId}` : page === 'home' ? '/' : '/' + page, type: 'website', indexable: false });
   }, [page, product, categoryId]);
-  return <div className="everne-editorial" id="top"><Header page={page} categoryId={product?.category ?? categoryId} /><main id="main" tabIndex={-1}>{page === 'home' ? <Home /> : page === 'care' ? <Care /> : page === 'standards' ? <Standards /> : page === 'collection' ? <CollectionPage categoryId={categoryId} /> : <ProductPage handle={handle} />}</main><Footer /></div>;
+  return <div className="everne-editorial" id="top"><Header page={page} /><main id="main" tabIndex={-1}>{page === 'home' ? <Home /> : page === 'care' ? <Care /> : page === 'standards' ? <Standards /> : page === 'collection' ? <CollectionPage categoryId={categoryId} /> : <ProductPage handle={handle} />}</main><Footer /></div>;
 }

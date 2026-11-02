@@ -55,6 +55,8 @@ try {
   const all = renderPage('/collections/all');
   assertSafe(all, '/collections/all');
   assert.equal((all.match(/class="e-collection-card"/g) ?? []).length, 20, 'All pieces must show twenty product cards');
+  assert.equal((all.match(/class="e-sidebar-desktop"/g) ?? []).length, 1, 'The collection must expose desktop side navigation');
+  assert.equal((all.match(/class="e-sidebar-mobile"/g) ?? []).length, 1, 'The collection must have a compact mobile navigation drawer');
   assert.equal((all.match(/<img\b/g) ?? []).length, 0, 'No unapproved product photography in the grid');
   assert.match(all, /aria-current="page" href="\/collections\/all"/);
   for (const category of ['tops', 'knitwear', 'trousers', 'dresses', 'skirts']) {
@@ -76,6 +78,8 @@ try {
     const html = renderPage(url);
     assertSafe(html, url);
     assert.match(html, /Photograph pending/, `${product.name} must reserve image space without stock photos`);
+    assert.match(html, /aria-label="Products in this category"/, `${product.name} must be reachable from the sidebar product navigation`);
+    assert.match(html, new RegExp(`aria-current="page" href="/products/${product.slug}"`), `${product.name} must be selected in the sidebar`);
     assert.match(html, /NOT AVAILABLE TO ORDER/, `${product.name} must be expressly noncommercial`);
     assert.match(html, /Details under review/, `${product.name} must disclose pending specifications`);
     assert.match(html, /Composition &amp; care/, `${product.name} must not invent fabric composition`);

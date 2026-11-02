@@ -99,16 +99,18 @@ try {
     await check(width, 'Category bar and product card grid', async () => {
       await reset('#/collections/all');
       assert.equal(await page.locator('.e-collection-card').count(), 20);
-      assert.equal(await page.locator('.e-shop-nav-links [aria-current="page"]').count(), 1);
+      assert.equal(await page.locator('.e-sidebar-desktop .e-sidebar-categories [aria-current="page"]').count(), 1);
+      assert.equal(await page.locator('.e-shop-nav-links').count(), 0);
       assert.equal(await page.locator('img,form,input,[href*="checkout"]').count(), 0);
       for (const [category, count] of [['tops', 5], ['knitwear', 5], ['trousers', 4], ['dresses', 3], ['skirts', 3]]) {
         await reset(`#/collections/${category}`);
         assert.equal(await page.locator('.e-collection-card').count(), count);
-        assert.equal(await page.locator(`.e-shop-nav-links [aria-current="page"][href="#/collections/${category}"]`).count(), 1);
+        assert.equal(await page.locator(`.e-sidebar-desktop .e-sidebar-categories [aria-current="page"][href="#/collections/${category}"]`).count(), 1);
         assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 2), `${category}: no horizontal overflow`);
       }
       await page.locator('.e-collection-card a').first().click();
       await page.locator('#product-title').waitFor();
+      assert.equal(await page.locator('.e-sidebar-desktop .e-sidebar-products [aria-current="page"]').count(), 1);
     });
 
     await check(width, 'Product concept pages remain gated and discontinued routes stay hidden', async () => {
