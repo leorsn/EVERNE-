@@ -54,3 +54,16 @@ Dies ist ein **Risikomodell**, kein behaupteter Zollbescheid oder echter Currenc
 5. **Preis-Gate**: Sobald eine tatsächliche verbindliche pro-Variante **all-in DE**-Lieferantenrechnung vorliegt, auf dem unveränderten 49-EUR-EVERNE-Preisschild gegen **19,92 EUR** cap neu rechnen. Erst *dann* eine GO-Empfehlung erwägen; der öffentliche Shopify-Status bleibt weiter DRAFT/0 stock.
 
 **Entscheid zum 02.11.2026:** **0/20 GO.** Zwei namentlich und über Supplier-SKUs identifizierbare Knitwear-Kandidaten und eine **amtlich verifizierte neue 2-EUR-Importabgabe** sind als Arbeitsfortschritt dokumentiert; es wurde **nichts bestellt, bezahlt, publiziert, aktiviert oder am bestehenden 20er-Katalog geändert**.
+
+## 5. Rückwirkender Kostengate-Abgleich zweier älterer Tapstitch-Basics
+
+Die ältere P2-Shortlist hatte **Everyday Tank / WT0196 für öffentlich 5,99 USD** und **Soft Line Longsleeve / WT0226 für öffentlich ab 6,99 USD** als günstige **Recherchekandidaten** geführt. Werden dieselben **nicht-DDP-Import-Stressannahmen wie in Abschnitt 3** (Warenpreis × Modell-FX, +3-EUR-Zoll in der EUSt-Basis, 19 % nicht abziehbare EUSt, **+2 EUR Handling ohne USt**, **kein bereits eingepreister Zoll**) unterstellt, ergibt sich **bereits ohne Porto**, ohne Carrierentgelt und ohne saisonalen Zuschlag:
+
+| EVERNE-Basic | Modell-FX | Rechnerischer Import-Mindestbetrag **ohne Versand** | Zulässige komplette Supplier-Kosten | Max. *zusätzlicher* Versand in USD, bevor das Gewinnziel kippt |
+|---|---:|---:|---:|---:|
+| Everyday Tank, 34 EUR / WT0196, 5,99 USD | 0,90 | **11,99 EUR** | **11,30 EUR** | **–0,64 USD** (mathematisch unmöglich) |
+| Everyday Tank, 34 EUR / WT0196, 5,99 USD | 0,95 | **12,34 EUR** | **11,30 EUR** | **–0,92 USD** (mathematisch unmöglich) |
+| Soft Line Longsleeve, 39 EUR / WT0226, 6,99 USD | 0,90 | **13,06 EUR** | **14,17 EUR** | **1,04 USD** |
+| Soft Line Longsleeve, 39 EUR / WT0226, 6,99 USD | 0,95 | **13,47 EUR** | **14,17 EUR** | **0,62 USD** |
+
+**Konsequenz:** In diesem nicht-DDP-Basisszenario ist der 34-EUR-Tank **auch bei theoretisch kostenlosem Versand** nicht 30-%-nachsteuerfähig. Das 39-EUR-Longsleeve lässt nur **0,62–1,04 USD** Spielraum für Versand vor jeglichem Carrierzuschlag; deshalb als Geschäftsmodell höchstens **HOLD, nicht GO**. **Nicht** als reale Tapstitch-Abrechnung behaupten: Mit korrekt ausgewiesener echter DDP-Gesamtsumme, anderer IOSS-Versteuerung oder wenn Abgaben anderweitig enthalten sind, darf nichts doppelt gezählt werden. Die tatsächlichen EU-Frachtkonditionen ändern sich beim Lieferanten zudem ab 03.11.2026. Es wurde kein Preis im EVERNE-Katalog angepasst.
