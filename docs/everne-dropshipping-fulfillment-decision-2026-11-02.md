@@ -2,6 +2,12 @@
 
 **Status:** interne, unveröffentlichte Lieferanten-/Integrationsrecherche. **Kein Lieferant, kein SKU und kein Verkauf freigegeben.** Die bestehenden 20 Einträge in `src/womenswearCatalog.ts` bleiben rein redaktionelle Konzepte; dieser Vermerk ersetzt weder Produktfreigaben noch Rechts-/Steuerberatung.
 
+## Zusätzlicher Supplier-Screen: Syncee und Spocket (02.11.2026)
+
+Beide Apps sind im Shopify-Shop bereits installiert, aber **für EVERNEs strikt vollautomatisches, kostenneutrales Modell vorerst NO-GO**. **Syncee Marketplace:** automatischer Orderimport, danach muss der Händler die Order per Checkout/Karte/PayPal **selbst bezahlen**; erst dann wird an den Supplier automatisch weitergeleitet. **Spocket:** automatischer Orderimport, aber Händler muss **Checkout → Place Order** auslösen; erst dann erfolgt die Supplier-Belastung. Reguläre bezahlte Plattform-Einstiegstarife liegen öffentlich bei **39,99 USD/Monat** (Syncee Basic und Spocket Starter); kostenlose Stufen decken die geforderte komplette Supplier-Abwicklung nicht belegbar ab. Bei Spocket entstehen laut Hilfe zusätzlich **2,9 % + 0,30 USD** pro Supplier-Zahlung und gegebenenfalls Zuschläge, getrennt von Shopify-Kundenzahlungsgebühren.
+
+Ein zweiter lesender Collective-Produktscreen lieferte ebenfalls **keine nach Stil und echtem Nettogewinn freigabefähige EVERNE-Auswahl**; kein Katalogimport. [Volle Gegenprüfung mit Quellen und Kosten-/Steuergates](everne-syncee-spocket-dropshipping-gates-2026-11-02.md). Keine zusätzlichen Abos oder Zahlungswege freigegeben.
+
 ## Weitere bereits installierte Shopify-Dropshipping-Apps: CJ vs. HyperSKU (02.11.2026)
 
 Ein lesender App-Check bestätigt **CJdropshipping** und **HyperSKU** als bereits installiert — **nicht** deren Händlerkonten, Produktverknüpfungen oder aktive Zahlungsberechtigungen. Die Abfrage aktiver appbezogener Abos wurde wegen **Access denied** nicht weiterverfolgt: „free to install“ ist keine verifizierte Nullkostenrechnung.
