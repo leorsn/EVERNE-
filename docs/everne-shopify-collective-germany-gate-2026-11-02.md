@@ -1,6 +1,23 @@
 # EVERNE — Shopify Collective: Deutschland- und Margen-Gate (02.11.2026)
 
-**Status: recherchierte Option, HOLD; keine Installation, keine Anmeldung, kein Lieferantenkontakt, kein Produktimport, keine Live-Shop-Änderung.** Shopify Collective ist ein technisch aussichtsreicherer nativer Shopify-Weg als viele bisher untersuchte Großhandels-Feeds, aber **kein verifizierter EVERNE-Lieferant und keine 30-%-Gewinnfreigabe**.
+**Status: recherchierte Option, HOLD; Collective ist laut lesendem Shop-Check bereits installiert. In dieser Recherche keine neue Installation, keine Anmeldung, kein Lieferantenkontakt, kein Produktimport, keine Live-Shop-Änderung.** Shopify Collective ist ein technisch aussichtsreicherer nativer Shopify-Weg als viele bisher untersuchte Großhandels-Feeds, aber **kein verifizierter EVERNE-Lieferant und keine 30-%-Gewinnfreigabe**.
+
+## Live-Abgleich im verbundenen EVERNE-Shop (nur lesend, 02.11.2026)
+
+Ein ausschließlich lesender Shopify-Check hat den bisherigen theoretischen Gate-Stand präzisiert:
+
+| Prüffeld | Aus dem verbundenen Shop belegter Stand | Folgerung |
+|---|---|---|
+| Shop / Land / Währung | **EVERNE**, **Deutschland**, **EUR** | Die Land-/Währungsvoraussetzung auf Händlerseite ist erfüllt. |
+| Shopify-Tarif | **Basic** | Ein aktiver regulärer Plan wird angezeigt; Collective-Teilnahme ist dadurch noch nicht vollständig bestätigt. |
+| Shopify Collective | Die Anwendung **Collective** ist in der Liste bereits installierter Apps enthalten. | **Keine Installation erforderlich** und in dieser Recherche auch keine durchgeführt. |
+| Shopify Payments | Ein gezielter Nur-Lese-Abruf des Aktivierungsstatus wurde wegen fehlender Berechtigung `read_shopify_payments` / `read_shopify_payments_accounts` verweigert. | **Nicht verifiziert**. Berechtigungsgrenze respektiert; kein weiterer Zugriff, keine Konfigurationsänderung. |
+| Steuerkonfiguration, Network Intelligence, operative Collective-Berechtigung | Nicht über den verfügbaren lesenden Statuscheck nachgewiesen. | **Offen**, besonders wegen Kleinunternehmerstatus und Datenschutz-/Steueranforderungen. |
+| Direkter Produktscreen in der vorhandenen Collective-Discovery | Ein einmaliger privater Vorfilter zu schlichten Oberteilen, weiten Hosen und Midiröcken wurde durchgeführt. Unter den sichtbaren Resultaten konnte **keine für EVERNE vollständig freigabefähige Kombination aus passendem Stil und nachgewiesenen 30 % Nettogewinn** festgestellt werden. | Kein Import, keine Einladung, keine Preislistenanfrage, keine Produktfreigabe; weiter **HOLD**. Dies beweist weder, dass der Katalog vollständig abgesucht wurde, noch, dass es generell keine passenden Produkte gibt. |
+
+**Besonders wichtig:** Shopify unterscheidet in seiner [Discovery-Anleitung](https://help.shopify.com/de/manual/online-sales-channels/shopify-collective/retailers/discovery) zwischen öffentlich sofort importierbaren Preislisten und Lieferanten, bei denen Preise erst angefragt werden müssen. **„Sofort importierbar“ bedeutet nicht „für EVERNE wirtschaftlich geeignet“**. Ohne vollständigen echten Brutto-Lieferantenbetrag (Artikel, anwendbare B2B-USt., Porto), Retoure, Zahlungsmittel, passende Variante und persönliche Ertragsteuerwirkung kann der geforderte Gewinn nicht freigegeben werden.
+
+Für die vorliegende Tätigkeit wurde die Shopify-Skill-Anbindung **nur zur lesenden Verifikation**, nicht zur aktiven Shop-Konfiguration, verwendet. Der Shopify-Collective-Suchzugang ist vorhanden; eine zugängliche Discovery-Oberfläche ersetzt aber keine dokumentierte Zulässigkeits-/Preisprüfung.
 
 ## 1. Harte technische Erkenntnis
 
@@ -47,7 +64,7 @@ Bei einer verlangten **30-%-Gewinnquote bezogen auf die gesamte Kundenzahlung `P
 
 | Gate | Erforderlicher Nachweis | Status |
 |---|---|---|
-| Shop-Berechtigung | Aktiver Plan; DE/EUR; Shopify Payments; Tax-Konfiguration korrekt für Kleinunternehmer; erforderliche ID-/Steuerverifikation; Network Intelligence bewusst gebilligt | **Ungeprüft; keine Änderung autorisiert** |
+| Shop-Berechtigung | Aktiver Plan; DE/EUR; Shopify Payments; Tax-Konfiguration korrekt für Kleinunternehmer; erforderliche ID-/Steuerverifikation; Network Intelligence bewusst gebilligt | **Basic / DE / EUR und Collective-Installation lesend bestätigt; übrige Voraussetzungen ungeprüft; keine Änderung autorisiert** |
 | Geeigneter Lieferant | Shopify-Lieferant **DE/EUR**; konkrete ruhige, hochwertige Damenmode-SKUs samt Varianten; Erlaubnis zum Verkauf unter EVERNE-Editorial | **Kein Kandidat verifiziert** |
 | Kein neues Abo | Keine Lieferanten-/App-Grundgebühr, über bestehenden Shopify-Kosten hinaus | **App laut Shopify kostenlos; individuelle Supplier-Konditionen unbekannt** |
 | Automatik | Automatische Kundenzahlungserfassung → Supplier-Auftrag → Supplier-Zahlung → Versand/Tracking; ausreichendes Payments-Guthaben | **Plattform dokumentiert; EVERNE-/Supplier-Test offen** |
