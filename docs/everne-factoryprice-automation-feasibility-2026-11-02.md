@@ -8,6 +8,27 @@
 
 Die öffentlich belegte XML-Anbindung betrifft vor allem **Katalog, Varianten, Preise und Bestände**. Sie ist nicht gleichbedeutend mit einem Bestell- oder Versandetikett-API.
 
+## Zweitprüfung der offiziellen Aussagen: „Integration“ ist keine belegte Abwicklung
+
+**Operative Einstufung: NO-GO für die geforderte vollständig automatische, unbeaufsichtigte Bestellabwicklung unter dem derzeit öffentlich belegten Stand.** Das ist kein technischer Beweis, dass FactoryPrice niemals eine geeignete Schnittstelle anbieten kann. Es ist die Konsequenz daraus, dass der verlangte *durchgehende* Ablauf nicht nachgewiesen ist. Für Einkaufs- und Stilbenchmarks bleibt der Anbieter als reine Recherchequelle nutzbar.
+
+| Originalquelle / direkte Aussage | Tatsächlich belegt | Was gerade **nicht** belegt ist |
+|---|---|---|
+| FactoryPrice, spezielle Dropshipping-Prozessbeschreibung: automatisch synchronisiert werden **Bestände und Preise**; danach leitet der Händler den Auftrag weiter und lädt sein Etikett im eingeloggten System hoch. | Produktfeed, Händlerprozess mit eigener Versandetikette, 3 PLN Handling pro Paket. | Automatische Shopify-Orderannahme, automatische Warenzahlung und maschinelle **sendungsgenaue** Übertragung eines bereits bezahlten PL→DE-Labels. |
+| FactoryPrice, allgemeiner Leitfaden: Bestellung „manuell oder automatisch“ via XML/API. | Der Anbieter *bewirbt* die Möglichkeit einer Order-Automation als allgemeinen Weg. | Eine konkret zugängliche, freigeschaltete **FactoryPrice-Order-API**, Prozessdokumentation, Beispielpayload, Rückmeldungen oder Shop-spezifische Verbindung. |
+| Base.com, offizielle Großhändler-Hilfe: Bei Dropshipping-Aufträgen ist die **eigene Weitergabe an den Großhändler der Standard**. Nur entsprechend markierte Lieferanten können per automatischer Aktion Aufträge empfangen. | Base.com *kann* für qualifizierte Großhändler automatisch weiterleiten. | Dass die benötigte Lieferantenfunktion speziell bei FactoryPrice vorhanden ist. „Native Base.com“-Werbung des Lieferanten ist kein solcher Nachweis. |
+| Base.com, dieselbe Hilfe: **Abrechnung zwischen Händler und Großhändler außerhalb von Base.com**, eigene Vereinbarung erforderlich. | Standard-Großhändlerintegration löst den Geldfluss nicht selbst. | Automatische Belastung, Zahlungszuordnung und Erstattung bei FactoryPrice oder ein bestätigter Base-Connect-Zahlungsmechanismus. |
+| FactoryPrice, Anleitung im Bereich „Dropshipping-Einstellungen“: Upload einer „Absender-Etikette“ nach Login. | Ein Händler-Upload ist beschrieben. | Ob dies eine einmalige Vorlage mit Absenderdaten oder ein **für jeden Auftrag neu frankiertes Transportlabel** ist; welche Route/Auftrags-ID eine maschinelle Übergabe nutzt. |
+
+**Entscheidungslogik:** Schon **ein** fehlender automatisierter Schritt bricht die verlangte Kette. Hier sind mindestens Auftragsübergabe, Lieferantenzahlung und die Übergabe des konkreten, gültigen Versandlabels nicht durch einen FactoryPrice-spezifischen Primärnachweis geschlossen. Die positiven Zwei-/Drei-Artikel-Margenmodelle sind damit **keine Grundlage, Bestellungen oder Bundles produktiv zu schalten**. Kein Konto angelegt, kein Lieferant kontaktiert, kein Label gekauft, keine App installiert.
+
+**Wiederaufnahme nur mit klarer Evidenz:** (1) dokumentiertes FactoryPrice-Order-API bzw. tatsächlich verwendbarer Base-Connect-Code inklusive Rückmeldungen, (2) autorisierter automatischer Zahlungsweg und Abrechnung, (3) dokumentierter automatischer, auf Auftrag und Paket referenzierter Labeltransfer *plus* nachweislich gültiger PL→DE-Kurierkonfiguration und (4) Status/Tracking und Retourenbehandlung. Erst danach, gesondert autorisiert, ein isolierter Test mit reproduzierbarem Nachweis über die ganze Kette.
+
+Zusätzlich geprüfte Primärseiten:
+- FactoryPrice, spezieller Ablauf und Integrationstabelle: https://factoryprice.eu/pl/cms/hurtownia-dropshipping-odziezy-damskiej-nadajemy-na-twojej-etykiecie-783.html
+- FactoryPrice, allgemeiner Leitfaden „manuell oder automatisch“: https://factoryprice.eu/pl/cms/dropshipping-co-to-jest-i-jak-dziala-781.html
+- Base.com, Großhändler-Hilfe, Unterkapitel „Automatyczne przekazywanie zamówień“ und „Opłaty“: https://www.base.com/pl-PL/pomoc/wiedza/hurtownie/
+
 ## Durchgängige Prozesskette: Beweisstatus
 
 | Prozessschritt | Gefundener technischer Ansatz | Nachweisstatus für FactoryPrice/EVERNE | Verbleibender Beleg |
