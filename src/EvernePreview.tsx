@@ -4,6 +4,17 @@ import { applySeo } from './seo';
 import { draftCategories, findProductDraft, productDrafts } from './productDrafts';
 
 type Page = 'home' | 'care' | 'standards' | 'product' | 'collection';
+type SortOrder = 'edit' | 'name';
+const sortPreferenceKey = 'everne-preview-sort';
+
+function getSavedSortOrder(): SortOrder {
+  try {
+    return window.sessionStorage.getItem(sortPreferenceKey) === 'name' ? 'name' : 'edit';
+  } catch {
+    // File-based Safari previews can restrict sessionStorage.
+    return 'edit';
+  }
+}
 const categories = [
   { id: 'tops', name: 'Tops & Bodysuits', image: '06-bodysuit.jpg', alt: 'Fashion model in a black top against a warm brown studio background.' },
   { id: 'knitwear', name: 'Knitwear', image: '07-knitwear.jpg', alt: 'Fashion model in a sculptural white knit sweater against a dark studio backdrop.' },
@@ -58,7 +69,7 @@ function ShopSidebar({ categoryId, productHandle }: { categoryId?: string; produ
   const label = draftCategories.find((item) => item.id === categoryId)?.label ?? 'All pieces';
   return <aside className="e-shop-sidebar" aria-label="Collection navigation">
     <div className="e-sidebar-desktop"><span className="e-sidebar-title">WOMAN</span><SidebarLinks categoryId={categoryId} productHandle={productHandle} /></div>
-    <details className="e-sidebar-mobile">
+    <details className="e-sidebar-mobile" key={`${categoryId ?? 'all'}-${productHandle ?? 'collection'}`}>
       <summary>Browse collection <span>{label}</span></summary>
       <div className="e-sidebar-mobile-content"><SidebarLinks categoryId={categoryId} productHandle={productHandle} /></div>
     </details>
@@ -84,7 +95,14 @@ function Footer() {
 }
 
 function CollectionPage({ categoryId }: { categoryId?: string }) {
-  const [sortOrder, setSortOrder] = useState<'edit' | 'name'>('edit');
+  const [sortOrder, setSortOrder] = useState<SortOrder>(getSavedSortOrder);
+  useEffect(() => {
+    try {
+      window.sessionStorage.setItem(sortPreferenceKey, sortOrder);
+    } catch {
+      // Browsing and sorting must continue if storage is unavailable.
+    }
+  }, [sortOrder]);
   const category = draftCategories.find((entry) => entry.id === categoryId);
   const all = categoryId === 'all';
   if (!all && !category) return <section className="e-product-missing">
@@ -104,7 +122,7 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
       <div className="e-collection-tools">
         <span className="e-collection-count">{items.length} pieces</span>
         <label className="e-sort-label" htmlFor="everne-sort">Sort by</label>
-        <select id="everne-sort" className="e-sort-select" value={sortOrder} onChange={(event) => setSortOrder(event.target.value as 'edit' | 'name')}>
+        <select id="everne-sort" className="e-sort-select" value={sortOrder} onChange={(event) => setSortOrder(event.target.value as SortOrder)}>
           <option value="edit">The edit</option>
           <option value="name">Name A–Z</option>
         </select>

@@ -101,6 +101,21 @@ try {
       assert.equal(await page.locator('.e-collection-card').count(), 20);
       await page.locator('#everne-sort').selectOption('name');
       assert.equal(await page.locator('.e-collection-card h2').first().innerText(), 'Denim Midi Skirt', 'Alphabetical ordering must reorder cards without changing the available catalog');
+      const storageAvailable = await page.evaluate(() => {
+        try {
+          sessionStorage.setItem('everne-preview-storage-test', '1');
+          sessionStorage.removeItem('everne-preview-storage-test');
+          return true;
+        } catch { return false; }
+      });
+      if (storageAvailable) {
+        await page.locator('.e-collection-card a').first().click();
+        await page.locator('.e-product-page').waitFor();
+        await page.locator('.e-product-information .e-text-link').click();
+        await page.locator('#everne-sort').waitFor();
+        assert.equal(await page.locator('#everne-sort').inputValue(), 'name', 'Sort preference must survive a product detail visit');
+        await reset('#/collections/all');
+      }
       await page.locator('#everne-sort').selectOption('edit');
       assert.equal(await page.locator('.e-collection-card h2').first().innerText(), 'Essential Rib Top', 'Editorial sequence must be restorable');
       assert.equal(await page.locator('.e-sidebar-desktop .e-sidebar-categories [aria-current="page"]').count(), 1);
@@ -111,6 +126,14 @@ try {
         assert.equal(await page.locator('.e-collection-card').count(), count);
         assert.equal(await page.locator(`.e-sidebar-desktop .e-sidebar-categories [aria-current="page"][href="#/collections/${category}"]`).count(), 1);
         assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 2), `${category}: no horizontal overflow`);
+      }
+      if (width <= 900) {
+        await reset('#/collections/tops');
+        await page.locator('.e-sidebar-mobile summary').click();
+        assert.equal(await page.locator('.e-sidebar-mobile').evaluate((drawer) => drawer.open), true);
+        await page.locator('.e-sidebar-mobile .e-sidebar-categories a[href="#/collections/knitwear"]').click();
+        await page.locator('#collection-page-title').waitFor();
+        assert.equal(await page.locator('.e-sidebar-mobile').evaluate((drawer) => drawer.open), false, 'Mobile category drawer must close on route changes');
       }
       await page.locator('.e-collection-card a').first().click();
       await page.locator('#product-title').waitFor();

@@ -29,3 +29,7 @@ The owner requested a visible side navigation for category and product detail pa
 ## Product browsing and fit-readiness refinement
 
 The next iteration focuses on the buying journey without activating commerce: all 20 cards remain compact in a four-column desktop or two-column mobile grid; the full catalog shows subtle category labels; a small accessible sort selector switches between the editorial sequence and name A–Z. Photo reservations remain visibly neutral, with the two supporting positions labelled as pending views. On each individual product page an unobtrusive **size selection / awaiting fit approval** row reserves the future fitting step without advertising size variants or inventory. Product research claims, transaction controls, live prices, and image approval gates remain unchanged.
+
+## Browsing continuity and mobile category navigation
+
+The sorting preference is now remembered within the current browser tab so that returning from a product detail page does not unexpectedly reorder the collection. If browser storage is unavailable, as may occur in a local Safari `file://` preview, sorting works for the current page without persistence. The mobile category disclosure is keyed to the route context, so moving between categories or products resets the expanded drawer. The established route-focus and scroll-to-heading behaviour remains in place.
