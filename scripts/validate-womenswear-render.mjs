@@ -44,12 +44,12 @@ try {
   assert.match(home, /id="collection"/);
   assert.equal((home.match(/class="e-category"/g) ?? []).length, 5);
   assert.equal((home.match(/<img\b/g) ?? []).length, 6);
-  assert.match(home, /NOT AN EVERNE GARMENT/);
-  assert.match(home, /PHOTOGRAPHIC STYLE REFERENCES ONLY/);
+  assert.match(home, /not an EVERNE garment/i);
+  assert.match(home, /Photographic styling references only/);
   assert.match(home, /href="\/care"/);
   assert.equal((home.match(/class="e-product-index-group"/g) ?? []).length, 0, 'Remove the long five-column product name list');
   assert.equal((home.match(/href="\/products\/[a-z0-9-]+"/g) ?? []).length, 0, 'Product cards live inside categories');
-  assert.equal((home.match(/href="\/collections\/[a-z]+"/g) ?? []).length, 13, 'Six category bar links, five image tiles and two collection CTAs');
+  assert.equal((home.match(/href="\/collections\/[a-z]+"/g) ?? []).length, 12, 'Six category bar links, five image tiles and one collection CTA');
   assert.match(home, /aria-label="Shop by category"/);
 
   const all = renderPage('/collections/all');
@@ -75,7 +75,7 @@ try {
     const url = `/products/${product.slug}`;
     const html = renderPage(url);
     assertSafe(html, url);
-    assert.match(html, /IMAGE<br\/>PENDING/, `${product.name} must reserve image space without stock photos`);
+    assert.match(html, /Photograph pending/, `${product.name} must reserve image space without stock photos`);
     assert.match(html, /NOT AVAILABLE TO ORDER/, `${product.name} must be expressly noncommercial`);
     assert.match(html, /Details under review/, `${product.name} must disclose pending specifications`);
     assert.match(html, /Composition &amp; care/, `${product.name} must not invent fabric composition`);
@@ -95,7 +95,7 @@ try {
   assert.match(care, /The care/);
   assert.match(care, /no products can be ordered here/);
   assert.equal((care.match(/<img\b/g) ?? []).length, 1);
-  assert.match(care, /aria-current="page" href="\/care"/);
+  assert.match(care, /href="\/care"/, 'Care remains available in the restrained footer navigation');
 
   const standard = renderPage('/standards');
   assertSafe(standard, '/standards');

@@ -97,6 +97,8 @@ try {
     await cdp('Emulation.setDeviceMetricsOverride', { width, height: 844, deviceScaleFactor: 2, mobile: true });
     await navigate(preview + '#/');
     await eq('document.querySelectorAll(".e-category").length', 5, `${width}px: five category labels`);
+    await eq('document.querySelectorAll(".e-wardrobe-endnote,.e-collection-entry,.e-approach,.e-care-teaser").length', 0,
+      `${width}px: no redundant editorial panels on the shop homepage`);
     await eq('document.querySelectorAll(".e-shop-nav-links a").length', 6, `${width}px: six category bar links`);
     await eq('document.querySelectorAll(".e-product-index-group").length', 0, `${width}px: no long product list`);
     await eq('document.images.length', 6, `${width}px: six garment styling references`);
@@ -142,6 +144,7 @@ try {
   await eq('document.querySelectorAll(".e-product-page").length', 0, 'Withdrawn edit route does not render a product page');
   await navigate(preview + '#/products/essential-rib-top');
   await eq('document.querySelector("main h1")?.textContent?.includes("Essential Rib Top")', true, 'First draft product renders');
+  await eq('document.querySelectorAll(".e-product-accordion").length', 3, 'Product notes sit in three restrained disclosure rows');
   await eq('document.images.length', 0, 'Draft product contains no unapproved photography');
   await eq('document.querySelectorAll("form,input,[href*=checkout]").length', 0, 'Draft has no buying controls');
   await eq('document.body.innerText.includes("NOT AVAILABLE TO ORDER")', true, 'Draft availability is explicit');

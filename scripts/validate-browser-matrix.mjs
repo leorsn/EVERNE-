@@ -86,7 +86,7 @@ try {
       await page.keyboard.press('Enter');
       await page.waitForFunction(() => document.activeElement?.id === 'main');
       assert.equal(await page.evaluate(() => getComputedStyle(document.documentElement).scrollBehavior), 'auto');
-      await page.locator('.e-nav-right a[href="#/care"]').click();
+      await page.locator('.e-footer-bottom nav a[href="#/care"]').click();
       await page.locator('#care-title').waitFor();
       assert.equal(await page.locator('img').count(), 1);
       await page.locator('.e-nav-right a[href="#/standards"]').click();

@@ -17,3 +17,7 @@ Owner feedback rejected the long 20-name index on the homepage. The design previ
 ## Monochrome direction
 
 The owner next requested black and white in place of the warm brown and beige palette. All client stylesheet colour tokens are neutral greyscale; the header, category navigation, product grid and detail pages retain a dark base with white typography, while the collection-entry stripe uses white with black text. Existing independent editorial styling photographs are displayed in greyscale (the original licensed files remain untouched). No product approval or sales-state change is implied.
+
+## Minimal storefront revision
+
+Owner review found the intermediate monochrome layout too visually busy. The next iteration removes the white collection-entry band and redundant direction/care marketing panels, compresses the primary navigation, reduces the footer wordmark, strips repeated labels from category and product cards, and folds the draft detail-page notes into accessible native disclosure rows. The five existing category reference photographs and all 20 distinct product concept detail routes remain. Product images and verified commercial terms are still absent; `NO_PRODUCTS` and `noindex` remain enforced.

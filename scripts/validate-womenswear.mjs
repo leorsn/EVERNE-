@@ -65,11 +65,11 @@ assert.ok(fs.existsSync('research-assets/products/garment-brush/catalog.webp'), 
 assert.ok(!fs.existsSync('public/editorial') && !fs.existsSync('public/products'),
   'Unapproved photography cannot remain in public/');
 
-for (const section of ['EVERNE / WOMAN', 'OUR STANDARD', 'CARE', 'THE FIRST SELECTION', 'OUR DIRECTION']) {
+for (const section of ['EVERNE / WOMAN', 'OUR STANDARD', 'CARE', 'Shop by category', 'VIEW COLLECTION']) {
   assert.ok(landing.includes(section), `Missing editorial navigation or chapter: ${section}`);
 }
-assert.match(landing, /NOT AN EVERNE GARMENT/);
-assert.match(landing, /PHOTOGRAPHIC STYLE REFERENCES ONLY/);
+assert.match(landing, /not an EVERNE garment/i);
+assert.match(landing, /Photographic styling references only/);
 assert.match(landing, /No garments are available to order/);
 assert.match(landing, /external suppliers/);
 assert.match(landing, /No active sales/);

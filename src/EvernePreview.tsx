@@ -27,21 +27,17 @@ function Header({ page, categoryId }: { page: Page; categoryId?: string }) {
     <header className="e-header">
       <nav className="e-nav-left" aria-label="Collection navigation">
         <Link className={page === 'home' ? 'e-active' : ''} aria-current={page === 'home' ? 'page' : undefined} to="/">WOMAN</Link>
-        <Link to="/#direction">OUR DIRECTION</Link>
       </nav>
       <Link to="/" className="e-wordmark" aria-label="EVERNE — home">EVERNE</Link>
       <nav className="e-nav-right" aria-label="Other sections">
-        <Link className={page === 'care' ? 'e-active' : ''} aria-current={page === 'care' ? 'page' : undefined} to="/care">CARE</Link>
         <Link className={page === 'standards' ? 'e-active' : ''} aria-current={page === 'standards' ? 'page' : undefined} to="/standards">OUR STANDARD</Link>
       </nav>
     </header>
     <nav className="e-shop-nav" aria-label="Shop by category">
-      <span className="e-shop-nav-label">WOMAN / THE EDIT</span>
       <div className="e-shop-nav-links">
         <Link to="/collections/all" className={page === 'collection' && categoryId === 'all' ? 'e-selected' : ''} aria-current={page === 'collection' && categoryId === 'all' ? 'page' : undefined}>ALL PIECES</Link>
         {draftCategories.map((category) => <Link key={category.id} to={`/collections/${category.id}`} className={(page === 'collection' || page === 'product') && categoryId === category.id ? 'e-selected' : ''} aria-current={page === 'collection' && categoryId === category.id ? 'page' : undefined}>{category.label.toUpperCase()}</Link>)}
       </div>
-      <span className="e-shop-nav-counter">20 / EDIT 01</span>
     </nav>
   </>;
 }
@@ -50,7 +46,7 @@ function Footer() {
   return <footer className="e-footer">
     <div className="e-footer-main">
       <Link to="/" className="e-footer-wordmark">EVERNE</Link>
-      <p>An independent womenswear project.<br />Hamburg, Germany.</p>
+      <p>Hamburg, Germany.</p>
     </div>
     <div className="e-footer-bottom">
       <span>© EVERNE 2026 · Private design preview · No active sales</span>
@@ -60,7 +56,7 @@ function Footer() {
         <a href="/legal.html#shipping">Delivery & returns</a>
       </nav>
     </div>
-    <p className="e-reference-note">Editorial reference photography only. Clothing pictured is not an EVERNE product.</p>
+    <p className="e-reference-note">Clothing pictured is not an EVERNE product.</p>
   </footer>;
 }
 
@@ -76,24 +72,21 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
   const items = all ? productDrafts : productDrafts.filter((item) => item.category === categoryId);
 
   return <section className="e-collection-page" aria-labelledby="collection-page-title">
-    <nav className="e-collection-breadcrumb" aria-label="Breadcrumb"><Link to="/">EVERNE</Link><span>/</span><Link to="/collections/all">WOMAN</Link>{!all && <><span>/</span><span>{category?.label}</span></>}</nav>
     <div className="e-collection-heading">
-      <div><span className="e-kicker">EVERNE / WOMAN / FIRST EDIT</span><h1 id="collection-page-title" tabIndex={-1}>{all ? 'All pieces.' : category?.label}</h1></div>
-      <div className="e-collection-heading-right"><span>{String(items.length).padStart(2, '0')} PIECES</span><p>Collection in preparation.<br />Photography and product details to follow.</p></div>
+      <h1 id="collection-page-title" tabIndex={-1}>{all ? 'All pieces' : category?.label}</h1>
+      <span className="e-collection-count">{items.length} pieces</span>
     </div>
     <div className="e-collection-grid" role="list" aria-label={`${all ? 'All' : category?.label} design concepts`}>
       {items.map((item) => <article className="e-collection-card" role="listitem" key={item.slug}>
         <Link to={`/products/${item.slug}`} aria-label={`View ${item.name} design preview`}>
           <div className="e-collection-card-image" aria-hidden="true">
-            <span className="e-collection-card-index">EVERNE / WOMAN</span>
-            <span className="e-collection-image-pending">IMAGE<br />PENDING</span>
-            <span className="e-collection-card-photo">PRODUCT PHOTOGRAPHY TO FOLLOW</span>
+            <span className="e-collection-image-pending">Photograph pending</span>
           </div>
-          <div className="e-collection-card-caption"><h2>{item.name}</h2><span>DESIGN PREVIEW <span aria-hidden="true">↗</span></span></div>
+          <div className="e-collection-card-caption"><h2>{item.name}</h2></div>
         </Link>
       </article>)}
     </div>
-    <p className="e-collection-disclosure">DEVELOPMENT PREVIEW ONLY. PHOTOGRAPHS, MATERIALS, FIT, SIZES AND PRICES ARE NOT APPROVED. NO ORDERS CAN BE PLACED.</p>
+    <p className="e-collection-disclosure">Design preview only. Photography and specifications are pending. No garments are available to order.</p>
   </section>;
 }
 
@@ -102,65 +95,35 @@ function Home() {
     <section className="e-hero" aria-labelledby="hero-title">
       <div className="e-hero-visual">
         <img src={editorial('05-tailoring.jpg')} alt="Independent styling reference: fashion model wearing an oversized black blazer and boots against a neutral studio backdrop. This outfit is not an EVERNE product." fetchPriority="high" />
-        <span className="e-visual-credit">STYLING REFERENCE / NOT AN EVERNE GARMENT</span>
+        <span className="e-visual-credit">EDITORIAL REFERENCE / NOT AN EVERNE GARMENT</span>
       </div>
       <div className="e-hero-copy">
         <span className="e-kicker">EVERNE / WOMAN</span>
         <div className="e-hero-content">
-          <h1 id="hero-title" tabIndex={-1}>The first<br /><em>edit.</em></h1>
+          <h1 id="hero-title" tabIndex={-1}>The first edit.</h1>
           <p>A considered edit of modern womenswear.</p>
-          <Link className="e-text-link" to="/collections/all">EXPLORE THE EDIT <span aria-hidden="true">↗</span></Link>
+          <Link className="e-text-link" to="/collections/all">VIEW COLLECTION <span aria-hidden="true">↗</span></Link>
         </div>
-        <span className="e-hero-index">WOMENSWEAR / COLLECTION IN PREPARATION</span>
       </div>
     </section>
 
     <section className="e-wardrobe" id="collection" aria-labelledby="collection-title">
       <div className="e-wardrobe-heading">
-        <div>
-          <span className="e-kicker">THE FIRST SELECTION / WOMAN</span>
-          <h2 id="collection-title" tabIndex={-1}>The wardrobe.</h2>
-        </div>
-        <p>Five wardrobe categories.<br />Collection in preparation.</p>
+        <h2 id="collection-title" tabIndex={-1}>Shop by category.</h2>
       </div>
       <div className="e-wardrobe-grid" role="list" aria-label="Planned womenswear categories with reference photographs">
         {categories.map(({ id, name, image, alt }, index) => <article className="e-category" role="listitem" key={name}>
           <Link to={`/collections/${id}`} aria-label={`Explore ${name} design concepts`}>
             <div className="e-category-image">
               <img src={editorial(image)} loading={index < 3 ? 'eager' : 'lazy'} alt={alt + ' Independent reference photo, not an EVERNE garment.'} />
-              <span>STYLING STUDY</span>
             </div>
             <div className="e-category-caption">
-              <div><span>0{index + 1} / WOMAN</span><h3>{name}</h3></div>
-              <span className="e-category-status">VIEW PIECES ↗</span>
+              <h3>{name}</h3>
             </div>
           </Link>
         </article>)}
-        <div className="e-wardrobe-endnote">
-          <span className="e-kicker">ABOUT THE FIRST EDIT</span>
-          <p>Nothing rushed.</p>
-          <span>Fit, fabric information and final product imagery are being reviewed before launch.</span>
-          <Link className="e-text-link" to="/standards">OUR STANDARD <span aria-hidden="true">↗</span></Link>
-        </div>
       </div>
-      <p className="e-wardrobe-disclosure">PHOTOGRAPHIC STYLE REFERENCES ONLY. THE CLOTHING SHOWN IS NOT FROM EVERNE. NO GARMENTS ARE YET AVAILABLE TO ORDER.</p>
-    </section>
-
-    <section className="e-collection-entry" aria-label="Browse the full edit">
-      <div><span className="e-kicker">THE FIRST EDIT / 20 DESIGN CONCEPTS</span><p>Explore the pieces.</p></div>
-      <Link className="e-text-link" to="/collections/all">VIEW ALL PIECES <span aria-hidden="true">↗</span></Link>
-    </section>
-
-    <section className="e-approach" id="direction" aria-label="EVERNE direction">
-      <span className="e-kicker">EVERNE / OUR DIRECTION</span>
-      <p>Considered pieces.<br /><em>A quieter wardrobe.</em></p>
-      <Link className="e-text-link" to="/standards">HOW WE SELECT <span aria-hidden="true">↗</span></Link>
-    </section>
-
-    <section className="e-care-teaser" aria-labelledby="care-teaser-title">
-      <span className="e-kicker">EVERNE / CARE</span>
-      <h2 id="care-teaser-title">Made to be kept in mind.</h2>
-      <Link className="e-text-link" to="/care">DISCOVER CARE <span aria-hidden="true">↗</span></Link>
+      <p className="e-wardrobe-disclosure">Photographic styling references only. The clothing shown is not from EVERNE. No garments are available to order.</p>
     </section>
   </>;
 }
@@ -186,38 +149,36 @@ function ProductPage({ handle }: { handle?: string }) {
     <article className="e-product-page" aria-labelledby="product-title">
       <div className="e-product-gallery" aria-label="Reserved image positions for pending product photography">
         <div className="e-product-image-slot e-product-image-main" role="note" aria-label="Primary product photograph is not yet available">
-          <span>EVERNE / WOMAN</span>
-          <strong>IMAGE<br />PENDING</strong>
-          <span>01 / MAIN PRODUCT IMAGE</span>
+          <span className="e-product-image-pending">Photograph pending</span>
         </div>
         <div className="e-product-image-pair">
-          <div className="e-product-image-slot" role="note" aria-label="Secondary product photograph is not yet available"><span>02 / SECONDARY VIEW</span><small>AWAITING APPROVED PHOTO</small></div>
-          <div className="e-product-image-slot" role="note" aria-label="Garment detail photograph is not yet available"><span>03 / DETAIL VIEW</span><small>AWAITING APPROVED PHOTO</small></div>
+          <div className="e-product-image-slot" role="note" aria-label="Secondary product photograph is not yet available" />
+          <div className="e-product-image-slot" role="note" aria-label="Garment detail photograph is not yet available" />
         </div>
       </div>
       <div className="e-product-information">
-        <span className="e-kicker">EVERNE / WOMAN · DESIGN PREVIEW {String(index + 1).padStart(2, '0')} / 20</span>
         <h1 id="product-title" tabIndex={-1}>{item.name}</h1>
         <p className="e-product-intro">{item.description}</p>
-        <div className="e-product-pending"><span>IN DEVELOPMENT</span><span>NOT AVAILABLE TO ORDER</span></div>
-        <section className="e-product-copy" aria-labelledby="design-direction-title">
-          <h2 id="design-direction-title">Design direction</h2>
-          <p>{item.designDirection}</p>
-        </section>
-        <section className="e-product-copy" aria-labelledby="styling-note-title">
-          <h2 id="styling-note-title">Styling note</h2>
-          <p>{item.stylingNote}</p>
-        </section>
-        <div className="e-product-specs" aria-label="Specifications still under review">
-          <h2>Details under review</h2>
-          <dl>
-            <div><dt>Fit direction</dt><dd>{item.fitDirection}</dd></div>
-            <div><dt>Composition & care</dt><dd>Pending fabric, care-label and physical-sample review.</dd></div>
-            <div><dt>Sizes & colours</dt><dd>Not verified or offered at this stage.</dd></div>
-            <div><dt>Price & delivery</dt><dd>Not published. No orders or reservations can be placed.</dd></div>
-          </dl>
+        <p className="e-product-pending">NOT AVAILABLE TO ORDER</p>
+        <div className="e-product-accordions">
+          <details className="e-product-accordion">
+            <summary>Design & fit</summary>
+            <p>{item.designDirection}</p><p>{item.fitDirection}</p>
+          </details>
+          <details className="e-product-accordion">
+            <summary>Styling</summary>
+            <p>{item.stylingNote}</p>
+          </details>
+          <details className="e-product-accordion">
+            <summary>Details under review</summary>
+            <dl>
+              <div><dt>Composition & care</dt><dd>Pending fabric, care-label and physical-sample review.</dd></div>
+              <div><dt>Sizes & colours</dt><dd>Not verified or offered at this stage.</dd></div>
+              <div><dt>Price & delivery</dt><dd>Not published. No orders or reservations can be placed.</dd></div>
+            </dl>
+          </details>
         </div>
-        <p className="e-product-disclaimer">This is a private design-page draft, not an offer. Descriptions are creative direction only and do not confirm that a particular garment, fabric or fit is available.</p>
+        <p className="e-product-disclaimer">Private design preview only. Final garment details and photography have not been approved.</p>
         <Link className="e-text-link" to={`/collections/${item.category}`}>BACK TO {category?.label.toUpperCase()} <span aria-hidden="true">↗</span></Link>
       </div>
     </article>
