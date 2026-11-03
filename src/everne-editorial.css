@@ -940,3 +940,25 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
 @media (prefers-reduced-motion: reduce) {
   .e-all-hero-cta { transition: none; }
 }
+
+/* Mobile shop: one clear category rail instead of three duplicate menus.
+   Product-detail pages keep their separate browse drawer for neighbouring pieces. */
+@media (max-width: 900px) {
+  .e-shop-nav-browse:not(.e-shop-nav-product),
+  .e-shop-shell:not(.e-shop-shell-product) .e-shop-sidebar { display: none; }
+  .e-shop-shell:not(.e-shop-shell-product) { gap: 0; padding-top: 0; }
+  .e-collection-category-filter { scroll-snap-type: x proximity; overscroll-behavior-inline: contain; }
+  .e-collection-category-filter a { scroll-snap-align: start; }
+}
+@media (max-width: 700px) {
+  .e-shop-shell .e-collection-grid:not(.e-collection-list) .e-collection-card-caption { grid-template-columns: minmax(0, 1fr); gap: 5px; }
+  .e-shop-shell .e-collection-grid:not(.e-collection-list) .e-collection-card-caption h2 { grid-column: 1; grid-row: 1; overflow-wrap: anywhere; }
+  .e-shop-shell .e-collection-grid:not(.e-collection-list) .e-collection-price-placeholder { grid-column: 1; grid-row: 2; white-space: normal; }
+  .e-shop-shell .e-collection-grid:not(.e-collection-list) .e-collection-card-category { grid-column: 1; grid-row: 3; }
+  .e-shop-shell .e-collection-grid:not(.e-collection-list) .e-collection-card-status { grid-column: 1; grid-row: 4; line-height: 1.5; }
+}
+@media (max-width: 390px) {
+  .e-product-title-row { flex-wrap: wrap; align-items: start; gap: 5px 16px; }
+  .e-product-price-pending { font-size: 9px; }
+  .e-collection-category-filter a { min-height: 52px; }
+}

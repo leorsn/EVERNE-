@@ -21,6 +21,10 @@ assert.match(lightEdition, /\.e-shop-shell-product \.e-product-page\s*\{[^}]*gri
 assert.match(lightEdition, /\.e-shop-shell \.e-collection-grid:not\(\.e-collection-list\) \.e-collection-card-description\s*\{\s*display:\s*none;/, 'The merchandise grid should keep long copy on detail pages and in list view');
 assert.match(lightEdition, /\.e-collection-category-filter\s*\{[^}]*overflow-x:\s*auto;/, 'Category navigation must remain usable on narrow viewports');
 assert.match(lightEdition, /\.e-shop-shell-product \.e-product-image-pair\s*\{\s*display:\s*grid;/, 'Detail pages should visibly reserve front, back and detail image positions');
+assert.match(lightEdition, /\.e-shop-nav-browse:not\(\.e-shop-nav-product\),\s*\.e-shop-shell:not\(\.e-shop-shell-product\) \.e-shop-sidebar\s*\{\s*display:\s*none;/, 'Mobile collections must show only one category navigation rail');
+assert.match(lightEdition, /\.e-collection-category-filter\s*\{\s*scroll-snap-type:\s*x proximity;/, 'Mobile category browsing must preserve swipe navigation');
+assert.match(lightEdition, /\.e-shop-shell \.e-collection-grid:not\(\.e-collection-list\) \.e-collection-price-placeholder\s*\{\s*grid-column:\s*1;\s*grid-row:\s*2;/, 'Mobile product cards must position pending prices beneath titles');
+assert.match(lightEdition, /\.e-product-title-row\s*\{\s*flex-wrap:\s*wrap;/, 'Small phones must permit long product names without crushing price labels');
 
 const vite = await createServer({
   appType: 'custom', configFile: false, logLevel: 'error',
