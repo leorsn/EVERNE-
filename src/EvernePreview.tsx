@@ -216,23 +216,28 @@ function ProductPage({ handle }: { handle?: string }) {
         <span aria-current="page">{item.name}</span>
       </nav>
       <article className="e-product-page" aria-labelledby="product-title">
-      <div className="e-product-gallery" aria-label="Reserved image positions for pending product photography">
-        <div className="e-product-image-slot e-product-image-main" role="note" aria-label="Primary product photograph is not yet available">
-          <span className="e-product-image-pending">Photograph pending</span>
-        </div>
-        <div className="e-product-image-pair">
-          <div className="e-product-image-slot" role="note" aria-label="Secondary product photograph is not yet available"><span className="e-product-image-secondary">Second view pending</span></div>
-          <div className="e-product-image-slot" role="note" aria-label="Garment detail photograph is not yet available"><span className="e-product-image-secondary">Detail view pending</span></div>
-        </div>
-      </div>
-      <div className="e-product-information">
+      <div className="e-product-heading">
         <p className="e-product-category"><span>{category?.label}</span><span>{String(position + 1).padStart(2, '0')} / {String(categoryItems.length).padStart(2, '0')}</span></p>
         <h1 id="product-title" tabIndex={-1}>{item.name}</h1>
         <p className="e-product-intro">{item.description}</p>
+      </div>
+      <div className="e-product-gallery" aria-label="Reserved image positions for pending product photography">
+        <div className="e-product-image-slot e-product-image-main" role="note" aria-label="Primary product photograph is not yet available">
+          <span className="e-photo-slot-index" aria-hidden="true">01 / 03</span>
+          <span className="e-product-image-pending">Photograph pending</span>
+          <span className="e-photo-slot-caption" aria-hidden="true">FRONT VIEW / IMAGE NOT APPROVED</span>
+        </div>
+        <div className="e-product-image-pair">
+          <div className="e-product-image-slot" role="note" aria-label="Secondary product photograph is not yet available"><span className="e-photo-slot-index" aria-hidden="true">02 / 03</span><span className="e-product-image-secondary">Back view pending</span><span className="e-photo-slot-caption" aria-hidden="true">BACK VIEW</span></div>
+          <div className="e-product-image-slot" role="note" aria-label="Garment detail photograph is not yet available"><span className="e-photo-slot-index" aria-hidden="true">03 / 03</span><span className="e-product-image-secondary">Detail view pending</span><span className="e-photo-slot-caption" aria-hidden="true">GARMENT DETAIL</span></div>
+        </div>
+      </div>
+      <div className="e-product-information">
         <p className="e-product-pending">NOT AVAILABLE TO ORDER</p>
         <div className="e-product-size-status" aria-label="Size selection unavailable pending fit review">
           <span>SIZE SELECTION</span><span>AWAITING FIT APPROVAL</span>
         </div>
+        <p className="e-product-fit-note">Size information will appear only after garment measurements and fit have been checked.</p>
         <div className="e-product-accordions">
           <details className="e-product-accordion">
             <summary>Design & fit</summary>

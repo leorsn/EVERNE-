@@ -87,6 +87,9 @@ try {
     const html = renderPage(url);
     assertSafe(html, url);
     assert.match(html, /Photograph pending/, `${product.name} must reserve image space without stock photos`);
+    assert.ok(html.indexOf('class="e-product-heading"') < html.indexOf('class="e-product-gallery"'), `${product.name} must identify the garment before the photo placeholders on mobile`);
+    assert.equal((html.match(/class="e-photo-slot-index"/g) ?? []).length, 3, `${product.name} must reserve three numbered photo positions`);
+    assert.match(html, /Size information will appear only after garment measurements/, `${product.name} must explain the size-approval gate`);
     assert.match(html, /aria-label="Products in this category"/, `${product.name} must be reachable from the sidebar product navigation`);
     assert.match(html, new RegExp(`aria-current="page" href="/products/${product.slug}"`), `${product.name} must be selected in the sidebar`);
     assert.match(html, /aria-label="Breadcrumb"/, `${product.name} needs a category breadcrumb`);
