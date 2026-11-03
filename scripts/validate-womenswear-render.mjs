@@ -111,6 +111,7 @@ try {
   assert.equal((all.match(/class="e-collection-card"/g) ?? []).length, 20, 'All pieces must show twenty product cards');
   assert.equal((all.match(/class="e-collection-card-status"/g) ?? []).length, 20, 'Every design card must disclose that it is not for sale');
   assert.equal((all.match(/class="e-collection-card-description"/g) ?? []).length, 20, 'Every design card must contain its unique editorial description');
+  assert.equal((all.match(/class="e-collection-card-view"/g) ?? []).length, 20, 'Every design card should contain a clear navigation affordance');
   assert.equal((all.match(/class="e-collection-image-index"/g) ?? []).length, 20, 'The design index must label all twenty image placeholders');
   assert.match(all, /aria-label="Breadcrumb"/, 'The collection needs navigation back to EVERNE');
   assert.match(all, /id="everne-sort"/, 'The full collection must have a restrained sort control');
@@ -156,6 +157,7 @@ try {
     assert.match(html, /class="e-shop-nav e-shop-nav-browse" aria-label="Shop by category"/, `${product.name} needs direct mobile category navigation`);
     assert.match(html, new RegExp(`aria-current="location" href="/collections/${product.category}"`), `${product.name} must mark its category as the current location`);
     assert.match(html, /aria-label="Browse more pieces"/, `${product.name} needs previous and next navigation`);
+    assert.equal((html.match(/class="e-related-item"/g) ?? []).length, 3, `${product.name} needs three related cross-category design links`);
     const siblings = productDrafts.filter((item) => item.category === product.category);
     const position = siblings.findIndex((item) => item.slug === product.slug);
     if (position > 0) {
