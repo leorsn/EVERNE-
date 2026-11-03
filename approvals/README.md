@@ -18,4 +18,6 @@ Moving from `IMAGE_FREE` to `REVIEWED_ASSETS_ONLY` also requires deliberately re
 
 A future product publication record must specify an approved final retail price (rather than a research target), real variant SKUs and size/measurement/stock evidence, at least two licensed approved photos tied to that same supplier product, and an owner approval record under `approvals/records/`. The script **never** publishes to Shopify or the production website. Turning on products also requires an intentional update to the existing independent `NO_GO` launch tests and active frontend boundary, followed by human review.
 
+The product-detail layout now has a reusable `ProductPhotoGallery` component capable of displaying real photographs with descriptive alt text and a responsive primary/detail grid. It is deliberately called **without any photos** in the active preview. The component itself does not grant image rights or source product data: only a separately reviewed release may connect the approved photograph records to it. The in-memory test photos are not deployed.
+
 Use `PRODUCT-RELEASE-RECORD-TEMPLATE.md` as a checklist when real samples and rights arrive. The template is not itself a release record and does not satisfy any gate.

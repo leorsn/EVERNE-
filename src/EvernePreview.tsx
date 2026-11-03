@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { applySeo } from './seo';
 import { draftCategories, findProductDraft, productDrafts } from './productDrafts';
+import ProductPhotoGallery from './ProductPhotoGallery';
 
 type Page = 'home' | 'care' | 'standards' | 'product' | 'collection';
 type SortOrder = 'edit' | 'name';
@@ -235,17 +236,7 @@ function ProductPage({ handle }: { handle?: string }) {
         <h1 id="product-title" tabIndex={-1}>{item.name}</h1>
         <p className="e-product-intro">{item.description}</p>
       </div>
-      <div className="e-product-gallery" aria-label="Reserved image positions for pending product photography">
-        <div className="e-product-image-slot e-product-image-main" role="note" aria-label="Primary product photograph is not yet available">
-          <span className="e-photo-slot-index" aria-hidden="true">01 / 03</span>
-          <span className="e-product-image-pending">Photograph pending</span>
-          <span className="e-photo-slot-caption" aria-hidden="true">FRONT VIEW / IMAGE NOT APPROVED</span>
-        </div>
-        <div className="e-product-image-pair">
-          <div className="e-product-image-slot" role="note" aria-label="Secondary product photograph is not yet available"><span className="e-photo-slot-index" aria-hidden="true">02 / 03</span><span className="e-product-image-secondary">Back view pending</span><span className="e-photo-slot-caption" aria-hidden="true">BACK VIEW</span></div>
-          <div className="e-product-image-slot" role="note" aria-label="Garment detail photograph is not yet available"><span className="e-photo-slot-index" aria-hidden="true">03 / 03</span><span className="e-product-image-secondary">Detail view pending</span><span className="e-photo-slot-caption" aria-hidden="true">GARMENT DETAIL</span></div>
-        </div>
-      </div>
+      <ProductPhotoGallery />
       <div className="e-product-information">
         <p className="e-product-pending">NOT AVAILABLE TO ORDER</p>
         <div className="e-product-size-status" aria-label="Size selection unavailable pending fit review">

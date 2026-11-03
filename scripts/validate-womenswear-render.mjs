@@ -11,7 +11,23 @@ const vite = await createServer({
 
 try {
   const { default: EvernePreview } = await vite.ssrLoadModule('/src/EvernePreview.tsx');
+  const { default: ProductPhotoGallery } = await vite.ssrLoadModule('/src/ProductPhotoGallery.tsx');
   const { productDrafts } = await vite.ssrLoadModule('/src/productDrafts.ts');
+
+  const pendingGallery = renderToStaticMarkup(React.createElement(ProductPhotoGallery));
+  assert.match(pendingGallery, /Photograph pending/);
+  assert.equal((pendingGallery.match(/<img\b/g) ?? []).length, 0);
+  // Synthetic in-memory imagery verifies future layout only; no test image is deployed.
+  const reviewedGallery = renderToStaticMarkup(React.createElement(ProductPhotoGallery, {
+    photos: [
+      { publicPath: '/test-only/sample-front.jpg', altText: 'Sample garment front view for the presentation test' },
+      { publicPath: '/test-only/sample-back.jpg', altText: 'Sample garment back view for the presentation test' },
+    ],
+  }));
+  assert.equal((reviewedGallery.match(/<img\b/g) ?? []).length, 2);
+  assert.match(reviewedGallery, /loading="lazy"/);
+  assert.match(reviewedGallery, /Sample garment front view/);
+  assert.doesNotMatch(reviewedGallery, /Photograph pending|add to cart|checkout/i);
   function renderPage(url) {
     const paths = [
       React.createElement(Route, { key: 'home', path: '/', element: React.createElement(EvernePreview, { page: 'home' }) }),
