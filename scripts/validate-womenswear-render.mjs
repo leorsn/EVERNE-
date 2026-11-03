@@ -100,13 +100,17 @@ try {
   assert.match(home, /Photographic styling references only/);
   assert.match(home, /href="\/care"/);
   assert.equal((home.match(/class="e-product-index-group"/g) ?? []).length, 0, 'Remove the long five-column product name list');
-  assert.equal((home.match(/href="\/products\/[a-z0-9-]+"/g) ?? []).length, 0, 'Product cards live inside categories');
-  assert.equal((home.match(/href="\/collections\/[a-z]+"/g) ?? []).length, 12, 'Six category bar links, five image tiles and one collection CTA');
+  assert.equal((home.match(/href="\/products\/[a-z0-9-]+"/g) ?? []).length, 4, 'Four editorial first-look links should lead directly to individual product studies');
+  assert.equal((home.match(/class="e-opening-edit-item"/g) ?? []).length, 4, 'Four opening product studies should be shown without product photography');
+  assert.equal((home.match(/href="\/collections\/[a-z]+"/g) ?? []).length, 13, 'Six category bar links, five image tiles and two collection CTAs');
+  assert.match(home, /20 PIECES/, 'The opening edit should link to the complete twenty-piece index');
   assert.match(home, /aria-label="Shop by category"/);
 
   const all = renderPage('/collections/all');
   assertSafe(all, '/collections/all');
   assert.equal((all.match(/class="e-collection-card"/g) ?? []).length, 20, 'All pieces must show twenty product cards');
+  assert.equal((all.match(/class="e-collection-card-status"/g) ?? []).length, 20, 'Every design card must disclose that it is not for sale');
+  assert.equal((all.match(/class="e-collection-card-description"/g) ?? []).length, 20, 'Every design card must contain its unique editorial description');
   assert.equal((all.match(/class="e-collection-image-index"/g) ?? []).length, 20, 'The design index must label all twenty image placeholders');
   assert.match(all, /aria-label="Breadcrumb"/, 'The collection needs navigation back to EVERNE');
   assert.match(all, /id="everne-sort"/, 'The full collection must have a restrained sort control');
