@@ -14,6 +14,7 @@ assert.match(lightEdition, /--e-paper:\s*#fafafa/, 'Use a near-white canvas');
 for (const selector of ['.e-header', '.e-shop-nav', '.e-hero-copy', '.e-wardrobe', '.e-collection-page', '.e-product-page', '.e-sidebar-desktop', '.e-related-item', '.e-footer']) {
   assert.ok(lightEdition.includes(selector), `The light theme must cover ${selector}`);
 }
+assert.match(lightEdition, /\.e-collection-list/, 'The light theme must support a compact text-led collection layout');
 
 const vite = await createServer({
   appType: 'custom', configFile: false, logLevel: 'error',
@@ -127,6 +128,9 @@ try {
   assert.match(all, /aria-label="Breadcrumb"/, 'The collection needs navigation back to EVERNE');
   assert.match(all, /id="everne-sort"/, 'The full collection must have a restrained sort control');
   assert.match(all, /Name A–Z/, 'The sort control must offer alphabetic ordering');
+  assert.match(all, /class="e-view-switch" role="group" aria-label="Collection layout"/, 'The collection must offer accessible grid and list controls');
+  assert.match(all, /aria-pressed="true">GRID<\/button>/, 'The initial layout must default to the photograph-first grid');
+  assert.match(all, /aria-pressed="false">LIST<\/button>/, 'The list control must be a real stateful button');
   assert.equal((all.match(/class="e-collection-card-category"/g) ?? []).length, 20, 'The full edit must identify each item category');
   assert.equal((all.match(/class="e-sidebar-desktop"/g) ?? []).length, 1, 'The collection must expose desktop side navigation');
   assert.match(all, /class="e-sidebar-title">THE EDIT<\/span>/, 'The sidebar should not repeat the header WOMAN label');
