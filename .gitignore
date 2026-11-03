@@ -2,6 +2,7 @@ node_modules/
 dist/
 dist-offline/
 offline-review/
+review-output/
 *.tsbuildinfo
 .env
 .env.local

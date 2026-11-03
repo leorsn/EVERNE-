@@ -24,4 +24,6 @@ The product-detail layout now has a reusable `ProductPhotoGallery` component cap
 
 `ProductCardImage` prepares the same approved-photo handoff in collection grids: real product photos can fill the card in a future reviewed release, while the active 20 copy-only cards remain image-free and clearly marked as pending. The synthetic test asset path is not bundled or deployed.
 
+Before connecting real supplier data to those components, run `npm run check:catalog-handoff`. The read-only `scripts/prepare-reviewed-catalog.mjs` reuses the independent sale and image approval gates, then cross-checks the public product name and category against the approved supplier row. It requires verified customer copy for the exact fabric, care, fit, delivery and returns details and creates no output while `NO_PRODUCTS` is active. After a genuine independent release, `node scripts/prepare-reviewed-catalog.mjs --export` can write a **local-only** `review-output/approved-catalog.json` for a human UI integration review. The export contains no supplier SKUs, customer data, automatic store import, checkout activation or production deployment. It is not a publication action.
+
 Use `PRODUCT-RELEASE-RECORD-TEMPLATE.md` as a checklist when real samples and rights arrive. The template is not itself a release record and does not satisfy any gate.
