@@ -18,6 +18,7 @@ const expectedModules = new Set([
   'src/seo.ts',
   'src/trend-main.tsx',
   'src/TrendStorePreview.tsx',
+  'src/trendCandidates.ts',
   'src/trendProducts.ts',
 ]);
 // The separate category-agnostic concept is also non-commercial.

@@ -1,9 +1,12 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { applySeo } from './seo';
+import { trendCandidates, type TrendCandidate } from './trendCandidates';
 import { reviewedTrendProducts } from './trendProducts';
 
-type Page = 'home' | 'discover' | 'standard' | 'about' | 'not-found';
+type Page = 'home' | 'discover' | 'candidate' | 'standard' | 'about' | 'not-found';
+
+const firstCandidate = trendCandidates[0];
 
 const selectionPrinciples = [
   { number: '01', name: 'Relevance', description: 'A product must solve a recognizable problem or bring something useful to everyday life.' },
@@ -41,6 +44,25 @@ function Footer() {
   </footer>;
 }
 
+function CandidateImagePlaceholder({ number = '001' }: { number?: string }) {
+  return <div className="t-candidate-image" role="img" aria-label="Product photograph pending verification">
+    <span>EVERNE / RESEARCH {number}</span>
+    <strong>IMAGE<br />PENDING</strong>
+    <span>ACTUAL PRODUCT PHOTOGRAPHY REQUIRED</span>
+  </div>;
+}
+
+function CandidateCard({ candidate }: { candidate: TrendCandidate }) {
+  return <article className="t-candidate-card">
+    <Link to={`/discover/${candidate.slug}`} aria-label={`View ${candidate.workingTitle} research concept`}>
+      <CandidateImagePlaceholder />
+      <div className="t-candidate-card-meta"><span>{candidate.category.toUpperCase()} / WORKING CONCEPT</span><span>NOT FOR SALE</span></div>
+      <h2>{candidate.workingTitle} <span aria-hidden="true">↗</span></h2>
+      <p>Product and supplier verification pending.</p>
+    </Link>
+  </article>;
+}
+
 function Home() {
   return <>
     <section className="t-hero" aria-labelledby="t-hero-title">
@@ -54,6 +76,19 @@ function Home() {
         <span>01 / THE FIRST SELECTION</span>
         <div className="t-hero-side-middle"><strong>EVERNE</strong><p>DISCOVERY<br />IN PROGRESS</p></div>
         <span>PRODUCTS UNDER REVIEW / ORDERS CLOSED</span>
+      </div>
+    </section>
+    <section className="t-first-look" aria-labelledby="t-first-look-title">
+      <div className="t-first-look-heading"><span className="t-kicker">FIRST LOOK / PRODUCT RESEARCH</span><span>01 / 01</span></div>
+      <div className="t-first-look-grid">
+        <CandidateImagePlaceholder />
+        <div className="t-first-look-copy">
+          <span className="t-kicker">{firstCandidate.category.toUpperCase()} / CANDIDATE 001</span>
+          <h2 id="t-first-look-title">{firstCandidate.workingTitle}.</h2>
+          <p>{firstCandidate.summary}</p>
+          <span className="t-research-pill">SOURCING REVIEW · NOT FOR SALE</span>
+          <Link className="t-text-link" to={`/discover/${firstCandidate.slug}`}>VIEW THE RESEARCH CONCEPT <span aria-hidden="true">↗</span></Link>
+        </div>
       </div>
     </section>
     <section className="t-statement" aria-labelledby="t-statement-title">
@@ -87,15 +122,41 @@ function Discover() {
         </article>)}
       </div>
       <p className="t-review-note">Reviewed catalog preview only. Ordering is not enabled.</p>
-    </> : <div className="t-empty-selection" role="status">
-      <div className="t-empty-index"><span>EVERNE / 001</span><span>SELECTION STATUS</span></div>
-      <div>
-        <h2>First drop, in progress.</h2>
-        <p>We are assessing products across categories. No items have been cleared for listing, and we are not taking orders or reservations yet.</p>
-        <Link className="t-text-link" to="/standard">OUR SELECTION STANDARD <span aria-hidden="true">↗</span></Link>
+    </> : <>
+      <div className="t-research-status" role="status"><span>FIRST DROP / IN PROGRESS</span><p>One working concept is being researched below. <strong>No products are approved for sale, and checkout remains closed.</strong></p></div>
+      <div className="t-candidate-grid">
+        {trendCandidates.map((candidate) => <CandidateCard key={candidate.slug} candidate={candidate} />)}
       </div>
-      <span className="t-empty-bottom">NO PRODUCTS PUBLISHED / NO CHECKOUT</span>
-    </div>}
+      <div className="t-review-note">CONCEPTS UNDER REVIEW — NO PRODUCTS PUBLISHED / NO CHECKOUT</div>
+    </>}
+  </section>;
+}
+
+function CandidateDetail() {
+  const candidate = firstCandidate;
+  return <section className="t-inner t-candidate-detail" aria-labelledby="t-candidate-title">
+    <Link className="t-back-link" to="/discover">← BACK TO DISCOVER</Link>
+    <div className="t-detail-grid">
+      <CandidateImagePlaceholder />
+      <div className="t-detail-information">
+        <span className="t-kicker">{candidate.category.toUpperCase()} / CANDIDATE 001</span>
+        <h1 id="t-candidate-title" tabIndex={-1}>{candidate.workingTitle}.</h1>
+        <span className="t-research-pill">RESEARCH CONCEPT · NOT FOR SALE</span>
+        <p className="t-detail-intro">{candidate.summary}</p>
+        <dl className="t-detail-facts">
+          <div><dt>Exact model</dt><dd>Not yet verified</dd></div>
+          <div><dt>Materials & dimensions</dt><dd>Supplier confirmation pending</dd></div>
+          <div><dt>Price & availability</dt><dd>Not approved</dd></div>
+          <div><dt>Shipping & returns</dt><dd>Not verified</dd></div>
+        </dl>
+        <p className="t-detail-explanation">This is a private look at the product-research workflow, not an offer to purchase. There is no reservation list, cart or purchase button.</p>
+        <Link className="t-text-link" to="/standard">HOW PRODUCTS ARE VERIFIED <span aria-hidden="true">↗</span></Link>
+      </div>
+    </div>
+    <div className="t-detail-checks">
+      <div><span className="t-kicker">BEFORE A FIRST DROP</span><h2>What must be verified.</h2></div>
+      <ol>{candidate.reviewChecks.map((check) => <li key={check}>{check}</li>)}</ol>
+    </div>
   </section>;
 }
 
@@ -134,6 +195,7 @@ export default function TrendStorePreview({ page }: { page: Page }) {
   useEffect(() => {
     const titles: Record<Page, string> = {
       home: 'EVERNE — A New Selection', discover: 'EVERNE — Discover',
+      candidate: 'EVERNE — Jewellery Bag Research Concept',
       standard: 'EVERNE — Our Standard', about: 'EVERNE — About', 'not-found': 'EVERNE — Page Not Listed',
     };
     applySeo({
@@ -147,7 +209,7 @@ export default function TrendStorePreview({ page }: { page: Page }) {
     <a className="t-skip" href="#main">Skip to content</a>
     <Header page={page} />
     <main id="main" tabIndex={-1}>
-      {page === 'home' ? <Home /> : page === 'discover' ? <Discover /> : page === 'standard' ? <Standard /> : page === 'about' ? <About /> : <Missing />}
+      {page === 'home' ? <Home /> : page === 'discover' ? <Discover /> : page === 'candidate' ? <CandidateDetail /> : page === 'standard' ? <Standard /> : page === 'about' ? <About /> : <Missing />}
     </main>
     <Footer />
   </div>;

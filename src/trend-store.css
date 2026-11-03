@@ -30,6 +30,17 @@ a { color: inherit; text-decoration: none; }
 .t-hero-side-middle { display: flex; flex-direction: column; gap: 20px; padding: 40px 0; }
 .t-hero-side-middle strong { color: #eee; font-size: clamp(30px, 4.1vw, 70px); font-weight: 300; letter-spacing: .17em; }
 .t-hero-side-middle p { margin: 0; color: #b2b2b2; font-size: clamp(20px, 2.15vw, 34px); font-weight: 300; line-height: 1.35; letter-spacing: .02em; }
+.t-first-look { padding: 38px clamp(23px, 4vw, 76px) 105px; border-bottom: 1px solid #303030; }
+.t-first-look-heading { display: flex; justify-content: space-between; gap: 20px; padding-bottom: 30px; color: #9a9a9a; font-size: 10px; letter-spacing: .14em; }
+.t-first-look-grid { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); gap: clamp(30px, 6vw, 110px); align-items: center; }
+.t-candidate-image { display: flex; flex-direction: column; justify-content: space-between; min-height: 440px; aspect-ratio: 4 / 4.35; padding: clamp(21px, 3vw, 43px); border: 1px solid #343434; background: #1a1a1a; color: #a0a0a0; }
+.t-candidate-image > span { font-size: 9px; line-height: 1.5; letter-spacing: .13em; }
+.t-candidate-image > strong { align-self: center; text-align: center; color: #626262; font-size: clamp(30px, 5vw, 80px); line-height: 1.12; font-weight: 300; letter-spacing: .015em; }
+.t-first-look-copy { display: flex; flex-direction: column; align-items: flex-start; }
+.t-first-look-copy h2 { margin: 34px 0 18px; font: 400 clamp(48px, 5.4vw, 86px)/1 Baskerville, 'Iowan Old Style', Georgia, serif; letter-spacing: -.05em; }
+.t-first-look-copy p { max-width: 400px; margin: 0 0 30px; color: #b7b7b7; font-size: 14px; line-height: 1.8; }
+.t-research-pill { display: inline-flex; padding: 11px 13px; border: 1px solid #565656; color: #b8b8b8; font-size: 9px; letter-spacing: .12em; line-height: 1.45; }
+.t-first-look-copy .t-text-link { margin-top: 33px; }
 .t-statement { display: grid; grid-template-columns: 1fr 2.2fr 1.2fr; gap: clamp(20px, 3.4vw, 64px); align-items: start; padding: clamp(75px, 9vw, 150px) clamp(23px, 4vw, 76px); border-bottom: 1px solid #303030; }
 .t-statement h2 { max-width: 500px; margin: -7px 0 0; font: 400 clamp(32px, 3.1vw, 54px)/1.12 Baskerville, 'Iowan Old Style', Georgia, serif; letter-spacing: -.035em; }
 .t-statement p { max-width: 390px; margin: 0 0 22px; color: #afafaf; font-size: 13px; line-height: 1.8; }
@@ -55,6 +66,38 @@ a { color: inherit; text-decoration: none; }
 .t-product-card h2 { margin: 0 0 8px; font-size: 15px; font-weight: 400; }
 .t-product-card p { margin: 0; color: #aaa; font-size: 12px; line-height: 1.6; }
 .t-review-note { color: #aaa; font-size: 11px; }
+.t-research-status { display: flex; justify-content: space-between; align-items: baseline; gap: 35px; padding: 22px 0; border-top: 1px solid #353535; border-bottom: 1px solid #353535; }
+.t-research-status > span { flex: 0 0 auto; color: #a3a3a3; font-size: 10px; letter-spacing: .12em; }
+.t-research-status p { max-width: 590px; margin: 0; color: #bcbcbc; font-size: 12px; line-height: 1.7; }
+.t-research-status strong { color: #f0f0f0; font-weight: 400; }
+.t-candidate-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 35px 16px; padding: 32px 0; }
+.t-candidate-card .t-candidate-image { min-height: 0; padding: 16px; }
+.t-candidate-card .t-candidate-image > span { font-size: 8px; }
+.t-candidate-card .t-candidate-image > strong { font-size: clamp(20px, 2.7vw, 41px); }
+.t-candidate-card-meta { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin: 17px 0 12px; color: #989898; font-size: 9px; letter-spacing: .07em; }
+.t-candidate-card h2 { display: flex; justify-content: space-between; align-items: baseline; margin: 0 0 10px; font-size: 18px; font-weight: 400; }
+.t-candidate-card h2 > span { font-size: 17px; }
+.t-candidate-card p { margin: 0; color: #aaa; font-size: 12px; line-height: 1.6; }
+.t-candidate-card a:hover h2 { text-decoration: underline; text-underline-offset: 5px; }
+.t-review-note { padding: 14px 0 0; border-top: 1px solid #353535; font-size: 10px; letter-spacing: .1em; }
+.t-candidate-detail { padding-top: 31px; }
+.t-back-link { display: inline-flex; min-height: 44px; align-items: center; margin-bottom: 23px; color: #b5b5b5; font-size: 10px; letter-spacing: .1em; }
+.t-back-link:hover { color: #fff; }
+.t-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(32px, 6vw, 110px); }
+.t-detail-grid > .t-candidate-image { max-height: 790px; }
+.t-detail-information { padding: 30px 0; }
+.t-detail-information h1 { margin: 26px 0 30px; font-size: clamp(49px, 6vw, 94px); }
+.t-detail-intro { max-width: 530px; margin: 34px 0; color: #bebebe; font-size: 14px; line-height: 1.8; }
+.t-detail-facts { margin: 0 0 27px; border-top: 1px solid #353535; }
+.t-detail-facts > div { display: grid; grid-template-columns: 1fr 1.1fr; gap: 15px; padding: 18px 0; border-bottom: 1px solid #353535; font-size: 12px; line-height: 1.5; }
+.t-detail-facts dt { color: #9c9c9c; }
+.t-detail-facts dd { margin: 0; color: #e3e3e3; }
+.t-detail-explanation { max-width: 470px; margin: 25px 0; color: #aaa; font-size: 12px; line-height: 1.8; }
+.t-detail-checks { display: grid; grid-template-columns: 1fr 1.2fr; gap: 50px; margin-top: 100px; padding-top: 43px; border-top: 1px solid #353535; }
+.t-detail-checks h2 { margin: 30px 0 0; font: 400 clamp(33px, 3.7vw, 58px)/1.1 Baskerville, 'Iowan Old Style', Georgia, serif; letter-spacing: -.035em; }
+.t-detail-checks ol { list-style: decimal-leading-zero; margin: 0; padding-left: 27px; }
+.t-detail-checks li { padding: 13px 0 20px 9px; border-bottom: 1px solid #353535; color: #b7b7b7; font-size: 13px; line-height: 1.7; }
+.t-detail-checks li::marker { color: #878787; font-size: 10px; }
 .t-principles { border-top: 1px solid #363636; }
 .t-principle { display: grid; grid-template-columns: 1fr 1.5fr 2fr; gap: 20px; align-items: baseline; padding: 34px 0; border-bottom: 1px solid #363636; }
 .t-principle > span { color: #888; font-size: 10px; letter-spacing: .12em; }
@@ -84,6 +127,7 @@ a { color: inherit; text-decoration: none; }
   .t-statement { grid-template-columns: 1fr 2fr; }
   .t-statement p, .t-statement .t-text-link { grid-column: 2; }
   .t-footer-mark { font-size: 10vw; }
+  .t-candidate-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 }
 @media (max-width: 700px) {
   .t-header { min-height: 0; padding: 15px 5% 0; gap: 9px 12px; }
@@ -99,6 +143,11 @@ a { color: inherit; text-decoration: none; }
   .t-hero-side-middle { flex-direction: row; justify-content: space-between; align-items: baseline; gap: 20px; padding: 23px 0; }
   .t-hero-side-middle strong { font-size: 29px; }
   .t-hero-side-middle p { font-size: 19px; text-align: right; }
+  .t-first-look { padding: 25px 5% 70px; }
+  .t-first-look-grid { grid-template-columns: 1fr; gap: 33px; }
+  .t-first-look-grid .t-candidate-image { min-height: 300px; max-height: 530px; }
+  .t-first-look-copy h2 { margin: 25px 0 18px; font-size: 59px; }
+  .t-candidate-image > strong { font-size: clamp(32px, 8vw, 63px); }
   .t-statement { display: block; padding: 72px 5%; }
   .t-statement h2 { margin: 25px 0; font-size: 39px; }
   .t-statement p { font-size: 13px; }
@@ -119,6 +168,18 @@ a { color: inherit; text-decoration: none; }
   .t-about-grid { display: block; padding-top: 35px; }
   .t-about-grid h2 { margin-bottom: 25px; font-size: 38px; }
   .t-product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 25px 12px; }
+  .t-research-status { display: block; }
+  .t-research-status p { margin-top: 12px; }
+  .t-candidate-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 25px 12px; }
+  .t-candidate-card .t-candidate-image > strong { font-size: 22px; }
+  .t-candidate-card h2 { font-size: 16px; }
+  .t-candidate-card-meta { font-size: 8px; }
+  .t-detail-grid { grid-template-columns: 1fr; gap: 22px; }
+  .t-detail-grid > .t-candidate-image { min-height: 300px; max-height: 525px; }
+  .t-detail-information { padding-top: 15px; }
+  .t-detail-information h1 { font-size: 58px; }
+  .t-detail-checks { display: block; margin-top: 70px; }
+  .t-detail-checks ol { margin-top: 32px; }
   .t-footer { padding: 50px 5% 25px; }
   .t-footer-main { display: block; padding-bottom: 35px; }
   .t-footer-mark { font-size: clamp(43px, 11vw, 79px); }

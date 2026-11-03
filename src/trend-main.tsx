@@ -14,6 +14,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       <Routes>
         <Route path="/" element={<TrendStorePreview page="home" />} />
         <Route path="/discover" element={<TrendStorePreview page="discover" />} />
+        <Route path="/discover/jewellery-bag" element={<TrendStorePreview page="candidate" />} />
         <Route path="/standard" element={<TrendStorePreview page="standard" />} />
         <Route path="/about" element={<TrendStorePreview page="about" />} />
         <Route path="*" element={<TrendStorePreview page="not-found" />} />
