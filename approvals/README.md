@@ -20,4 +20,6 @@ A future product publication record must specify an approved final retail price 
 
 The product-detail layout now has a reusable `ProductPhotoGallery` component capable of displaying real photographs with descriptive alt text and a responsive primary/detail grid. It is deliberately called **without any photos** in the active preview. The component itself does not grant image rights or source product data: only a separately reviewed release may connect the approved photograph records to it. The in-memory test photos are not deployed.
 
+`ProductReviewFacts` similarly provides a future display for measured size labels, approved whole-euro price, composition, care, and confirmed delivery and return terms. It currently receives **no product facts**. Size labels are informational, not stock promises or order controls. Any future integration must derive these exact details from approved product evidence and applicable consumer information, with an explicit release decision. Its synthetic render-test values are never bundled into the active storefront.
+
 Use `PRODUCT-RELEASE-RECORD-TEMPLATE.md` as a checklist when real samples and rights arrive. The template is not itself a release record and does not satisfy any gate.

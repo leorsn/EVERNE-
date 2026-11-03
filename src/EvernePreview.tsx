@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { applySeo } from './seo';
 import { draftCategories, findProductDraft, productDrafts } from './productDrafts';
 import ProductPhotoGallery from './ProductPhotoGallery';
+import { ProductFactsAccordion, ProductSizeInformation } from './ProductReviewFacts';
 
 type Page = 'home' | 'care' | 'standards' | 'product' | 'collection';
 type SortOrder = 'edit' | 'name';
@@ -239,10 +240,7 @@ function ProductPage({ handle }: { handle?: string }) {
       <ProductPhotoGallery />
       <div className="e-product-information">
         <p className="e-product-pending">NOT AVAILABLE TO ORDER</p>
-        <div className="e-product-size-status" aria-label="Size selection unavailable pending fit review">
-          <span>SIZE SELECTION</span><span>AWAITING FIT APPROVAL</span>
-        </div>
-        <p className="e-product-fit-note">Size information will appear only after garment measurements and fit have been checked.</p>
+        <ProductSizeInformation />
         <div className="e-product-accordions">
           <details className="e-product-accordion">
             <summary>Design & fit</summary>
@@ -252,14 +250,7 @@ function ProductPage({ handle }: { handle?: string }) {
             <summary>Styling</summary>
             <p>{item.stylingNote}</p>
           </details>
-          <details className="e-product-accordion">
-            <summary>Details under review</summary>
-            <dl>
-              <div><dt>Composition & care</dt><dd>Pending fabric, care-label and physical-sample review.</dd></div>
-              <div><dt>Sizes & colours</dt><dd>Not verified or offered at this stage.</dd></div>
-              <div><dt>Price & delivery</dt><dd>Not published. No orders or reservations can be placed.</dd></div>
-            </dl>
-          </details>
+          <ProductFactsAccordion />
         </div>
         <p className="e-product-disclaimer">Private design preview only. Final garment details and photography have not been approved.</p>
         <Link className="e-text-link" to={`/collections/${item.category}`}>BACK TO {category?.label.toUpperCase()} <span aria-hidden="true">↗</span></Link>

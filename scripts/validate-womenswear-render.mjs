@@ -12,6 +12,7 @@ const vite = await createServer({
 try {
   const { default: EvernePreview } = await vite.ssrLoadModule('/src/EvernePreview.tsx');
   const { default: ProductPhotoGallery } = await vite.ssrLoadModule('/src/ProductPhotoGallery.tsx');
+  const { ProductSizeInformation, ProductFactsAccordion } = await vite.ssrLoadModule('/src/ProductReviewFacts.tsx');
   const { productDrafts } = await vite.ssrLoadModule('/src/productDrafts.ts');
 
   const pendingGallery = renderToStaticMarkup(React.createElement(ProductPhotoGallery));
@@ -28,6 +29,29 @@ try {
   assert.match(reviewedGallery, /loading="lazy"/);
   assert.match(reviewedGallery, /Sample garment front view/);
   assert.doesNotMatch(reviewedGallery, /Photograph pending|add to cart|checkout/i);
+
+  const pendingSizes = renderToStaticMarkup(React.createElement(ProductSizeInformation));
+  const pendingFacts = renderToStaticMarkup(React.createElement(ProductFactsAccordion));
+  assert.match(pendingSizes, /AWAITING FIT APPROVAL/);
+  assert.match(pendingFacts, /Details under review/);
+  assert.doesNotMatch(pendingSizes + pendingFacts, /<button\b|<input\b|€\d+/i);
+  // Synthetic in-memory values: test markup only, never shipping or product claims.
+  const fixtureFacts = {
+    retailGrossEur: 49,
+    sizeLabels: ['S', 'M'], colours: ['Black'],
+    fitNote: 'Fixture: size notes confirmed for illustration only.',
+    composition: 'Fixture: fabric label only.',
+    careInstructions: 'Fixture: care label only.',
+    deliveryTerms: 'Fixture: confirmed dispatch terms would appear here.',
+    returnsTerms: 'Fixture: confirmed returns terms would appear here.',
+  };
+  const reviewedSizes = renderToStaticMarkup(React.createElement(ProductSizeInformation, { facts: fixtureFacts }));
+  const reviewedFacts = renderToStaticMarkup(React.createElement(ProductFactsAccordion, { facts: fixtureFacts }));
+  assert.match(reviewedSizes, /VERIFIED SIZES/);
+  assert.match(reviewedSizes, /€49/);
+  assert.match(reviewedFacts, /Material &amp; care/);
+  assert.match(reviewedFacts, /Delivery &amp; returns/);
+  assert.doesNotMatch(reviewedSizes + reviewedFacts, /<button\b|<form\b|<input\b|add to cart/i);
   function renderPage(url) {
     const paths = [
       React.createElement(Route, { key: 'home', path: '/', element: React.createElement(EvernePreview, { page: 'home' }) }),

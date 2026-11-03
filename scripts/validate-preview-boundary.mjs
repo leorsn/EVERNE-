@@ -11,6 +11,7 @@ const expectedModules = new Set([
   'src/main.tsx',
   'src/EvernePreview.tsx',
   'src/ProductPhotoGallery.tsx',
+  'src/ProductReviewFacts.tsx',
   'src/productDrafts.ts',
   'src/RouteFocus.tsx',
   'src/seo.ts',
