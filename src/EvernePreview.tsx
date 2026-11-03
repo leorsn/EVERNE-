@@ -43,12 +43,13 @@ const standards = [
 ];
 
 // The twenty design pages are a presentation inventory, not a Shopify stock feed.
-// The four-item opening edit makes products discoverable without implying sale approval.
+// The five-item opening edit makes products discoverable without implying sale approval.
 const openingEditSlugs = [
   'essential-rib-top',
   'relaxed-crew-knit',
   'wide-leg-trouser',
   'the-black-mini',
+  'denim-midi-skirt',
 ];
 const openingEdit = openingEditSlugs.map((slug) => productDrafts.find((item) => item.slug === slug)!);
 
@@ -84,11 +85,12 @@ function Header({ page, selectedCategory }: { page: Page; selectedCategory?: str
       </nav>
       <Link to="/" className="e-wordmark" aria-label="EVERNE — home">EVERNE</Link>
       <nav className="e-nav-right" aria-label="Other sections">
+        <Link to="/collections/all">THE EDIT</Link>
         <Link className={page === 'care' ? 'e-active' : ''} aria-current={page === 'care' ? 'page' : undefined} to="/care">CARE</Link>
         <Link className={page === 'standards' ? 'e-active' : ''} aria-current={page === 'standards' ? 'page' : undefined} to="/standards">OUR STANDARD</Link>
       </nav>
     </header>
-    <nav className={isBrowsing ? 'e-shop-nav e-shop-nav-browse' : 'e-shop-nav'} aria-label="Shop by category">
+    <nav className={page === 'product' ? 'e-shop-nav e-shop-nav-browse e-shop-nav-product' : isBrowsing ? 'e-shop-nav e-shop-nav-browse' : 'e-shop-nav'} aria-label="Shop by category">
       <div className="e-shop-nav-links" ref={categoryStripRef}>
         <Link className={selectedCategory === 'all' ? 'e-selected' : undefined} aria-current={selectedCategory === 'all' ? currentCategory : undefined} to="/collections/all">ALL PIECES</Link>
         {draftCategories.map((category) => <Link key={category.id} className={selectedCategory === category.id ? 'e-selected' : undefined} aria-current={selectedCategory === category.id ? currentCategory : undefined} to={`/collections/${category.id}`}>{category.label.toUpperCase()}</Link>)}
@@ -193,6 +195,7 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
           <ProductCardImage index={productDrafts.indexOf(item) + 1} total={productDrafts.length} />
           <div className="e-collection-card-caption">
             <h2>{item.name}</h2>
+            <span className="e-collection-price-placeholder">PRICE PENDING</span>
             {all && <span className="e-collection-card-category">{draftCategories.find((entry) => entry.id === item.category)?.label}</span>}
             <p className="e-collection-card-description">{item.description}</p>
             <span className="e-collection-card-status">DESIGN STUDY · NOT FOR SALE</span>
@@ -223,20 +226,27 @@ function Home() {
       </div>
     </section>
 
-    <section className="e-opening-edit" aria-labelledby="opening-edit-title">
-      <div className="e-opening-edit-lead">
-        <span className="e-kicker">01 / THE FIRST EDIT</span>
-        <h2 id="opening-edit-title">A closer look.</h2>
-        <p>Start with four pieces from the twenty-part design index. Every concept has its own page; final product photographs, sizing and ordering are still pending.</p>
-        <Link className="e-text-link" to="/collections/all">EXPLORE ALL {productDrafts.length} PIECES <span aria-hidden="true">↗</span></Link>
+    <section className="e-featured-rail" aria-labelledby="featured-rail-title">
+      <div className="e-featured-heading">
+        <h2 id="featured-rail-title">THE FIRST EDIT</h2>
+        <span>05 / 20 DESIGN STUDIES</span>
       </div>
-      <div className="e-opening-edit-list" role="list" aria-label="Selected design concepts">
-        {openingEdit.map((item) => <Link role="listitem" key={item.slug} to={`/products/${item.slug}`} className="e-opening-edit-item">
-          <span className="e-opening-edit-number">{String(productDrafts.indexOf(item) + 1).padStart(2, '0')}</span>
-          <span className="e-opening-edit-name">{item.name}</span>
-          <span className="e-opening-edit-category">{draftCategories.find((entry) => entry.id === item.category)?.label}</span>
-          <span className="e-opening-edit-arrow" aria-hidden="true">↗</span>
-        </Link>)}
+      <div className="e-featured-grid" role="list" aria-label="Five featured EVERNE design concepts">
+        {openingEdit.map((item) => <article key={item.slug} className="e-featured-card" role="listitem">
+          <Link to={`/products/${item.slug}`} aria-label={`View ${item.name} design study`}>
+            <ProductCardImage index={productDrafts.indexOf(item) + 1} total={productDrafts.length} />
+            <div className="e-featured-caption">
+              <h3>{item.name}</h3>
+              <span>PRICE PENDING</span>
+            </div>
+            <p>{draftCategories.find((entry) => entry.id === item.category)?.label}</p>
+            <small>IMAGES &amp; COLOURS PENDING</small>
+          </Link>
+        </article>)}
+      </div>
+      <div className="e-featured-footer">
+        <Link to="/collections/all">EXPLORE THE COLLECTION <span aria-hidden="true">→</span></Link>
+        <p>Design preview only. The pictured editorial styling references elsewhere on this site are not EVERNE products. No ordering available.</p>
       </div>
     </section>
 
@@ -295,14 +305,22 @@ function ProductPage({ handle }: { handle?: string }) {
       <article className="e-product-page" aria-labelledby="product-title">
       <div className="e-product-heading">
         <p className="e-product-category"><span>{category?.label}</span><span>{String(position + 1).padStart(2, '0')} / {String(categoryItems.length).padStart(2, '0')}</span></p>
-        <h1 id="product-title" tabIndex={-1}>{item.name}</h1>
+        <div className="e-product-title-row"><h1 id="product-title" tabIndex={-1}>{item.name}</h1><span className="e-product-price-pending">PRICE PENDING</span></div>
         <p className="e-product-intro">{item.description}</p>
         <p className="e-product-review-state">DESIGN STUDY {String(productDrafts.indexOf(item) + 1).padStart(2, '0')} / {productDrafts.length} · SOURCING & FIT REVIEW PENDING</p>
       </div>
       <ProductPhotoGallery />
       <div className="e-product-information">
-        <p className="e-product-pending">NOT AVAILABLE TO ORDER</p>
+        <div className="e-product-colour-panel" aria-label="Colour options awaiting physical sample review">
+          <div><strong>COLOUR</strong><span>TO BE CONFIRMED</span></div>
+          <p>No verified colour variants yet.</p>
+        </div>
         <ProductSizeInformation />
+        <button type="button" className="e-product-disabled-cta" disabled aria-label="Ordering unavailable until product approval">NOT AVAILABLE TO ORDER</button>
+        <div className="e-product-service-notes" aria-label="Order information awaiting approval">
+          <p><span>DELIVERY</span><strong>Terms pending supplier verification</strong></p>
+          <p><span>RETURNS</span><strong>Procedure to be confirmed before launch</strong></p>
+        </div>
         <div className="e-product-accordions">
           <details className="e-product-accordion">
             <summary>Design & fit</summary>
