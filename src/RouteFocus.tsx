@@ -1,17 +1,31 @@
-import { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useLocation, useNavigationType } from 'react-router-dom';
 
 // React Router changes the page without moving keyboard focus. On an actual
-// route change, focus the destination heading, while preserving its scroll
-// position and the existing #edit return behaviour.
+// route change, focus the destination heading. Browser back/forward returns to
+// the previous catalogue position; ordinary links begin at the page heading.
 export default function RouteFocus() {
   const location = useLocation();
-  const previousPath = useRef(location.pathname);
+  const navigationType = useNavigationType();
+  const previousLocation = useRef({ pathname: location.pathname, hash: location.hash });
+  const scrollPositions = useRef(new Map<string, number>());
+
+  useEffect(() => {
+    if (!('scrollRestoration' in window.history)) return;
+    const previousMode = window.history.scrollRestoration;
+    window.history.scrollRestoration = 'manual';
+    return () => { window.history.scrollRestoration = previousMode; };
+  }, []);
+
+  useLayoutEffect(() => {
+    const recordPosition = () => scrollPositions.current.set(location.key, window.scrollY);
+    window.addEventListener('scroll', recordPosition, { passive: true });
+    return () => window.removeEventListener('scroll', recordPosition);
+  }, [location.key]);
 
   useEffect(() => {
     if (import.meta.env.VITE_OFFLINE_PREVIEW !== '1') return;
-    // The portable HashRouter would otherwise treat #main, #detail-main,
-    // #pending-main and other in-page anchors as entirely different routes.
+    // The portable HashRouter would otherwise treat in-page anchors as routes.
     // Install this once for all pages, not only the home collection.
     function jumpToSection(event: MouseEvent) {
       if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
@@ -22,7 +36,7 @@ export default function RouteFocus() {
       const target = document.getElementById(targetId);
       if (!target) return;
       event.preventDefault();
-      const isSkipLink = link?.classList.contains('w-skip-link') ?? false;
+      const isSkipLink = link?.classList.contains('e-skip') || link?.classList.contains('w-skip-link') || false;
       target.scrollIntoView({
         behavior: isSkipLink || window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth',
       });
@@ -34,21 +48,22 @@ export default function RouteFocus() {
     return () => document.removeEventListener('click', jumpToSection);
   }, []);
 
-  useEffect(() => {
-    const changedPage = previousPath.current !== location.pathname;
-    previousPath.current = location.pathname;
-    if (!changedPage) return;
+  useLayoutEffect(() => {
+    const changedPage = previousLocation.current.pathname !== location.pathname;
+    const changedHash = previousLocation.current.hash !== location.hash;
+    previousLocation.current = { pathname: location.pathname, hash: location.hash };
+    if (!changedPage && !changedHash) return;
 
-    const frame = window.requestAnimationFrame(() => {
-      const returnToEdit = location.pathname === '/' && location.hash === '#edit';
-      const heading = returnToEdit
-        ? document.getElementById('edit-title')
-        : document.querySelector<HTMLElement>('main h1');
-      heading?.focus({ preventScroll: true });
-    });
-
-    return () => window.cancelAnimationFrame(frame);
-  }, [location.pathname, location.hash]);
+    const destination = location.hash ? document.getElementById(location.hash.slice(1)) : null;
+    if (destination) {
+      destination.scrollIntoView({ behavior: 'auto' });
+      (destination.querySelector<HTMLElement>('h1, h2') ?? destination).focus({ preventScroll: true });
+    } else if (changedPage) {
+      const saved = navigationType === 'POP' ? scrollPositions.current.get(location.key) : undefined;
+      window.scrollTo({ top: saved ?? 0, behavior: 'auto' });
+      document.querySelector<HTMLElement>('main h1')?.focus({ preventScroll: true });
+    }
+  }, [location.key, location.pathname, location.hash, navigationType]);
 
   return null;
 }

@@ -3,23 +3,26 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 // The earlier Shopify garment-care app remains preserved in this repository.
-// Review every dependency reachable from the active women's preview entry so
-// no future refactor silently pulls old checkout, customer or product code in.
+// Review every dependency reachable from both preview entries so no future
+// refactor silently pulls old checkout, customer or product code in.
 const projectRoot = process.cwd();
 const sourceRoot = path.join(projectRoot, 'src');
 const expectedModules = new Set([
   'src/main.tsx',
-  'src/WomenswearApp.tsx',
-  'src/ConceptDetailPage.tsx',
-  'src/CarePage.tsx',
-  'src/StandardsPage.tsx',
-  'src/CollectionPendingPage.tsx',
+  'src/EvernePreview.tsx',
+  'src/ProductPhotoGallery.tsx',
+  'src/ProductReviewFacts.tsx',
+  'src/ProductCardImage.tsx',
+  'src/productDrafts.ts',
   'src/RouteFocus.tsx',
-  'src/womenswearNavigation.ts',
-  'src/womenswearCatalog.ts',
   'src/seo.ts',
+  'src/trend-main.tsx',
+  'src/TrendStorePreview.tsx',
+  'src/trendCandidates.ts',
+  'src/trendProducts.ts',
 ]);
-const expectedStyles = new Set(['src/womenswear.css', 'src/fashion-storefront.css']);
+// The separate category-agnostic concept is also non-commercial.
+const expectedStyles = new Set(['src/everne-editorial.css', 'src/trend-store.css']);
 const allowedPackages = new Set(['react', 'react-dom/client', 'react-router-dom']);
 const visited = new Set();
 const styles = new Set();
@@ -85,6 +88,7 @@ function walk(file) {
 }
 
 walk(path.join(sourceRoot, 'main.tsx'));
+walk(path.join(sourceRoot, 'trend-main.tsx'));
 assert.deepEqual([...visited].sort(), [...expectedModules].sort(),
   'Preview source dependency graph changed: review and explicitly approve every newly reachable module');
 assert.deepEqual([...styles].sort(), [...expectedStyles].sort(),
@@ -101,10 +105,34 @@ assert.doesNotMatch(index, /<(?:script|link)\b[^>]*(?:src|href)=["']https?:\/\//
   'The preview entry HTML must not load remote scripts or stylesheets');
 assert.match(index, /name="robots" content="noindex,nofollow"/,
   'The preview entry must remain non-indexable');
+const next = fs.readFileSync('next.html', 'utf8');
+assert.doesNotMatch(next, /<(?:script|link)\b[^>]*(?:src|href)=["']https?:\/\//i,
+  'The new concept preview may not fetch remote scripts or styles');
+assert.match(next, /name="robots" content="noindex,nofollow"/,
+  'The new direction must stay non-indexable');
+
+// Vite copies public/ into the deployed output. Allow only hash-locked,
+// rights-documented editorial references in this protected design study.
+function listPublicFiles(directory) {
+  return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
+    const absolute = path.join(directory, entry.name);
+    return entry.isDirectory() ? listPublicFiles(absolute) : [absolute];
+  });
+}
+const exposedPictures = listPublicFiles(path.join(projectRoot, 'public'))
+  .filter((file) => /\.(?:avif|gif|jpe?g|png|webp)$/i.test(file));
+const visualManifest = JSON.parse(fs.readFileSync(path.join(projectRoot, 'approvals/visual-assets.json'), 'utf8'));
+assert.equal(visualManifest.previewMode, 'EDITORIAL_STUDY', 'Unexpected protected preview mode');
+assert.deepEqual(exposedPictures.map(projectPath).sort(),
+  visualManifest.studyAssets.map((asset) => asset.publicPath).sort(),
+  'Only documented design-study photos may enter public/');
+assert.ok(!fs.existsSync(path.join(projectRoot, 'public/editorial')) &&
+  !fs.existsSync(path.join(projectRoot, 'public/products')),
+  'No vendor, garment or product photo directories may be deployed');
 
 for (const file of visited) {
   assert.ok(!fs.readFileSync(file, 'utf8').match(/VITE_(?:SHOPIFY|STRIPE|SUPABASE|PAYMENT|CHECKOUT)_/),
     `Live commerce/backend configuration must not be accessible from the active preview: ${file}`);
 }
 
-console.log(`EVERNE WOMAN entry boundary passed: ${visited.size} explicitly reviewed source modules, ${styles.size} stylesheet, no old Shopify/cart/payment modules or active network calls.`);
+console.log(`EVERNE dual preview boundary passed: ${visited.size} explicitly reviewed source modules, ${styles.size} stylesheets, no old Shopify/cart/payment modules or active network calls.`);

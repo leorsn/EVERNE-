@@ -6,10 +6,9 @@ import fs from 'node:fs';
 // replacement of these assertions with evidence-backed release checks.
 const read = (file) => fs.readFileSync(file, 'utf8');
 const ready = JSON.parse(read('sourcing/first-drop-readiness.json'));
-const home = read('src/WomenswearApp.tsx');
-const detail = read('src/ConceptDetailPage.tsx');
-const standards = read('src/StandardsPage.tsx');
+const home = read('src/EvernePreview.tsx');
 const legal = read('public/legal.html');
+const legalDe = read('public/rechtliches.html');
 const routes = read('src/main.tsx');
 const vercel = JSON.parse(read('vercel.json'));
 
@@ -19,19 +18,19 @@ assert.equal(ready.storefrontPublicationAuthorized, false, 'An unapproved commer
 assert.ok(ready.items.every((item) => item.approvedForSale === false),
   'An item-level sale approval requires its own reviewed source evidence');
 
-assert.match(home, /No checkout until actual garments are verified/,
+assert.match(home, /NOT AN EVERNE GARMENT/,
+  'Editorial reference images must be distinguished from product photos');
+assert.match(home, /not (?:yet )?available to order/i,
   'Visitors must understand why products are unavailable');
-assert.match(home, /Each card is a design direction, not a stocked garment/,
-  'A concept card must never imply actual inventory');
-assert.match(detail, /No inventory confirmed/,
-  'Product detail pages must not invent stock');
-assert.match(detail, /Terms not yet confirmed/,
-  'Product detail pages must not invent delivery or returns terms');
-assert.match(standards, /external suppliers/,
+assert.doesNotMatch(home, /<picture\b|<form\b|<input\b/i,
+  'Do not expose commerce controls before approval');
+assert.match(home, /Clothing pictured is not an EVERNE product/,
+  'A non-product-photo disclosure must remain visible');
+assert.match(home, /external suppliers/,
   'The standards page must identify the curation rather than manufacture model');
-assert.match(standards, /What is not yet verified/,
+assert.match(home, /WHAT IS NOT YET VERIFIED/,
   'The standards page must separate unverified claims from confirmed facts');
-assert.match(standards, /No garments are available to order/,
+assert.match(home, /No garments are available to order/,
   'The trust page must not be mistaken for a public shop');
 
 assert.match(legal, /still placeholders/,
@@ -40,6 +39,17 @@ assert.match(legal, /\[Insert verified business street address\]/,
   'Do not silently pass an incomplete merchant address as completed');
 assert.match(legal, /\[Insert contact email address\]/,
   'Do not silently pass an incomplete merchant contact as completed');
+assert.match(legal, /licensed third-party editorial reference photography/,
+  'English legal status must describe the editorial photo study');
+assert.match(legalDe, /lizenzierte redaktionelle Referenzfotos/,
+  'German legal status must describe the editorial photo study');
+assert.doesNotMatch(legal, /The 20 featured fashion pieces|Displayed prices are non-binding targets/,
+  'Do not present private research concepts or target prices as displayed merchandise');
+assert.doesNotMatch(legalDe, /Die Website ist technisch mit Shopify verbunden|ein vorhandener Warenkorb-Schlüssel beim Laden entfernt/,
+  'The active preview does not run the dormant Shopify or basket storage modules');
+for (const anchor of ['imprint', 'privacy', 'shipping']) {
+  assert.match(legal, new RegExp(`id="${anchor}"`), `Footer legal anchor missing: ${anchor}`);
+}
 
 assert.match(routes, /path="\/standards"/,
   'The customer-facing standards route must remain accessible');

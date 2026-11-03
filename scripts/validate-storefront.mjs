@@ -75,6 +75,10 @@ if (!vercelConfig.rewrites?.some((rule) => rule.source === '/products/:path*' &&
   failures.push('Vercel product deep-link rewrite is missing');
 }
 
+if (!vercelConfig.rewrites?.some((rule) => rule.source === '/collections/:path*' && rule.destination === '/')) {
+  failures.push('Vercel category deep-link rewrite is missing');
+}
+
 if (!vercelConfig.rewrites?.some((rule) => rule.source === '/edit/:path*' && rule.destination === '/')) {
   failures.push('Vercel concept deep-link rewrite is missing');
 }
