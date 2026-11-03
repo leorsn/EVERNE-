@@ -18,6 +18,7 @@ assert.match(lightEdition, /\.e-collection-list/, 'The light theme must support 
 assert.match(lightEdition, /\.e-featured-grid\s*\{\s*display:\s*grid;\s*grid-template-columns:\s*repeat\(5,/, 'The home edit should use the five-column reference rhythm');
 assert.match(lightEdition, /\.e-shop-shell \.e-collection-grid:not\(\.e-collection-list\)\s*\{\s*grid-template-columns:\s*repeat\(5,/, 'The desktop collection should use five edge-to-edge columns');
 assert.match(lightEdition, /\.e-shop-shell-product \.e-product-page\s*\{[^}]*grid-template-columns:\s*minmax\(0, 50%\) minmax\(0, 50%\)/, 'The desktop product detail should use a split image and information layout');
+assert.match(lightEdition, /\.e-shop-shell \.e-collection-grid:not\(\.e-collection-list\) \.e-collection-card-description\s*\{\s*display:\s*none;/, 'The merchandise grid should keep long copy on detail pages and in list view');
 
 const vite = await createServer({
   appType: 'custom', configFile: false, logLevel: 'error',
