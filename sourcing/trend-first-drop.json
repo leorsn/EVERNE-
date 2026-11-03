@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "candidateSlug": "jewellery-bag",
+  "workingTitle": "Jewellery bag",
+  "stage": "RESEARCH_ONLY",
+  "supplier": {
+    "name": null,
+    "productUrl": null,
+    "sku": null
+  },
+  "product": {
+    "materialsAndDimensions": null,
+    "variants": [],
+    "approvedProductPhotoPaths": []
+  },
+  "economics": {
+    "currency": "EUR",
+    "salePriceEur": null,
+    "landedUnitCostEur": null,
+    "paymentAndPlatformFeesEur": null,
+    "returnsReserveEur": null,
+    "additionalRecurringAutomationCostEur": null
+  },
+  "evidence": {
+    "supplierIdentity": { "verified": false, "reference": null, "reviewedAt": null },
+    "actualProductSpecsAndSafety": { "verified": false, "reference": null, "reviewedAt": null },
+    "commercialImageRights": { "verified": false, "reference": null, "reviewedAt": null },
+    "realGermanyShippingQuote": { "verified": false, "reference": null, "reviewedAt": null },
+    "returnsAndDefectsProcess": { "verified": false, "reference": null, "reviewedAt": null },
+    "automaticOrderForwarding": { "verified": false, "reference": null, "reviewedAt": null },
+    "automaticSupplierPayment": { "verified": false, "reference": null, "reviewedAt": null },
+    "zeroExtraRecurringCost": { "verified": false, "reference": null, "reviewedAt": null },
+    "costsAndTaxTreatment": { "verified": false, "reference": null, "reviewedAt": null },
+    "channelRequirementsAndTestOrder": { "verified": false, "reference": null, "reviewedAt": null }
+  },
+  "targetChannel": null,
+  "founderRelease": {
+    "approved": false,
+    "reference": null,
+    "reviewedAt": null
+  }
+}
