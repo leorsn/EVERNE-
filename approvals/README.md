@@ -22,4 +22,6 @@ The product-detail layout now has a reusable `ProductPhotoGallery` component cap
 
 `ProductReviewFacts` similarly provides a future display for measured size labels, approved whole-euro price, composition, care, and confirmed delivery and return terms. It currently receives **no product facts**. Size labels are informational, not stock promises or order controls. Any future integration must derive these exact details from approved product evidence and applicable consumer information, with an explicit release decision. Its synthetic render-test values are never bundled into the active storefront.
 
+`ProductCardImage` prepares the same approved-photo handoff in collection grids: real product photos can fill the card in a future reviewed release, while the active 20 copy-only cards remain image-free and clearly marked as pending. The synthetic test asset path is not bundled or deployed.
+
 Use `PRODUCT-RELEASE-RECORD-TEMPLATE.md` as a checklist when real samples and rights arrive. The template is not itself a release record and does not satisfy any gate.

@@ -13,6 +13,7 @@ try {
   const { default: EvernePreview } = await vite.ssrLoadModule('/src/EvernePreview.tsx');
   const { default: ProductPhotoGallery } = await vite.ssrLoadModule('/src/ProductPhotoGallery.tsx');
   const { ProductSizeInformation, ProductFactsAccordion } = await vite.ssrLoadModule('/src/ProductReviewFacts.tsx');
+  const { default: ProductCardImage } = await vite.ssrLoadModule('/src/ProductCardImage.tsx');
   const { productDrafts } = await vite.ssrLoadModule('/src/productDrafts.ts');
 
   const pendingGallery = renderToStaticMarkup(React.createElement(ProductPhotoGallery));
@@ -52,6 +53,17 @@ try {
   assert.match(reviewedFacts, /Material &amp; care/);
   assert.match(reviewedFacts, /Delivery &amp; returns/);
   assert.doesNotMatch(reviewedSizes + reviewedFacts, /<button\b|<form\b|<input\b|add to cart/i);
+
+  const pendingCard = renderToStaticMarkup(React.createElement(ProductCardImage, { index: 1, total: 20 }));
+  assert.match(pendingCard, /IMAGE PENDING/);
+  assert.equal((pendingCard.match(/<img\b/g) ?? []).length, 0);
+  const photoCard = renderToStaticMarkup(React.createElement(ProductCardImage, {
+    index: 2, total: 20,
+    photo: { publicPath: '/test-only/approved-card.jpg', altText: 'Test-only garment photograph, not a real EVERNE product' },
+  }));
+  assert.match(photoCard, /alt="Test-only garment photograph/);
+  assert.match(photoCard, /loading="lazy"/);
+  assert.doesNotMatch(photoCard, /IMAGE PENDING|buy now|add to cart/i);
   function renderPage(url) {
     const paths = [
       React.createElement(Route, { key: 'home', path: '/', element: React.createElement(EvernePreview, { page: 'home' }) }),

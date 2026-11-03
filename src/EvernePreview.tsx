@@ -4,6 +4,7 @@ import { applySeo } from './seo';
 import { draftCategories, findProductDraft, productDrafts } from './productDrafts';
 import ProductPhotoGallery from './ProductPhotoGallery';
 import { ProductFactsAccordion, ProductSizeInformation } from './ProductReviewFacts';
+import ProductCardImage from './ProductCardImage';
 
 type Page = 'home' | 'care' | 'standards' | 'product' | 'collection';
 type SortOrder = 'edit' | 'name';
@@ -154,10 +155,7 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
     <div className="e-collection-grid" role="list" aria-label={`${all ? 'All' : category?.label} design concepts`}>
       {items.map((item) => <article className="e-collection-card" role="listitem" key={item.slug}>
         <Link to={`/products/${item.slug}`} aria-label={`View ${item.name} design preview`}>
-          <div className="e-collection-card-image" aria-hidden="true">
-            <span className="e-collection-image-index">{String(productDrafts.indexOf(item) + 1).padStart(2, '0')} / {productDrafts.length}</span>
-            <span className="e-collection-image-pending">IMAGE PENDING</span>
-          </div>
+          <ProductCardImage index={productDrafts.indexOf(item) + 1} total={productDrafts.length} />
           <div className="e-collection-card-caption">
             <h2>{item.name}</h2>
             {all && <span className="e-collection-card-category">{draftCategories.find((entry) => entry.id === item.category)?.label}</span>}
