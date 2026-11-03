@@ -119,7 +119,8 @@ try {
       await page.locator('#everne-sort').selectOption('edit');
       assert.equal(await page.locator('.e-collection-card h2').first().innerText(), 'Essential Rib Top', 'Editorial sequence must be restorable');
       assert.equal(await page.locator('.e-sidebar-desktop .e-sidebar-categories [aria-current="page"]').count(), 1);
-      assert.equal(await page.locator('.e-shop-nav-links').count(), 0);
+      assert.equal(await page.locator('.e-shop-nav-links').count(), 1, 'The mobile category strip must remain in the page');
+      assert.equal(await page.locator('.e-shop-nav-browse').isVisible(), width <= 900, 'The category strip should only show when the desktop sidebar is collapsed');
       assert.equal(await page.locator('img,form,input,[href*="checkout"]').count(), 0);
       for (const [category, count] of [['tops', 5], ['knitwear', 5], ['trousers', 4], ['dresses', 3], ['skirts', 3]]) {
         await reset(`#/collections/${category}`);
@@ -154,6 +155,20 @@ try {
       assert.match(await page.locator('main').innerText(), /AWAITING FIT APPROVAL/);
       assert.equal(await page.locator('meta[name="robots"]').getAttribute('content'), 'noindex,nofollow');
       assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 2), 'Draft detail must not overflow horizontally');
+    });
+
+    await check(width, 'Product navigation restores the catalogue position', async () => {
+      await reset('#/collections/all');
+      await page.evaluate(() => window.scrollTo(0, document.documentElement.scrollHeight));
+      const previousY = await page.evaluate(() => window.scrollY);
+      assert.ok(previousY > 100, 'The collection must be long enough to test scroll restoration');
+      await page.locator('.e-collection-card a').last().click();
+      await page.locator('#product-title').waitFor();
+      assert.ok(await page.evaluate(() => window.scrollY) < 5, 'A new product page must start at the top');
+      await page.goBack();
+      await page.locator('#collection-page-title').waitFor();
+      const restoredY = await page.evaluate(() => window.scrollY);
+      assert.ok(Math.abs(restoredY - previousY) <= 5, `Back navigation should restore the collection position: ${restoredY} vs ${previousY}`);
     });
 
     await check(width, 'Legal drafts: layout, anchors and tap targets', async () => {

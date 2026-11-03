@@ -1,12 +1,27 @@
-import { useEffect, useRef } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect, useLayoutEffect, useRef } from 'react';
+import { useLocation, useNavigationType } from 'react-router-dom';
 
 // React Router changes the page without moving keyboard focus. On an actual
-// route change, focus the destination heading, while preserving its scroll
-// position and the existing #edit return behaviour.
+// route change, focus the destination heading. Browser back/forward returns to
+// the previous catalogue position; ordinary links begin at the page heading.
 export default function RouteFocus() {
   const location = useLocation();
+  const navigationType = useNavigationType();
   const previousLocation = useRef({ pathname: location.pathname, hash: location.hash });
+  const scrollPositions = useRef(new Map<string, number>());
+
+  useEffect(() => {
+    if (!('scrollRestoration' in window.history)) return;
+    const previousMode = window.history.scrollRestoration;
+    window.history.scrollRestoration = 'manual';
+    return () => { window.history.scrollRestoration = previousMode; };
+  }, []);
+
+  useLayoutEffect(() => {
+    const recordPosition = () => scrollPositions.current.set(location.key, window.scrollY);
+    window.addEventListener('scroll', recordPosition, { passive: true });
+    return () => window.removeEventListener('scroll', recordPosition);
+  }, [location.key]);
 
   useEffect(() => {
     if (import.meta.env.VITE_OFFLINE_PREVIEW !== '1') return;
@@ -33,25 +48,22 @@ export default function RouteFocus() {
     return () => document.removeEventListener('click', jumpToSection);
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const changedPage = previousLocation.current.pathname !== location.pathname;
     const changedHash = previousLocation.current.hash !== location.hash;
     previousLocation.current = { pathname: location.pathname, hash: location.hash };
     if (!changedPage && !changedHash) return;
 
-    const frame = window.requestAnimationFrame(() => {
-      const destination = location.hash ? document.getElementById(location.hash.slice(1)) : null;
-      if (destination) {
-        destination.scrollIntoView({ behavior: 'auto' });
-        (destination.querySelector<HTMLElement>('h1, h2') ?? destination).focus({ preventScroll: true });
-      } else if (changedPage) {
-        window.scrollTo({ top: 0, behavior: 'auto' });
-        document.querySelector<HTMLElement>('main h1')?.focus({ preventScroll: true });
-      }
-    });
-
-    return () => window.cancelAnimationFrame(frame);
-  }, [location.pathname, location.hash]);
+    const destination = location.hash ? document.getElementById(location.hash.slice(1)) : null;
+    if (destination) {
+      destination.scrollIntoView({ behavior: 'auto' });
+      (destination.querySelector<HTMLElement>('h1, h2') ?? destination).focus({ preventScroll: true });
+    } else if (changedPage) {
+      const saved = navigationType === 'POP' ? scrollPositions.current.get(location.key) : undefined;
+      window.scrollTo({ top: saved ?? 0, behavior: 'auto' });
+      document.querySelector<HTMLElement>('main h1')?.focus({ preventScroll: true });
+    }
+  }, [location.key, location.pathname, location.hash, navigationType]);
 
   return null;
 }
