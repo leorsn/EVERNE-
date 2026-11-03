@@ -32,7 +32,9 @@ const standards = [
 // Licensed third-party visual references, not EVERNE garments or product claims.
 const editorial = (file: string) => import.meta.env.BASE_URL + 'editorial-study/' + file;
 
-function Header({ page }: { page: Page }) {
+function Header({ page, selectedCategory }: { page: Page; selectedCategory?: string }) {
+  const isBrowsing = page === 'collection' || page === 'product';
+  const currentCategory = page === 'product' ? 'location' : 'page';
   return <>
     <a className="e-skip" href="#main">Skip to content</a>
     <header className="e-header">
@@ -45,12 +47,12 @@ function Header({ page }: { page: Page }) {
         <Link className={page === 'standards' ? 'e-active' : ''} aria-current={page === 'standards' ? 'page' : undefined} to="/standards">OUR STANDARD</Link>
       </nav>
     </header>
-    {page !== 'collection' && page !== 'product' && <nav className="e-shop-nav" aria-label="Shop by category">
+    <nav className={isBrowsing ? 'e-shop-nav e-shop-nav-browse' : 'e-shop-nav'} aria-label="Shop by category">
       <div className="e-shop-nav-links">
-        <Link to="/collections/all">ALL PIECES</Link>
-        {draftCategories.map((category) => <Link key={category.id} to={`/collections/${category.id}`}>{category.label.toUpperCase()}</Link>)}
+        <Link className={selectedCategory === 'all' ? 'e-selected' : undefined} aria-current={selectedCategory === 'all' ? currentCategory : undefined} to="/collections/all">ALL PIECES</Link>
+        {draftCategories.map((category) => <Link key={category.id} className={selectedCategory === category.id ? 'e-selected' : undefined} aria-current={selectedCategory === category.id ? currentCategory : undefined} to={`/collections/${category.id}`}>{category.label.toUpperCase()}</Link>)}
       </div>
-    </nav>}
+    </nav>
   </>;
 }
 
@@ -306,5 +308,5 @@ export default function EvernePreview({ page }: { page: Page }) {
     const description = product ? `${product.name}: an EVERNE design concept in development. Product photography, specifications and ordering are not available.` : 'EVERNE is an independent womenswear project in preparation. The collection is not yet available to order.';
     applySeo({ title, description, path: product ? `/products/${product.slug}` : page === 'collection' ? `/collections/${categoryId}` : page === 'home' ? '/' : '/' + page, type: 'website', indexable: false });
   }, [page, product, categoryId]);
-  return <div className="everne-editorial" id="top"><Header page={page} /><main id="main" tabIndex={-1}>{page === 'home' ? <Home /> : page === 'care' ? <Care /> : page === 'standards' ? <Standards /> : page === 'collection' ? <CollectionPage categoryId={categoryId} /> : <ProductPage handle={handle} />}</main><Footer /></div>;
+  return <div className="everne-editorial" id="top"><Header page={page} selectedCategory={product?.category ?? (page === 'collection' ? categoryId : undefined)} /><main id="main" tabIndex={-1}>{page === 'home' ? <Home /> : page === 'care' ? <Care /> : page === 'standards' ? <Standards /> : page === 'collection' ? <CollectionPage categoryId={categoryId} /> : <ProductPage handle={handle} />}</main><Footer /></div>;
 }

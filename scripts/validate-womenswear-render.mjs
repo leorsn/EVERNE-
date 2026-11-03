@@ -62,6 +62,7 @@ try {
   assert.equal((all.match(/class="e-collection-card-category"/g) ?? []).length, 20, 'The full edit must identify each item category');
   assert.equal((all.match(/class="e-sidebar-desktop"/g) ?? []).length, 1, 'The collection must expose desktop side navigation');
   assert.equal((all.match(/class="e-sidebar-mobile"/g) ?? []).length, 1, 'The collection must have a compact mobile navigation drawer');
+  assert.match(all, /class="e-shop-nav e-shop-nav-browse" aria-label="Shop by category"/, 'Collection navigation must be available on mobile');
   assert.equal((all.match(/<img\b/g) ?? []).length, 0, 'No unapproved product photography in the grid');
   assert.match(all, /aria-current="page" href="\/collections\/all"/);
   for (const category of ['tops', 'knitwear', 'trousers', 'dresses', 'skirts']) {
@@ -74,6 +75,7 @@ try {
       `${category} must preserve the correct design-index markers`);
     assert.equal((html.match(/href="\/products\/[a-z0-9-]+"/g) ?? []).length, count);
     assert.match(html, new RegExp(`aria-current="page" href="/collections/${category}"`));
+    assert.match(html, /class="e-shop-nav e-shop-nav-browse" aria-label="Shop by category"/, `${category} needs direct mobile category navigation`);
     assert.equal((html.match(/<img\b/g) ?? []).length, 0);
   }
   const unknownCollection = renderPage('/collections/unknown');
@@ -89,6 +91,8 @@ try {
     assert.match(html, new RegExp(`aria-current="page" href="/products/${product.slug}"`), `${product.name} must be selected in the sidebar`);
     assert.match(html, /aria-label="Breadcrumb"/, `${product.name} needs a category breadcrumb`);
     assert.match(html, new RegExp(`href="/collections/${product.category}"`), `${product.name} needs a route back to its category`);
+    assert.match(html, /class="e-shop-nav e-shop-nav-browse" aria-label="Shop by category"/, `${product.name} needs direct mobile category navigation`);
+    assert.match(html, new RegExp(`aria-current="location" href="/collections/${product.category}"`), `${product.name} must mark its category as the current location`);
     assert.match(html, /aria-label="Browse more pieces"/, `${product.name} needs previous and next navigation`);
     const siblings = productDrafts.filter((item) => item.category === product.category);
     const position = siblings.findIndex((item) => item.slug === product.slug);
