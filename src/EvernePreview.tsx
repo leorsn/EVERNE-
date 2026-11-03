@@ -118,6 +118,10 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
   return <div className="e-shop-shell">
     <ShopSidebar categoryId={categoryId} />
     <section className="e-collection-page" aria-labelledby="collection-page-title">
+    <nav className="e-collection-breadcrumb" aria-label="Breadcrumb">
+      <Link to="/">EVERNE</Link><span aria-hidden="true">/</span>
+      {all ? <span aria-current="page">THE EDIT</span> : <><Link to="/collections/all">THE EDIT</Link><span aria-hidden="true">/</span><span aria-current="page">{category?.label}</span></>}
+    </nav>
     <div className="e-collection-heading">
       <h1 id="collection-page-title" tabIndex={-1}>{all ? 'All pieces' : category?.label}</h1>
       <div className="e-collection-tools">
@@ -133,6 +137,7 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
       {items.map((item) => <article className="e-collection-card" role="listitem" key={item.slug}>
         <Link to={`/products/${item.slug}`} aria-label={`View ${item.name} design preview`}>
           <div className="e-collection-card-image" aria-hidden="true">
+            <span className="e-collection-image-index">{String(productDrafts.indexOf(item) + 1).padStart(2, '0')} / {productDrafts.length}</span>
             <span className="e-collection-image-pending">IMAGE PENDING</span>
           </div>
           <div className="e-collection-card-caption">
@@ -219,7 +224,7 @@ function ProductPage({ handle }: { handle?: string }) {
         </div>
       </div>
       <div className="e-product-information">
-        <p className="e-product-category">{category?.label}</p>
+        <p className="e-product-category"><span>{category?.label}</span><span>{String(position + 1).padStart(2, '0')} / {String(categoryItems.length).padStart(2, '0')}</span></p>
         <h1 id="product-title" tabIndex={-1}>{item.name}</h1>
         <p className="e-product-intro">{item.description}</p>
         <p className="e-product-pending">NOT AVAILABLE TO ORDER</p>

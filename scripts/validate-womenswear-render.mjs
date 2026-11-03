@@ -55,6 +55,8 @@ try {
   const all = renderPage('/collections/all');
   assertSafe(all, '/collections/all');
   assert.equal((all.match(/class="e-collection-card"/g) ?? []).length, 20, 'All pieces must show twenty product cards');
+  assert.equal((all.match(/class="e-collection-image-index"/g) ?? []).length, 20, 'The design index must label all twenty image placeholders');
+  assert.match(all, /aria-label="Breadcrumb"/, 'The collection needs navigation back to EVERNE');
   assert.match(all, /id="everne-sort"/, 'The full collection must have a restrained sort control');
   assert.match(all, /Name A–Z/, 'The sort control must offer alphabetic ordering');
   assert.equal((all.match(/class="e-collection-card-category"/g) ?? []).length, 20, 'The full edit must identify each item category');
@@ -68,6 +70,8 @@ try {
     const count = productDrafts.filter((product) => product.category === category).length;
     assert.equal((html.match(/class="e-collection-card"/g) ?? []).length, count,
       `${category} must display exactly its own products`);
+    assert.equal((html.match(/class="e-collection-image-index"/g) ?? []).length, count,
+      `${category} must preserve the correct design-index markers`);
     assert.equal((html.match(/href="\/products\/[a-z0-9-]+"/g) ?? []).length, count);
     assert.match(html, new RegExp(`aria-current="page" href="/collections/${category}"`));
     assert.equal((html.match(/<img\b/g) ?? []).length, 0);
