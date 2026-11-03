@@ -129,6 +129,16 @@ try {
         assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 2), `${category}: no horizontal overflow`);
       }
       if (width <= 900) {
+        await reset('#/collections/skirts');
+        await page.waitForFunction(() => {
+          const strip = document.querySelector('.e-shop-nav-browse .e-shop-nav-links');
+          const active = strip?.querySelector('[aria-current="page"]');
+          if (!strip || !active) return false;
+          const visible = strip.getBoundingClientRect();
+          const selected = active.getBoundingClientRect();
+          return selected.left >= visible.left - 2 && selected.right <= visible.right + 2;
+        });
+        assert.equal(await page.locator('.e-shop-nav-browse [aria-current="page"]').innerText(), 'SKIRTS', 'The mobile category strip must reveal the selected category');
         await reset('#/collections/tops');
         await page.locator('.e-sidebar-mobile summary').click();
         assert.equal(await page.locator('.e-sidebar-mobile').evaluate((drawer) => drawer.open), true);

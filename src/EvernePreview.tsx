@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { applySeo } from './seo';
 import { draftCategories, findProductDraft, productDrafts } from './productDrafts';
@@ -35,6 +35,20 @@ const editorial = (file: string) => import.meta.env.BASE_URL + 'editorial-study/
 function Header({ page, selectedCategory }: { page: Page; selectedCategory?: string }) {
   const isBrowsing = page === 'collection' || page === 'product';
   const currentCategory = page === 'product' ? 'location' : 'page';
+  const categoryStripRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!isBrowsing || !selectedCategory) return;
+    const strip = categoryStripRef.current;
+    if (!strip || strip.clientWidth === 0 || strip.scrollWidth <= strip.clientWidth) return;
+    const active = strip.querySelector<HTMLElement>('[aria-current]');
+    if (!active) return;
+    const stripBounds = strip.getBoundingClientRect();
+    const activeBounds = active.getBoundingClientRect();
+    const target = strip.scrollLeft + activeBounds.left - stripBounds.left - (strip.clientWidth - activeBounds.width) / 2;
+    strip.scrollLeft = Math.max(0, target);
+  }, [isBrowsing, selectedCategory]);
+
   return <>
     <a className="e-skip" href="#main">Skip to content</a>
     <header className="e-header">
@@ -48,7 +62,7 @@ function Header({ page, selectedCategory }: { page: Page; selectedCategory?: str
       </nav>
     </header>
     <nav className={isBrowsing ? 'e-shop-nav e-shop-nav-browse' : 'e-shop-nav'} aria-label="Shop by category">
-      <div className="e-shop-nav-links">
+      <div className="e-shop-nav-links" ref={categoryStripRef}>
         <Link className={selectedCategory === 'all' ? 'e-selected' : undefined} aria-current={selectedCategory === 'all' ? currentCategory : undefined} to="/collections/all">ALL PIECES</Link>
         {draftCategories.map((category) => <Link key={category.id} className={selectedCategory === category.id ? 'e-selected' : undefined} aria-current={selectedCategory === category.id ? currentCategory : undefined} to={`/collections/${category.id}`}>{category.label.toUpperCase()}</Link>)}
       </div>
