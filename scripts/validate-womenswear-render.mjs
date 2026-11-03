@@ -113,6 +113,7 @@ try {
   assert.match(all, /Name A–Z/, 'The sort control must offer alphabetic ordering');
   assert.equal((all.match(/class="e-collection-card-category"/g) ?? []).length, 20, 'The full edit must identify each item category');
   assert.equal((all.match(/class="e-sidebar-desktop"/g) ?? []).length, 1, 'The collection must expose desktop side navigation');
+  assert.match(all, /class="e-sidebar-title">THE EDIT<\/span>/, 'The sidebar should not repeat the header WOMAN label');
   assert.equal((all.match(/class="e-sidebar-mobile"/g) ?? []).length, 1, 'The collection must have a compact mobile navigation drawer');
   assert.match(all, /class="e-shop-nav e-shop-nav-browse" aria-label="Shop by category"/, 'Collection navigation must be available on mobile');
   assert.equal((all.match(/<img\b/g) ?? []).length, 0, 'No unapproved product photography in the grid');
@@ -143,6 +144,8 @@ try {
     assert.equal((html.match(/class="e-photo-slot-index"/g) ?? []).length, 3, `${product.name} must reserve three numbered photo positions`);
     assert.match(html, /Size information will appear only after garment measurements/, `${product.name} must explain the size-approval gate`);
     assert.match(html, /aria-label="Products in this category"/, `${product.name} must be reachable from the sidebar product navigation`);
+    assert.match(html, /class="e-sidebar-section-label" aria-hidden="true">IN THIS CATEGORY<\/span>/,
+      `${product.name} must distinguish category navigation from its product links`);
     assert.match(html, new RegExp(`aria-current="page" href="/products/${product.slug}"`), `${product.name} must be selected in the sidebar`);
     assert.match(html, /aria-label="Breadcrumb"/, `${product.name} needs a category breadcrumb`);
     assert.match(html, new RegExp(`href="/collections/${product.category}"`), `${product.name} needs a route back to its category`);

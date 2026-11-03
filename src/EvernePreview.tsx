@@ -80,6 +80,7 @@ function SidebarLinks({ categoryId, productHandle }: { categoryId?: string; prod
       {draftCategories.map((category) => <Link key={category.id} to={`/collections/${category.id}`} className={categoryId === category.id ? 'e-sidebar-selected' : ''} aria-current={categoryId === category.id ? (productHandle ? 'location' : 'page') : undefined}><span>{category.label}</span><small>{productDrafts.filter((item) => item.category === category.id).length}</small></Link>)}
     </nav>
     {productHandle && <nav className="e-sidebar-products" aria-label="Products in this category">
+      <span className="e-sidebar-section-label" aria-hidden="true">IN THIS CATEGORY</span>
       {productDrafts.filter((item) => item.category === categoryId).map((item) => <Link key={item.slug} to={`/products/${item.slug}`} className={item.slug === productHandle ? 'e-sidebar-selected' : ''} aria-current={item.slug === productHandle ? 'page' : undefined}>{item.name}</Link>)}
     </nav>}
   </>;
@@ -88,7 +89,7 @@ function SidebarLinks({ categoryId, productHandle }: { categoryId?: string; prod
 function ShopSidebar({ categoryId, productHandle }: { categoryId?: string; productHandle?: string }) {
   const label = draftCategories.find((item) => item.id === categoryId)?.label ?? 'All pieces';
   return <aside className="e-shop-sidebar" aria-label="Collection navigation">
-    <div className="e-sidebar-desktop"><span className="e-sidebar-title">WOMAN</span><SidebarLinks categoryId={categoryId} productHandle={productHandle} /></div>
+    <div className="e-sidebar-desktop"><span className="e-sidebar-title">THE EDIT</span><SidebarLinks categoryId={categoryId} productHandle={productHandle} /></div>
     <details className="e-sidebar-mobile" key={`${categoryId ?? 'all'}-${productHandle ?? 'collection'}`}>
       <summary>Browse collection <span>{label}</span></summary>
       <div className="e-sidebar-mobile-content"><SidebarLinks categoryId={categoryId} productHandle={productHandle} /></div>
