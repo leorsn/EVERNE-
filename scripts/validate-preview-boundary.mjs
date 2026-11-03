@@ -3,8 +3,8 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 // The earlier Shopify garment-care app remains preserved in this repository.
-// Review every dependency reachable from the active women's preview entry so
-// no future refactor silently pulls old checkout, customer or product code in.
+// Review every dependency reachable from both preview entries so no future
+// refactor silently pulls old checkout, customer or product code in.
 const projectRoot = process.cwd();
 const sourceRoot = path.join(projectRoot, 'src');
 const expectedModules = new Set([
@@ -16,9 +16,12 @@ const expectedModules = new Set([
   'src/productDrafts.ts',
   'src/RouteFocus.tsx',
   'src/seo.ts',
+  'src/trend-main.tsx',
+  'src/TrendStorePreview.tsx',
+  'src/trendProducts.ts',
 ]);
-// The preparation site exposes text-only design drafts, never commerce modules.
-const expectedStyles = new Set(['src/everne-editorial.css']);
+// The separate category-agnostic concept is also non-commercial.
+const expectedStyles = new Set(['src/everne-editorial.css', 'src/trend-store.css']);
 const allowedPackages = new Set(['react', 'react-dom/client', 'react-router-dom']);
 const visited = new Set();
 const styles = new Set();
@@ -84,6 +87,7 @@ function walk(file) {
 }
 
 walk(path.join(sourceRoot, 'main.tsx'));
+walk(path.join(sourceRoot, 'trend-main.tsx'));
 assert.deepEqual([...visited].sort(), [...expectedModules].sort(),
   'Preview source dependency graph changed: review and explicitly approve every newly reachable module');
 assert.deepEqual([...styles].sort(), [...expectedStyles].sort(),
@@ -100,6 +104,11 @@ assert.doesNotMatch(index, /<(?:script|link)\b[^>]*(?:src|href)=["']https?:\/\//
   'The preview entry HTML must not load remote scripts or stylesheets');
 assert.match(index, /name="robots" content="noindex,nofollow"/,
   'The preview entry must remain non-indexable');
+const next = fs.readFileSync('next.html', 'utf8');
+assert.doesNotMatch(next, /<(?:script|link)\b[^>]*(?:src|href)=["']https?:\/\//i,
+  'The new concept preview may not fetch remote scripts or styles');
+assert.match(next, /name="robots" content="noindex,nofollow"/,
+  'The new direction must stay non-indexable');
 
 // Vite copies public/ into the deployed output. Allow only hash-locked,
 // rights-documented editorial references in this protected design study.
@@ -125,4 +134,4 @@ for (const file of visited) {
     `Live commerce/backend configuration must not be accessible from the active preview: ${file}`);
 }
 
-console.log(`EVERNE WOMAN entry boundary passed: ${visited.size} explicitly reviewed source modules, ${styles.size} stylesheet, no old Shopify/cart/payment modules or active network calls.`);
+console.log(`EVERNE dual preview boundary passed: ${visited.size} explicitly reviewed source modules, ${styles.size} stylesheets, no old Shopify/cart/payment modules or active network calls.`);
