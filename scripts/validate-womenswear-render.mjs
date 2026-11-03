@@ -42,10 +42,20 @@ try {
       { publicPath: '/test-only/sample-back.jpg', altText: 'Sample garment back view for the presentation test' },
     ],
   }));
-  assert.equal((reviewedGallery.match(/<img\b/g) ?? []).length, 2);
+  assert.equal((reviewedGallery.match(/<img\b/g) ?? []).length, 3, 'Approved photo galleries should render one large image and two small selectors');
   assert.match(reviewedGallery, /loading="lazy"/);
   assert.match(reviewedGallery, /Sample garment front view/);
+  assert.match(reviewedGallery, /aria-label="Previous product photograph"/);
+  assert.match(reviewedGallery, /aria-label="Next product photograph"/);
+  assert.equal((reviewedGallery.match(/class="e-product-gallery-thumbnail"/g) ?? []).length, 2);
+  assert.match(reviewedGallery, /aria-pressed="true"/, 'The first approved image should be selected by default');
   assert.doesNotMatch(reviewedGallery, /Photograph pending|add to cart|checkout/i);
+  const onePhotoGallery = renderToStaticMarkup(React.createElement(ProductPhotoGallery, {
+    photos: [{ publicPath: '/test-only/one-approved-photo.jpg', altText: 'Single garment photo for the presentation test' }],
+  }));
+  assert.equal((onePhotoGallery.match(/<img\b/g) ?? []).length, 1);
+  assert.doesNotMatch(onePhotoGallery, /Previous product photograph|Next product photograph|e-product-gallery-thumbnails/,
+    'A single-image gallery must not render empty navigation controls');
 
   const pendingSizes = renderToStaticMarkup(React.createElement(ProductSizeInformation));
   const pendingFacts = renderToStaticMarkup(React.createElement(ProductFactsAccordion));
