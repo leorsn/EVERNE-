@@ -32,6 +32,20 @@ const standards = [
   { title: 'The image', text: 'A product photograph must show the actual reviewed garment before it can be used for sale.' },
 ];
 
+// The twenty design pages are a presentation inventory, not a Shopify stock feed.
+// The four-item opening edit makes products discoverable without implying sale approval.
+const openingEditSlugs = [
+  'essential-rib-top',
+  'relaxed-crew-knit',
+  'wide-leg-trouser',
+  'the-black-mini',
+];
+const openingEdit = openingEditSlugs.map((slug) => productDrafts.find((item) => item.slug === slug)!);
+
+function categoryCount(categoryId: string): number {
+  return productDrafts.filter((item) => item.category === categoryId).length;
+}
+
 // Licensed third-party visual references, not EVERNE garments or product claims.
 const editorial = (file: string) => import.meta.env.BASE_URL + 'editorial-study/' + file;
 
@@ -143,7 +157,11 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
       {all ? <span aria-current="page">THE EDIT</span> : <><Link to="/collections/all">THE EDIT</Link><span aria-hidden="true">/</span><span aria-current="page">{category?.label}</span></>}
     </nav>
     <div className="e-collection-heading">
-      <h1 id="collection-page-title" tabIndex={-1}>{all ? 'All pieces' : category?.label}</h1>
+      <div>
+        <span className="e-kicker">COLLECTION 01 / DESIGN STUDIES</span>
+        <h1 id="collection-page-title" tabIndex={-1}>{all ? 'All pieces' : category?.label}</h1>
+        <p className="e-collection-intro">{all ? 'Twenty individual ideas. Five wardrobe categories. Each piece is being sourced and reviewed before it can be offered for sale.' : `Explore the ${category?.label.toLowerCase()} edit. These are design concepts, with actual garments, fits and images still under review.`}</p>
+      </div>
       <div className="e-collection-tools">
         <span className="e-collection-count">{items.length} pieces</span>
         <label className="e-sort-label" htmlFor="everne-sort">Sort by</label>
@@ -160,6 +178,8 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
           <div className="e-collection-card-caption">
             <h2>{item.name}</h2>
             {all && <span className="e-collection-card-category">{draftCategories.find((entry) => entry.id === item.category)?.label}</span>}
+            <p className="e-collection-card-description">{item.description}</p>
+            <span className="e-collection-card-status">DESIGN STUDY · NOT FOR SALE</span>
           </div>
         </Link>
       </article>)}
@@ -180,9 +200,26 @@ function Home() {
         <span className="e-kicker">EVERNE / WOMAN</span>
         <div className="e-hero-content">
           <h1 id="hero-title" tabIndex={-1}>The first edit.</h1>
-          <p>A considered edit of modern womenswear.</p>
+          <p>Twenty design studies across five considered categories. A modern wardrobe in the making.</p>
           <Link className="e-text-link" to="/collections/all">VIEW COLLECTION <span aria-hidden="true">↗</span></Link>
         </div>
+      </div>
+    </section>
+
+    <section className="e-opening-edit" aria-labelledby="opening-edit-title">
+      <div className="e-opening-edit-lead">
+        <span className="e-kicker">01 / THE FIRST EDIT</span>
+        <h2 id="opening-edit-title">A closer look.</h2>
+        <p>Start with four pieces from the twenty-part design index. Every concept has its own page; final product photographs, sizing and ordering are still pending.</p>
+        <Link className="e-text-link" to="/collections/all">EXPLORE ALL {productDrafts.length} PIECES <span aria-hidden="true">↗</span></Link>
+      </div>
+      <div className="e-opening-edit-list" role="list" aria-label="Selected design concepts">
+        {openingEdit.map((item) => <Link role="listitem" key={item.slug} to={`/products/${item.slug}`} className="e-opening-edit-item">
+          <span className="e-opening-edit-number">{String(productDrafts.indexOf(item) + 1).padStart(2, '0')}</span>
+          <span className="e-opening-edit-name">{item.name}</span>
+          <span className="e-opening-edit-category">{draftCategories.find((entry) => entry.id === item.category)?.label}</span>
+          <span className="e-opening-edit-arrow" aria-hidden="true">↗</span>
+        </Link>)}
       </div>
     </section>
 
@@ -198,6 +235,7 @@ function Home() {
             </div>
             <div className="e-category-caption">
               <h3>{name}</h3>
+              <span className="e-category-count">{categoryCount(id)} design studies</span>
             </div>
           </Link>
         </article>)}
@@ -235,6 +273,7 @@ function ProductPage({ handle }: { handle?: string }) {
         <p className="e-product-category"><span>{category?.label}</span><span>{String(position + 1).padStart(2, '0')} / {String(categoryItems.length).padStart(2, '0')}</span></p>
         <h1 id="product-title" tabIndex={-1}>{item.name}</h1>
         <p className="e-product-intro">{item.description}</p>
+        <p className="e-product-review-state">DESIGN STUDY {String(productDrafts.indexOf(item) + 1).padStart(2, '0')} / {productDrafts.length} · SOURCING & FIT REVIEW PENDING</p>
       </div>
       <ProductPhotoGallery />
       <div className="e-product-information">
