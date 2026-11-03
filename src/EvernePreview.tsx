@@ -180,6 +180,7 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
             {all && <span className="e-collection-card-category">{draftCategories.find((entry) => entry.id === item.category)?.label}</span>}
             <p className="e-collection-card-description">{item.description}</p>
             <span className="e-collection-card-status">DESIGN STUDY · NOT FOR SALE</span>
+            <span className="e-collection-card-view">EXPLORE DESIGN <span aria-hidden="true">↗</span></span>
           </div>
         </Link>
       </article>)}
@@ -259,6 +260,13 @@ function ProductPage({ handle }: { handle?: string }) {
   const position = categoryItems.findIndex((entry) => entry.slug === item.slug);
   const previous = categoryItems[position - 1];
   const next = categoryItems[position + 1];
+  const related = draftCategories
+    .filter((entry) => entry.id !== item.category)
+    .slice(0, 3)
+    .map((entry, index) => {
+      const entries = productDrafts.filter((piece) => piece.category === entry.id);
+      return entries[(productDrafts.indexOf(item) + index) % entries.length];
+    });
 
   return <div className="e-shop-shell e-shop-shell-product">
     <ShopSidebar categoryId={item.category} productHandle={item.slug} />
@@ -304,6 +312,21 @@ function ProductPage({ handle }: { handle?: string }) {
           <strong>{next?.name ?? 'Explore the collection'}</strong>
         </Link>
       </nav>
+      <section className="e-related-edit" aria-labelledby="related-edit-title">
+        <div className="e-related-heading">
+          <div><span className="e-kicker">DISCOVER MORE / COLLECTION 01</span><h2 id="related-edit-title">Also in the edit.</h2></div>
+          <Link to="/collections/all">VIEW ALL PIECES <span aria-hidden="true">↗</span></Link>
+        </div>
+        <div className="e-related-list" role="list" aria-label="Other design studies">
+          {related.map((piece) => <Link role="listitem" key={piece.slug} to={`/products/${piece.slug}`} className="e-related-item">
+            <span className="e-related-number">{String(productDrafts.indexOf(piece) + 1).padStart(2, '0')}</span>
+            <strong>{piece.name}</strong>
+            <small>{draftCategories.find((entry) => entry.id === piece.category)?.label}</small>
+            <span aria-hidden="true">↗</span>
+          </Link>)}
+        </div>
+        <p className="e-related-note">Further design studies only. Product selection and ordering remain unavailable.</p>
+      </section>
     </div>
   </div>;
 }
