@@ -1,8 +1,19 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import React from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import { createServer } from 'vite';
+
+// The 20 product pages must stay visually consistent after the light redesign.
+const editorialStyles = readFileSync(new URL('../src/everne-editorial.css', import.meta.url), 'utf8');
+const lightEdition = editorialStyles.split('/* EVERNE / LIGHT EDITION')[1];
+assert.ok(lightEdition, 'The light editorial theme must be present');
+assert.match(lightEdition, /color-scheme:\s*light/, 'Use light native form controls');
+assert.match(lightEdition, /--e-paper:\s*#fafafa/, 'Use a near-white canvas');
+for (const selector of ['.e-header', '.e-shop-nav', '.e-hero-copy', '.e-wardrobe', '.e-collection-page', '.e-product-page', '.e-sidebar-desktop', '.e-related-item', '.e-footer']) {
+  assert.ok(lightEdition.includes(selector), `The light theme must cover ${selector}`);
+}
 
 const vite = await createServer({
   appType: 'custom', configFile: false, logLevel: 'error',
