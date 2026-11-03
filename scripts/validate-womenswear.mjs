@@ -94,7 +94,7 @@ for (const match of styles.matchAll(/#([0-9a-f]{6})\b/gi)) {
 }
 assert.match(styles, /grayscale\(1\)/, 'Unapproved style-reference photographs must be monochrome');
 assert.doesNotMatch(styles, /sepia\(|saturate\(/, 'Warm image tinting must be removed from the black-and-white direction');
-assert.match(index, /name="theme-color" content="#090909"/, 'Browser chrome should match the black storefront');
+assert.match(index, /name="theme-color" content="#fafafa"/, 'Browser chrome should match the light EVERNE storefront');
 assert.match(styles, /@media \(max-width: 700px\)/);
 assert.match(styles, /prefers-reduced-motion/);
 assert.doesNotMatch(styles, /@import|url\(\s*['"]?https?:/i);
