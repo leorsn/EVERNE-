@@ -124,8 +124,8 @@ const exposedPictures = listPublicFiles(path.join(projectRoot, 'public'))
 const visualManifest = JSON.parse(fs.readFileSync(path.join(projectRoot, 'approvals/visual-assets.json'), 'utf8'));
 assert.equal(visualManifest.previewMode, 'EDITORIAL_STUDY', 'Unexpected protected preview mode');
 assert.deepEqual(exposedPictures.map(projectPath).sort(),
-  visualManifest.studyAssets.map((asset) => asset.publicPath).sort(),
-  'Only documented design-study photos may enter public/');
+  [...visualManifest.studyAssets, ...(visualManifest.campaignConceptAssets ?? [])].map((asset) => asset.publicPath).sort(),
+  'Only documented design-study photos and separately registered generated campaign concepts may enter public/');
 assert.ok(!fs.existsSync(path.join(projectRoot, 'public/editorial')) &&
   !fs.existsSync(path.join(projectRoot, 'public/products')),
   'No vendor, garment or product photo directories may be deployed');

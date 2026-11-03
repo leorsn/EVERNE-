@@ -49,6 +49,8 @@ const landing = read('src/EvernePreview.tsx');
 const styles = read('src/everne-editorial.css');
 const index = read('index.html');
 const legal = read('public/legal.html');
+const legalGerman = read('public/rechtliches.html');
+const legalStyles = read('public/legal-light.css');
 
 assert.match(entry, /<EvernePreview page="home"/);
 assert.match(entry, /path="\/care"/);
@@ -94,7 +96,18 @@ for (const match of styles.matchAll(/#([0-9a-f]{6})\b/gi)) {
 }
 assert.match(styles, /grayscale\(1\)/, 'Unapproved style-reference photographs must be monochrome');
 assert.doesNotMatch(styles, /sepia\(|saturate\(/, 'Warm image tinting must be removed from the black-and-white direction');
-assert.match(index, /name="theme-color" content="#090909"/, 'Browser chrome should match the black storefront');
+assert.match(index, /name="theme-color" content="#fafafa"/, 'Browser chrome should match the light EVERNE storefront');
+for (const page of [legal, legalGerman]) {
+  assert.match(page, /href="\/legal-light\.css"/, 'Legal pages must share the light monochrome design');
+  assert.match(page, /name="theme-color" content="#fafafa"/, 'Legal browser chrome must match the store');
+  assert.match(page, /sessionStorage/, 'Legal drafts must disclose the collection browsing preference storage');
+  assert.match(page, /noindex,nofollow/, 'Unfinished legal drafts must remain non-indexable');
+}
+assert.match(legal, /20 design concepts/, 'English legal status must reflect the current twenty-piece preview');
+assert.match(legalGerman, /20 Designentwürfe/, 'German legal status must reflect the current twenty-piece preview');
+assert.match(legalStyles, /background:\s*#fafafa/, 'Legal pages must use the same near-white base');
+assert.match(legalStyles, /footer\s*\{[^}]*background:\s*#f3f3f3/, 'Legal footers must not revert to the dark style');
+assert.doesNotMatch(legalStyles, /@import|url\(\s*['"]?https?:/i, 'Legal page styling may not load unreviewed remote assets');
 assert.match(styles, /@media \(max-width: 700px\)/);
 assert.match(styles, /prefers-reduced-motion/);
 assert.doesNotMatch(styles, /@import|url\(\s*['"]?https?:/i);

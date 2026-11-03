@@ -78,16 +78,38 @@ export function validateVisualApprovals(root, outputDirectory) {
     assert.ok(fs.existsSync(inside(root, evidenceRecord)), 'Missing editorial evidence: ' + evidenceRecord);
     studies.set(publicPath, record);
   }
+  // Internally generated campaign imagery is distinct from third-party style
+  // references and from reviewed product photographs. It remains noncommercial.
+  const campaignConcepts = new Map();
+  assert.ok(Array.isArray(manifest.campaignConceptAssets ?? []), 'campaignConceptAssets must be an array');
+  for (const record of manifest.campaignConceptAssets ?? []) {
+    const { publicPath, sha256, origin, evidenceRecord, usage, disclosure, reviewedAt } = record;
+    assert.match(publicPath ?? '', /^public\/campaign-concepts\/[a-z0-9-]+\.jpe?g$/,
+      'A generated campaign must be confined to public/campaign-concepts/');
+    assert.ok(!campaignConcepts.has(publicPath) && !approved.has(publicPath) && !studies.has(publicPath),
+      'Duplicate generated campaign asset');
+    assert.match(sha256 ?? '', /^[a-f0-9]{64}$/, 'A generated campaign needs a byte-specific hash');
+    assert.equal(origin, 'OPENAI_IMAGE_GENERATION', 'Generated image provenance must be explicit');
+    assert.equal(usage, 'NON_PRODUCT_CAMPAIGN_CONCEPT', 'Generated imagery cannot approve garments or sales');
+    assert.equal(disclosure, 'DIGITAL CAMPAIGN CONCEPT · NOT EVERNE CLOTHING', 'Generated campaigns require an honest disclosure');
+    assert.match(reviewedAt ?? '', /^\d{4}-\d{2}-\d{2}$/, 'Campaign concept registration date required');
+    assert.match(evidenceRecord ?? '', /^approvals\/records\/[a-zA-Z0-9_.-]+\.md$/,
+      'Generated campaign evidence path required');
+    assert.ok(fs.existsSync(inside(root, evidenceRecord)), 'Missing campaign evidence: ' + evidenceRecord);
+    campaignConcepts.set(publicPath, record);
+  }
   if (manifest.previewMode === 'IMAGE_FREE') {
     assert.equal(approved.size, 0, 'IMAGE_FREE preview cannot claim any approved photographs');
     assert.equal(studies.size, 0, 'IMAGE_FREE preview cannot contain editorial studies');
+    assert.equal(campaignConcepts.size, 0, 'IMAGE_FREE preview cannot contain generated campaigns');
   } else if (manifest.previewMode === 'EDITORIAL_STUDY') {
     assert.equal(approved.size, 0, 'Editorial study photos are not approved EVERNE product photography');
     assert.ok(studies.size > 0, 'EDITORIAL_STUDY requires documented reference images');
   } else {
     assert.equal(studies.size, 0, 'Reviewed product imagery must be separately authorized');
+    assert.equal(campaignConcepts.size, 0, 'Generated campaign concepts do not count as approved product images');
   }
-  const registered = new Map([...approved, ...studies]);
+  const registered = new Map([...approved, ...studies, ...campaignConcepts]);
 
   const publicFiles = walkFiles(path.join(root, 'public')).filter((file) => rasterExtension.test(file));
   const outputRoot = outputDirectory ? inside(root, outputDirectory) : undefined;
@@ -110,7 +132,7 @@ export function validateVisualApprovals(root, outputDirectory) {
       `Approved visual is missing from public/: ${approvedPath}`);
   }
 
-  return { mode: manifest.previewMode, approved: approved.size, studies: studies.size, deployedImages: outputFiles.length };
+  return { mode: manifest.previewMode, approved: approved.size, studies: studies.size, campaignConcepts: campaignConcepts.size, deployedImages: outputFiles.length };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

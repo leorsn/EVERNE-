@@ -39,10 +39,10 @@ assert.match(legal, /\[Insert verified business street address\]/,
   'Do not silently pass an incomplete merchant address as completed');
 assert.match(legal, /\[Insert contact email address\]/,
   'Do not silently pass an incomplete merchant contact as completed');
-assert.match(legal, /licensed third-party editorial reference photography/,
-  'English legal status must describe the editorial photo study');
-assert.match(legalDe, /lizenzierte redaktionelle Referenzfotos/,
-  'German legal status must describe the editorial photo study');
+assert.match(legal, /editorial styling photographs are independent third-party references/i,
+  'English legal status must distinguish styling references from actual product photos');
+assert.match(legalDe, /redaktionellen Modefotos stammen von unabhängigen Dritten/,
+  'German legal status must distinguish styling references from actual product photos');
 assert.doesNotMatch(legal, /The 20 featured fashion pieces|Displayed prices are non-binding targets/,
   'Do not present private research concepts or target prices as displayed merchandise');
 assert.doesNotMatch(legalDe, /Die Website ist technisch mit Shopify verbunden|ein vorhandener Warenkorb-Schlüssel beim Laden entfernt/,

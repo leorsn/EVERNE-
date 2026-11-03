@@ -8,7 +8,9 @@ import ProductCardImage from './ProductCardImage';
 
 type Page = 'home' | 'care' | 'standards' | 'product' | 'collection';
 type SortOrder = 'edit' | 'name';
+type ViewMode = 'grid' | 'list';
 const sortPreferenceKey = 'everne-preview-sort';
+const viewPreferenceKey = 'everne-preview-view';
 
 function getSavedSortOrder(): SortOrder {
   try {
@@ -16,6 +18,14 @@ function getSavedSortOrder(): SortOrder {
   } catch {
     // File-based Safari previews can restrict sessionStorage.
     return 'edit';
+  }
+}
+function getSavedViewMode(): ViewMode {
+  try {
+    return window.sessionStorage.getItem(viewPreferenceKey) === 'list' ? 'list' : 'grid';
+  } catch {
+    // Browsing must work in restricted Safari sessions and server-side previews.
+    return 'grid';
   }
 }
 const categories = [
@@ -31,6 +41,21 @@ const standards = [
   { title: 'The terms', text: 'Prices, delivery windows, shipping charges and returns must be clear before orders open.' },
   { title: 'The image', text: 'A product photograph must show the actual reviewed garment before it can be used for sale.' },
 ];
+
+// The twenty design pages are a presentation inventory, not a Shopify stock feed.
+// The five-item opening edit makes products discoverable without implying sale approval.
+const openingEditSlugs = [
+  'essential-rib-top',
+  'relaxed-crew-knit',
+  'wide-leg-trouser',
+  'the-black-mini',
+  'denim-midi-skirt',
+];
+const openingEdit = openingEditSlugs.map((slug) => productDrafts.find((item) => item.slug === slug)!);
+
+function categoryCount(categoryId: string): number {
+  return productDrafts.filter((item) => item.category === categoryId).length;
+}
 
 // Licensed third-party visual references, not EVERNE garments or product claims.
 const editorial = (file: string) => import.meta.env.BASE_URL + 'editorial-study/' + file;
@@ -60,11 +85,12 @@ function Header({ page, selectedCategory }: { page: Page; selectedCategory?: str
       </nav>
       <Link to="/" className="e-wordmark" aria-label="EVERNE — home">EVERNE</Link>
       <nav className="e-nav-right" aria-label="Other sections">
+        <Link to="/collections/all">THE EDIT</Link>
         <Link className={page === 'care' ? 'e-active' : ''} aria-current={page === 'care' ? 'page' : undefined} to="/care">CARE</Link>
         <Link className={page === 'standards' ? 'e-active' : ''} aria-current={page === 'standards' ? 'page' : undefined} to="/standards">OUR STANDARD</Link>
       </nav>
     </header>
-    <nav className={isBrowsing ? 'e-shop-nav e-shop-nav-browse' : 'e-shop-nav'} aria-label="Shop by category">
+    <nav className={page === 'product' ? 'e-shop-nav e-shop-nav-browse e-shop-nav-product' : isBrowsing ? 'e-shop-nav e-shop-nav-browse' : 'e-shop-nav'} aria-label="Shop by category">
       <div className="e-shop-nav-links" ref={categoryStripRef}>
         <Link className={selectedCategory === 'all' ? 'e-selected' : undefined} aria-current={selectedCategory === 'all' ? currentCategory : undefined} to="/collections/all">ALL PIECES</Link>
         {draftCategories.map((category) => <Link key={category.id} className={selectedCategory === category.id ? 'e-selected' : undefined} aria-current={selectedCategory === category.id ? currentCategory : undefined} to={`/collections/${category.id}`}>{category.label.toUpperCase()}</Link>)}
@@ -117,13 +143,15 @@ function Footer() {
 
 function CollectionPage({ categoryId }: { categoryId?: string }) {
   const [sortOrder, setSortOrder] = useState<SortOrder>(getSavedSortOrder);
+  const [viewMode, setViewMode] = useState<ViewMode>(getSavedViewMode);
   useEffect(() => {
     try {
       window.sessionStorage.setItem(sortPreferenceKey, sortOrder);
+      window.sessionStorage.setItem(viewPreferenceKey, viewMode);
     } catch {
-      // Browsing and sorting must continue if storage is unavailable.
+      // Browsing, sorting and switching views work without browser storage.
     }
-  }, [sortOrder]);
+  }, [sortOrder, viewMode]);
   const category = draftCategories.find((entry) => entry.id === categoryId);
   const all = categoryId === 'all';
   if (!all && !category) return <section className="e-product-missing">
@@ -138,12 +166,31 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
   return <div className="e-shop-shell">
     <ShopSidebar categoryId={categoryId} />
     <section className="e-collection-page" aria-labelledby="collection-page-title">
+    {all && <section className="e-all-hero" aria-labelledby="all-hero-title">
+      <img
+        className="e-all-hero-image"
+        src={`${import.meta.env.BASE_URL}campaign-concepts/02-all-pieces-studio-wide.jpg`}
+        alt="Digitally generated campaign concept: two full-length models in black and charcoal looks, with a garment rail, studio window and backdrop stand visible at the edges. The clothing is not an EVERNE product."
+        fetchPriority="high"
+      />
+      <div className="e-all-hero-content">
+        <span className="e-all-hero-eyebrow">EVERNE / WOMAN</span>
+        <h2 id="all-hero-title">The First Edit</h2>
+        <p>Collection 01 · 20 design studies</p>
+        <a className="e-all-hero-cta" href="#pieces">EXPLORE ALL PIECES</a>
+      </div>
+      <span className="e-all-hero-reference">DIGITAL CAMPAIGN CONCEPT · NOT EVERNE CLOTHING</span>
+    </section>}
     <nav className="e-collection-breadcrumb" aria-label="Breadcrumb">
       <Link to="/">EVERNE</Link><span aria-hidden="true">/</span>
       {all ? <span aria-current="page">THE EDIT</span> : <><Link to="/collections/all">THE EDIT</Link><span aria-hidden="true">/</span><span aria-current="page">{category?.label}</span></>}
     </nav>
-    <div className="e-collection-heading">
-      <h1 id="collection-page-title" tabIndex={-1}>{all ? 'All pieces' : category?.label}</h1>
+    <div className="e-collection-heading" id={all ? 'pieces' : undefined}>
+      <div>
+        <span className="e-kicker">COLLECTION 01 / DESIGN STUDIES</span>
+        <h1 id="collection-page-title" tabIndex={-1}>{all ? 'All pieces' : category?.label}</h1>
+        <p className="e-collection-intro">{all ? 'Twenty individual ideas. Five wardrobe categories. Each piece is being sourced and reviewed before it can be offered for sale.' : `Explore the ${category?.label.toLowerCase()} edit. These are design concepts, with actual garments, fits and images still under review.`}</p>
+      </div>
       <div className="e-collection-tools">
         <span className="e-collection-count">{items.length} pieces</span>
         <label className="e-sort-label" htmlFor="everne-sort">Sort by</label>
@@ -151,15 +198,31 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
           <option value="edit">The edit</option>
           <option value="name">Name A–Z</option>
         </select>
+        <div className="e-view-switch" role="group" aria-label="Collection layout">
+          <button type="button" className={viewMode === 'grid' ? 'e-view-active' : ''} aria-pressed={viewMode === 'grid'} onClick={() => setViewMode('grid')}>GRID</button>
+          <button type="button" className={viewMode === 'list' ? 'e-view-active' : ''} aria-pressed={viewMode === 'list'} onClick={() => setViewMode('list')}>LIST</button>
+        </div>
       </div>
     </div>
-    <div className="e-collection-grid" role="list" aria-label={`${all ? 'All' : category?.label} design concepts`}>
+    <nav className="e-collection-category-filter" aria-label="Filter design studies by category">
+      <Link to="/collections/all" className={all ? 'e-collection-filter-active' : undefined} aria-current={all ? 'page' : undefined}>
+        <span>ALL PIECES</span><small>{productDrafts.length}</small>
+      </Link>
+      {draftCategories.map((entry) => <Link key={entry.id} to={`/collections/${entry.id}`} className={categoryId === entry.id ? 'e-collection-filter-active' : undefined} aria-current={categoryId === entry.id ? 'page' : undefined}>
+        <span>{entry.label.toUpperCase()}</span><small>{categoryCount(entry.id)}</small>
+      </Link>)}
+    </nav>
+    <div className={`e-collection-grid ${viewMode === 'list' ? 'e-collection-list' : ''}`.trim()} role="list" aria-label={`${all ? 'All' : category?.label} design concepts`}>
       {items.map((item) => <article className="e-collection-card" role="listitem" key={item.slug}>
         <Link to={`/products/${item.slug}`} aria-label={`View ${item.name} design preview`}>
           <ProductCardImage index={productDrafts.indexOf(item) + 1} total={productDrafts.length} />
           <div className="e-collection-card-caption">
             <h2>{item.name}</h2>
+            <span className="e-collection-price-placeholder">PRICE PENDING</span>
             {all && <span className="e-collection-card-category">{draftCategories.find((entry) => entry.id === item.category)?.label}</span>}
+            <p className="e-collection-card-description">{item.description}</p>
+            <span className="e-collection-card-status">DESIGN STUDY · NOT FOR SALE</span>
+            <span className="e-collection-card-view">EXPLORE DESIGN <span aria-hidden="true">↗</span></span>
           </div>
         </Link>
       </article>)}
@@ -180,9 +243,33 @@ function Home() {
         <span className="e-kicker">EVERNE / WOMAN</span>
         <div className="e-hero-content">
           <h1 id="hero-title" tabIndex={-1}>The first edit.</h1>
-          <p>A considered edit of modern womenswear.</p>
+          <p>Twenty design studies across five considered categories. A modern wardrobe in the making.</p>
           <Link className="e-text-link" to="/collections/all">VIEW COLLECTION <span aria-hidden="true">↗</span></Link>
         </div>
+      </div>
+    </section>
+
+    <section className="e-featured-rail" aria-labelledby="featured-rail-title">
+      <div className="e-featured-heading">
+        <h2 id="featured-rail-title">THE FIRST EDIT</h2>
+        <span>05 / 20 DESIGN STUDIES</span>
+      </div>
+      <div className="e-featured-grid" role="list" aria-label="Five featured EVERNE design concepts">
+        {openingEdit.map((item) => <article key={item.slug} className="e-featured-card" role="listitem">
+          <Link to={`/products/${item.slug}`} aria-label={`View ${item.name} design study`}>
+            <ProductCardImage index={productDrafts.indexOf(item) + 1} total={productDrafts.length} />
+            <div className="e-featured-caption">
+              <h3>{item.name}</h3>
+              <span>PRICE PENDING</span>
+            </div>
+            <p>{draftCategories.find((entry) => entry.id === item.category)?.label}</p>
+            <small>IMAGES &amp; COLOURS PENDING</small>
+          </Link>
+        </article>)}
+      </div>
+      <div className="e-featured-footer">
+        <Link to="/collections/all">EXPLORE THE COLLECTION <span aria-hidden="true">→</span></Link>
+        <p>Design preview only. The pictured editorial styling references elsewhere on this site are not EVERNE products. No ordering available.</p>
       </div>
     </section>
 
@@ -198,6 +285,7 @@ function Home() {
             </div>
             <div className="e-category-caption">
               <h3>{name}</h3>
+              <span className="e-category-count">{categoryCount(id)} design studies</span>
             </div>
           </Link>
         </article>)}
@@ -221,6 +309,13 @@ function ProductPage({ handle }: { handle?: string }) {
   const position = categoryItems.findIndex((entry) => entry.slug === item.slug);
   const previous = categoryItems[position - 1];
   const next = categoryItems[position + 1];
+  const related = draftCategories
+    .filter((entry) => entry.id !== item.category)
+    .slice(0, 3)
+    .map((entry, index) => {
+      const entries = productDrafts.filter((piece) => piece.category === entry.id);
+      return entries[(productDrafts.indexOf(item) + index) % entries.length];
+    });
 
   return <div className="e-shop-shell e-shop-shell-product">
     <ShopSidebar categoryId={item.category} productHandle={item.slug} />
@@ -233,13 +328,22 @@ function ProductPage({ handle }: { handle?: string }) {
       <article className="e-product-page" aria-labelledby="product-title">
       <div className="e-product-heading">
         <p className="e-product-category"><span>{category?.label}</span><span>{String(position + 1).padStart(2, '0')} / {String(categoryItems.length).padStart(2, '0')}</span></p>
-        <h1 id="product-title" tabIndex={-1}>{item.name}</h1>
+        <div className="e-product-title-row"><h1 id="product-title" tabIndex={-1}>{item.name}</h1><span className="e-product-price-pending">PRICE PENDING</span></div>
         <p className="e-product-intro">{item.description}</p>
+        <p className="e-product-review-state">DESIGN STUDY {String(productDrafts.indexOf(item) + 1).padStart(2, '0')} / {productDrafts.length} · SOURCING & FIT REVIEW PENDING</p>
       </div>
-      <ProductPhotoGallery />
+      <ProductPhotoGallery key={item.slug} />
       <div className="e-product-information">
-        <p className="e-product-pending">NOT AVAILABLE TO ORDER</p>
+        <div className="e-product-colour-panel" aria-label="Colour options awaiting physical sample review">
+          <div><strong>COLOUR</strong><span>TO BE CONFIRMED</span></div>
+          <p>No verified colour variants yet.</p>
+        </div>
         <ProductSizeInformation />
+        <button type="button" className="e-product-disabled-cta" disabled aria-label="Ordering unavailable until product approval">NOT AVAILABLE TO ORDER</button>
+        <div className="e-product-service-notes" aria-label="Order information awaiting approval">
+          <p><span>DELIVERY</span><strong>Terms pending supplier verification</strong></p>
+          <p><span>RETURNS</span><strong>Procedure to be confirmed before launch</strong></p>
+        </div>
         <div className="e-product-accordions">
           <details className="e-product-accordion">
             <summary>Design & fit</summary>
@@ -265,6 +369,21 @@ function ProductPage({ handle }: { handle?: string }) {
           <strong>{next?.name ?? 'Explore the collection'}</strong>
         </Link>
       </nav>
+      <section className="e-related-edit" aria-labelledby="related-edit-title">
+        <div className="e-related-heading">
+          <div><span className="e-kicker">DISCOVER MORE / COLLECTION 01</span><h2 id="related-edit-title">Also in the edit.</h2></div>
+          <Link to="/collections/all">VIEW ALL PIECES <span aria-hidden="true">↗</span></Link>
+        </div>
+        <div className="e-related-list" role="list" aria-label="Other design studies">
+          {related.map((piece) => <Link role="listitem" key={piece.slug} to={`/products/${piece.slug}`} className="e-related-item">
+            <span className="e-related-number">{String(productDrafts.indexOf(piece) + 1).padStart(2, '0')}</span>
+            <strong>{piece.name}</strong>
+            <small>{draftCategories.find((entry) => entry.id === piece.category)?.label}</small>
+            <span aria-hidden="true">↗</span>
+          </Link>)}
+        </div>
+        <p className="e-related-note">Further design studies only. Product selection and ordering remain unavailable.</p>
+      </section>
     </div>
   </div>;
 }
