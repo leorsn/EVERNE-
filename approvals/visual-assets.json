@@ -103,6 +103,15 @@
       "usage": "NON_PRODUCT_CAMPAIGN_CONCEPT",
       "disclosure": "DIGITAL CAMPAIGN CONCEPT · NOT EVERNE CLOTHING",
       "reviewedAt": "2026-11-03"
+    },
+    {
+      "publicPath": "public/campaign-concepts/02-all-pieces-studio-wide.jpg",
+      "sha256": "f9bb58f29c0fb5b51e2b3e1e57ae4b224e97cbadf60c1ae747d8e5a8dc43677b",
+      "origin": "OPENAI_IMAGE_GENERATION",
+      "evidenceRecord": "approvals/records/all-pieces-studio-wide-2026-11-03.md",
+      "usage": "NON_PRODUCT_CAMPAIGN_CONCEPT",
+      "disclosure": "DIGITAL CAMPAIGN CONCEPT · NOT EVERNE CLOTHING",
+      "reviewedAt": "2026-11-03"
     }
   ]
 }

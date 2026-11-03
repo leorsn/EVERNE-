@@ -169,8 +169,8 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
     {all && <section className="e-all-hero" aria-labelledby="all-hero-title">
       <img
         className="e-all-hero-image"
-        src={`${import.meta.env.BASE_URL}campaign-concepts/01-all-pieces-editorial.jpg`}
-        alt="Digitally generated campaign concept showing two models in minimalist black and charcoal looks against a grey studio backdrop. The depicted garments are not EVERNE products."
+        src={`${import.meta.env.BASE_URL}campaign-concepts/02-all-pieces-studio-wide.jpg`}
+        alt="Digitally generated campaign concept: two full-length models in black and charcoal looks, with a garment rail, studio window and backdrop stand visible at the edges. The clothing is not an EVERNE product."
         fetchPriority="high"
       />
       <div className="e-all-hero-content">
