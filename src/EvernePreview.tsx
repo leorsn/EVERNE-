@@ -166,11 +166,26 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
   return <div className="e-shop-shell">
     <ShopSidebar categoryId={categoryId} />
     <section className="e-collection-page" aria-labelledby="collection-page-title">
+    {all && <section className="e-all-hero" aria-labelledby="all-hero-title">
+      <img
+        className="e-all-hero-image"
+        src={editorial('05-tailoring.jpg')}
+        alt="Independent editorial styling reference showing a model in a black tailored look against a pale studio backdrop. The clothing shown is not an EVERNE product."
+        fetchPriority="high"
+      />
+      <div className="e-all-hero-content">
+        <span className="e-all-hero-eyebrow">EVERNE / WOMAN</span>
+        <h2 id="all-hero-title">The First Edit</h2>
+        <p>Collection 01 · 20 design studies</p>
+        <a className="e-all-hero-cta" href="#pieces">EXPLORE ALL PIECES</a>
+      </div>
+      <span className="e-all-hero-reference">EDITORIAL STYLING REFERENCE · NOT EVERNE CLOTHING</span>
+    </section>}
     <nav className="e-collection-breadcrumb" aria-label="Breadcrumb">
       <Link to="/">EVERNE</Link><span aria-hidden="true">/</span>
       {all ? <span aria-current="page">THE EDIT</span> : <><Link to="/collections/all">THE EDIT</Link><span aria-hidden="true">/</span><span aria-current="page">{category?.label}</span></>}
     </nav>
-    <div className="e-collection-heading">
+    <div className="e-collection-heading" id={all ? 'pieces' : undefined}>
       <div>
         <span className="e-kicker">COLLECTION 01 / DESIGN STUDIES</span>
         <h1 id="collection-page-title" tabIndex={-1}>{all ? 'All pieces' : category?.label}</h1>
