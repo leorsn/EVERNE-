@@ -83,6 +83,19 @@ try {
     assert.match(html, /Photograph pending/, `${product.name} must reserve image space without stock photos`);
     assert.match(html, /aria-label="Products in this category"/, `${product.name} must be reachable from the sidebar product navigation`);
     assert.match(html, new RegExp(`aria-current="page" href="/products/${product.slug}"`), `${product.name} must be selected in the sidebar`);
+    assert.match(html, /aria-label="Breadcrumb"/, `${product.name} needs a category breadcrumb`);
+    assert.match(html, new RegExp(`href="/collections/${product.category}"`), `${product.name} needs a route back to its category`);
+    assert.match(html, /aria-label="Browse more pieces"/, `${product.name} needs previous and next navigation`);
+    const siblings = productDrafts.filter((item) => item.category === product.category);
+    const position = siblings.findIndex((item) => item.slug === product.slug);
+    if (position > 0) {
+      assert.match(html, new RegExp(`href="/products/${siblings[position - 1].slug}"`), `${product.name} needs its previous-category neighbour`);
+    }
+    if (position < siblings.length - 1) {
+      assert.match(html, new RegExp(`href="/products/${siblings[position + 1].slug}"`), `${product.name} needs its next-category neighbour`);
+    } else {
+      assert.match(html, /ALL PIECES/, `${product.name} needs an exit to the full edit`);
+    }
     assert.match(html, /NOT AVAILABLE TO ORDER/, `${product.name} must be expressly noncommercial`);
     assert.match(html, /SIZE SELECTION/, `${product.name} must reserve size selection without inventing available sizes`);
     assert.match(html, /AWAITING FIT APPROVAL/, `${product.name} must explain why sizing is unavailable`);
@@ -106,6 +119,7 @@ try {
   assert.match(care, /no products can be ordered here/);
   assert.equal((care.match(/<img\b/g) ?? []).length, 1);
   assert.match(care, /href="\/care"/, 'Care remains available in the restrained footer navigation');
+  assert.match(care, /aria-current="page" href="\/care"/, 'Care must be discoverable and selected in the header');
 
   const standard = renderPage('/standards');
   assertSafe(standard, '/standards');

@@ -41,6 +41,7 @@ function Header({ page }: { page: Page }) {
       </nav>
       <Link to="/" className="e-wordmark" aria-label="EVERNE — home">EVERNE</Link>
       <nav className="e-nav-right" aria-label="Other sections">
+        <Link className={page === 'care' ? 'e-active' : ''} aria-current={page === 'care' ? 'page' : undefined} to="/care">CARE</Link>
         <Link className={page === 'standards' ? 'e-active' : ''} aria-current={page === 'standards' ? 'page' : undefined} to="/standards">OUR STANDARD</Link>
       </nav>
     </header>
@@ -56,8 +57,8 @@ function Header({ page }: { page: Page }) {
 function SidebarLinks({ categoryId, productHandle }: { categoryId?: string; productHandle?: string }) {
   return <>
     <nav className="e-sidebar-categories" aria-label="Womenswear categories">
-      <Link to="/collections/all" className={categoryId === 'all' ? 'e-sidebar-selected' : ''} aria-current={categoryId === 'all' ? 'page' : undefined}>All pieces</Link>
-      {draftCategories.map((category) => <Link key={category.id} to={`/collections/${category.id}`} className={categoryId === category.id ? 'e-sidebar-selected' : ''} aria-current={categoryId === category.id ? (productHandle ? 'location' : 'page') : undefined}>{category.label}</Link>)}
+      <Link to="/collections/all" className={categoryId === 'all' ? 'e-sidebar-selected' : ''} aria-current={categoryId === 'all' ? 'page' : undefined}><span>All pieces</span><small>{productDrafts.length}</small></Link>
+      {draftCategories.map((category) => <Link key={category.id} to={`/collections/${category.id}`} className={categoryId === category.id ? 'e-sidebar-selected' : ''} aria-current={categoryId === category.id ? (productHandle ? 'location' : 'page') : undefined}><span>{category.label}</span><small>{productDrafts.filter((item) => item.category === category.id).length}</small></Link>)}
     </nav>
     {productHandle && <nav className="e-sidebar-products" aria-label="Products in this category">
       {productDrafts.filter((item) => item.category === categoryId).map((item) => <Link key={item.slug} to={`/products/${item.slug}`} className={item.slug === productHandle ? 'e-sidebar-selected' : ''} aria-current={item.slug === productHandle ? 'page' : undefined}>{item.name}</Link>)}
@@ -194,10 +195,20 @@ function ProductPage({ handle }: { handle?: string }) {
   </section>;
 
   const category = draftCategories.find((entry) => entry.id === item.category);
+  const categoryItems = productDrafts.filter((entry) => entry.category === item.category);
+  const position = categoryItems.findIndex((entry) => entry.slug === item.slug);
+  const previous = categoryItems[position - 1];
+  const next = categoryItems[position + 1];
 
   return <div className="e-shop-shell e-shop-shell-product">
     <ShopSidebar categoryId={item.category} productHandle={item.slug} />
-    <div className="e-shop-content"><article className="e-product-page" aria-labelledby="product-title">
+    <div className="e-shop-content">
+      <nav className="e-product-breadcrumb" aria-label="Breadcrumb">
+        <Link to="/">EVERNE</Link><span aria-hidden="true">/</span>
+        <Link to={`/collections/${item.category}`}>{category?.label}</Link><span aria-hidden="true">/</span>
+        <span aria-current="page">{item.name}</span>
+      </nav>
+      <article className="e-product-page" aria-labelledby="product-title">
       <div className="e-product-gallery" aria-label="Reserved image positions for pending product photography">
         <div className="e-product-image-slot e-product-image-main" role="note" aria-label="Primary product photograph is not yet available">
           <span className="e-product-image-pending">Photograph pending</span>
@@ -236,7 +247,18 @@ function ProductPage({ handle }: { handle?: string }) {
         <p className="e-product-disclaimer">Private design preview only. Final garment details and photography have not been approved.</p>
         <Link className="e-text-link" to={`/collections/${item.category}`}>BACK TO {category?.label.toUpperCase()} <span aria-hidden="true">↗</span></Link>
       </div>
-    </article></div>
+      </article>
+      <nav className="e-product-pagination" aria-label="Browse more pieces">
+        <Link to={previous ? `/products/${previous.slug}` : `/collections/${item.category}`}>
+          <span>{previous ? '← PREVIOUS PIECE' : '← BACK TO CATEGORY'}</span>
+          <strong>{previous?.name ?? category?.label}</strong>
+        </Link>
+        <Link to={next ? `/products/${next.slug}` : '/collections/all'}>
+          <span>{next ? 'NEXT PIECE →' : 'ALL PIECES →'}</span>
+          <strong>{next?.name ?? 'Explore the collection'}</strong>
+        </Link>
+      </nav>
+    </div>
   </div>;
 }
 
