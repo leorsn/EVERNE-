@@ -8,7 +8,9 @@ import ProductCardImage from './ProductCardImage';
 
 type Page = 'home' | 'care' | 'standards' | 'product' | 'collection';
 type SortOrder = 'edit' | 'name';
+type ViewMode = 'grid' | 'list';
 const sortPreferenceKey = 'everne-preview-sort';
+const viewPreferenceKey = 'everne-preview-view';
 
 function getSavedSortOrder(): SortOrder {
   try {
@@ -16,6 +18,14 @@ function getSavedSortOrder(): SortOrder {
   } catch {
     // File-based Safari previews can restrict sessionStorage.
     return 'edit';
+  }
+}
+function getSavedViewMode(): ViewMode {
+  try {
+    return window.sessionStorage.getItem(viewPreferenceKey) === 'list' ? 'list' : 'grid';
+  } catch {
+    // Browsing must work in restricted Safari sessions and server-side previews.
+    return 'grid';
   }
 }
 const categories = [
@@ -131,13 +141,15 @@ function Footer() {
 
 function CollectionPage({ categoryId }: { categoryId?: string }) {
   const [sortOrder, setSortOrder] = useState<SortOrder>(getSavedSortOrder);
+  const [viewMode, setViewMode] = useState<ViewMode>(getSavedViewMode);
   useEffect(() => {
     try {
       window.sessionStorage.setItem(sortPreferenceKey, sortOrder);
+      window.sessionStorage.setItem(viewPreferenceKey, viewMode);
     } catch {
-      // Browsing and sorting must continue if storage is unavailable.
+      // Browsing, sorting and switching views work without browser storage.
     }
-  }, [sortOrder]);
+  }, [sortOrder, viewMode]);
   const category = draftCategories.find((entry) => entry.id === categoryId);
   const all = categoryId === 'all';
   if (!all && !category) return <section className="e-product-missing">
@@ -169,9 +181,13 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
           <option value="edit">The edit</option>
           <option value="name">Name A–Z</option>
         </select>
+        <div className="e-view-switch" role="group" aria-label="Collection layout">
+          <button type="button" className={viewMode === 'grid' ? 'e-view-active' : ''} aria-pressed={viewMode === 'grid'} onClick={() => setViewMode('grid')}>GRID</button>
+          <button type="button" className={viewMode === 'list' ? 'e-view-active' : ''} aria-pressed={viewMode === 'list'} onClick={() => setViewMode('list')}>LIST</button>
+        </div>
       </div>
     </div>
-    <div className="e-collection-grid" role="list" aria-label={`${all ? 'All' : category?.label} design concepts`}>
+    <div className={`e-collection-grid ${viewMode === 'list' ? 'e-collection-list' : ''}`.trim()} role="list" aria-label={`${all ? 'All' : category?.label} design concepts`}>
       {items.map((item) => <article className="e-collection-card" role="listitem" key={item.slug}>
         <Link to={`/products/${item.slug}`} aria-label={`View ${item.name} design preview`}>
           <ProductCardImage index={productDrafts.indexOf(item) + 1} total={productDrafts.length} />
