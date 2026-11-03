@@ -1,0 +1,48 @@
+/* EVERNE legal drafts — the same restrained monochrome language as the store. */
+:root {
+  color-scheme: light;
+  --line: #dedede;
+  --muted: #626262;
+  color: #1b1b1b;
+  background: #fafafa;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+body { background: #fafafa; color: #1b1b1b; }
+a { color: inherit; }
+a:focus-visible { outline: 2px solid #1b1b1b; outline-offset: 4px; }
+.top { min-height: 73px; padding: 12px clamp(25px, 3.3vw, 56px); background: rgba(255,255,255,.98); border-bottom: 1px solid var(--line); }
+.brand { font: 400 25px/1.1 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: .23em; }
+.back { color: #484848; font-size: 10px; letter-spacing: .08em; text-decoration: none; }
+.back:hover, .toc a:hover { text-decoration: underline; text-underline-offset: 5px; }
+.hero { padding: clamp(65px, 8vw, 115px) clamp(25px, 3.3vw, 56px) 70px; border-color: var(--line); }
+h1 { font: 400 clamp(47px, 5.2vw, 75px)/1.1 Georgia, 'Times New Roman', serif; letter-spacing: -.04em; }
+.intro { max-width: 730px; margin-top: 26px; color: var(--muted); font-size: 15px; line-height: 1.8; }
+.notice, .status { max-width: 930px; margin-top: 22px; padding: 17px 20px; background: #f3f3f3; border: 1px solid var(--line); color: #393939; font-size: 12px; line-height: 1.75; }
+.notice { border-left: 2px solid #777777; }
+.toc { padding: 15px clamp(25px, 3.3vw, 56px); gap: 8px 29px; background: #fff; border-color: var(--line); }
+.toc a { display: inline-flex; align-items: center; min-height: 44px; color: #393939; font-size: 10px; letter-spacing: .075em; text-decoration: none; }
+.legal { max-width: 1100px; }
+.legal section { border-color: var(--line); }
+.kicker { color: var(--muted); letter-spacing: .12em; }
+h2 { font: 400 clamp(32px, 3.9vw, 55px)/1.1 Georgia, 'Times New Roman', serif; letter-spacing: -.035em; }
+h3 { font: 400 23px/1.25 Georgia, 'Times New Roman', serif; }
+p, li { color: #343434; }
+.muted { color: var(--muted); }
+.placeholder { padding: 2px 6px; border: 1px dashed #888888; color: #393939; background: #f3f3f3; }
+.pill { border-color: var(--line); }
+.withdraw { border-color: #1b1b1b; }
+.skip { background: #fff; color: #1b1b1b; }
+footer { padding: 35px clamp(25px, 3.3vw, 56px); background: #f3f3f3; color: var(--muted); border-top: 1px solid var(--line); }
+@media (max-width: 700px) {
+  .top { padding: 13px 5%; gap: 14px; }
+  .brand { font-size: 21px; }
+  .back { font-size: 9px; text-align: right; }
+  .hero { padding: 62px 5% 46px; }
+  h1 { font-size: clamp(41px, 10vw, 57px); }
+  h2 { font-size: clamp(29px, 8vw, 40px); }
+  .intro { font-size: 14px; }
+  .notice, .status { padding: 16px; }
+  .toc { padding: 12px 5%; gap: 3px 20px; }
+  .legal section { padding: 48px 0; }
+  footer { padding: 30px 5%; }
+}
