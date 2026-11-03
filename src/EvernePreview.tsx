@@ -309,7 +309,7 @@ function ProductPage({ handle }: { handle?: string }) {
         <p className="e-product-intro">{item.description}</p>
         <p className="e-product-review-state">DESIGN STUDY {String(productDrafts.indexOf(item) + 1).padStart(2, '0')} / {productDrafts.length} · SOURCING & FIT REVIEW PENDING</p>
       </div>
-      <ProductPhotoGallery />
+      <ProductPhotoGallery key={item.slug} />
       <div className="e-product-information">
         <div className="e-product-colour-panel" aria-label="Colour options awaiting physical sample review">
           <div><strong>COLOUR</strong><span>TO BE CONFIRMED</span></div>
