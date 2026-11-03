@@ -93,5 +93,16 @@
       "usage": "NON_PRODUCT_REFERENCE",
       "reviewedAt": "2026-11-02"
     }
+  ],
+  "campaignConceptAssets": [
+    {
+      "publicPath": "public/campaign-concepts/01-all-pieces-editorial.jpg",
+      "sha256": "548083e830730ae6695acf6864f0b636971da26abeac08eef9f2949ed9815b16",
+      "origin": "OPENAI_IMAGE_GENERATION",
+      "evidenceRecord": "approvals/records/all-pieces-campaign-concept-2026-11-03.md",
+      "usage": "NON_PRODUCT_CAMPAIGN_CONCEPT",
+      "disclosure": "DIGITAL CAMPAIGN CONCEPT · NOT EVERNE CLOTHING",
+      "reviewedAt": "2026-11-03"
+    }
   ]
 }

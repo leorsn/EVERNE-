@@ -169,8 +169,8 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
     {all && <section className="e-all-hero" aria-labelledby="all-hero-title">
       <img
         className="e-all-hero-image"
-        src={editorial('05-tailoring.jpg')}
-        alt="Independent editorial styling reference showing a model in a black tailored look against a pale studio backdrop. The clothing shown is not an EVERNE product."
+        src={`${import.meta.env.BASE_URL}campaign-concepts/01-all-pieces-editorial.jpg`}
+        alt="Digitally generated campaign concept showing two models in minimalist black and charcoal looks against a grey studio backdrop. The depicted garments are not EVERNE products."
         fetchPriority="high"
       />
       <div className="e-all-hero-content">
@@ -179,7 +179,7 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
         <p>Collection 01 · 20 design studies</p>
         <a className="e-all-hero-cta" href="#pieces">EXPLORE ALL PIECES</a>
       </div>
-      <span className="e-all-hero-reference">EDITORIAL STYLING REFERENCE · NOT EVERNE CLOTHING</span>
+      <span className="e-all-hero-reference">DIGITAL CAMPAIGN CONCEPT · NOT EVERNE CLOTHING</span>
     </section>}
     <nav className="e-collection-breadcrumb" aria-label="Breadcrumb">
       <Link to="/">EVERNE</Link><span aria-hidden="true">/</span>

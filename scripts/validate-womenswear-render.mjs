@@ -105,8 +105,8 @@ try {
   function assertSafe(html, page) {
     assert.doesNotMatch(html, /<picture\b|<form\b|<input\b|<video\b/i, 'Preview must not contain order controls or video');
     for (const match of html.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/g)) {
-      assert.match(match[1], /^\/editorial-study\/[a-z0-9-]+\.jpg$/,
-        'Only registered third-party editorial assets may appear');
+      assert.ok(/^\/editorial-study\/[a-z0-9-]+\.jpg$/.test(match[1]) || match[1] === '/campaign-concepts/01-all-pieces-editorial.jpg',
+        'Only registered third-party editorial assets and the labeled digital campaign concept may appear');
     }
     assert.doesNotMatch(html, /href="[^"]*(?:\/cart|\/checkout)|>\s*(?:buy now|add to cart)\s*</i, `${page} must not link to sales`);
     assert.doesNotMatch(html, /€\d+|Price target|View all 20 concepts/i, `${page} must not expose unapproved products or prices`);
@@ -153,8 +153,9 @@ try {
   assert.equal((all.match(/class="e-sidebar-mobile"/g) ?? []).length, 1, 'The collection must have a compact mobile navigation drawer');
   assert.match(all, /class="e-shop-nav e-shop-nav-browse" aria-label="Shop by category"/, 'Collection navigation must be available on mobile');
   assert.match(all, /class="e-all-hero" aria-labelledby="all-hero-title"/, 'All Pieces should open with a dedicated campaign hero');
-  assert.match(all, /class="e-all-hero-image" src="\/editorial-study\/05-tailoring\.jpg"/, 'Only an identified editorial reference is displayed in the campaign');
-  assert.match(all, /EDITORIAL STYLING REFERENCE · NOT EVERNE CLOTHING/, 'The campaign must disclose that it does not show EVERNE garments');
+  assert.match(all, /class="e-all-hero-image" src="\/campaign-concepts\/01-all-pieces-editorial\.jpg"/, 'All Pieces must use the dedicated campaign concept and not the home reference photograph');
+  assert.match(all, /Digitally generated campaign concept/, 'The new campaign image must identify its synthetic origin');
+  assert.match(all, /DIGITAL CAMPAIGN CONCEPT · NOT EVERNE CLOTHING/, 'The campaign must disclose that it does not show EVERNE garments');
   assert.match(all, /href="#pieces">EXPLORE ALL PIECES/, 'The campaign CTA should lead to the product index, not a checkout');
   assert.match(all, /class="e-collection-heading" id="pieces"/, 'The product-index anchor must exist');
   assert.equal((all.match(/<img\b/g) ?? []).length, 1, 'Only the editorial campaign may have a photo; the twenty product placeholders must remain empty');
