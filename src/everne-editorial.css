@@ -468,3 +468,36 @@ img { display: block; width: 100%; height: 100%; object-fit: cover; }
   .e-collection-card-category { font-size: 9px; }
   .e-shop-shell-product .e-product-heading h1 { margin-bottom: 17px; }
 }
+
+/* Product-first collection preview. All images remain approval-gated. */
+.e-opening-edit { display: grid; grid-template-columns: minmax(250px, .78fr) minmax(0, 1.5fr); gap: clamp(35px, 6vw, 100px); padding: clamp(55px, 6vw, 92px) clamp(25px, 3.3vw, 56px); border-top: 1px solid #333333; border-bottom: 1px solid #333333; background: #101010; }
+.e-opening-edit-lead h2 { margin: 30px 0 18px; font: 400 clamp(35px, 3.3vw, 51px)/1.1 Georgia, 'Times New Roman', serif; letter-spacing: -.047em; }
+.e-opening-edit-lead p { max-width: 330px; margin: 0 0 28px; color: #bdbdbd; font-size: 12px; line-height: 1.8; }
+.e-opening-edit-list { border-top: 1px solid #474747; }
+.e-opening-edit-item { display: grid; grid-template-columns: 44px minmax(0, 1fr) minmax(105px, .5fr) 18px; align-items: center; gap: 20px; min-height: 85px; padding: 16px 2px; border-bottom: 1px solid #474747; transition: background .2s ease, padding .2s ease; }
+.e-opening-edit-item:hover { background: #1b1b1b; padding-left: 10px; padding-right: 10px; }
+.e-opening-edit-number, .e-opening-edit-category { color: #919191; font-size: 9px; line-height: 1.5; letter-spacing: .05em; }
+.e-opening-edit-name { font: 400 clamp(18px, 1.7vw, 25px)/1.2 Georgia, 'Times New Roman', serif; letter-spacing: -.025em; }
+.e-opening-edit-category { text-align: right; }
+.e-opening-edit-arrow { justify-self: end; color: #bcbcbc; font-size: 16px; }
+.e-category-count { color: #9d9d9d; font-size: 9px; line-height: 1.5; letter-spacing: .06em; }
+.e-collection-intro { max-width: 510px; margin: 17px 0 0; color: #a9a9a9; font-size: 12px; line-height: 1.75; }
+.e-shop-shell .e-collection-card-caption { gap: 8px; }
+.e-collection-card-description { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; min-height: 34px; margin: 3px 0 0; color: #a5a5a5; font-size: 10px; line-height: 1.65; }
+.e-shop-shell .e-collection-card-caption .e-collection-card-status { padding-top: 1px; color: #777777; font-size: 8px; letter-spacing: .09em; }
+.e-product-review-state { margin: 18px 0 0; color: #939393; font-size: 9px; line-height: 1.6; letter-spacing: .12em; }
+@media (max-width: 900px) {
+  .e-opening-edit { grid-template-columns: 1fr; gap: 28px; }
+  .e-opening-edit-lead p { max-width: 600px; }
+}
+@media (max-width: 700px) {
+  .e-opening-edit { padding: 45px 25px 54px; }
+  .e-opening-edit-lead h2 { margin-top: 20px; }
+  .e-opening-edit-item { grid-template-columns: 28px minmax(0, 1fr) 16px; gap: 12px; min-height: 70px; }
+  .e-opening-edit-category { display: none; }
+  .e-opening-edit-name { font-size: 19px; }
+  .e-collection-intro { font-size: 11px; }
+  .e-collection-card-description { min-height: 0; font-size: 9px; }
+  .e-shop-shell .e-collection-card-caption .e-collection-card-status { font-size: 7px; }
+}
+@media (prefers-reduced-motion: reduce) { .e-opening-edit-item { transition: none; } }
