@@ -204,6 +204,14 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
         </div>
       </div>
     </div>
+    <nav className="e-collection-category-filter" aria-label="Filter design studies by category">
+      <Link to="/collections/all" className={all ? 'e-collection-filter-active' : undefined} aria-current={all ? 'page' : undefined}>
+        <span>ALL PIECES</span><small>{productDrafts.length}</small>
+      </Link>
+      {draftCategories.map((entry) => <Link key={entry.id} to={`/collections/${entry.id}`} className={categoryId === entry.id ? 'e-collection-filter-active' : undefined} aria-current={categoryId === entry.id ? 'page' : undefined}>
+        <span>{entry.label.toUpperCase()}</span><small>{categoryCount(entry.id)}</small>
+      </Link>)}
+    </nav>
     <div className={`e-collection-grid ${viewMode === 'list' ? 'e-collection-list' : ''}`.trim()} role="list" aria-label={`${all ? 'All' : category?.label} design concepts`}>
       {items.map((item) => <article className="e-collection-card" role="listitem" key={item.slug}>
         <Link to={`/products/${item.slug}`} aria-label={`View ${item.name} design preview`}>

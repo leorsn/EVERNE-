@@ -19,6 +19,8 @@ assert.match(lightEdition, /\.e-featured-grid\s*\{\s*display:\s*grid;\s*grid-tem
 assert.match(lightEdition, /\.e-shop-shell \.e-collection-grid:not\(\.e-collection-list\)\s*\{\s*grid-template-columns:\s*repeat\(5,/, 'The desktop collection should use five edge-to-edge columns');
 assert.match(lightEdition, /\.e-shop-shell-product \.e-product-page\s*\{[^}]*grid-template-columns:\s*minmax\(0, 50%\) minmax\(0, 50%\)/, 'The desktop product detail should use a split image and information layout');
 assert.match(lightEdition, /\.e-shop-shell \.e-collection-grid:not\(\.e-collection-list\) \.e-collection-card-description\s*\{\s*display:\s*none;/, 'The merchandise grid should keep long copy on detail pages and in list view');
+assert.match(lightEdition, /\.e-collection-category-filter\s*\{[^}]*overflow-x:\s*auto;/, 'Category navigation must remain usable on narrow viewports');
+assert.match(lightEdition, /\.e-shop-shell-product \.e-product-image-pair\s*\{\s*display:\s*grid;/, 'Detail pages should visibly reserve front, back and detail image positions');
 
 const vite = await createServer({
   appType: 'custom', configFile: false, logLevel: 'error',
@@ -158,6 +160,11 @@ try {
   assert.match(all, /DIGITAL CAMPAIGN CONCEPT · NOT EVERNE CLOTHING/, 'The campaign must disclose that it does not show EVERNE garments');
   assert.match(all, /href="#pieces">EXPLORE ALL PIECES/, 'The campaign CTA should lead to the product index, not a checkout');
   assert.match(all, /class="e-collection-heading" id="pieces"/, 'The product-index anchor must exist');
+  assert.match(all, /aria-label="Filter design studies by category"/, 'The product index must offer direct category navigation');
+  const categoryFilter = all.match(/<nav class="e-collection-category-filter"[^>]*>([\s\S]*?)<\/nav>/)?.[1];
+  assert.ok(categoryFilter, 'The compact category filter must be rendered');
+  assert.equal((categoryFilter.match(/<a\b/g) ?? []).length, 6, 'The compact category filter must link to all five categories and the full edit');
+  assert.match(all, /class="e-collection-filter-active" aria-current="page" href="\/collections\/all"/, 'All Pieces must be the selected category filter');
   assert.equal((all.match(/<img\b/g) ?? []).length, 1, 'Only the editorial campaign may have a photo; the twenty product placeholders must remain empty');
   assert.match(all, /aria-current="page" href="\/collections\/all"/);
   for (const category of ['tops', 'knitwear', 'trousers', 'dresses', 'skirts']) {
@@ -170,6 +177,7 @@ try {
       `${category} must preserve the correct design-index markers`);
     assert.equal((html.match(/href="\/products\/[a-z0-9-]+"/g) ?? []).length, count);
     assert.match(html, new RegExp(`aria-current="page" href="/collections/${category}"`));
+    assert.match(html, new RegExp(`class="e-collection-filter-active" aria-current="page" href="/collections/${category}"`), `${category} must be selected in the category filter`);
     assert.match(html, /class="e-shop-nav e-shop-nav-browse" aria-label="Shop by category"/, `${category} needs direct mobile category navigation`);
     assert.equal((html.match(/<img\b/g) ?? []).length, 0);
     assert.doesNotMatch(html, /class="e-all-hero"/, 'Category pages should open directly with their products');
