@@ -15,6 +15,9 @@ for (const selector of ['.e-header', '.e-shop-nav', '.e-hero-copy', '.e-wardrobe
   assert.ok(lightEdition.includes(selector), `The light theme must cover ${selector}`);
 }
 assert.match(lightEdition, /\.e-collection-list/, 'The light theme must support a compact text-led collection layout');
+assert.match(lightEdition, /\.e-featured-grid\s*\{\s*display:\s*grid;\s*grid-template-columns:\s*repeat\(5,/, 'The home edit should use the five-column reference rhythm');
+assert.match(lightEdition, /\.e-shop-shell \.e-collection-grid:not\(\.e-collection-list\)\s*\{\s*grid-template-columns:\s*repeat\(5,/, 'The desktop collection should use five edge-to-edge columns');
+assert.match(lightEdition, /\.e-shop-shell-product \.e-product-page\s*\{[^}]*grid-template-columns:\s*minmax\(0, 50%\) minmax\(0, 50%\)/, 'The desktop product detail should use a split image and information layout');
 
 const vite = await createServer({
   appType: 'custom', configFile: false, logLevel: 'error',
@@ -112,10 +115,11 @@ try {
   assert.match(home, /Photographic styling references only/);
   assert.match(home, /href="\/care"/);
   assert.equal((home.match(/class="e-product-index-group"/g) ?? []).length, 0, 'Remove the long five-column product name list');
-  assert.equal((home.match(/href="\/products\/[a-z0-9-]+"/g) ?? []).length, 4, 'Four editorial first-look links should lead directly to individual product studies');
-  assert.equal((home.match(/class="e-opening-edit-item"/g) ?? []).length, 4, 'Four opening product studies should be shown without product photography');
-  assert.equal((home.match(/href="\/collections\/[a-z]+"/g) ?? []).length, 13, 'Six category bar links, five image tiles and two collection CTAs');
-  assert.match(home, /20 PIECES/, 'The opening edit should link to the complete twenty-piece index');
+  assert.equal((home.match(/href="\/products\/[a-z0-9-]+"/g) ?? []).length, 5, 'Five editorial first-look links should lead directly to individual product studies');
+  assert.equal((home.match(/class="e-featured-card"/g) ?? []).length, 5, 'Five opening studies should use the same product-card presentation');
+  assert.equal((home.match(/class="e-featured-caption"/g) ?? []).length, 5, 'Each opening study should have its own compact product caption');
+  assert.equal((home.match(/href="\/collections\/[a-z]+"/g) ?? []).length, 14, 'Header edit link, six category bar links, five image tiles and two collection CTAs');
+  assert.match(home, /EXPLORE THE COLLECTION/, 'The opening edit should link to the complete twenty-piece index');
   assert.match(home, /aria-label="Shop by category"/);
 
   const all = renderPage('/collections/all');
@@ -132,6 +136,7 @@ try {
   assert.match(all, /aria-pressed="true">GRID<\/button>/, 'The initial layout must default to the photograph-first grid');
   assert.match(all, /aria-pressed="false">LIST<\/button>/, 'The list control must be a real stateful button');
   assert.equal((all.match(/class="e-collection-card-category"/g) ?? []).length, 20, 'The full edit must identify each item category');
+  assert.equal((all.match(/class="e-collection-price-placeholder"/g) ?? []).length, 20, 'No unapproved prices should appear in the full edit');
   assert.equal((all.match(/class="e-sidebar-desktop"/g) ?? []).length, 1, 'The collection must expose desktop side navigation');
   assert.match(all, /class="e-sidebar-title">THE EDIT<\/span>/, 'The sidebar should not repeat the header WOMAN label');
   assert.equal((all.match(/class="e-sidebar-mobile"/g) ?? []).length, 1, 'The collection must have a compact mobile navigation drawer');
@@ -169,7 +174,7 @@ try {
     assert.match(html, new RegExp(`aria-current="page" href="/products/${product.slug}"`), `${product.name} must be selected in the sidebar`);
     assert.match(html, /aria-label="Breadcrumb"/, `${product.name} needs a category breadcrumb`);
     assert.match(html, new RegExp(`href="/collections/${product.category}"`), `${product.name} needs a route back to its category`);
-    assert.match(html, /class="e-shop-nav e-shop-nav-browse" aria-label="Shop by category"/, `${product.name} needs direct mobile category navigation`);
+    assert.match(html, /class="e-shop-nav e-shop-nav-browse e-shop-nav-product" aria-label="Shop by category"/, `${product.name} needs direct mobile category navigation`);
     assert.match(html, new RegExp(`aria-current="location" href="/collections/${product.category}"`), `${product.name} must mark its category as the current location`);
     assert.match(html, /aria-label="Browse more pieces"/, `${product.name} needs previous and next navigation`);
     assert.equal((html.match(/class="e-related-item"/g) ?? []).length, 3, `${product.name} needs three related cross-category design links`);
@@ -184,6 +189,9 @@ try {
       assert.match(html, /ALL PIECES/, `${product.name} needs an exit to the full edit`);
     }
     assert.match(html, /NOT AVAILABLE TO ORDER/, `${product.name} must be expressly noncommercial`);
+    assert.match(html, /class="e-product-disabled-cta" disabled=""/, `${product.name} must keep the prominent purchase-style area in a disabled state`);
+    assert.match(html, /PRICE PENDING/, `${product.name} must not present an unapproved price`);
+    assert.match(html, /No verified colour variants yet/, `${product.name} must not fabricate colour choices`);
     assert.match(html, /SIZE SELECTION/, `${product.name} must reserve size selection without inventing available sizes`);
     assert.match(html, /AWAITING FIT APPROVAL/, `${product.name} must explain why sizing is unavailable`);
     assert.doesNotMatch(html, /<button[^>]*>\s*(?:XS|S|M|L|XL)\s*<\/button>/, `${product.name} must not imply real size inventory`);
