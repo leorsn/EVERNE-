@@ -6,7 +6,7 @@ import ProductPhotoGallery from './ProductPhotoGallery';
 import { ProductFactsAccordion, ProductSizeInformation } from './ProductReviewFacts';
 import ProductCardImage from './ProductCardImage';
 import SupplierBagPreview, { SupplierBagCard, supplierBagHandle } from './SupplierBagPreview';
-import { findSupplierCandidate, SupplierCandidateOptions } from './SupplierCandidatePreviews';
+import { findSupplierCandidate, supplierPhotosForColour, SupplierCandidateOptions } from './SupplierCandidatePreviews';
 
 type Page = 'home' | 'care' | 'standards' | 'product' | 'collection';
 type SortOrder = 'edit' | 'name';
@@ -218,7 +218,7 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
     <div className={`e-collection-grid ${viewMode === 'list' ? 'e-collection-list' : ''}`.trim()} role="list" aria-label={`${all ? 'All' : category?.label} design concepts`}>
       {items.map((item) => <article className="e-collection-card" role="listitem" key={item.slug}>
         <Link to={`/products/${item.slug}`} aria-label={`View ${item.name} design preview`}>
-          <ProductCardImage index={productDrafts.indexOf(item) + 1} total={productDrafts.length} photo={findSupplierCandidate(item.slug)?.photos[0]} />
+          <ProductCardImage index={productDrafts.indexOf(item) + 1} total={productDrafts.length} photo={supplierPhotosForColour(findSupplierCandidate(item.slug), 'Black')[0]} />
           <div className="e-collection-card-caption">
             <h2>{item.name}</h2>
             <span className="e-collection-price-placeholder">PRICE PENDING</span>
@@ -260,7 +260,7 @@ function Home() {
       <div className="e-featured-grid" role="list" aria-label="Five featured EVERNE design concepts">
         {openingEdit.map((item) => <article key={item.slug} className="e-featured-card" role="listitem">
           <Link to={`/products/${item.slug}`} aria-label={`View ${item.name} design study`}>
-            <ProductCardImage index={productDrafts.indexOf(item) + 1} total={productDrafts.length} photo={findSupplierCandidate(item.slug)?.photos[0]} />
+            <ProductCardImage index={productDrafts.indexOf(item) + 1} total={productDrafts.length} photo={supplierPhotosForColour(findSupplierCandidate(item.slug), 'Black')[0]} />
             <div className="e-featured-caption">
               <h3>{item.name}</h3>
               <span>PRICE PENDING</span>
@@ -301,6 +301,9 @@ function Home() {
 }
 
 function ProductPage({ handle }: { handle?: string }) {
+  // Scope a colour choice to its product route. Never reuse another garment's
+  // selected variant when navigating between individual design studies.
+  const [supplierColourChoice, setSupplierColourChoice] = useState<{ handle: string; colour: string } | null>(null);
   if (handle === supplierBagHandle) return <SupplierBagPreview />;
   const item = findProductDraft(handle);
   if (!item) return <section className="e-product-missing">
@@ -311,6 +314,10 @@ function ProductPage({ handle }: { handle?: string }) {
   </section>;
 
   const candidate = findSupplierCandidate(item.slug);
+  const requestedColour = supplierColourChoice?.handle === item.slug ? supplierColourChoice.colour : undefined;
+  const supplierColour = candidate?.colours.includes(requestedColour ?? '')
+    ? requestedColour!
+    : candidate?.colours.includes('Black') ? 'Black' : candidate?.colours[0];
   const category = draftCategories.find((entry) => entry.id === item.category);
   const categoryItems = productDrafts.filter((entry) => entry.category === item.category);
   const position = categoryItems.findIndex((entry) => entry.slug === item.slug);
@@ -340,9 +347,9 @@ function ProductPage({ handle }: { handle?: string }) {
         <p className="e-product-review-state">DESIGN STUDY {String(productDrafts.indexOf(item) + 1).padStart(2, '0')} / {productDrafts.length} · SOURCING & FIT REVIEW PENDING</p>
         {candidate && <p className="e-product-disclaimer">TEMPORARY SUPPLIER IMAGE COMPARISON: {candidate.supplierTitle} (EPROLO). NOT A VERIFIED EVERNE ITEM.</p>}
       </div>
-      <ProductPhotoGallery key={item.slug} photos={candidate?.photos} />
+      <ProductPhotoGallery key={`${item.slug}:${supplierColour ?? 'pending'}`} photos={candidate ? supplierPhotosForColour(candidate, supplierColour ?? '') : undefined} />
       <div className="e-product-information">
-        {candidate ? <SupplierCandidateOptions key={item.slug} candidate={candidate} /> : <>
+        {candidate ? <SupplierCandidateOptions key={item.slug} candidate={candidate} colour={supplierColour!} onColourChange={(colour) => setSupplierColourChoice({ handle: item.slug, colour })} /> : <>
           <div className="e-product-colour-panel" aria-label="Colour options awaiting physical sample review">
             <div><strong>COLOUR</strong><span>TO BE CONFIRMED</span></div>
             <p>No verified colour variants yet.</p>
