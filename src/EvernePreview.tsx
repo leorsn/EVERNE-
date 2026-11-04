@@ -6,6 +6,7 @@ import ProductPhotoGallery from './ProductPhotoGallery';
 import { ProductFactsAccordion, ProductSizeInformation } from './ProductReviewFacts';
 import ProductCardImage from './ProductCardImage';
 import SupplierBagPreview, { SupplierBagCard, supplierBagHandle } from './SupplierBagPreview';
+import { findSupplierCandidate, SupplierCandidateOptions } from './SupplierCandidatePreviews';
 
 type Page = 'home' | 'care' | 'standards' | 'product' | 'collection';
 type SortOrder = 'edit' | 'name';
@@ -217,19 +218,19 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
     <div className={`e-collection-grid ${viewMode === 'list' ? 'e-collection-list' : ''}`.trim()} role="list" aria-label={`${all ? 'All' : category?.label} design concepts`}>
       {items.map((item) => <article className="e-collection-card" role="listitem" key={item.slug}>
         <Link to={`/products/${item.slug}`} aria-label={`View ${item.name} design preview`}>
-          <ProductCardImage index={productDrafts.indexOf(item) + 1} total={productDrafts.length} />
+          <ProductCardImage index={productDrafts.indexOf(item) + 1} total={productDrafts.length} photo={findSupplierCandidate(item.slug)?.photos[0]} />
           <div className="e-collection-card-caption">
             <h2>{item.name}</h2>
             <span className="e-collection-price-placeholder">PRICE PENDING</span>
             {all && <span className="e-collection-card-category">{draftCategories.find((entry) => entry.id === item.category)?.label}</span>}
             <p className="e-collection-card-description">{item.description}</p>
-            <span className="e-collection-card-status">DESIGN STUDY · NOT FOR SALE</span>
+            <span className="e-collection-card-status">{findSupplierCandidate(item.slug) ? 'SUPPLIER PHOTO · NOT APPROVED FOR SALE' : 'DESIGN STUDY · NOT FOR SALE'}</span>
             <span className="e-collection-card-view">EXPLORE DESIGN <span aria-hidden="true">↗</span></span>
           </div>
         </Link>
       </article>)}
     </div>
-    <p className="e-collection-disclosure">Design preview only. Photography and specifications are pending. No garments are available to order.</p>
+    <p className="e-collection-disclosure">Private design preview only. Four concepts use temporary EPROLO supplier reference photos; none is an approved EVERNE garment or offer. Sizes, material claims and specifications await validation. No orders are accepted.</p>
     </section>
   </div>;
 }
@@ -259,7 +260,7 @@ function Home() {
       <div className="e-featured-grid" role="list" aria-label="Five featured EVERNE design concepts">
         {openingEdit.map((item) => <article key={item.slug} className="e-featured-card" role="listitem">
           <Link to={`/products/${item.slug}`} aria-label={`View ${item.name} design study`}>
-            <ProductCardImage index={productDrafts.indexOf(item) + 1} total={productDrafts.length} />
+            <ProductCardImage index={productDrafts.indexOf(item) + 1} total={productDrafts.length} photo={findSupplierCandidate(item.slug)?.photos[0]} />
             <div className="e-featured-caption">
               <h3>{item.name}</h3>
               <span>PRICE PENDING</span>
@@ -309,6 +310,7 @@ function ProductPage({ handle }: { handle?: string }) {
     <Link className="e-text-link" to="/collections/all">RETURN TO THE EDIT <span aria-hidden="true">↗</span></Link>
   </section>;
 
+  const candidate = findSupplierCandidate(item.slug);
   const category = draftCategories.find((entry) => entry.id === item.category);
   const categoryItems = productDrafts.filter((entry) => entry.category === item.category);
   const position = categoryItems.findIndex((entry) => entry.slug === item.slug);
@@ -336,14 +338,17 @@ function ProductPage({ handle }: { handle?: string }) {
         <div className="e-product-title-row"><h1 id="product-title" tabIndex={-1}>{item.name}</h1><span className="e-product-price-pending">PRICE PENDING</span></div>
         <p className="e-product-intro">{item.description}</p>
         <p className="e-product-review-state">DESIGN STUDY {String(productDrafts.indexOf(item) + 1).padStart(2, '0')} / {productDrafts.length} · SOURCING & FIT REVIEW PENDING</p>
+        {candidate && <p className="e-product-disclaimer">TEMPORARY SUPPLIER IMAGE COMPARISON: {candidate.supplierTitle} (EPROLO). NOT A VERIFIED EVERNE ITEM.</p>}
       </div>
-      <ProductPhotoGallery key={item.slug} />
+      <ProductPhotoGallery key={item.slug} photos={candidate?.photos} />
       <div className="e-product-information">
-        <div className="e-product-colour-panel" aria-label="Colour options awaiting physical sample review">
-          <div><strong>COLOUR</strong><span>TO BE CONFIRMED</span></div>
-          <p>No verified colour variants yet.</p>
-        </div>
-        <ProductSizeInformation />
+        {candidate ? <SupplierCandidateOptions key={item.slug} candidate={candidate} /> : <>
+          <div className="e-product-colour-panel" aria-label="Colour options awaiting physical sample review">
+            <div><strong>COLOUR</strong><span>TO BE CONFIRMED</span></div>
+            <p>No verified colour variants yet.</p>
+          </div>
+          <ProductSizeInformation />
+        </>}
         <button type="button" className="e-product-disabled-cta" disabled aria-label="Ordering unavailable until product approval">NOT AVAILABLE TO ORDER</button>
         <div className="e-product-service-notes" aria-label="Order information awaiting approval">
           <p><span>DELIVERY</span><strong>Terms pending supplier verification</strong></p>
