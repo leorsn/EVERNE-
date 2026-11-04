@@ -10,6 +10,9 @@ export type SupplierCandidate = Readonly<{
   supplier: 'EPROLO';
   photos: readonly ProductPhoto[];
   colours: readonly string[];
+  // Exact variant->media associations read from the Shopify draft product.
+  // These prove the supplier's image assignment, NOT product/colour approval.
+  colourPhotoUrls: Readonly<Record<string, string>>;
   sizes: readonly string[];
   listedCombinations: readonly Readonly<{ colour: string; size: string }>[];
 }>;
@@ -32,6 +35,11 @@ const candidates: readonly SupplierCandidate[] = [
       { publicPath: 'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/4523D1F1C60AE30A58A2D3B5CAF51141.jpg?v=1793739773', altText: 'Temporary EPROLO source photograph 10 of Ribbed Scoop-Neck Tank. Not an approved EVERNE product.' },
     ],
     colours: ["Black","Advanced Gray","White"],
+    colourPhotoUrls: {
+      'Advanced Gray': 'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/26DD360A6E517D7B0E69519CB3FE0004.jpg?v=1793739757',
+      White: 'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/8834C7417598AD06FC4750CF65DA2EC4.jpg?v=1793739760',
+      Black: 'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/F7EB32170D8A56470084979608B80054.jpg?v=1793739763',
+    },
     sizes: ["S","M","L"],
     listedCombinations: [{"colour":"Advanced Gray","size":"S"},{"colour":"Advanced Gray","size":"M"},{"colour":"Advanced Gray","size":"L"},{"colour":"White","size":"S"},{"colour":"White","size":"M"},{"colour":"White","size":"L"},{"colour":"Black","size":"S"},{"colour":"Black","size":"M"},{"colour":"Black","size":"L"}],
   },
@@ -48,6 +56,11 @@ const candidates: readonly SupplierCandidate[] = [
       { publicPath: 'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/E9D6A851E89E2CAC1ADB9F9302D1003C.jpg?v=1793739851', altText: 'Temporary EPROLO source photograph 6 of Fitted Crew-Neck Long-Sleeve Top. Not an approved EVERNE product.' },
     ],
     colours: ["Black","Gray","White"],
+    colourPhotoUrls: {
+      Black: 'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/E9D6A851E89E2CAC1ADB9F9302D1003C.jpg?v=1793739851',
+      White: 'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/EC9722AEEE00E11F6145006CC1DCCF29.jpg?v=1793739834',
+      Gray: 'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/177FA79ACF2C0985E6E88AE6D204A943.jpg?v=1793739844',
+    },
     sizes: ["S","M","L","XL"],
     listedCombinations: [{"colour":"Black","size":"S"},{"colour":"Black","size":"M"},{"colour":"Black","size":"L"},{"colour":"Black","size":"XL"},{"colour":"White","size":"S"},{"colour":"White","size":"M"},{"colour":"White","size":"L"},{"colour":"White","size":"XL"},{"colour":"Gray","size":"S"},{"colour":"Gray","size":"M"},{"colour":"Gray","size":"L"},{"colour":"Gray","size":"XL"}],
   },
@@ -71,6 +84,12 @@ const candidates: readonly SupplierCandidate[] = [
       { publicPath: 'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/DB9762079FAA7A1B5EA964854051AABD.jpg?v=1793739813', altText: 'Temporary EPROLO source photograph 13 of Satin-Effect Mermaid Midi Skirt. Not an approved EVERNE product.' },
     ],
     colours: ["Black","Silver Gray","White","Wine Red"],
+    colourPhotoUrls: {
+      'Wine Red': 'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/8B02D6F845EDC354267558ECBEF10571.jpg?v=1793739796',
+      'Silver Gray': 'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/D944F4E20C14C116F4899AAB82DBBB41.jpg?v=1793739799',
+      White: 'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/EEF8C20D67F8F1F9EAAAC08C2D4FC36F.jpg?v=1793739805',
+      Black: 'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/DB9762079FAA7A1B5EA964854051AABD.jpg?v=1793739813',
+    },
     sizes: ["M","L","XL"],
     listedCombinations: [{"colour":"Wine Red","size":"M"},{"colour":"Wine Red","size":"L"},{"colour":"Wine Red","size":"XL"},{"colour":"Silver Gray","size":"M"},{"colour":"Silver Gray","size":"L"},{"colour":"Silver Gray","size":"XL"},{"colour":"White","size":"M"},{"colour":"White","size":"L"},{"colour":"White","size":"XL"},{"colour":"Black","size":"M"},{"colour":"Black","size":"L"},{"colour":"Black","size":"XL"}],
   },
@@ -87,6 +106,9 @@ const candidates: readonly SupplierCandidate[] = [
       { publicPath: 'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/E2F02B1223B8415255CE938042C02655.jpg?v=1793739744', altText: 'Temporary EPROLO source photograph 6 of High-Waisted Slim Trousers. Not an approved EVERNE product.' },
     ],
     colours: ["Black"],
+    colourPhotoUrls: {
+      Black: 'https://cdn.shopify.com/s/files/1/0957/2325/8237/files/E2F02B1223B8415255CE938042C02655.jpg?v=1793739744',
+    },
     sizes: ["S","M","L","XL"],
     listedCombinations: [{"colour":"Black","size":"S"},{"colour":"Black","size":"M"},{"colour":"Black","size":"L"},{"colour":"Black","size":"XL"}],
   },
@@ -94,6 +116,18 @@ const candidates: readonly SupplierCandidate[] = [
 
 export function findSupplierCandidate(handle: string | undefined): SupplierCandidate | undefined {
   return candidates.find((candidate) => candidate.conceptSlug === handle);
+}
+
+// Only reorder photos that Shopify explicitly associates with a draft variant.
+// Keep the complete source gallery accessible, with the selected colour first.
+export function supplierPhotosForColour(candidate: SupplierCandidate | undefined, colour: string): readonly ProductPhoto[] {
+  if (!candidate) return [];
+  const sourceImage = candidate.photos.find((photo) => photo.publicPath === candidate.colourPhotoUrls[colour]);
+  if (!sourceImage) return candidate.photos;
+  return [
+    { ...sourceImage, altText: `${candidate.supplier} draft image linked to ${colour} variant of ${candidate.supplierTitle}. Temporary reference, not an approved EVERNE garment.` },
+    ...candidate.photos.filter((photo) => photo.publicPath !== sourceImage.publicPath),
+  ];
 }
 
 const colourSwatches: Readonly<Record<string, string>> = {
@@ -105,10 +139,11 @@ const colourSwatches: Readonly<Record<string, string>> = {
   'Wine Red': '#5d2034',
 };
 
-export function SupplierCandidateOptions({ candidate }: { candidate: SupplierCandidate }) {
-  const [colour, setColour] = useState<string>(
-    candidate.colours.includes('Black') ? 'Black' : candidate.colours[0],
-  );
+export function SupplierCandidateOptions({ candidate, colour, onColourChange }: {
+  candidate: SupplierCandidate;
+  colour: string;
+  onColourChange: (colour: string) => void;
+}) {
   const availableSizes = candidate.sizes.filter((size) =>
     candidate.listedCombinations.some((option) => option.colour === colour && option.size === size),
   );
@@ -127,7 +162,7 @@ export function SupplierCandidateOptions({ candidate }: { candidate: SupplierCan
           className={'e-supplier-colour-choice' + (colour === option ? ' e-supplier-colour-selected' : '')}
           aria-pressed={colour === option}
           onClick={() => {
-            setColour(option);
+            onColourChange(option);
             if (!candidate.listedCombinations.some((variant) => variant.colour === option && variant.size === size)) {
               setSize(candidate.listedCombinations.find((variant) => variant.colour === option)?.size ?? candidate.sizes[0]);
             }
@@ -148,6 +183,6 @@ export function SupplierCandidateOptions({ candidate }: { candidate: SupplierCan
       </div>
       <p>Supplier-listed combination: {colour} / {activeSize}. Fit and stock are not verified.</p>
     </div>
-    <p className="e-product-disclaimer">Temporary EPROLO supplier comparison: {candidate.supplierTitle}. The images and variant names are not an approval of the EVERNE design. EPROLO is not an approved fulfilment partner. The gallery does not switch to colour-specific photos yet.</p>
+    <p className="e-product-disclaimer">Temporary EPROLO supplier comparison: {candidate.supplierTitle}. Selecting a colour shows the lead image linked to that variant in the Shopify draft. Other gallery photos can show different colours. Neither the images nor variant names approve an EVERNE product or supplier; EPROLO is not an approved fulfilment partner.</p>
   </>;
 }
