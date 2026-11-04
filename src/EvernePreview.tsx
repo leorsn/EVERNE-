@@ -5,6 +5,7 @@ import { draftCategories, findProductDraft, productDrafts } from './productDraft
 import ProductPhotoGallery from './ProductPhotoGallery';
 import { ProductFactsAccordion, ProductSizeInformation } from './ProductReviewFacts';
 import ProductCardImage from './ProductCardImage';
+import SupplierBagPreview, { SupplierBagCard, supplierBagHandle } from './SupplierBagPreview';
 
 type Page = 'home' | 'care' | 'standards' | 'product' | 'collection';
 type SortOrder = 'edit' | 'name';
@@ -212,6 +213,7 @@ function CollectionPage({ categoryId }: { categoryId?: string }) {
         <span>{entry.label.toUpperCase()}</span><small>{categoryCount(entry.id)}</small>
       </Link>)}
     </nav>
+    {all && <SupplierBagCard />}
     <div className={`e-collection-grid ${viewMode === 'list' ? 'e-collection-list' : ''}`.trim()} role="list" aria-label={`${all ? 'All' : category?.label} design concepts`}>
       {items.map((item) => <article className="e-collection-card" role="listitem" key={item.slug}>
         <Link to={`/products/${item.slug}`} aria-label={`View ${item.name} design preview`}>
@@ -273,6 +275,8 @@ function Home() {
       </div>
     </section>
 
+    <SupplierBagCard />
+
     <section className="e-wardrobe" id="collection" aria-labelledby="collection-title">
       <div className="e-wardrobe-heading">
         <h2 id="collection-title" tabIndex={-1}>Shop by category.</h2>
@@ -296,6 +300,7 @@ function Home() {
 }
 
 function ProductPage({ handle }: { handle?: string }) {
+  if (handle === supplierBagHandle) return <SupplierBagPreview />;
   const item = findProductDraft(handle);
   if (!item) return <section className="e-product-missing">
     <span className="e-kicker">EVERNE / WOMAN</span>
@@ -421,11 +426,12 @@ function Standards() {
 export default function EvernePreview({ page }: { page: Page }) {
   const { handle, category: categoryId } = useParams<{ handle: string; category: string }>();
   const product = page === 'product' ? findProductDraft(handle) : undefined;
+  const supplierBag = page === 'product' && handle === supplierBagHandle;
   useEffect(() => {
     const collectionLabel = categoryId === 'all' ? 'All Pieces' : draftCategories.find((entry) => entry.id === categoryId)?.label;
-    const title = product ? `EVERNE — ${product.name} | Design Preview` : page === 'collection' ? `EVERNE — ${collectionLabel ?? 'Collection'} | Design Preview` : page === 'care' ? 'EVERNE — Care' : page === 'standards' ? 'EVERNE — Our Standard' : 'EVERNE — Womenswear';
-    const description = product ? `${product.name}: an EVERNE design concept in development. Product photography, specifications and ordering are not available.` : 'EVERNE is an independent womenswear project in preparation. The collection is not yet available to order.';
-    applySeo({ title, description, path: product ? `/products/${product.slug}` : page === 'collection' ? `/collections/${categoryId}` : page === 'home' ? '/' : '/' + page, type: 'website', indexable: false });
-  }, [page, product, categoryId]);
+    const title = supplierBag ? 'EVERNE — Structured Crossbody Bag | Supplier Preview' : product ? `EVERNE — ${product.name} | Design Preview` : page === 'collection' ? `EVERNE — ${collectionLabel ?? 'Collection'} | Design Preview` : page === 'care' ? 'EVERNE — Care' : page === 'standards' ? 'EVERNE — Our Standard' : 'EVERNE — Womenswear';
+    const description = supplierBag ? 'Structured crossbody bag: original CJ supplier photos, five listed colours and one size. Private preview only; ordering unavailable.' : product ? `${product.name}: an EVERNE design concept in development. Product photography, specifications and ordering are not available.` : 'EVERNE is an independent womenswear project in preparation. The collection is not yet available to order.';
+    applySeo({ title, description, path: supplierBag ? '/products/' + supplierBagHandle : product ? `/products/${product.slug}` : page === 'collection' ? `/collections/${categoryId}` : page === 'home' ? '/' : '/' + page, type: 'website', indexable: false });
+  }, [page, product, categoryId, supplierBag]);
   return <div className="everne-editorial" id="top"><Header page={page} selectedCategory={product?.category ?? (page === 'collection' ? categoryId : undefined)} /><main id="main" tabIndex={-1}>{page === 'home' ? <Home /> : page === 'care' ? <Care /> : page === 'standards' ? <Standards /> : page === 'collection' ? <CollectionPage categoryId={categoryId} /> : <ProductPage handle={handle} />}</main><Footer /></div>;
 }
