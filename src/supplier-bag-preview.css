@@ -1,0 +1,37 @@
+/* Private supplier candidate, visually separate from unverified design studies. */
+.e-supplier-feature { margin: 35px 5%; border: 1px solid #e4e4e4; background: #f6f6f6; }
+.e-supplier-feature-link { display: grid; grid-template-columns: minmax(0, 43%) minmax(0, 1fr); min-height: 315px; color: #111; text-decoration: none; }
+.e-supplier-feature-link > img { display: block; width: 100%; height: 100%; min-height: 315px; max-height: 480px; object-fit: contain; background: #efefef; }
+.e-supplier-feature-copy { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: clamp(22px, 5vw, 68px); }
+.e-supplier-overline { font: 600 10px/1.5 'Helvetica Neue', Arial, sans-serif; letter-spacing: .12em; color: #777; }
+.e-supplier-feature h2 { margin: 17px 0; font: 400 clamp(28px, 3.2vw, 47px)/1.1 Georgia, 'Times New Roman', serif; letter-spacing: -.035em; }
+.e-supplier-feature p { max-width: 410px; margin: 0 0 16px; font: 400 13px/1.7 'Helvetica Neue', Arial, sans-serif; color: #666; }
+.e-supplier-price { font: 500 12px/1.6 'Helvetica Neue', Arial, sans-serif; color: #222; }
+.e-supplier-feature-action { margin-top: 22px; font: 600 10px/1.5 'Helvetica Neue', Arial, sans-serif; letter-spacing: .1em; border-bottom: 1px solid #111; padding-bottom: 6px; }
+.e-supplier-feature small { display: block; margin-top: 17px; font: 400 10px/1.5 'Helvetica Neue', Arial, sans-serif; color: #747474; }
+.e-supplier-feature-link:focus-visible { outline: 2px solid #111; outline-offset: 3px; }
+.e-supplier-feature-link:hover .e-supplier-feature-action { opacity: .6; }
+.e-supplier-shell .e-product-title-row { align-items: baseline; }
+.e-supplier-product-price { flex: none; font: 400 22px/1.3 Georgia, 'Times New Roman', serif; color: #111; }
+.e-supplier-shell .e-supplier-colour-panel { margin-bottom: 26px; }
+.e-supplier-colour-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px !important; margin-top: 17px; }
+.e-supplier-colour-choice { display: flex; align-items: center; gap: 10px; min-height: 49px; padding: 8px 10px; border: 1px solid #dedede; border-radius: 0; background: #fff; color: #333; cursor: pointer; font: 400 12px/1.4 'Helvetica Neue', Arial, sans-serif; text-align: left; }
+.e-supplier-colour-choice:hover { border-color: #aaa; }
+.e-supplier-colour-choice.e-supplier-colour-selected { border-color: #111; box-shadow: inset 0 0 0 1px #111; color: #111; }
+.e-supplier-colour-choice:focus-visible { outline: 2px solid #111; outline-offset: 2px; }
+.e-supplier-swatch { display: block; flex: 0 0 22px; width: 22px; height: 22px; border: 1px solid #c8c8c8; border-radius: 50%; }
+.e-supplier-colour-panel p.e-supplier-variant-help { display: block; width: auto; margin: 13px 0 0; padding: 0; background: transparent; color: #747474; font: 400 11px/1.55 'Helvetica Neue', Arial, sans-serif; }
+.e-supplier-size-panel { margin-bottom: 28px; padding: 17px 0 0; border-top: 1px solid #dedede; }
+.e-supplier-size-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; font: 600 11px/1.5 'Helvetica Neue', Arial, sans-serif; color: #222; }
+.e-supplier-size-heading span { font-weight: 400; color: #858585; }
+.e-supplier-size-choice { display: inline-flex; align-items: center; justify-content: center; margin-top: 14px; min-height: 44px; padding: 9px 16px; border: 1px solid #111; font: 500 12px/1.5 'Helvetica Neue', Arial, sans-serif; color: #111; }
+.e-supplier-size-panel > p { margin: 12px 0 0; color: #777; font: 400 11px/1.55 'Helvetica Neue', Arial, sans-serif; }
+@media (max-width: 700px) {
+  .e-supplier-feature { margin: 18px 5% 28px; }
+  .e-supplier-feature-link { grid-template-columns: 1fr; }
+  .e-supplier-feature-link > img { height: 330px; min-height: 0; }
+  .e-supplier-feature-copy { padding: 24px 20px 28px; }
+  .e-supplier-feature h2 { font-size: 30px; }
+  .e-supplier-colour-grid { grid-template-columns: 1fr 1fr; }
+  .e-supplier-colour-choice { font-size: 10px; }
+}
