@@ -37,6 +37,29 @@ try {
   const { ProductSizeInformation, ProductFactsAccordion } = await vite.ssrLoadModule('/src/ProductReviewFacts.tsx');
   const { default: ProductCardImage } = await vite.ssrLoadModule('/src/ProductCardImage.tsx');
   const { productDrafts } = await vite.ssrLoadModule('/src/productDrafts.ts');
+  const { findSupplierCandidate, supplierPhotosForColour } = await vite.ssrLoadModule('/src/SupplierCandidatePreviews.tsx');
+
+  // Shopify Admin variant.media was read for each draft variant. A source
+  // photo may only be promoted to the gallery lead when that exact image is
+  // linked to the selected supplier colour; no visually guessed associations.
+  const mappedSupplierPhotos = {
+    'everyday-tank': { 'Advanced Gray': '26DD360A6E517D7B0E69519CB3FE0004', White: '8834C7417598AD06FC4750CF65DA2EC4', Black: 'F7EB32170D8A56470084979608B80054' },
+    'soft-line-longsleeve': { Black: 'E9D6A851E89E2CAC1ADB9F9302D1003C', White: 'EC9722AEEE00E11F6145006CC1DCCF29', Gray: '177FA79ACF2C0985E6E88AE6D204A943' },
+    'fluid-midi-skirt': { 'Wine Red': '8B02D6F845EDC354267558ECBEF10571', 'Silver Gray': 'D944F4E20C14C116F4899AAB82DBBB41', White: 'EEF8C20D67F8F1F9EAAAC08C2D4FC36F', Black: 'DB9762079FAA7A1B5EA964854051AABD' },
+    'tailored-everyday-pant': { Black: 'E2F02B1223B8415255CE938042C02655' },
+  };
+  for (const [handle, colours] of Object.entries(mappedSupplierPhotos)) {
+    const candidate = findSupplierCandidate(handle);
+    assert.ok(candidate, `${handle} must be a registered, explicitly unapproved supplier candidate`);
+    assert.deepEqual([...candidate.colours].sort(), Object.keys(colours).sort(), 'Map every listed colour, not a subset');
+    for (const [colour, filename] of Object.entries(colours)) {
+      const images = supplierPhotosForColour(candidate, colour);
+      assert.equal(images.length, candidate.photos.length, `${handle}: selecting ${colour} cannot remove source photos`);
+      assert.ok(images[0].publicPath.includes(`/files/${filename}.jpg?`), `${handle}: ${colour} must lead with Shopify variant-linked media`);
+      assert.match(images[0].altText, /not an approved EVERNE garment/, 'Variant-linked media must remain clearly unapproved');
+      assert.equal(new Set(images.map((image) => image.publicPath)).size, candidate.photos.length, 'Keep each gallery image exactly once');
+    }
+  }
 
   const pendingGallery = renderToStaticMarkup(React.createElement(ProductPhotoGallery));
   assert.match(pendingGallery, /Photograph pending/);
@@ -215,6 +238,10 @@ try {
         `${product.name} must plainly disclose that the supplier photo is not an approved product`);
       assert.match(html, /EPROLO is not an approved fulfilment partner/,
         `${product.name} must not imply supplier approval`);
+      assert.match(html, /Selecting a colour shows the lead image linked to that variant in the Shopify draft/,
+        `${product.name} must explain the source and limitations of its gallery colour switching`);
+      assert.ok(html.indexOf(mappedSupplierPhotos[product.slug].Black) !== -1,
+        `${product.name} must lead with the Shopify-linked black variant photo by default`);
       assert.equal((html.match(/class="e-product-gallery-thumbnail"/g) ?? []).length, supplierPhotoCount,
         `${product.name} needs every original, temporary supplier photo in its gallery`);
       assert.equal((html.match(/<img\b/g) ?? []).length, supplierPhotoCount + 1,
