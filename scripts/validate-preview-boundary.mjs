@@ -13,6 +13,7 @@ const expectedModules = new Set([
   'src/ProductPhotoGallery.tsx',
   'src/ProductReviewFacts.tsx',
   'src/ProductCardImage.tsx',
+  'src/SupplierBagPreview.tsx',
   'src/productDrafts.ts',
   'src/RouteFocus.tsx',
   'src/seo.ts',
@@ -22,7 +23,7 @@ const expectedModules = new Set([
   'src/trendProducts.ts',
 ]);
 // The separate category-agnostic concept is also non-commercial.
-const expectedStyles = new Set(['src/everne-editorial.css', 'src/trend-store.css']);
+const expectedStyles = new Set(['src/everne-editorial.css', 'src/supplier-bag-preview.css', 'src/trend-store.css']);
 const allowedPackages = new Set(['react', 'react-dom/client', 'react-router-dom']);
 const visited = new Set();
 const styles = new Set();
