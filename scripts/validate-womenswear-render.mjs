@@ -110,12 +110,14 @@ try {
 
   function assertSafe(html, page) {
     assert.doesNotMatch(html, /<picture\b|<form\b|<input\b|<video\b/i, 'Preview must not contain order controls or video');
+    const supplierPreview = ['/', '/collections/all', '/products/structured-crossbody-bag', '/edit/essential-rib-top'].includes(page);
+    const supplierImagePattern = /^https:\/\/cdn\.shopify\.com\/s\/files\/1\/0957\/2325\/8237\/files\/[a-f0-9-]{36}\.png\?v=1793809223$/;
     for (const match of html.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/g)) {
-      assert.ok(/^\/editorial-study\/[a-z0-9-]+\.jpg$/.test(match[1]) || /^\/campaign-concepts\/(?:01-all-pieces-editorial|02-all-pieces-studio-wide)\.jpg$/.test(match[1]),
-        'Only registered third-party editorial assets and the labeled digital campaign concept may appear');
+      assert.ok(/^\/editorial-study\/[a-z0-9-]+\.jpg$/.test(match[1]) || /^\/campaign-concepts\/(?:01-all-pieces-editorial|02-all-pieces-studio-wide)\.jpg$/.test(match[1]) || (supplierPreview && supplierImagePattern.test(match[1])),
+        `Only registered editorial assets, the campaign concept and Shopify draft imagery may appear: ${page} / ${match[1]}`);
     }
     assert.doesNotMatch(html, /href="[^"]*(?:\/cart|\/checkout)|>\s*(?:buy now|add to cart)\s*</i, `${page} must not link to sales`);
-    assert.doesNotMatch(html, /€\d+|Price target|View all 20 concepts/i, `${page} must not expose unapproved products or prices`);
+    assert.doesNotMatch(supplierPreview ? html.replace(/€109/g, '') : html, /€\d+|Price target|View all 20 concepts/i, `${page} must not expose other unapproved products or prices`);
     assert.match(html, /no active sales|not yet available to order|No garments are available to order/i, `${page} must disclose the prelaunch status`);
     assert.match(html, /href="\/legal.html#imprint"/, `${page} must link to legal information`);
     assert.match(html, /href="\/standards"/, `${page} must link to supplier standards`);
@@ -127,12 +129,12 @@ try {
   assert.match(home, /The first/);
   assert.match(home, /id="collection"/);
   assert.equal((home.match(/class="e-category"/g) ?? []).length, 5);
-  assert.equal((home.match(/<img\b/g) ?? []).length, 6);
+  assert.equal((home.match(/<img\b/g) ?? []).length, 7, 'Six editorial references and one separately labelled supplier-preview thumbnail');
   assert.match(home, /not an EVERNE garment/i);
   assert.match(home, /Photographic styling references only/);
   assert.match(home, /href="\/care"/);
   assert.equal((home.match(/class="e-product-index-group"/g) ?? []).length, 0, 'Remove the long five-column product name list');
-  assert.equal((home.match(/href="\/products\/[a-z0-9-]+"/g) ?? []).length, 5, 'Five editorial first-look links should lead directly to individual product studies');
+  assert.equal((home.match(/href="\/products\/[a-z0-9-]+"/g) ?? []).length, 6, 'Five editorial studies plus the isolated supplier candidate should be linked');
   assert.equal((home.match(/class="e-featured-card"/g) ?? []).length, 5, 'Five opening studies should use the same product-card presentation');
   assert.equal((home.match(/class="e-featured-caption"/g) ?? []).length, 5, 'Each opening study should have its own compact product caption');
   assert.equal((home.match(/href="\/collections\/[a-z]+"/g) ?? []).length, 14, 'Header edit link, six category bar links, five image tiles and two collection CTAs');
@@ -169,7 +171,7 @@ try {
   assert.ok(categoryFilter, 'The compact category filter must be rendered');
   assert.equal((categoryFilter.match(/<a\b/g) ?? []).length, 6, 'The compact category filter must link to all five categories and the full edit');
   assert.match(all, /class="e-collection-filter-active" aria-current="page" href="\/collections\/all"/, 'All Pieces must be the selected category filter');
-  assert.equal((all.match(/<img\b/g) ?? []).length, 1, 'Only the editorial campaign may have a photo; the twenty product placeholders must remain empty');
+  assert.equal((all.match(/<img\b/g) ?? []).length, 2, 'The campaign and isolated supplier candidate may have photos; all twenty design placeholders remain empty');
   assert.match(all, /aria-current="page" href="\/collections\/all"/);
   for (const category of ['tops', 'knitwear', 'trousers', 'dresses', 'skirts']) {
     const html = renderPage(`/collections/${category}`);
@@ -230,6 +232,27 @@ try {
     assert.match(html, new RegExp(product.name), `${product.name} needs its own named detail page`);
     assert.equal((html.match(/<img\b/g) ?? []).length, 0, 'No editorial photo may masquerade as a product photograph');
   }
+
+  // Supplier photos and colour choices are isolated to a protected candidate
+  // route. The original twenty design studies must remain unreleased.
+  const bagUrl = '/products/structured-crossbody-bag';
+  const bag = renderPage(bagUrl);
+  assertSafe(bag, bagUrl);
+  assert.match(bag, /Structured Crossbody Bag/);
+  assert.match(bag, /€109/);
+  for (const colour of ['Black', 'Pearl Blue', 'Gray', 'Golden Brown', 'White']) {
+    assert.match(bag, new RegExp(colour), `Supplier-listed colour ${colour} must appear`);
+  }
+  assert.match(bag, /30 × 13 × 22 cm/, 'Only the one supplier-listed size may be shown');
+  assert.doesNotMatch(bag, />\s*(?:XS|S|M|L|XL)\s*</, 'No garment sizes may be invented');
+  assert.equal((bag.match(/class="e-product-gallery-thumbnail"/g) ?? []).length, 11,
+    'Eleven original Shopify-hosted supplier photos need accessible gallery selectors');
+  assert.match(bag, /aria-pressed="true"/, 'Black must be selected by default');
+  assert.match(bag, /supplier connection pending/i, 'Unlinked colours must be labelled as pending');
+  assert.match(bag, /class="e-product-disabled-cta" disabled=""/,
+    'Order activation must remain blocked on the supplier candidate');
+  assert.match(bag, /Automated supplier payment not verified/,
+    'Automatic supplier settlement is not yet verified');
 
   const unknown = renderPage('/products/legacy-item');
   assertSafe(unknown, '/products/legacy-item');
