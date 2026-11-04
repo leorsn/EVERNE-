@@ -110,14 +110,19 @@ try {
 
   function assertSafe(html, page) {
     assert.doesNotMatch(html, /<picture\b|<form\b|<input\b|<video\b/i, 'Preview must not contain order controls or video');
-    const supplierPreview = ['/', '/collections/all', '/products/structured-crossbody-bag', '/edit/essential-rib-top'].includes(page);
-    const supplierImagePattern = /^https:\/\/cdn\.shopify\.com\/s\/files\/1\/0957\/2325\/8237\/files\/[a-f0-9-]{36}\.png\?v=1793809223$/;
+    const bagPreview = ['/', '/collections/all', '/products/structured-crossbody-bag', '/edit/essential-rib-top'].includes(page);
+    const supplierPreview = bagPreview || [
+      '/collections/tops', '/collections/trousers', '/collections/skirts',
+      '/products/everyday-tank', '/products/soft-line-longsleeve',
+      '/products/fluid-midi-skirt', '/products/tailored-everyday-pant',
+    ].includes(page);
+    const supplierImagePattern = /^https:\/\/cdn\.shopify\.com\/s\/files\/1\/0957\/2325\/8237\/files\/(?:[a-f0-9-]{36}\.png\?v=1793809223|[A-F0-9]{32}\.jpg\?v=17937\d{5})$/;
     for (const match of html.matchAll(/<img\b[^>]*\bsrc="([^"]+)"/g)) {
       assert.ok(/^\/editorial-study\/[a-z0-9-]+\.jpg$/.test(match[1]) || /^\/campaign-concepts\/(?:01-all-pieces-editorial|02-all-pieces-studio-wide)\.jpg$/.test(match[1]) || (supplierPreview && supplierImagePattern.test(match[1])),
         `Only registered editorial assets, the campaign concept and Shopify draft imagery may appear: ${page} / ${match[1]}`);
     }
     assert.doesNotMatch(html, /href="[^"]*(?:\/cart|\/checkout)|>\s*(?:buy now|add to cart)\s*</i, `${page} must not link to sales`);
-    assert.doesNotMatch(supplierPreview ? html.replace(/€109/g, '') : html, /€\d+|Price target|View all 20 concepts/i, `${page} must not expose other unapproved products or prices`);
+    assert.doesNotMatch(bagPreview ? html.replace(/€109/g, '') : html, /€\d+|Price target|View all 20 concepts/i, `${page} must not expose other unapproved products or prices`);
     assert.match(html, /no active sales|not yet available to order|No garments are available to order/i, `${page} must disclose the prelaunch status`);
     assert.match(html, /href="\/legal.html#imprint"/, `${page} must link to legal information`);
     assert.match(html, /href="\/standards"/, `${page} must link to supplier standards`);
@@ -171,7 +176,7 @@ try {
   assert.ok(categoryFilter, 'The compact category filter must be rendered');
   assert.equal((categoryFilter.match(/<a\b/g) ?? []).length, 6, 'The compact category filter must link to all five categories and the full edit');
   assert.match(all, /class="e-collection-filter-active" aria-current="page" href="\/collections\/all"/, 'All Pieces must be the selected category filter');
-  assert.equal((all.match(/<img\b/g) ?? []).length, 2, 'The campaign and isolated supplier candidate may have photos; all twenty design placeholders remain empty');
+  assert.equal((all.match(/<img\b/g) ?? []).length, 6, 'Campaign and bag imagery plus four labelled supplier comparison photos; the other design placeholders remain empty');
   assert.match(all, /aria-current="page" href="\/collections\/all"/);
   for (const category of ['tops', 'knitwear', 'trousers', 'dresses', 'skirts']) {
     const html = renderPage(`/collections/${category}`);
@@ -185,7 +190,9 @@ try {
     assert.match(html, new RegExp(`aria-current="page" href="/collections/${category}"`));
     assert.match(html, new RegExp(`class="e-collection-filter-active" aria-current="page" href="/collections/${category}"`), `${category} must be selected in the category filter`);
     assert.match(html, /class="e-shop-nav e-shop-nav-browse" aria-label="Shop by category"/, `${category} needs direct mobile category navigation`);
-    assert.equal((html.match(/<img\b/g) ?? []).length, 0);
+    const expectedSupplierCards = { tops: 2, trousers: 1, skirts: 1 };
+    assert.equal((html.match(/<img\b/g) ?? []).length, expectedSupplierCards[category] ?? 0,
+      `${category} may show only the explicitly labelled, temporary supplier comparisons`);
     assert.doesNotMatch(html, /class="e-all-hero"/, 'Category pages should open directly with their products');
   }
   const unknownCollection = renderPage('/collections/unknown');
@@ -196,10 +203,31 @@ try {
     const url = `/products/${product.slug}`;
     const html = renderPage(url);
     assertSafe(html, url);
-    assert.match(html, /Photograph pending/, `${product.name} must reserve image space without stock photos`);
+    const supplierPhotoCounts = {
+      'everyday-tank': 10,
+      'soft-line-longsleeve': 6,
+      'fluid-midi-skirt': 13,
+      'tailored-everyday-pant': 6,
+    };
+    const supplierPhotoCount = supplierPhotoCounts[product.slug] ?? 0;
+    if (supplierPhotoCount) {
+      assert.match(html, /TEMPORARY SUPPLIER IMAGE COMPARISON/,
+        `${product.name} must plainly disclose that the supplier photo is not an approved product`);
+      assert.match(html, /EPROLO is not an approved fulfilment partner/,
+        `${product.name} must not imply supplier approval`);
+      assert.equal((html.match(/class="e-product-gallery-thumbnail"/g) ?? []).length, supplierPhotoCount,
+        `${product.name} needs every original, temporary supplier photo in its gallery`);
+      assert.equal((html.match(/<img\b/g) ?? []).length, supplierPhotoCount + 1,
+        `${product.name} must show an active image and all gallery thumbnails`);
+    } else {
+      assert.match(html, /Photograph pending/, `${product.name} must reserve image space without stock photos`);
+      assert.equal((html.match(/<img\b/g) ?? []).length, 0, 'Unmatched concept photos must remain pending');
+    }
     assert.ok(html.indexOf('class="e-product-heading"') < html.indexOf('class="e-product-gallery"'), `${product.name} must identify the garment before the photo placeholders on mobile`);
-    assert.equal((html.match(/class="e-photo-slot-index"/g) ?? []).length, 3, `${product.name} must reserve three numbered photo positions`);
-    assert.match(html, /Size information will appear only after garment measurements/, `${product.name} must explain the size-approval gate`);
+    assert.equal((html.match(/class="e-photo-slot-index"/g) ?? []).length, supplierPhotoCount ? 1 : 3,
+      `${product.name} must show numbered images or reserve three pending photo positions`);
+    if (!supplierPhotoCount) assert.match(html, /Size information will appear only after garment measurements/,
+      `${product.name} must explain the size-approval gate`);
     assert.match(html, /aria-label="Products in this category"/, `${product.name} must be reachable from the sidebar product navigation`);
     assert.match(html, /class="e-sidebar-section-label" aria-hidden="true">IN THIS CATEGORY<\/span>/,
       `${product.name} must distinguish category navigation from its product links`);
@@ -223,14 +251,19 @@ try {
     assert.match(html, /NOT AVAILABLE TO ORDER/, `${product.name} must be expressly noncommercial`);
     assert.match(html, /class="e-product-disabled-cta" disabled=""/, `${product.name} must keep the prominent purchase-style area in a disabled state`);
     assert.match(html, /PRICE PENDING/, `${product.name} must not present an unapproved price`);
-    assert.match(html, /No verified colour variants yet/, `${product.name} must not fabricate colour choices`);
-    assert.match(html, /SIZE SELECTION/, `${product.name} must reserve size selection without inventing available sizes`);
-    assert.match(html, /AWAITING FIT APPROVAL/, `${product.name} must explain why sizing is unavailable`);
-    assert.doesNotMatch(html, /<button[^>]*>\s*(?:XS|S|M|L|XL)\s*<\/button>/, `${product.name} must not imply real size inventory`);
+    if (supplierPhotoCount) {
+      assert.match(html, /SUPPLIER COLOUR/, `${product.name} must distinguish supplier-listed choices from reviewed options`);
+      assert.match(html, /SUPPLIER SIZE/, `${product.name} must distinguish supplier-listed sizes from fitted sizes`);
+      assert.match(html, /Fit and stock are not verified/, `${product.name} must not imply verified size inventory`);
+    } else {
+      assert.match(html, /No verified colour variants yet/, `${product.name} must not fabricate colour choices`);
+      assert.match(html, /SIZE SELECTION/, `${product.name} must reserve size selection without inventing available sizes`);
+      assert.match(html, /AWAITING FIT APPROVAL/, `${product.name} must explain why sizing is unavailable`);
+      assert.doesNotMatch(html, /<button[^>]*>\s*(?:XS|S|M|L|XL)\s*<\/button>/, `${product.name} must not imply real size inventory`);
+    }
     assert.match(html, /Details under review/, `${product.name} must disclose pending specifications`);
     assert.match(html, /Composition &amp; care/, `${product.name} must not invent fabric composition`);
     assert.match(html, new RegExp(product.name), `${product.name} needs its own named detail page`);
-    assert.equal((html.match(/<img\b/g) ?? []).length, 0, 'No editorial photo may masquerade as a product photograph');
   }
 
   // Supplier photos and colour choices are isolated to a protected candidate
