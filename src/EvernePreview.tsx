@@ -86,6 +86,7 @@ function Header({ page, selectedCategory }: { page: Page; selectedCategory?: str
       </nav>
       <Link to="/" className="e-wordmark" aria-label="EVERNE — home">EVERNE</Link>
       <nav className="e-nav-right" aria-label="Other sections">
+        <Link to="/selected">SELECTED PIECES</Link>
         <Link to="/collections/all">THE EDIT</Link>
         <Link className={page === 'care' ? 'e-active' : ''} aria-current={page === 'care' ? 'page' : undefined} to="/care">CARE</Link>
         <Link className={page === 'standards' ? 'e-active' : ''} aria-current={page === 'standards' ? 'page' : undefined} to="/standards">OUR STANDARD</Link>

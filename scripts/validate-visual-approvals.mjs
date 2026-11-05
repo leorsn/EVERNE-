@@ -98,18 +98,40 @@ export function validateVisualApprovals(root, outputDirectory) {
     assert.ok(fs.existsSync(inside(root, evidenceRecord)), 'Missing campaign evidence: ' + evidenceRecord);
     campaignConcepts.set(publicPath, record);
   }
+  // AI-rendered outfit studies can appear only in the protected preview.
+  // Their registration never grants a claim of verified product photography.
+  const productStudies = new Map();
+  assert.ok(Array.isArray(manifest.generatedProductStudyAssets ?? []), 'generatedProductStudyAssets must be an array');
+  for (const record of manifest.generatedProductStudyAssets ?? []) {
+    const { publicPath, sha256, origin, evidenceRecord, usage, disclosure, reviewedAt } = record;
+    assert.match(publicPath ?? '', /^public\/product-editorial\/[a-z0-9-]+\.webp$/,
+      'Generated product styling belongs only in public/product-editorial/');
+    assert.ok(!productStudies.has(publicPath) && !approved.has(publicPath) && !studies.has(publicPath) && !campaignConcepts.has(publicPath),
+      'Duplicate visual asset');
+    assert.match(sha256 ?? '', /^[a-f0-9]{64}$/, 'Every generated product study needs a byte-specific hash');
+    assert.equal(origin, 'OPENAI_IMAGE_GENERATION', 'Generated imagery provenance must be explicit');
+    assert.equal(usage, 'NON_PRODUCT_VISUAL_STUDY', 'Generated styling does not approve merchandise');
+    assert.equal(disclosure, 'AI-GENERATED STYLING STUDY · NOT A VERIFIED SUPPLIER PRODUCT PHOTO',
+      'Generated imagery must carry the product accuracy disclosure');
+    assert.match(reviewedAt ?? '', /^\d{4}-\d{2}-\d{2}$/, 'Product study registration date required');
+    assert.match(evidenceRecord ?? '', /^approvals\/records\/[a-zA-Z0-9_.-]+\.md$/, 'Product study evidence required');
+    assert.ok(fs.existsSync(inside(root, evidenceRecord)), `Missing product study evidence: ${evidenceRecord}`);
+    productStudies.set(publicPath, record);
+  }
   if (manifest.previewMode === 'IMAGE_FREE') {
     assert.equal(approved.size, 0, 'IMAGE_FREE preview cannot claim any approved photographs');
     assert.equal(studies.size, 0, 'IMAGE_FREE preview cannot contain editorial studies');
     assert.equal(campaignConcepts.size, 0, 'IMAGE_FREE preview cannot contain generated campaigns');
+    assert.equal(productStudies.size, 0, 'IMAGE_FREE preview cannot contain generated styling');
   } else if (manifest.previewMode === 'EDITORIAL_STUDY') {
     assert.equal(approved.size, 0, 'Editorial study photos are not approved EVERNE product photography');
     assert.ok(studies.size > 0, 'EDITORIAL_STUDY requires documented reference images');
   } else {
     assert.equal(studies.size, 0, 'Reviewed product imagery must be separately authorized');
     assert.equal(campaignConcepts.size, 0, 'Generated campaign concepts do not count as approved product images');
+    assert.equal(productStudies.size, 0, 'Generated outfit concepts do not count as approved product images');
   }
-  const registered = new Map([...approved, ...studies, ...campaignConcepts]);
+  const registered = new Map([...approved, ...studies, ...campaignConcepts, ...productStudies]);
 
   const publicFiles = walkFiles(path.join(root, 'public')).filter((file) => rasterExtension.test(file));
   const outputRoot = outputDirectory ? inside(root, outputDirectory) : undefined;
@@ -132,7 +154,7 @@ export function validateVisualApprovals(root, outputDirectory) {
       `Approved visual is missing from public/: ${approvedPath}`);
   }
 
-  return { mode: manifest.previewMode, approved: approved.size, studies: studies.size, campaignConcepts: campaignConcepts.size, deployedImages: outputFiles.length };
+  return { mode: manifest.previewMode, approved: approved.size, studies: studies.size, campaignConcepts: campaignConcepts.size, productStudies: productStudies.size, deployedImages: outputFiles.length };
 }
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {

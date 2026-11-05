@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter, HashRouter, Route, Routes } from 'react-router-dom';
 import EvernePreview from './EvernePreview';
 import RouteFocus from './RouteFocus';
+import { SelectedProductDetail, SelectedProductIndex } from './SelectedProductEdit';
 import './everne-editorial.css';
 
 // A separate, explicit build mode produces a file://-friendly Safari review.
@@ -21,6 +22,8 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/" element={<EvernePreview page="home" />} />
         <Route path="/care" element={<EvernePreview page="care" />} />
         <Route path="/standards" element={<EvernePreview page="standards" />} />
+        <Route path="/selected" element={<SelectedProductIndex />} />
+        <Route path="/selected/:slug" element={<SelectedProductDetail />} />
         <Route path="/collections/:category" element={<EvernePreview page="collection" />} />
         <Route path="/products/:handle" element={<EvernePreview page="product" />} />
         <Route path="*" element={<EvernePreview page="home" />} />

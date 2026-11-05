@@ -14,6 +14,8 @@ const expectedModules = new Set([
   'src/ProductReviewFacts.tsx',
   'src/ProductCardImage.tsx',
   'src/SupplierBagPreview.tsx',
+  'src/SelectedProductEdit.tsx',
+  'src/selectedProductPhotos.ts',
   'src/productDrafts.ts',
   'src/RouteFocus.tsx',
   'src/seo.ts',
@@ -23,7 +25,7 @@ const expectedModules = new Set([
   'src/trendProducts.ts',
 ]);
 // The separate category-agnostic concept is also non-commercial.
-const expectedStyles = new Set(['src/everne-editorial.css', 'src/supplier-bag-preview.css', 'src/trend-store.css']);
+const expectedStyles = new Set(['src/everne-editorial.css', 'src/selected-product-edit.css', 'src/supplier-bag-preview.css', 'src/trend-store.css']);
 const allowedPackages = new Set(['react', 'react-dom/client', 'react-router-dom']);
 const visited = new Set();
 const styles = new Set();
@@ -125,7 +127,7 @@ const exposedPictures = listPublicFiles(path.join(projectRoot, 'public'))
 const visualManifest = JSON.parse(fs.readFileSync(path.join(projectRoot, 'approvals/visual-assets.json'), 'utf8'));
 assert.equal(visualManifest.previewMode, 'EDITORIAL_STUDY', 'Unexpected protected preview mode');
 assert.deepEqual(exposedPictures.map(projectPath).sort(),
-  [...visualManifest.studyAssets, ...(visualManifest.campaignConceptAssets ?? [])].map((asset) => asset.publicPath).sort(),
+  [...visualManifest.studyAssets, ...(visualManifest.campaignConceptAssets ?? []), ...(visualManifest.generatedProductStudyAssets ?? [])].map((asset) => asset.publicPath).sort(),
   'Only documented design-study photos and separately registered generated campaign concepts may enter public/');
 assert.ok(!fs.existsSync(path.join(projectRoot, 'public/editorial')) &&
   !fs.existsSync(path.join(projectRoot, 'public/products')),
